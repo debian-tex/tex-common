@@ -378,7 +378,7 @@
 # -_- DebPkgProvidedMaps -_-
 </example>
            in the file, and installing a file in
-	   <file>/var/lib/tetex/debian/fontmap-cfg/</file> with the
+	   <file>/var/lib/tetex/fontmap-cfg/</file> with the
 	   name <file><var>package</var>.list</file> and the content
 <example>
 10foo

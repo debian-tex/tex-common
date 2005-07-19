@@ -3,14 +3,15 @@ Section: tex
 Priority: optional
 Maintainer: teTeX maintainers <debian-tetex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, C.M. Connelly <cmc@debian.org>, Atsuhito KOHDA <kohda@debian.org>, Frank Küster <frank@debian.org>
-Build-Depends: debhelper (>= 4.0.0), debiandoc-sgml
+Build-Depends: debhelper (>= 4.0.0), debiandoc-sgml, eperl
 Build-Depends-Indep: debiandoc-sgml
 Standards-Version: 3.6.1
 
 Package: tex-common
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Common infrastructure for using and building TeX Debian
+Depends: ucf, debconf
+Conflicts: tetex-bin (<< 3.0-5)
+Description: Common infrastructure for using and building TeX in Debian
  This package contains a number of scripts and common configuration
  files that are needed to install a TeX System, either teTeX or
  TeX-Live.

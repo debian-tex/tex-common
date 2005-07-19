@@ -17,14 +17,19 @@ if [ -L "${VARD}/fmtutil.cnf" ]; then
     exit 0
 fi
 
-if [ -f ${CNFDIR}/00tetex.cnf ] ; then
+if [ -f ${CNFDIR}/00tex.cnf ] ; then
   CNFFILES=`/bin/ls -1 ${CNFDIR}/*.cnf`
+  NUM_CNFFILES=`echo $CNFFILES | wc -w`
 else
   echo "update-fmtutil; Something seems wrong."
   exit 1
 fi
 
+
 if [ "${VERBOSE}" = "true" ]; then
+  if [ $NUM_CNFFILES = 1 ] && [ "$CNFFILES" = "/etc/texmf/fmt.d/00tex.cnf" ]; then
+    echo "update-fmtutil: Not generating empty fmtutil.cnf" >&2
+  fi
   if [ -f "${VARD}/fmtutil.cnf" ]; then
     echo -n "Regenerating ${VARD}/fmtutil.cnf ... " >&2
   else

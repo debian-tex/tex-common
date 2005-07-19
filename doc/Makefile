@@ -14,6 +14,7 @@ policy-pdf: Debian-TeX-Policy.sgml  version.ent
 	debiandoc2pdf Debian-TeX-Policy.sgml
 
 install:
+	install -d $(DESTDIR)
 	cp Debian-TeX-Policy.txt $(DESTDIR)/
 	cp -R Debian-TeX-Policy.html $(DESTDIR)/
 

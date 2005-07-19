@@ -36,8 +36,15 @@ Copyright Holders of individual files, sorted by directory:
 
 - debian:  
 
-  Currently, all files are Copyright 2005 Frank Küster
-  <frank@debian.org>
+  Currently, all files are Copyright 2004,2005 Frank Küster
+  <frank@debian.org>, except
+
+  common.variables: Frank Küster (2004,2005) <frank@debian.org> (based on a
+                  framework by Davide Salvetti (1999-2002)
+                  <salve@debian.org>)
+
+  rules: Frank Küster (2004,2005) <frank@debian.org> with eperl code
+	 based on work by Davide, as above
 
 - doc:
 
@@ -60,12 +67,19 @@ Copyright Holders of individual files, sorted by directory:
 		  Hilmar Preusse (2004) <hille42@web.de>
   update-updmap:  Atsuhito Kohda (2002,2003) <kohda@debian.org>
 	          Frank Küster (2004) <frank@debian.org>
-  update-updmap.8: Atsuhito Kohda (2002,2003) <kohda@debian.org>
-		  Florent Rougon (2004) <f.rougon@free.fr>
+		  Florent Rougon (2005) <f.rougon@free.fr>
+  update-updmap.1: Atsuhito Kohda (2002,2003) <kohda@debian.org>
+		  Florent Rougon (2004,2005) <f.rougon@free.fr>
 
-- teTeX-build:  
-  
-  common.functions.in: Frank Küster (2004) <frank@debian.org>
-  common.variables: Frank Küster (2004,2005) <frank@debian.org> (based on a
-                  framework by Davide Salvetti (1999-2002) <salve@debian.org>)
+- conf/texmf.d/
 
+  all files are split from texmf.in-teTeX, Copyright
+  Thomas Esser (1995-2005) <te@dbs.uni-hannover.de>, in the Public
+  Domain,  except 
+
+  90TeXDoc.cnf:  Atsuhito Kohda (2003) <kohda@debian.org>
+
+- conf/fmt.d/
+
+  00tex.cnf: Thomas Esser (1998,1999) <te@dbs.uni-hannover.de>, 
+	     in the Public Domain

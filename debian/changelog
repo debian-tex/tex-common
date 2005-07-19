@@ -1,3 +1,11 @@
+tex-common (0.2) unstable; urgency=low
+
+  * Install the configuration files needed by teTeX
+  * Bug fix: "tex-common does not install: conflicts with tetex-bin",
+    thanks to Hans Ulrich Niedermann (Closes: #314948).
+
+ -- Frank Küster <frank@debian.org>  Wed, 29 Jun 2005 20:36:47 +0200
+
 tex-common (0.1) unstable; urgency=low
 
   * Initial Release.

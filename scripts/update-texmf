@@ -1,5 +1,4 @@
 #!/bin/sh
-# (setq skeleton-pair t)
 # update-texmf
 # License: GPL
 
@@ -9,7 +8,7 @@ TXMF=/etc/texmf
 TXMF_CNF=$TXMF/texmf.cnf
 CNFDIR=${TXMF}/texmf.d
 VARD=/var/lib/texmf/web2c
-MD5SUMS=/usr/share/tetex-bin/texmf.cnf.md5sum.d
+MD5SUMS=/usr/share/tex-common/md5sums/texmf.cnf.md5sum.d/
 TMPDIR=`mktemp -d`
 TMPTXMF=`mktemp -p ${TMPDIR} texmfXXXXXXX`
 

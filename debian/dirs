@@ -1,5 +1,9 @@
 usr/sbin
+usr/bin
 usr/share/tex-common/teTeX-build
-usr/share/doc/tex-common/
 usr/share/dsfp
+etc/texmf/fmt.d
+etc/texmf/texmf.d
+etc/texmf/updmap.d
+var/lib/texmf/web2c
 
