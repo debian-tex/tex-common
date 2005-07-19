@@ -1,0 +1,33 @@
+.TH UPDATE-FMTUTIL 8
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+update-fmtutil \- shell script to generate /var/lib/texmf/web2c/fmtutil.cnf
+.SH SYNOPSIS
+.B update-fmtutil
+.I "[options]"
+.br
+.SH DESCRIPTION
+This manual page documents briefly the
+.BR update-fmtutil
+command.
+This manual page was written for the Debian GNU/Linux distribution
+because the original script was designed for Debian packaging system.
+.PP
+.B update-fmtutil
+is a shell script to generate /var/lib/texmf/web2c/fmtutil.cnf from files in 
+/etc/texmf/fmt.d/*.cnf
+.PP
+The main tetex-bin provides 00tetex.cnf only and we assume that other TeX 
+related packages should provide files with necessary contents.
+The two digit numeral determines the order in which update-fmtutil read a file.
+.PP
+A user who wants to customize /var/lib/texmf/web2c/fmtutil.cnf should add, 
+for example, 22myfmt.cnf in /etc/texmf/fmt.d/ and run 'update-fmtutil'.
+.SH OPTIONS
+.TP
+.B \-v
+Show verbose messages.
+.SH AUTHOR
+This manual page was written by Atsuhito Kohda <kohda@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

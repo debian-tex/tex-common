@@ -1,0 +1,45 @@
+.TH UPDATE-TEXMF 8
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+update-texmf \- shell script to generate /etc/texmf/texmf.cnf
+.SH SYNOPSIS
+.B update-texmf
+.I "[options]"
+.br
+.SH DESCRIPTION
+This manual page documents briefly the
+.BR update-texmf
+command.
+This manual page was written for the Debian GNU/Linux distribution
+because the original script was designed for Debian packaging system.
+.PP
+.B update-texmf
+is a shell script to generate /etc/texmf/texmf.cnf from files in 
+/etc/texmf/texmf.d/*.cnf
+.PP
+The tetex-bin provides 05TeXMF.cnf to 95NonPath.cnf and we assume
+that other TeX related packages should use the name only with the lower cases.
+The two digit numeral determines the order in which update-texmf read a file.
+.PP
+A user who wants to customize /etc/texmf/texmf.cnf should add, 
+for example, 22mymacro.cnf in /etc/texmf/texmf.d/ and run 'update-texmf'.
+Thanks to ucf(1) update-texmf will regard manual changes of
+/etc/texmf/texmf.cnf, however it is recommended to change the files in
+/etc/texmf/texmf.d/ and to generate /etc/texmf/texmf.cnf.
+.SH OPTIONS
+.TP
+.B \-v, --verbose
+Show verbose messages.
+.TP
+.B \-d, --debug
+Show debugging information, and don't delete temporary files. Implies
+--verbose. 
+.SH SEE ALSO
+.PP
+Further information can be found in
+/usr/share/doc/tetex-bin/README.Debian.gz
+.PP
+.SH AUTHOR
+This manual page was written by Atsuhito Kohda <kohda@debian.org>,
+for the Debian GNU/Linux system (but may be used by others).

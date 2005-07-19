@@ -1,0 +1,462 @@
+<!doctype debiandoc system>
+<debiandoc>
+
+  <book>
+    <titlepag>
+      <title>The Debian TeX sub-policy</title>
+      <author>
+	<name>Frank Küster</name>
+	<email>frank@debian.org</email>
+      </author>
+      <author>
+	<name>The Debian teTeX mailing List</name>
+	<email>debian-tetex-maint@lists.debian.org</email>
+      </author>
+      <version>version 0.2, 2005-02-17</version>
+
+      <abstract>
+        This document provides a set of rules for the packaging of
+        applications, fonts and input files related to TeX within the
+        Debian GNU/Linux distribution.  <!-- This document -->
+<!-- 	is part of the policy package for Debian. -->  </abstract>
+
+      <copyright>
+	<copyrightsummary>
+	  Copyright &copy; 2004-2005 Frank Küster, Richard Lewis
+	</copyrightsummary>
+	<p>
+	  This manual is free software; you may redistribute it and/or
+	  modify it under the terms of the GNU General Public License
+	  as published by the Free Software Foundation; either version
+	  2, or (at your option) any later version.
+	</p>
+	<p>
+	  This is distributed in the hope that it will be useful, but
+	  <em>without any warranty</em>; without even the implied
+	  warranty of merchantability or fitness for a particular
+	  purpose.   See the GNU General Public License for more
+	  details.
+	</p>
+	<p>
+	  A copy of the GNU General Public License is available as
+	  <url id="file:///usr/share/common-licenses/GPL"
+	  name="/usr/share/common-licenses/GPL"> in the Debian
+<!-- 	  <file><url id="file:///usr/share/common-licenses/GPL" -->
+<!-- 	  name="/usr/share/common-licenses/GPL"></file> in the Debian -->
+	  distribution or on the World Wide Web at 
+	  <url id="http://www.gnu.org/copyleft/gpl.html"
+	  name="The GNU General Public Licence">.  You can also obtain it by writing to the
+	  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+	  Boston, MA 02111-1307, USA.
+	</p>
+      </copyright>
+    </titlepag>
+
+    <toc detail="sect">
+    <chapt>
+      <heading>About this document</heading>
+      <p>
+        This document provides a set of rules for the packaging of
+        applications, fonts and input files related to TeX within the
+        Debian GNU/Linux distribution.  It is still a in a draft state
+        -- some things might not yet be fully implemented, and others
+        are advisable, but not strictly necessary.  If in doubt,
+        please ask on <tt>debian-tetex-maint@lists.debian.org</tt>.
+      </p>
+      <p>
+	The latest copy of this document can be found in the
+	<tt>Debian-TeX-policy</tt> files in the <package>tetex-bin</package>
+	package. 
+    </chapt>
+    <chapt>
+      <heading>Terms and Definitions</heading>
+      <p></p>
+      <p>
+      <taglist>
+        <tag>TeX-related package</tag>
+	<item>
+
+	  Any Debian package that uses or provides parts of the TeX
+	  infrastructure, i.e. the TeX or Metafont program or
+	  derivatives thereof, fonts or input files in a
+	  <var>TEXMF</var> tree, etc.
+
+	</item>
+	<tag><package>tex-common</package></tag>
+	<item>
+
+	  <p>This package provides basic infrastructure and some
+	  configuration files for all TeX-related packages, including
+	  the <prgn>configuration update programs</prgn>.
+	  </p>
+
+	</item>
+        <tag>Basic TeX packages</tag> <item>
+
+	  <p>A Basic TeX package is a Debian package that provides the
+	  basic infrastructure for TeX-related programs.  It should
+	  provide sufficient functionality for typesetting most
+	  generated (La)TeX code, e.g. from docbook, debiandoc, or
+	  texinfo sources.  Usually, the Basic TeX packages will be
+	  divided into an architecture-dependent and an
+	  architecture-independent package.</p>
+
+	  <p>The arch-dependent package must provide at least one
+	  binary that is fully compatible with Donald E. Knuth's
+	  original TeX program, and it should provide the original TeX
+	  itself.  The output formats <tt>dvi</tt>, PostScript and
+	  Adobe PDF must be available, either directly or by
+	  conversion of other output formats.  The arch-independent
+	  package must provide at least the files necessary to create
+	  the formats for plain TeX and LaTeX and the input files
+	  required by the LaTeX distribution, as well as the Computer
+	  Modern fonts.</p>
+
+	  </item>
+
+	<tag><var>TEXMF</var> tree</tag> 
+	<item> 
+
+	  <p>One directory tree, arranged according to the TeX Directory
+	  Structure.  The latest version of the TDS is available at
+	  <tt><url name="http://www.tug.org/twg/tds/"
+	  id="http://www.tug.org/twg/tds/"></tt>.</p>
+	  <p></p>
+	</item>
+	
+	<tag>configuration update programs</tag>
+	<item>
+
+	  <p>The configuration information from files provided by
+	  differen TeX-related packages must be merged and made
+	  available in appropriate form to the various programs.  This
+	  is usually done by scripts that write files into the
+	  <var>TEXMFSYSVAR</var> tree.
+	  </p>
+
+	  <p>
+	  Currently, the configuration update programs provided by
+	  <package>tex-common</package> are:
+	  <file>update-texmf</file>, <file>update-fmtutil</file>,
+	  <file>update-updmap</file>, and <file>updmap</file>.
+	  </p>
+
+	</item>
+      </taglist>
+      </p>
+    </chapt>
+    <chapt>
+      <heading>File Placement</heading>
+      <sect>
+      <heading>Path searching and <package>libkpathsea</package> / <package>libkpse</package></heading>
+
+        <p>The Basic TeX packages must provide a mechanism for searching
+        through <var>TEXMF</var> trees that allows different files to be
+        found depending on the invoking program and the specified file
+        format.  The only existing implementation is the
+        <package>libkpathsea</package> library.  Unfortunately, it was
+        not originally designed for use as a dynamic shared library.  A
+        rewrite is under way to create a <package>libkpse</package>
+        library with proper API specification and ABI compatibility. For
+        the time being, the Basic TeX packages can provide a shared
+        library, and program maintainers can decide to use it, or to
+        link statically against their own copy of the code.
+        </p>
+  
+        <p>For use in scripts, the Basic TeX packages provide the
+        utilities <prgn>kpsewhich</prgn>, <prgn>kpsepath</prgn>,
+        <prgn>kpsexpand</prgn>, and <prgn>kpsestat</prgn>.</p>
+
+      </sect>
+      <sect>
+      <heading>Directory trees</heading>
+
+        <p>
+        File locations must follow the TeX Directory Structure, TDS.  It
+        is a bug if a package only conforms to an outdated TDS version.
+        It is a more severe bug, however, if it conforms to the current
+        TDS version but does not make sure to depend on an appropriately
+        recent version of the Basic TeX packages (that support this TDS
+        version).
+        </p>
+  
+        <p>
+        Configuration files must be placed below
+        <file>/etc/texmf</file>, with symlinks pointing from the TDS
+        locations to files or directories below
+        <file>/etc/texmf</file>.  The system-wide
+        <var>TEXMFSYSCONFIG</var> tree, if defined, must be the same
+        as the <var>TEXMFMAIN</var> tree; a TeX-related package must
+        not change this.
+        </p>
+
+        <p>
+        The following <var>TEXMF</var> trees are defined, as outlined
+        below:
+        <enumlist>
+          <item><file>/usr/share/texmf/</file>, referenced as <var>TEXMFMAIN</var>
+  	  <footnote>
+  	    The separation between a <var>TEXMFMAIN</var> tree (for the files
+              that have to match the binary executables) and a <var>TEXMFDIST</var>
+              tree (for other TeX input files) is not made in Debian,
+              because it is not necessary on a system with a decent
+              package managment system </footnote>
+  	</item>
+          <item><file>/var/lib/texmf/</file>, referenced as <var>TEXMFSYSVAR</var></item>
+          <item><file>/usr/share/texmf-site/</file>, referenced as <var>TEXMFSITE</var></item>
+          <item><file>/usr/local/share/texmf/</file>, referenced as <var>TEXMFLOCAL</var></item>
+          <item>optionally user-specific directories for
+	      configuration files (<var>TEXMFCONFIG)</var> and generated files
+	      (<var>TEXMFVAR</var>)</item>
+          <item> Any directories listed in the <var>TEXMFHOME</var> configuration
+                 variable in <file>texmf.cnf</file> or as an environment
+                 variable,
+  	</item>
+        </enumlist>
+
+          The search order is from bottom up (files in
+          <var>TEXMFHOME</var> taking precedence over files in
+          <var>TEXMFMAIN).</var>
+        </p>
+
+        <p>
+        Debian packages generally install files in
+        <var>TEXMFMAIN</var> exclusively (but see <ref
+        id="names_and_texmfsite">), and may ship or create empty
+        directories in the other trees, in accordance with Debian
+        Policy.  Packages should take care to ignore
+        <var>TEXMFHOME</var> in their maintainer scripts.
+        </p>
+      </sect>
+
+      <sect>
+	<heading>Generated files</heading>
+
+	<p>
+	Generated font files must be put in subdirectories of
+	<file>/var/cache/fonts</file>, all other generated files
+	should be below <file>/var/lib/texmf</file> (or the
+	user-specific variable directories), with the subdirectory
+	structure conforming to the TDS.  If necessary, symbolic links
+	can point from static <var>TEXMF</var> trees to files
+	below <file>/var/</file>.
+	</p>
+
+	<p>An exception is the generated file
+        <file>/etc/texmf/texmf.cnf</file>.  It is not intended that
+        local administrators edit that file, but if they do, the
+        configuration update programs must respect these changes.</p>
+
+      </sect>
+
+      <sect id="names_and_texmfsite">
+	<heading>Filenames and installation of alternative files</heading>
+
+	<p>
+	Packages may not install files with the same name as a file
+	already installed in a <var>TEXMF</var> tree, unless both
+	files are in subdirectories where they will only be found by
+	different applications, as determined by the
+	<tt>--progname</tt> switch to kpsewhich.
+	</p>
+
+	<p>
+	As an exception to this rule, packages that need newer
+	versions of a file than already supplied by an other package
+	and installed in <var>TEXMFMAIN</var> can place them into
+	<var>TEXMFSITE.</var> The package must make sure that the
+	newer version is backward-compatible, meaning it must not
+	break compilation of any TeX document, and it should not
+	change the output file.  A change of the output file may be
+	acceptable if an obviously buggy behavior is corrected,
+	<strong>and</strong> if it had previously not been possible to
+	easily fix this behavior in user's documents.
+	</p>
+
+	<p>
+	Packages that install files in <var>TEXMFSITE</var> must make
+	sure to follow not only their own upstream development, but
+	also that of the package(s) that install the files in
+	<var>TEXMFMAIN,</var> and make sure not to get outdated with
+	respect to the files in <var>TEXMFMAIN</var>
+	</p>
+
+	<p>
+	Installing more than two versions of a file will most likely
+	lead to confusion.  Therefore, the possibility to shadow a
+	file once using <var>TEXMFSITE</var> should be enough, and the
+	usage of <prgn>dpkg-divert</prgn> is discouraged.
+	</p>
+
+	<p>
+	It is also discouraged to use a file other than from the
+	canonical source for that file, usually the CTAN network. 
+	</p>
+      </sect>
+
+    </chapt> 
+    <chapt>
+      <heading>Configuration</heading>
+      <sect>
+        <heading>Configuration update programs</heading>
+
+	<p>
+	The central configuration file for TeX applications is
+	<file>/etc/texmf/texmf.cnf</file>, the central font configuration
+	file is <file>/var/lib/texmf/web2c/updmap.cfg</file>, and format
+	generation is determinded by
+	<file>/var/lib/texmf/web2c/fmtutil.cnf</file>.  All three files are
+	generated by configuration update programs from configuration
+	files in subdirectories of <file>/etc/texmf</file>.  For
+	<file>updmap.cfg</file> and <file>fmtutil.cnf</file>, this is the only
+	method of configuration.  <file>texmf.cnf</file> can be edited
+	manually by local system administrators, and changes will be
+	handled by ucf.  Package installation scripts, however, should
+	not change this file, but use the <prgn>update-texmf</prgn>
+	mechanism.  Local administrators are encouraged to use the
+	<prgn>update-texmf</prgn> mechanism, too.
+	</p> 
+
+	<p>
+	Packages are free to add configuration items to the common
+	configuration files, but they should not try to override
+	configuration items that are supplied by other
+	packages.  Rather, shared configuration items should be supplied
+	by the Basic TeX packages or any other package on which all
+	involved packages depend, with a setting appropriate for
+	all.  If this is impractical, the involved packages must at
+	least agree on the way different packages override other's
+	settings<footnote>
+	  Note that in <file>texmf.cnf</file>, as well as in the
+	  sequence of multiple <file>texmf.cnf</file> files that are
+	  read, earlier entries override later ones.
+<!-- Check what happens in fmtutil.cnf and updmap.cnf -->
+	</footnote>.
+        </p>
+
+	<p>
+	Maintainer scripts should call <prgn>update-updmap</prgn> with
+	the option <tt>--quiet</tt>.  Besides that, the configuration
+	update programs should be called without any options to allow
+	for internal changes, e.g. of the directories where the
+	generated files are placed.
+	</p>
+
+	<p>
+	Packages that changed <file>updmap.cfg</file> or
+	<file>fmtutil.cnf</file> must call <prgn>updmap-sys</prgn> or
+	<prgn>fmtutil-sys</prgn>, respectively. They must make sure
+	to issue the necessary <prgn>mktexlsr</prgn> commands before
+	and after this.
+	</p>
+	<sect1>
+	  <heading>Font configuration</heading>
+	  <p>
+	  A package that provides additional fonts for TeX should put
+	  the necessary <tt>map</tt> files below
+	  <file>/etc/texmf/map/</file> (which must be symlinked from
+	  <file><var>TEXMFMAIN</var>/fonts/map</file> by the Basic TeX
+	  packages), and have them registered by putting a
+	  configuration file with extension <tt>.cfg</tt> into
+	  <file>/etc/texmf/updmap.d/</file> and calling
+	  <tt>update-updmap --quiet</tt>.  The file contents will then
+	  be incorporated into
+	  <file>/var/lib/texmf/web2c/updmap.cfg</file>, the effective
+	  configuration file for <prgn>updmap</prgn>.
+	  </p>
+	  <p>
+	  If a package is removed, but not purged, its <tt>map</tt>
+	   files will stay in subdirectories of
+	   <file>/etc/texmf</file>, but the actual font files below
+	   <file>/usr/share/texmf</file> are removed, and the font is
+	   unusable. Therefore it must make sure that the
+	   <prgn>updmap</prgn> configuration file in
+	   <file>/etc/texmf/updmap.d</file> is ignored when the
+	   package is in this state. This can be achieved by putting
+	   the "magic comment" 
+<example>
+# -_- DebPkgProvidedMaps -_-
+</example>
+           in the file, and installing a file in
+	   <file>/var/lib/tetex/debian/fontmap-cfg/</file> with the
+	   name <file><var>package</var>.list</file> and the content
+<example>
+10foo
+12bar
+</example>
+           if the packages installs the files <file>10foo.cfg</file>
+	   and <file>12bar.cfg</file> in
+	   <file>/etc/texmf/updmap.d</file>. When the package is
+	   removed, but not purged, this file will be removed, thus
+	   disabling the <prgn>updmap</prgn> configuration files.
+	  </p>
+	</sect1>
+      </sect>
+
+      <sect>
+	<heading>Best practices for packages that
+	<tt>build-depend</tt> on the TeX system:</heading>
+	<p>
+	If packages that build-depend on the TeX system need a changed
+	configuration, they should not try to provide it statically.
+	If settings in any other configuration file are inappropriate
+	for a package to build, this is (usually) a bug in the package
+	that provides the file.  It should be fixed in this package,
+	not circumvented by a workaround in the build process.  Such
+	workarounds have proven to be problematic, because they might
+	stop working after changes in the depended-on package, and
+	such failure cannot be foreseen by its maintainers.  If a
+	change is still necessary, the package should use the
+	configuration update programs with the <tt>--outputdir</tt>
+	and <tt>--add-file</tt> options.
+	</p>
+      </sect>
+      <sect>
+        <heading>Command execution, format files, and bug severity</heading>
+	<p>
+	If TeX formats need to be generated before execution, this
+	must be done in the post-installation script.  Packages that
+	depend on an executable can thus simply declare
+	<tt>Depends:</tt> on the package providing the executable, and
+	<em>only</em> do that.  Any additional checks, e.g. for the
+	existence of format files, is unnecessary and harmful, causing
+	internal changes (e.g. of format file extensions) to break the
+	depending package that does this check.
+	</p>
+<!-- 	<p> -->
+<!-- 	Format generation involves many configuration and input -->
+<!-- 	files.  In many cases format generation failed because of a bad -->
+<!-- 	local configuration, missing files or files added in local -->
+<!-- 	<var>TEXMF</var> trees, and consequently also the package -->
+<!-- 	post-installation script and configuration failed.  Therefore -->
+<!-- 	bug reports because of failed post-installation scripts have a -->
+<!-- 	severity of <em>important</em> unless -->
+<!-- 	<list compact> -->
+<!-- 	<item>the error occurs on a fresh install or</item> -->
+<!-- 	<item>the error occurs upon upgrade, and it has been shown -->
+<!-- 	that the post-installation script would not have failed with -->
+<!-- 	the old version of the package, </item> -->
+<!-- 	</list> -->
+<!-- 	in which cases the severity would be <em>grave</em>. -->
+<!-- 	</p> -->
+      </sect>
+      <sect>
+        <heading>The Dpkg Post-Invoke Mechanism</heading>
+
+	<p>To be done...</p>
+
+	<p>
+	Packages should be able to delay running of mktexlsr, updmap
+	and perhaps even "fmtutil --all" until all TeX-related packages
+	that want to do this are configured.  Thus, it is unnecessary
+	to call the programs multiple times.  Coding this is easy,
+	however it is unclear how it can be made sure that failures
+	get attributed to the correct program (even updmap has
+	recently been reported to fail).
+	</p>
+
+      </sect>
+    </chapt>
+  </book>
+</debiandoc>
+

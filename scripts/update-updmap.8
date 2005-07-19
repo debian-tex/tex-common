@@ -1,0 +1,211 @@
+.Dd Dec 2, 2004
+.Os Debian
+.Dt UPDATE-UPDMAP 8 SMM
+.Sh NAME
+.Nm update-updmap
+.Nd generate
+.Pa /var/lib/texmf/web2c/updmap.cfg
+from files in
+.Pa /etc/texmf/updmap.d/
+.Sh SYNOPSIS
+.Nm
+.Bk
+.Op Ar option ...
+.Ek
+.Sh DESCRIPTION
+This manual page documents
+.Nm ,
+a program that was written for the Debian distribution.
+.Ss Overview
+.Nm
+is used to generate
+.Xr updmap 1 Ns 's
+configuration file,
+.Pa /var/lib/texmf/web2c/updmap.cfg ,
+from the files with names ending in
+.Ql .cfg
+located in
+.Pa /etc/texmf/updmap.d/ .
+.Pp
+The tetex-bin package provides
+.Pa 00updmap.cfg
+in
+.Pa /etc/texmf/updmap.d/ ,
+which defines the base contents of the to\-be\-generated
+.Pa /var/lib/texmf/web2c/updmap.cfg
+(general settings and base fonts).  Thanks to
+.Nm ,
+TeX-related font packages can have their own font map files referenced in
+.Pa /var/lib/texmf/web2c/updmap.cfg
+without having to edit that file.  With the underlying mechanism, system
+administrators can disable the map files they want by commenting their
+entries in the appropriate files under
+.Pa /etc/texmf/updmap.d/ .
+Such changes will be preserved if the package in question is removed
+(not purged) and then reinstalled.
+.Pp
+The packages simply have to ship their map files (e.g.,
+.Pa foo.map )
+in
+.Pa /etc/texmf/map/dvips/
+and one or more
+.Ql .cfg
+file(s) under
+.Pa /etc/texmf/updmap.d/
+(e.g.,
+.Pa  10foo.cfg )
+referencing the map files.
+.Ss "Mode of operation"
+.Nm
+concatenates all the
+.Ql .cfg
+files under
+.Pa /etc/texmf/updmap.d/
+provided that:
+.Bl -dash -offset indent -compact
+.It
+they do not contain the following pseudo-comment:
+.Bd -literal -offset indent
+# -_- DebPkgProvidedMaps -_-
+.Ed
+.Pp
+or;
+.It
+they have this pseudo-comment and are listed in a
+.Ql .list
+file under
+.Pa /var/lib/tetex/debian/fontmap-cfg/ ,
+meaning that the package shipping the
+.Ql .cfg
+file is installed. The name of the
+.Q1 .list
+file is ignored (but should be the name of the package that installed
+it). The file should contain the names of the 
+.Q1 .cfg
+files in 
+.Pa /etc/texmf/updmap.d/
+that should be enabled, without the
+.Q1 .cfg
+suffix, e.g. 
+.Bd -literal -offset indent
+10foo
+12bar
+.Ed
+.El
+.Pp
+The first case is for configuration files added by the local system
+administrator. Files that contain the magic pseudo-comment should be
+used by Debian packages. In this case, only the base name should appear
+in the
+.Ql .list
+file: for instance,
+.Ql 10foo
+for
+.Pa /etc/texmf/updmap.d/10foo.cfg ;
+please refer to the Debian TeX Policy for details.
+.Pp
+The order used to process the
+.Ql .cfg
+files is obtained by running
+.Xr sort 1
+with the
+.Sq C
+locale (for ordinary alphanumeric characters, it corresponds to the
+.Tn ASCII
+order).  The result obtained by concatenating them is stored as the new
+.Pa /var/lib/texmf/web2c/updmap.cfg .
+.Pp
+.Ss "Options"
+.Bl -tag -width ".Fl -version"
+.It Fl -quiet
+don't write anything to the standard output during normal operation
+.It Fl -help
+print a summary of the command-line usage of
+.Nm
+and exit
+.It Fl -version
+output version information and exit
+.El
+.Pp
+Note that the
+.Fl v
+option, which turns on verbose mode, is deprecated.  We are currently in a
+transition phase where quiet mode is still the default (therefore,
+.Fl -quiet
+has no effect), but
+.Nm
+will be verbose by default as soon as enough packages use
+.Fl -quiet
+in their maintainer scripts.
+.Sh "SYNTAX FOR THE .CFG FILES"
+The
+.Ql .cfg
+files under
+.Pa /etc/texmf/updmap.d/
+should contain valid configuration lines for
+.Xr updmap 1 .
+Usually, they will consist of lines of following one of these forms:
+.Bd -literal -offset indent
+Map <foo.map>
+MixedMap <bar.map>
+.Ed
+.Pp
+The
+.Li MixedMap
+form should only be used if the font is available in both bitmap and scalable
+formats (this way, it won't be declared in the default map file for Dvips that
+is used
+when
+.Li dvipsPreferOutline
+is set to
+.Ql false
+in
+.Pa updmap.cfg ) .
+.Pp
+The following comment (from
+.Xr updmap 1 Ns 's
+point of view):
+.Bd -literal -offset indent
+# -_- DebPkgProvidedMaps -_-
+.Ed
+.Pp
+is treated in a particular way by
+.Nm
+(see section
+.Sx "Mode of operation"
+above) and should be used in every
+.Ql .cfg
+file provided by a Debian package.  This ensures that the corresponding
+map files are disabled when the package is removed and reenabled when
+the package is reinstalled.
+.Sh FILES
+.Bd -unfilled -offset left -compact
+.Pa /etc/texmf/updmap.d/00updmap.cfg
+.Pa /etc/texmf/updmap.d/*.cfg
+.Pa /var/lib/texmf/web2c/updmap.cfg
+.Pa /var/lib/tetex/debian/fontmap-cfg/*.list
+.Ed
+.Sh DIAGNOSTICS
+.Nm
+returns 0 on success, or a strictly positive integer on error.
+.Sh SEE ALSO
+.Xr updmap 1
+.Pp
+.Bd -unfilled -offset left -compact
+.Pa /usr/share/doc/tetex-bin/README.Debian.gz
+.Pa /usr/share/doc/tetex-bin/README.Developers.gz
+.Pa /usr/share/doc/tetex-base/README.Debian.gz
+.Ed
+.Sh AUTHORS
+This manual page was written by
+.An -nosplit
+.An Atsuhito Kohda Aq kohda@debian.org
+and updated by
+.An "Florent Rougon" Aq f.rougon@free.fr
+for the Debian distribution (and may be used by others).
+.\" For Emacs:
+.\" Local Variables:
+.\" fill-column: 72
+.\" sentence-end: "[.?!][]\"')}]*\\($\\| $\\|	\\|  \\)[ 	\n]*"
+.\" sentence-end-double-space: t
+.\" End:

@@ -1,0 +1,21 @@
+DESTDIR=/usr/share/doc/tex-common
+
+CLEANFILES=Debian-TeX-Policy.txt Debian-TeX-Policy.pdf Debian-TeX-Policy.html Debian-TeX-Policy.tpt 
+
+all: policy-txt policy-html
+
+policy-txt: Debian-TeX-Policy.sgml  version.ent
+	debiandoc2text Debian-TeX-Policy.sgml
+
+policy-html: Debian-TeX-Policy.sgml  version.ent
+	debiandoc2html Debian-TeX-Policy.sgml
+
+policy-pdf: Debian-TeX-Policy.sgml  version.ent
+	debiandoc2pdf Debian-TeX-Policy.sgml
+
+install:
+	cp Debian-TeX-Policy.txt $(DESTDIR)/
+	cp -R Debian-TeX-Policy.html $(DESTDIR)/
+
+clean:
+	-rm -r $(CLEANFILES)

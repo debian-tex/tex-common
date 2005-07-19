@@ -1,0 +1,95 @@
+#!/bin/sh -e
+# script dsf-patchfunc - shell script functions for dsf-patch
+# $Id: dsf-patchfunc,v 1.1.1.1 2005/06/13 17:21:58 frank Exp $
+#
+# dsf-patch stands for "Debian single file patch system"
+# 
+# Copyright (C) 2005 by Frank Küster <frank@kuesterei.ch>. 
+#
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+#
+# This file is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to: The Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# On Debian GNU/Linux System you can find a copy of the GNU General Public
+# License in "/usr/share/common-licenses/GPL".
+
+# variable definitions
+progname=dsf-patchfunc
+
+# function definitions
+origCopy(){
+  filename="$1"
+  if [ -f $filename.orig.0 ]; then
+    depth=0
+    origCopyRecursive
+  fi
+  cp $filename $filename.orig.0
+}
+origCopyRecursive(){
+  if [ -f $filename.orig.$((++depth)) ]; then
+    origCopyRecursive
+  fi
+  mv $filename.orig.$((--depth)) $filename.orig.$((depth+1))
+}
+
+testTwoArgs(){
+  if [ ! $# -eq 2 ]; then
+    echo "$progname: $1 needs exactly one filename,"
+    echo "but you have given the following arguments:"
+    echo "$@"
+    echo
+    exit 1
+  fi
+}
+
+origRestore(){
+  filename="$1"
+  if [ -f $filename.orig.0 ]; then
+    rm $filename.orig.0
+    if [ -f $filename.orig.1 ]; then
+      depth=1
+      origRestoreRecursive
+    fi
+  else
+    echo "$progname --origrestore: error!"
+    echo "$filename.orig.0 not found"
+    exit 1
+  fi
+}
+moveReverse(){
+  origin="$2"
+  target="$1"
+  mv $origin $target
+}
+origRestoreRecursive(){
+  moveReverse $filename.orig.$((--depth)) $filename.orig.$((++depth))
+  if [ -f $filename.orig.$((++depth)) ]; then
+    origRestoreRecursive
+  fi
+}
+
+
+case $1 in
+  --origcopy)
+    testTwoArgs "$@"
+    origCopy "$2"
+    ;;
+  --origrestore)
+    testTwoArgs "$@"
+    origRestore "$2"
+    ;;
+  *)
+    echo "$progname: unknown option $1"
+    ;;
+esac
+

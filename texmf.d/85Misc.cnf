@@ -1,0 +1,72 @@
+% Makeindex style (.ist) files.
+INDEXSTYLE = .;$TEXMF/makeindex//
+
+% Font encoding files (.enc).
+ENCFONTS = .;$TEXMF/fonts/enc//;$TEXMF/dvips//
+
+% CMap files.
+CMAPFONTS = .;$TEXMF/fonts/cmap//
+
+% Subfont definition files.
+SFDFONTS = .;$TEXMF/fonts/sfd//
+
+% Opentype outline fonts.
+OPENTYPEFONTS = .;$TEXMF/fonts/opentype//
+
+% pdftex config files:
+PDFTEXCONFIG = .;$TEXMF/pdftex/{$progname,}//
+
+% Used by DMP (ditroff-to-mpx), called by makempx -troff.
+% The path given is correct for GROFF on Linux installed under /usr.
+% Originally: TRFONTS = /usr/lib/font/devpost
+TRFONTS = /usr/share/groff/current/font/devps
+MPSUPPORT = .;$TEXMF/metapost/support
+
+% For xdvi to find mime.types and .mailcap, if they do not exist in
+% $HOME.  These are single directories, not paths.
+% (But the default mime.types, at least, may well suffice.)
+MIMELIBDIR = /usr/etc
+MAILCAPLIBDIR = /usr/etc
+
+% TeX documentation and source files, for use with kpsewhich.
+TEXDOCS = .;$TEXMF/doc//
+TEXSOURCES = .;$TEXMF/source//
+
+% Web and CWeb input paths.
+WEBINPUTS = .;$TEXMF/web//
+CWEBINPUTS = .;$TEXMF/cweb//
+
+% Omega-related fonts and other files.  The odd construction for OFMFONTS
+% makes it behave in the face of a definition of TFMFONTS.  Unfortunately
+% no default substitution would take place for TFMFONTS, so an explicit
+% path is retained.
+OFMFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/{ofm,tfm}//;$TFMFONTS
+OPLFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/opl//
+OVFFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/ovf//
+OVPFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/ovp//
+OTPINPUTS = .;$TEXMF/omega/otp//
+OCPINPUTS = .;$TEXMF/omega/ocp//
+
+% Some additional input variables for several programs.  If you add
+% a program that uses the 'other text files' or 'other binary files'
+% search formats, you'll want to add their variables here as well.
+T4HTINPUTS   = .;$TEXMF/tex4ht//
+
+% Architecture independent executables
+TEXMFSCRIPTS = $TEXMF/scripts//
+
+%% The mktex* scripts rely on KPSE_DOT. Do not set it in the environment.
+% KPSE_DOT = .
+
+% This definition isn't used from this .cnf file itself (that would be
+% paradoxical), but the compile-time default in paths.h is built from it.
+% The SELFAUTO* variables are set automatically from the location of
+% argv[0], in kpse_set_progname.  
+% 
+% The TETEXDIR stuff isn't likely to relevant unless you're using teTeX,
+% but it doesn't hurt.
+%
+% For security reasons, it is better not to have . part of the path.
+% 
+TEXMFCNF = {$SELFAUTOLOC,$SELFAUTODIR,$SELFAUTOPARENT}{,{/share,}/texmf{-local,}/web2c};$TETEXDIR;/usr/share/texmf/web2c;/usr/share/texmf/web2c
+

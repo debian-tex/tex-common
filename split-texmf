@@ -1,0 +1,71 @@
+#!/bin/bash -e
+
+# for creating the patch, we need files with extenstion .orig:
+ext=".cnf"
+
+if [ "$1" = "--create-patch" ]; then 
+  ext=".cnf.orig"; 
+else
+  # make backup copies
+  for file in $destdir/*.cnf; do 
+    if [ -f $file ]; then mv $file $file.bak; fi
+  done
+fi
+
+source=texk/kpathsea/texmf.cnf
+destdir=debian/texmf.d
+
+test -d $destdir || mkdir $destdir
+
+
+# main helper function
+selectpart(){
+  sed -n -e "$startpattern,$endpattern p" $source | sed -e "$endpattern d"
+  startpattern="$endpattern"
+}
+
+startpattern=0
+
+# 05TeXMF.cnf
+endpattern="/^%%%%/"
+selectpart  > $destdir/05TeXMF$ext
+
+# 15Plain.cnf
+endpattern="/^% LaTeX/"
+selectpart > $destdir/15Plain$ext
+
+# 45TeXinputs.cnf
+endpattern="/^% Device-independent font metric files./"
+selectpart > $destdir/45TeXinputs$ext
+
+# 55Fonts.cnf
+endpattern="/^% BibTeX bibliographies and style files./"
+selectpart > $destdir/55Fonts$ext
+
+# 65BibTeX.cnf
+endpattern="/^% PostScript headers and prologues/"
+selectpart > $destdir/65BibTeX$ext
+
+# 75DviPS.cnf
+endpattern="/^% Makeindex style (.ist) files./"
+selectpart > $destdir/75DviPS$ext
+
+# 85Misc.cnf
+endpattern="/^# \$progname: kpathsea v. 3.5.3 or later/"
+selectpart > $destdir/85Misc$ext
+
+# 90TeXDoc.cnf
+# Debian-specific
+cat texmf.d/90TeXDoc.cnf > $destdir/90TeXDoc$ext
+
+# 95NonPath.cnf
+endpattern="$"
+selectpart > $destdir/95NonPath$ext
+
+needed_files="05TeXMF 15Plain 45TeXinputs 55Fonts \
+   65BibTeX 75DviPS 85Misc 90TeXDoc 95NonPath"
+
+for file in $needed_files; do 
+  # test whether a file is empty
+  test -n "`cat $destdir/$file$ext`" || exit 1
+done

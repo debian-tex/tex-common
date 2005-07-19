@@ -1,0 +1,2 @@
+%% READ /usr/share/doc/dvipdfmx/README.Debian for details:
+% CMAPINPUTS = .;/usr/share/fonts/cmap/adobe-gb1//;/usr/share/fonts/cmap/adobe-cns1//;/usr/share/fonts/cmap/gs-cjk-resource//

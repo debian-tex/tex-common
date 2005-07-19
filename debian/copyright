@@ -1,0 +1,71 @@
+This package is a collection of files needed to use and/or build TeX
+packages in Debian.  Its contents are either written by the Debian
+maintainers, or taken and adapted from the upstream sources.
+
+It was first created Mon, 13 Jun 2005 17:55:58 +0200.
+
+License:
+
+Unless otherwise indicated (see individual file listing below), it is
+covered by the following license, the GPL:
+
+This package is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or (at
+your option) any later version.
+
+This package is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License,
+version 2, with the Debian GNU/Linux distribution in file
+/usr/share/common-licenses/GPL-2; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+USA
+
+
+Copyright Holders of individual files, sorted by directory:
+
+- toplevel:
+
+  split-texmf: Frank Küster (2005) <frank@debian.org>
+  TODO is probably not copyrightable and contains contributions
+	by all coworkers.
+
+- debian:  
+
+  Currently, all files are Copyright 2005 Frank Küster
+  <frank@debian.org>
+
+- doc:
+
+  Debian-TeX-Policy.sgml  Makefile  version.ent:
+	 Frank Küster (2004) <frank@debian.org>
+
+- dsfp:
+
+  dsf-patchfunc  dsf-patch.mk:
+	 Frank Küster (2004,2005) <frank@debian.org>
+
+- scripts:
+
+  update-fmtutil: Atsuhito Kohda (2002,2003) <kohda@debian.org>
+		  Julian Gilbey (2002) <jdg@debian.org>
+  update-fmtutil.8: Atsuhito Kohda (2002) <kohda@debian.org>
+  update-texmf:   Atsuhito Kohda (2002,2003) <kohda@debian.org>
+	          Frank Küster (2004) <frank@debian.org>
+  update-texmf.8: Atsuhito Kohda (2002,2003) <kohda@debian.org>
+		  Hilmar Preusse (2004) <hille42@web.de>
+  update-updmap:  Atsuhito Kohda (2002,2003) <kohda@debian.org>
+	          Frank Küster (2004) <frank@debian.org>
+  update-updmap.8: Atsuhito Kohda (2002,2003) <kohda@debian.org>
+		  Florent Rougon (2004) <f.rougon@free.fr>
+
+- teTeX-build:  
+  
+  common.functions.in: Frank Küster (2004) <frank@debian.org>
+  common.variables: Frank Küster (2004,2005) <frank@debian.org> (based on a
+                  framework by Davide Salvetti (1999-2002) <salve@debian.org>)
+
