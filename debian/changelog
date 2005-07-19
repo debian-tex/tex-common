@@ -1,3 +1,12 @@
+tex-common (0.3) unstable; urgency=low
+
+  * provide an upgrade path for the configuration items taken over from
+    tetex-base 
+  * Add a versioned conflict on tetex-base - they would remove our
+    00updmap.cfg file.
+
+ -- Frank Küster <frank@debian.org>  Wed,  6 Jul 2005 17:36:30 +0200
+
 tex-common (0.2) unstable; urgency=low
 
   * Install the configuration files needed by teTeX

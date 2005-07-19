@@ -2,14 +2,15 @@
 #!/bin/sh -e
 # 
 # postinst maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id: postinst.in,v 1.2 2005/06/29 19:40:45 frank Exp $
+# $Id: postinst.in,v 1.3 2005/07/07 08:53:12 frank Exp $
 <:=@COPYRIGHT:>//
 
 ## Define static variables we need
 MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
-UCF="ucf --debconf-ok"
-#UCF="ucf -d --debconf-ok --verbose"
+#UCF="ucf --debconf-ok"
+UCF="ucf -d --debconf-ok --verbose"
+FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 
 
 umask 022
@@ -20,9 +21,8 @@ action=$1
 . <:=${CONFMODULE}:>
 db_version 2.0
 
-# external function definitions are currently not needed
-# <:open(FUNCTIONS,'postinst.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
-# <:=@FUNCTIONS:>//
+<:open(FUNCTIONS,'postinst.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
+<:=@FUNCTIONS:>//
 
 # <:open(FUNCTIONS,'common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 # <:=@FUNCTIONS:>//
@@ -31,14 +31,23 @@ db_version 2.0
 # Here starts the real action
 #################################################################
 
-## normal actions
 case $action in
   configure|reconfigure)
+    ## upgrade from 2.0.2 in sarge
+    configured_version=$2
+    # we must keep changes to the option part of 00updmap.cfg, if it is 
+    # installed (from an older tetex-base package)
+    dpkg --compare-versions \
+      $FIRST_VERSION_WITH_UPGRADE_PATH gt "$configured_version" && \
+      updmap_extract
+
 # normal install    
     # handle ucf-managed configuration files
+    set -x
     for file in $UCF_FILES; do
       $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
     done
+    set +x
 
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 

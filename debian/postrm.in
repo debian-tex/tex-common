@@ -2,7 +2,7 @@
 #!/bin/sh -e
 # 
 # postrm maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id: postrm.in,v 1.1 2005/06/29 19:40:45 frank Exp $
+# $Id: postrm.in,v 1.2 2005/07/07 08:53:12 frank Exp $
 <:=@COPYRIGHT:>//
 
 ## variables
@@ -34,7 +34,9 @@ case $action in
     rm -f $VARTEXMF/web2c/* # nukes tetex-base's mktex.cnf
 
     # now remove the directory
-    rmdir --ignore-fail-on-non-empty /var/lib/texmf 
+    # (if we were installed with an old version of tetex-base, the other package
+    # might have deleted it already)
+    test -d /var/lib/texmf && rmdir --ignore-fail-on-non-empty /var/lib/texmf || true
     ;;
   *)
     ;;

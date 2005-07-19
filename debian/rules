@@ -17,8 +17,8 @@ teTeX_buildfiles=debian/common.variables debian/common.functions
 
 # create maintainer scripts etc.
 EPERL_FILES := debian/common.functions debian/postinst debian/postrm
-eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts \
-   debian/common.variables debian/common.functions debian/postrm.functions
+eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.functions \
+   debian/common.variables debian/common.functions debian/postrm.functions 
 
 # Eperl is simply great: thanks, Davide!
 % :: %.in $(eperl_sourcefiles) 
@@ -63,10 +63,11 @@ install: build
 	# Add here commands to install the package into debian/tex-common.
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
 	cp dsfp/* $(INSTDIR)/usr/share/dsfp/
+	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
+	# ucf files
 	cp conf/texmf.d/*cnf $(INSTDIR)/usr/share/tex-common/
-	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d
-	cp conf/updmap.d/00updmap.cfg $(INSTDIR)/etc/texmf/updmap.d/
-	cp -a debian/md5sums/ $(INSTDIR)/usr/share/tex-common/
+	cp conf/updmap.d/00updmap.cfg $(INSTDIR)/usr/share/tex-common/
+	cp -a debian/md5sums/* $(INSTDIR)/usr/share/tex-common/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
 	cp $(teTeX_buildfiles) $(INSTDIR)/usr/share/tex-common/teTeX-build/
