@@ -1,0 +1,19 @@
+#################################################################
+## Function definitions - included from file postrm.functions
+#################################################################
+
+purge_file () {
+  local conffile="$1"
+  for ext in $PURGE_EXTENSIONS; do
+    rm -f "${conffile}${ext}"
+  done
+  rm -f "${conffile}"
+}
+purge_ucf_file () {
+  local conffile="$1"
+  purge_file $conffile
+  if [ -x /usr/bin/ucf ]; then
+    ucf --purge "${conffile}"
+  fi
+}
+
