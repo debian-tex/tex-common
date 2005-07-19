@@ -1,56 +1,161 @@
-.TH UPDATE-TEXMF 8
-.SH NAME
-update-language \- shell script to generate language.dat
-.SH SYNOPSIS
-.B update-language
-.I "[options]"
-.br
-.SH DESCRIPTION
-.BR update-language
-is a shell script to generate 
-.B /var/lib/texmf/tex/generic/config/language.dat
-.
-.PP
-Users or package authors who want to use additional language patterns
-in LaTeX (and other formats that use this file) can put files with extension 
-.B .cnf
-into
-.B /etc/texmf/language.d/
-and invoke this script.  The two digit numeral determines the order in
-which update-language will put the entries into
-.B language.dat.
-Note that only the first entry is treated differently, otherwise the
-order does not matter.
-.PP
-A user who wants to customize 
-.B language.dat
-should create a file, for example, 
-.B 90mypatterns.cnf,
-in 
-.B /etc/texmf/language.d/ 
-and run
-.B update-language.
-Similarly, packages that provide additional hyphenation patterns
-install files into 
-.B /etc/texmf/language.d/ 
-and run
-.B update-language
-in postinst.  
-.SH OPTIONS
-.TP
-.B \-v, --verbose
-Show verbose messages.
-.TP
-.B \-d, --debug
-Show debugging information, and don't delete temporary files. Implies
---verbose. 
-.SH SEE ALSO
-.PP
-Further information can be found in the Debian TeX Policy, 
-.B /usr/share/doc/tex-common/Debian-TeX-Policy.txt.gz
-.PP
-.SH AUTHOR
-This manual page was written by Frank Küster <frank@debian.org>,
-for the Debian GNU/Linux system, but may be used by others under the
-terms of the GNU General Public License, either version 2 or any later
-version. 
+.Dd Dec 2, 2004
+.Os Debian
+.Dt UPDATE-LANGUAGE 8 SMM
+.Sh NAME
+.Nm update-language
+.Nd generate
+.Pa /var/lib/texmf/tex/generic/config/language.dat
+from files in
+.Pa /etc/texmf/language.d/
+.Sh SYNOPSIS
+.Nm
+.Bk
+.Op Ar option ...
+.Ek
+.Sh DESCRIPTION
+This manual page documents
+.Nm ,
+a program that was written for the Debian distribution.
+.Ss Overview
+.Nm
+is used to generate the hyphenation configuration file
+.Pa /var/lib/texmf/tex/generic/config/language.dat
+which determines which hyphenation patterns will be available in the
+LaTeX, pdfLaTeX, and some other formats, from the files with names ending in
+.Ql .cnf
+located in
+.Pa /etc/texmf/language.d/ .
+.Pp
+With the underlying mechanism, system
+administrators can disable languages they want by commenting their
+entries in the appropriate files under
+.Pa /etc/texmf/language.d/ ,
+or add files defining language names for locally installed patterns.
+Such changes will be preserved if the package in question is removed
+(not purged) and then reinstalled.
+.Pp
+The TeX packages provide basic hyphenation pattern configuration files in
+.Pa /etc/texmf/language.d/ ,
+Thanks to
+.Nm ,
+TeX-related packages that provide additional patterns can have their own
+language definitions referenced in
+.Pa /var/lib/texmf/tex/generic/config/language.dat
+without having to edit that file. 
+.Pp
+The packages simply have to ship their pattern files in the appropriate
+TDS locations and a
+.Ql .cnf
+file under
+.Pa /etc/texmf/language.d/
+(e.g.,
+.Pa  10foo.cnf )
+defining the language names for the pattern files.
+.Ss "Mode of operation"
+.Nm
+concatenates all the
+.Ql .cnf
+files under
+.Pa /etc/texmf/language.d/
+provided that:
+.Bl -dash -offset indent -compact
+.It
+they do not contain the following pseudo-comment:
+.Bd -literal -offset indent
+# -_- DebPkgProvidedMaps -_-
+.Ed
+.Pp
+or;
+.It
+they have this pseudo-comment and are listed in a
+.Ql .list
+file under
+.Pa /var/lib/tex-common/language-cnf ,
+meaning that the package shipping the
+.Ql .cnf
+file is installed. The name of the
+.Q1 .list
+file is ignored (but should be the name of the package that installed
+it). The file should contain the names of the 
+.Q1 .cnf
+files in 
+.Pa /etc/texmf/language.d/
+that should be enabled, without the
+.Q1 .cnf
+suffix, e.g. 
+.Bd -literal -offset indent
+10foo
+12bar
+.Ed
+.El
+.Pp
+The first case is for configuration files added by the local system
+administrator. Files that contain the magic pseudo-comment should be
+used by Debian packages. In this case, only the base name should appear
+in the
+.Ql .list
+file: for instance,
+.Ql 10foo
+for
+.Pa /etc/texmf/language.d/10foo.cnf ;
+please refer to the Debian TeX Policy for details.
+.Pp
+The order used to process the
+.Ql .cnf
+files is obtained by running
+.Xr sort 1
+with the
+.Sq C
+locale (for ordinary alphanumeric characters, it corresponds to the
+.Tn ASCII
+order).  The result obtained by concatenating them is stored as the new
+.Pa /var/lib/texmf/tex/generic/config/language.dat
+.Pp
+.Ss "Options"
+.Bl -tag -width ".Fl -version"
+.It Fl -quiet
+don't write anything to the standard output during normal operation
+.It Fl -help
+print a summary of the command-line usage of
+.Nm
+and exit
+.It Fl -version
+output version information and exit
+.El
+.Pp
+Note that the
+.Fl v
+option, which turns on verbose mode, is deprecated.  We are currently in a
+transition phase where quiet mode is still the default (therefore,
+.Fl -quiet
+has no effect), but
+.Nm
+will be verbose by default as soon as enough packages use
+.Fl -quiet
+in their maintainer scripts.
+.Sh FILES
+.Bd -unfilled -offset left -compact
+.Pa /etc/texmf/language.d/*.cnf
+.Pa /var/lib/texmf/tex/generic/config/language.dat
+.Pa /var/lib/tex-common/language-cnf/*.list
+.Ed
+.Sh DIAGNOSTICS
+.Nm
+returns 0 on success, or a strictly positive integer on error.
+.Sh SEE ALSO
+.Ed
+.Sh AUTHORS
+This manual page was written by
+.An -nosplit
+.An Frank Küster Aq frank@debian.org
+based on older texts by
+.An Atsuhito Kohda Aq kohda@debian.org
+and
+.An "Florent Rougon" Aq f.rougon@free.fr
+for the Debian distribution (and may be used by others).
+.\" For Emacs:
+.\" Local Variables:
+.\" fill-column: 72
+.\" sentence-end: "[.?!][]\"')}]*\\($\\| $\\|	\\|  \\)[ 	\n]*"
+.\" sentence-end-double-space: t
+.\" End:
