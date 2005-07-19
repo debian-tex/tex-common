@@ -1,0 +1,72 @@
+#################################################################
+## Function definitions - included from file postinst.functions
+#################################################################
+
+###############################################################################
+# cfgval(variable)
+#   read variable ($1) from config file, first match wins
+###############################################################################
+# from tetex-bin's updmap
+cfgval()
+{
+  cnfFile="$1"
+  opt="$2"
+  cat "$cnfFile" | sed -n 's/^'"$opt"'[	 =][	 =]*//p' | sed q
+}
+
+cleanup()
+{
+  rc=$?
+  [ -n "$tempdir" ] && rm -rf "$tempdir"
+  exit $rc
+}
+
+updmap_extract(){
+  # we extract the settings from an existing 00updmap.cfg that belong to us
+  # to the new version.  If the settings are unchanged from tetex-base's defaults 
+  # (2.0.2), ucf will know the md5sum and make the changes 2.0.2->3.0
+  # 
+  # The file itself is stored, so that tetex-base can also extract its settings.
+  conffile=/etc/texmf/updmap.d/00updmap.cfg
+  dfltfile=/usr/share/tex-common/00updmap.cfg
+  keepfile=/etc/texmf/updmap.d/00updmap.cfg_keep-for-tetex-base
+  options="dvipsPreferOutline pdftexDownloadBase14 dvipdfmDownloadBase14 dvipsDownloadBase35 LW35"
+
+  # is no old version installed?
+  test ! -f "$conffile" && return 0 || true
+  test -f $keepfile || cp $conffile $keepfile
+
+  # get the new defaults
+  for option in $options; do
+    eval dflt_$option=`cfgval $dfltfile $option`
+  done
+
+  # compare with current settings, and create a new file
+  SETTING_CHANGED=false
+  tempdir=`mktemp -d -p $MKTMPDIR`
+  tempfile1=`mktemp -p $tempdir`
+  trap 'cleanup' HUP INT QUIT BUS PIPE TERM
+  cp -p $dfltfile $tempfile1
+  for option in $options; do
+    eval $option=`cfgval $conffile $option`
+    if eval [ ! "\$$option" = "\$dflt_$option" ]; then
+      SETTING_CHANGED=true
+      tempfile2=`mktemp -p $tempdir`
+      optname=$option
+      eval optvalue=\$$option
+      eval optoldvalue=\$dflt_$option
+      sed -e "s@^[[:space:]]*$optname[[:space:]]*$optoldvalue@$optname $optvalue@" $tempfile1 > $tempfile2
+      mv $tempfile2 $tempfile1
+    fi
+  done
+  if [ "$SETTING_CHANGED" = "true" ]; then
+    mv $tempfile1 $conffile
+  fi
+  # the true is needed, because the last command likely was the failed [ above!
+  true; rm -rf "$tempdir"
+  return 0
+}
+
+#################################################################
+##  End of function definitions from file postinst.functions
+#################################################################
