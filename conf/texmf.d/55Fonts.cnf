@@ -19,7 +19,7 @@ GLYPHFONTS = .;$TEXMF/fonts
 MISCFONTS = .;$TEXMF/fonts/misc//
 
 % font name map files.
-TEXFONTMAPS = .;$TEXMF/fonts/map//;$TEXMF/dvips//
+TEXFONTMAPS = .;$TEXMF/{fonts/map,}/{$progname,pdftex,dvips,}//
 
 % support non"k"-xdvi:
 PKFONTS.XDvi    = .:$TEXMF/%s:$VARTEXFONTS/pk/{%m,modeless}//

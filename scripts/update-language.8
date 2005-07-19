@@ -1,0 +1,56 @@
+.TH UPDATE-TEXMF 8
+.SH NAME
+update-language \- shell script to generate language.dat
+.SH SYNOPSIS
+.B update-language
+.I "[options]"
+.br
+.SH DESCRIPTION
+.BR update-language
+is a shell script to generate 
+.B /var/lib/texmf/tex/generic/config/language.dat
+.
+.PP
+Users or package authors who want to use additional language patterns
+in LaTeX (and other formats that use this file) can put files with extension 
+.B .cnf
+into
+.B /etc/texmf/language.d/
+and invoke this script.  The two digit numeral determines the order in
+which update-language will put the entries into
+.B language.dat.
+Note that only the first entry is treated differently, otherwise the
+order does not matter.
+.PP
+A user who wants to customize 
+.B language.dat
+should create a file, for example, 
+.B 90mypatterns.cnf,
+in 
+.B /etc/texmf/language.d/ 
+and run
+.B update-language.
+Similarly, packages that provide additional hyphenation patterns
+install files into 
+.B /etc/texmf/language.d/ 
+and run
+.B update-language
+in postinst.  
+.SH OPTIONS
+.TP
+.B \-v, --verbose
+Show verbose messages.
+.TP
+.B \-d, --debug
+Show debugging information, and don't delete temporary files. Implies
+--verbose. 
+.SH SEE ALSO
+.PP
+Further information can be found in the Debian TeX Policy, 
+.B /usr/share/doc/tex-common/Debian-TeX-Policy.txt.gz
+.PP
+.SH AUTHOR
+This manual page was written by Frank Küster <frank@debian.org>,
+for the Debian GNU/Linux system, but may be used by others under the
+terms of the GNU General Public License, either version 2 or any later
+version. 

@@ -2,7 +2,7 @@
 #!/bin/sh -e
 # 
 # postinst maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id: postinst.in,v 1.3 2005/07/07 08:53:12 frank Exp $
+# $Id: postinst.in,v 1.4 2005/07/18 15:44:36 frank Exp $
 <:=@COPYRIGHT:>//
 
 ## Define static variables we need
@@ -11,7 +11,8 @@ UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
 #UCF="ucf --debconf-ok"
 UCF="ucf -d --debconf-ok --verbose"
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
-
+OLD_LDAT=/etc/texmf/language.dat
+POSTINST_MOVE_EXT="<:$POSTINST_MOVE_EXT:>"
 
 umask 022
 
@@ -40,6 +41,20 @@ case $action in
     dpkg --compare-versions \
       $FIRST_VERSION_WITH_UPGRADE_PATH gt "$configured_version" && \
       updmap_extract
+
+# is there a file /etc/texmf/language.dat already? Move it out of the way
+    if [ -f $OLD_LDAT ]; then
+      cat > $OLD_LDAT.$POSTINST_MOVE_EXT <<EOF
+This file is no longer used and has therefore been renamed by the postinst 
+script of the tex-common package.
+
+Please use the mechanism described in update-language(8) instead.
+
+EOF
+      cat $OLD_LDAT >> $OLD_LDAT.$POSTINST_MOVE_EXT 
+      rm $OLD_LDAT
+    fi
+
 
 # normal install    
     # handle ucf-managed configuration files

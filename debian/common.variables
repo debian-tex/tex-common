@@ -1,6 +1,6 @@
 <:# Copyright (C) 1999, 2000, 01, 02 by Davide Giovanni Maria Salvetti <salve@debian.org>.:>//
 <:# Copyright (C) 2004, 05 by Frank Küster <frank@debian.org>.:>//
-<:# $Id: common.variables,v 1.3 2005/07/07 08:53:12 frank Exp $:>//
+<:# $Id: common.variables,v 1.4 2005/07/18 15:44:36 frank Exp $:>//
 <:# this list is from dpkg-1.10.9/include/dpkg.h.in:  :>//
 <:$DPKG_EXTENSIONS="'~' '%' .bak .dpkg-tmp .dpkg-new .dpkg-old .dpkg-dist":>//
 <:$PREINST_MOVE_EXT="preinst-bak":>//
@@ -12,6 +12,7 @@
 <:$doc="/usr/share/doc/$PACKAGE/":>//
 <:$VARTEXMF="/var/lib/texmf":>//
 <:$MKTMPDIR="/tmp":>//
+<:$LANGUAGE_DIR="$etc/language.d":>//
 <:$LDAT_PATTERNS="inhyph.tex bahyph.tex cahyph.tex hrhyph.tex czhyph.tex \\
     dehypht.tex dehyphn.tex dkhyphen.tex nehyph.tex fi8hyph.tex frhyph.tex \\
     gahyph.tex grhyph.tex icehyph.tex ithyph.tex lahyph.tex huhyph.tex nohyph.tex \\

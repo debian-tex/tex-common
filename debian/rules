@@ -5,11 +5,9 @@
 
 INSTDIR=$(CURDIR)/debian/tex-common
 
-sbin_scripts=update-fmtutil update-texmf
-bin_scripts=update-updmap
+sbin_scripts=update-fmtutil update-texmf update-fontlang
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))
 sbin_manpages=$(foreach script,$(sbin_scripts), scripts/$(script).8)
-bin_installfiles=$(foreach script,$(bin_scripts), scripts/$(script))
 bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1)
 
 # for the teTeX packages
@@ -64,12 +62,14 @@ install: build
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
 	cp dsfp/* $(INSTDIR)/usr/share/dsfp/
 	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
+	cp conf/language.d/00tex.cnf $(INSTDIR)/etc/texmf/language.d/
 	# ucf files
 	cp conf/texmf.d/*cnf $(INSTDIR)/usr/share/tex-common/
 	cp conf/updmap.d/00updmap.cfg $(INSTDIR)/usr/share/tex-common/
 	cp -a debian/md5sums/* $(INSTDIR)/usr/share/tex-common/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
-	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
+	ln -s /usr/sbin/update-fontlang $(INSTDIR)/usr/sbin/update-language
+	ln -s /usr/sbin/update-fontlang $(INSTDIR)/usr/bin/update-updmap
 	cp $(teTeX_buildfiles) $(INSTDIR)/usr/share/tex-common/teTeX-build/
 
 

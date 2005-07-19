@@ -70,6 +70,12 @@ Copyright Holders of individual files, sorted by directory:
 		  Florent Rougon (2005) <f.rougon@free.fr>
   update-updmap.1: Atsuhito Kohda (2002,2003) <kohda@debian.org>
 		  Florent Rougon (2004,2005) <f.rougon@free.fr>
+  update-fontlang: Norbert Preinig (2005) <preining@logic.at> based 
+ 		  on update-updmap
+  update-language.8: Frank Küster (2005) <frank@debian.org>
+  update-fontlang.8: Frank Küster (2005) <frank@debian.org>
+		  Atsuhito Kohda (2002,2003) <kohda@debian.org>
+		  Florent Rougon (2004,2005) <f.rougon@free.fr>
 
 - conf/texmf.d/
 

@@ -3,7 +3,8 @@ usr/bin
 usr/share/tex-common/teTeX-build
 usr/share/dsfp
 etc/texmf/fmt.d
+etc/texmf/language.d
 etc/texmf/texmf.d
 etc/texmf/updmap.d
 var/lib/texmf/web2c
-
+var/lib/texmf/tex/generic/config
