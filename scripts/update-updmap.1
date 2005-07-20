@@ -1,10 +1,10 @@
-.Dd Dec 2, 2004
+.Dd Jul 19, 2005
 .Os Debian
 .Dt UPDATE-UPDMAP 8 SMM
 .Sh NAME
 .Nm update-updmap
 .Nd generate
-.Pa /var/lib/texmf/web2c/updmap.cfg
+.Pa updmap.cfg
 from files in
 .Pa /etc/texmf/updmap.d/
 .Sh SYNOPSIS
@@ -20,31 +20,45 @@ a program that was written for the Debian distribution.
 .Nm
 is used to generate
 .Xr updmap 1 Ns 's
-configuration file,
+and 
+.Xr updmap-sys 8 Ns 's
+site-wide configuration file,
 .Pa /var/lib/texmf/web2c/updmap.cfg ,
+or the per-user configuration file,
+.Pa TEXMFCONFIG/web2c/updmap.cfg ,
 from the files with names ending in
 .Ql .cfg
 located in
 .Pa /etc/texmf/updmap.d/ .
 .Pp
-The tetex-bin package provides
-.Pa 00updmap.cfg
-in
+The base TeX packages (tetex-bin or texlive-) provide files in
 .Pa /etc/texmf/updmap.d/ ,
-which defines the base contents of the to\-be\-generated
+which define the base contents of the to\-be\-generated
 .Pa /var/lib/texmf/web2c/updmap.cfg
-(general settings and base fonts).  Thanks to
-.Nm ,
-TeX-related font packages can have their own font map files referenced in
-.Pa /var/lib/texmf/web2c/updmap.cfg
-without having to edit that file.  With the underlying mechanism, system
+(general settings and base fonts), or the per-user file 
+.Pa TEXMFCONFIG/web2c/updmap.cfg .
+With the underlying mechanism, system
 administrators can disable the map files they want by commenting their
 entries in the appropriate files under
 .Pa /etc/texmf/updmap.d/ .
 Such changes will be preserved if the package in question is removed
 (not purged) and then reinstalled.
 .Pp
-The packages simply have to ship their map files (e.g.,
+Users without local administration rights can use 
+.Nm
+with the options 
+.Fa Fl -conf-dir
+and 
+.Fa Fl -output-file
+to merge their local configuration and an updated site-wide
+configuration. 
+
+.Pp
+Thanks to
+.Nm ,
+TeX-related font packages can have their own font map files referenced in
+.Pa /var/lib/texmf/web2c/updmap.cfg
+without having to edit that file.  The packages simply have to ship their map files (e.g.,
 .Pa foo.map )
 in
 .Pa /etc/texmf/map/dvips/
