@@ -18,6 +18,16 @@ action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade
 
 ## do the things we have to do always
 case $action in
+  remove)
+    # remove /var/lib/texmf/web2c/*
+    rm -f $VARTEXMF/web2c/* 
+    rm -f $VARTEXMF/tex/generic/config/language.dat
+
+    # now remove the directory
+    # (if we were installed with an old version of tetex-base, the other package
+    # might have deleted it already)
+    test -d /var/lib/texmf && rmdir --ignore-fail-on-non-empty /var/lib/texmf || true
+    ;;
   purge)
     # purge texmf_parts
     for file in $UCF_FILES; do
@@ -28,15 +38,6 @@ case $action in
 
     # remove /var/lib/texmf/web2c/*
     rm -f $VARTEXMF/web2c/* # nukes tetex-base's mktex.cnf
-    ;;
-  remove)
-    # remove /var/lib/texmf/web2c/*
-    rm -f $VARTEXMF/web2c/* # nukes tetex-base's mktex.cnf
-
-    # now remove the directory
-    # (if we were installed with an old version of tetex-base, the other package
-    # might have deleted it already)
-    test -d /var/lib/texmf && rmdir --ignore-fail-on-non-empty /var/lib/texmf || true
     ;;
   *)
     ;;

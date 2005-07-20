@@ -8,11 +8,11 @@
 ## Define static variables we need
 MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
-#UCF="ucf --debconf-ok"
-UCF="ucf -d --debconf-ok --verbose"
+UCF="ucf --debconf-ok"
+#UCF="ucf -d --debconf-ok --verbose"
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 OLD_LDAT=/etc/texmf/language.dat
-POSTINST_MOVE_EXT="<:$POSTINST_MOVE_EXT:>"
+POSTINST_MOVE_EXT="<:=$POSTINST_MOVE_EXT:>"
 
 umask 022
 
@@ -58,11 +58,9 @@ EOF
 
 # normal install    
     # handle ucf-managed configuration files
-    set -x
     for file in $UCF_FILES; do
       $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
     done
-    set +x
 
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 

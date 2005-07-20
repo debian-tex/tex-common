@@ -10,7 +10,7 @@ Standards-Version: 3.6.1
 Package: tex-common
 Architecture: all
 Depends: ucf, debconf
-Conflicts: tetex-bin (<< 3.0-5), tetex-base (<< 3.0-4)
+Conflicts: tetex-bin (<= 3.0-4), tetex-base (<= 3.0-3)
 Description: Common infrastructure for using and building TeX in Debian
  This package contains a number of scripts and common configuration
  files that are needed to install a TeX System, either teTeX or
