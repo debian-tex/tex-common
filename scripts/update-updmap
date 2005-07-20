@@ -25,30 +25,30 @@ progname=$(basename "$0")
 if [ "$progname" = "update-language" ] ; then
     CNFDIR=language.d
   # System-wide configuration directory
-  SYSWIDE_CNFDIR=/etc/texmf/$CNFDIR
-  CHECKFILE="$SYSWIDE_CNFDIR/00tex.cnf"
-  EXT="cnf"
-  MEMORY_DIR=/var/lib/tex-common/language-cnf
-  VARD=/var/lib/texmf/tex/generic/config
-  DEFAULT_OUTPUTFILE_BASENAME=language.dat
-  SYSWIDE_DEFAULT_OUTPUTFILE="$VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-  CC="%"		# for COMMENTCHAR
-  HELPTEXT="Generate language.dat, the hyphenation configuration file for LaTeX"
+    SYSWIDE_CNFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CNFDIR/00tex.cnf"
+    EXT="cnf"
+    MEMORY_DIR=/var/lib/tex-common/language-cnf
+    VARD=/var/lib/texmf/tex/generic/config
+    DEFAULT_OUTPUTFILE_BASENAME=language.dat
+    SYSWIDE_DEFAULT_OUTPUTFILE="$VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+    CC="%"		# for COMMENTCHAR
+    HELPTEXT="Generate language.dat, the hyphenation configuration file for LaTeX"
 elif [ "$progname" = "update-updmap" ] ; then
     CNFDIR=updmap.d
   # System-wide configuration directory
-  SYSWIDE_CNFDIR=/etc/texmf/$CNFDIR
-  CHECKFILE="$SYSWIDE_CNFDIR/00updmap.cfg"
-  EXT="cfg"
-  MEMORY_DIR=/var/lib/tex-common/fontmap-cfg
-  SYSWIDE_VARD=/var/lib/texmf/web2c
-  DEFAULT_OUTPUTFILE_BASENAME=updmap.cfg
-  SYSWIDE_DEFAULT_OUTPUTFILE="$VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-  CC="#"
-  HELPTEXT="Generate an updmap configuration file."
+    SYSWIDE_CNFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CNFDIR/00updmap.cfg"
+    EXT="cfg"
+    MEMORY_DIR=/var/lib/tex-common/fontmap-cfg
+    SYSWIDE_VARD=/var/lib/texmf/web2c
+    DEFAULT_OUTPUTFILE_BASENAME=updmap.cfg
+    SYSWIDE_DEFAULT_OUTPUTFILE="$VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+    CC="#"
+    HELPTEXT="Generate an updmap configuration file."
 else
-  echo "Please call me either as update-updmap or update-language!"
-  exit 1
+    echo "Please call me either as update-updmap or update-language!"
+    exit 1
 fi
 
 usage="Usage: $progname [OPTION...]
@@ -75,9 +75,9 @@ tempfile=""
 
 cleanup()
 {
-  rc=$?
-  [ -n "$tempfile" ] && rm -f "$tempfile"
-  exit $rc
+    rc=$?
+    [ -n "$tempfile" ] && rm -f "$tempfile"
+    exit $rc
 }
 
 
@@ -219,8 +219,8 @@ trap 'cleanup' HUP INT QUIT BUS PIPE TERM
 # -v (verbose) is here for backward compatibility only.
 TEMP=$(getopt -o +v --longoptions quiet,help,version -n "$progname" -- "$@")
 TEMP=$(getopt -o +vc:o: --longoptions \
-       conf-dir:,output-file:,quiet,help,version \
-       -n "$progname" -- "$@")
+    conf-dir:,output-file:,quiet,help,version \
+    -n "$progname" -- "$@")
 
 # -v (verbose) is here for backward compatibility only.
 TEMP=$(getopt -o +v --longoptions quiet,help,version -n "$progname" -- "$@")
@@ -290,7 +290,7 @@ your scripts accordingly.\n\n" >&2; quiet=0; shift ;;
         --help) echo "$usage"; exit 0 ;;
         --version) echo "$progname $version"; exit 0 ;;
         --) shift; break ;;
-         *) echo "$progname: unexpected option '$1'; please report a bug." >&2
+	*) echo "$progname: unexpected option '$1'; please report a bug." >&2
             exit 1 ;;
     esac
 done
@@ -357,11 +357,11 @@ fi
 # *                               Actual work                                *
 # ****************************************************************************
 if [ $quiet = 0 ]; then
-  if [ -f "$output_file" ]; then
-    printf "Regenerating '${output_file}'... "
-  else
-      printf "Generating '${output_file}'... "
-  fi
+    if [ -f "$output_file" ]; then
+	printf "Regenerating '${output_file}'... "
+    else
+	printf "Generating '${output_file}'... "
+    fi
 fi
 
 # Creating the temporary file in the output directory gives it automatically
@@ -388,61 +388,28 @@ ${CC}${CC}${CC}\n" >"$tempfile"; then
     exit 1
 fi
 
--    # Does "$file" have the magic comment?
--    if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
--        # Is the package "$file" comes from still installed?
--        if [ -d "$FONTMAP_MEMORY_DIR" ] \
--            && find "$FONTMAP_MEMORY_DIR" -name '*.list' -print0 \
--               | xargs -0r cat \
--               | grep -E "^$(basename "$file" .cfg)\$" >/dev/null; then
--            include_file "$file"
--        else
--            do_not_include_file "$file"
--        fi
--    else
--        include_file "$file"
--    fi
--done
-find "$CNFDIR" -type f -name '*.'${EXT} | LC_COLLATE=C sort | while read file; do
-find "$CNFDIR" -type f -name '*.'${EXT} | LC_COLLATE=C sort | while read file; do
-    # Does "$file" have the magic comment?
-    if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
-        # Is the package "$file" comes from still installed?
-        if [ -d "$MEMORY_DIR" ] \
-            && find "$MEMORY_DIR" -name '*.list' -print0 \
-               | xargs -0r cat \
-               | grep -E "^$(basename "$file" .$ext)\$" >/dev/null; then
-            include_file "$file"
-        else
-            do_not_include_file "$file"
-        fi
-    else
-        include_file "$file"
-    fi
-done
-
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
 
-if [ $syswide_mode = 1 ]; then
-    find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}
-else
-    find "$SYSWIDE_CONFDIR" "$conf_dir" -maxdepth 1 -type f -name '*.'${EXT}
-fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
- 
+    if [ $syswide_mode = 1 ]; then
+	find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}
+    else
+	find "$SYSWIDE_CONFDIR" "$conf_dir" -maxdepth 1 -type f -name '*.'${EXT}
+    fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
+    
 # This is atomic.
-mv "$tempfile" "$output_file"
- 
-if [ $quiet = 0 ]; then
-    if [ "$progname" = "update-language" ] ; then
-	printf "done.\n\n"
-	echo "$progname has updated '$output_file'. If you want to enable"
-	echo "the new patterns, you should run fmtutil (with option --all,"
-	echo "or choose a particular format)"
-    elif [ "$progname" = "update-updmap" ] ; then
-	printf "done.\n\n"
-	echo "$progname has updated '$output_file'. If you want to enable"
-	echo "the map files with this new file, you should run updmap."
-fi
+    mv "$tempfile" "$output_file"
+    
+    if [ $quiet = 0 ]; then
+	if [ "$progname" = "update-language" ] ; then
+	    printf "done.\n\n"
+	    echo "$progname has updated '$output_file'. If you want to enable"
+	    echo "the new patterns, you should run fmtutil (with option --all,"
+	    echo "or choose a particular format)"
+	elif [ "$progname" = "update-updmap" ] ; then
+	    printf "done.\n\n"
+	    echo "$progname has updated '$output_file'. If you want to enable"
+	    echo "the map files with this new file, you should run updmap."
+	fi
 
 
