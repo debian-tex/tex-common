@@ -2,7 +2,7 @@
 #
 # update-fontlang --- Generate updmap.cfg and language.dat from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
-# Copyright (C) 2004 Florent Rougon
+# Copyright (C) 2004,2005 Florent Rougon
 # Copyright (C) 2005 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
@@ -19,36 +19,46 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 # MA 02111-1307, USA.
 
-version="0.5"
+version="0.7"
 progname=$(basename "$0")
 
 if [ "$progname" = "update-language" ] ; then
-  CNFDIR=/etc/texmf/language.d
-  CHECKFILE="$CNFDIR/00tex.cnf"
+    CNFDIR=language.d
+  # System-wide configuration directory
+  SYSWIDE_CNFDIR=/etc/texmf/$CNFDIR
+  CHECKFILE="$SYSWIDE_CNFDIR/00tex.cnf"
   EXT="cnf"
   MEMORY_DIR=/var/lib/tex-common/language-cnf
   VARD=/var/lib/texmf/tex/generic/config
-  CFGFILE_BASENAME=language.dat
-  CFGFILE="$VARD/$CFGFILE_BASENAME"
+  DEFAULT_OUTPUTFILE_BASENAME=language.dat
+  SYSWIDE_DEFAULT_OUTPUTFILE="$VARD/$DEFAULT_OUTPUTFILE_BASENAME"
   CC="%"		# for COMMENTCHAR
+  HELPTEXT="Generate language.dat, the hyphenation configuration file for LaTeX"
 elif [ "$progname" = "update-updmap" ] ; then
-  CNFDIR=/etc/texmf/updmap.d
-  CHECKFILE="$CNFDIR/00updmap.cfg"
+    CNFDIR=updmap.d
+  # System-wide configuration directory
+  SYSWIDE_CNFDIR=/etc/texmf/$CNFDIR
+  CHECKFILE="$SYSWIDE_CNFDIR/00updmap.cfg"
   EXT="cfg"
   MEMORY_DIR=/var/lib/tex-common/fontmap-cfg
-  VARD=/var/lib/texmf/web2c
-  CFGFILE_BASENAME=updmap.cfg
-  CFGFILE="$VARD/$CFGFILE_BASENAME"
+  SYSWIDE_VARD=/var/lib/texmf/web2c
+  DEFAULT_OUTPUTFILE_BASENAME=updmap.cfg
+  SYSWIDE_DEFAULT_OUTPUTFILE="$VARD/$DEFAULT_OUTPUTFILE_BASENAME"
   CC="#"
+  HELPTEXT="Generate an updmap configuration file."
 else
   echo "Please call me either as update-updmap or update-language!"
   exit 1
 fi
 
 usage="Usage: $progname [OPTION...]
-Generate $CFGFILE from the files in $CNFDIR.
+$HELPTEXT
 
 Options:
+      -c, --conf-dir     directory where the user-specific configuration is
+                         looked for in user-specific mode
+      -o, --output-file  file to write the output to 
+                         (default: $SYSWIDE_CFGFILE)
       --quiet            don't write anything to the standard output during
                          normal operation
       --help             display this help message and exit
@@ -57,10 +67,23 @@ Options:
 
 DebPkgProvidedMaps_magic_comment="^# -_- DebPkgProvidedMaps -_-"
 
+# This ensures that if $tempfile is in the *environment*, we won't erase
+# the file it could point to in case the script is killed by a signal before
+# it has had a chance to even create its temporary file.
+tempfile=""
+
+
+cleanup()
+{
+  rc=$?
+  [ -n "$tempfile" ] && rm -f "$tempfile"
+  exit $rc
+}
+
 
 include_file()
 {
-    echo "${CC}${CC}${CC} From file: $file" >>"$tempfile"
+    printf "\n${CC}${CC}${CC} From file: $file\n" >>"$tempfile"
     cat "$file" >>"$tempfile"
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
 }
@@ -68,13 +91,136 @@ include_file()
 do_not_include_file()
 {
     cat >>"$tempfile" <<EOF
+
 ${CC}${CC}
 ${CC}${CC}${CC} $file not included because the
 ${CC}${CC}${CC} corresponding package seems to be removed.
 ${CC}${CC}
+
 EOF
 }
 
+# This function expects a file path on every line of stdin and will write
+# on stdout the same lines with the file basename and dirname swapped.
+# This is useful because we want to sort the files from several directories
+# based on their basenames only (the directory they are stored into mustn't
+# influence the order).
+swap_basename_and_dirname()
+{
+    # Use a slash as the separator between basename and dirname so that
+    # files or directories with e.g. spaces in their names are supported.
+    while read file; do
+        echo "$(basename "$file")$(dirname "$file")"
+    done
+}
+
+# handle_file <file path>
+#
+# <file path> must point to an update-updmap configuration file (such as
+# /etc/texmf/updmap.d/05tetex-extra.cfg). The function decides whether the file
+# should be included in $output_file and outputs the corresponding snippet if
+# yes, or a comment explaining why if no.
+handle_file()
+{
+    file="$1"
+
+    # Does the file have the magic comment?
+    if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
+        # Is the package "$file" comes from still installed?
+        if [ -d "$FONTMAP_MEMORY_DIR" ] \
+            && find "$FONTMAP_MEMORY_DIR" -type f -name '*.list' -print0 \
+            | xargs -0r cat \
+            | grep -E "^$(basename "$file" .cfg)\$" >/dev/null; then
+            include_file "$file"
+        else
+            do_not_include_file "$file"
+        fi
+    else
+        include_file "$file"
+    fi
+}
+
+# merge_files
+#
+# This function expects on the standard input a sorted list of update-updmap
+# configuration files (such as /etc/texmf/updmap.d/05tetex-extra.cfg). Each of
+# them should be listed on a line by itself with the basename being the
+# *first* component of the path, e.g.:
+#
+#   05tetex-extra.cfg/etc/texmf/updmap.d
+#
+# (where 05 should be at the beginning of the line, with no leading spaces, of
+# course). This is so because the sort operation presumably performed by the
+# caller of this function should sort on the basenames of the files,
+# regardless of the directories they come from.
+#
+# Since the list is expected to be sorted, if several files have the same
+# basename, they will be found on consecutive lines.
+#
+# The function calls handle_file() for every file in the list, but only once
+# for a single basename. If several files with the same basename are listed
+# from several directories, only the one in $conf_dir will be passed to
+# handle_file. This allows user-defined .cfg files to override system .cfg
+# files (those in /etc). The order of the files is preserved:
+# handle_file() will receive them as they came on stdin, except that it will
+# be called only once for each basename.
+#
+# handle_file receives the file path in the usual order (directory/basename).
+merge_files()
+{
+    # We will procede the list focusing on the last two elements in order to
+    # handle the case of several files in a row having the same basename.
+    lastfile=""
+    lastdir=""
+    # Overloaded files are files with the same basename that were found in
+    # several directories.
+    overloaded=0
+
+    while read line; do
+        filename="${line%%/*}"
+        dirname="/${line#*/}"
+        if [ -n "$lastfile" ]; then
+            if [ "$lastfile" != "$filename" ]; then
+                # For overloaded files, use the one in $conf_dir.
+                if [ $overloaded = 1 ]; then
+                    overloaded=0
+                    dir="$conf_dir"
+                else
+                    dir="$lastdir"
+                fi
+                handle_file "$dir/$lastfile"
+            else
+                overloaded=1
+            fi
+        fi
+        lastdir="$dirname"
+        lastfile="$filename"
+    done
+
+    # Test whether there was at least one line to read from stdin
+    if [ -n "$lastdir" ]; then
+        # The last file is still in the pipe; get it out.
+        if [ $overloaded = 1 ]; then
+            dir="$conf_dir"
+        else
+            dir="$lastdir"
+        fi
+        handle_file "$dir/$lastfile"
+    fi
+}
+
+
+# The list of signals to trap is taken from teTeX 3's updmap script, but they
+# have been converted to signal names because we can only rely on these on
+# POSIX systems.
+trap 'cleanup' HUP INT QUIT BUS PIPE TERM
+
+
+# -v (verbose) is here for backward compatibility only.
+TEMP=$(getopt -o +v --longoptions quiet,help,version -n "$progname" -- "$@")
+TEMP=$(getopt -o +vc:o: --longoptions \
+       conf-dir:,output-file:,quiet,help,version \
+       -n "$progname" -- "$@")
 
 # -v (verbose) is here for backward compatibility only.
 TEMP=$(getopt -o +v --longoptions quiet,help,version -n "$progname" -- "$@")
@@ -88,11 +234,54 @@ esac
 # Don't remove the quotes around $TEMP!
 eval set -- "$TEMP"
 
-# Defaults
-quiet=1
+# Determine whether we will run in system-wide mode or in user-specific mode
+if [ "$(id -u)" -eq 0 ]; then
+    syswide_mode=1
+else
+    syswide_mode=0
+fi
 
+
+# ****************************************************************************
+# *                                 Defaults                                 *
+# ****************************************************************************
+quiet=1
+if [ $syswide_mode = 1 ]; then
+    output_file="$SYSWIDE_DEFAULT_OUTPUTFILE"
+else
+    # Is there an updmap.d/language.d directory somewhere in the expansion of
+    # $TEXMFCONFIG?
+    conf_dir=""
+    texmfconfig=$(kpsewhich --expand-path '$TEXMFCONFIG')
+    OLDIFS="$IFS"
+    IFS=:
+    for d in "$texmfconfig"; do
+        if [ -d "$d/$CNFDIR" ]; then
+            conf_dir="$d/$CNFDIR"
+            break
+        fi
+    done
+    IFS="$OLDIFS"
+
+    # Does $TEXMFVAR expand to a single directory?
+    texmfvar=$(kpsewhich --expand-path '$TEXMFVAR')
+    if ! echo "$texmfvar" | grep -e ':'; then
+        output_file="$texmfvar/web2c/$DEFAULT_OUTPUTFILE_BASENAME"
+    else
+        # We don't know what to do in this case, therefore: do nothing unless
+        # the output file is specified with the correponding option.
+        output_file=""
+    fi
+fi
+
+
+# ****************************************************************************
+# *                             Options handling                             *
+# ****************************************************************************
 while true; do
     case "$1" in
+        -c|--conf-dir) conf_dir="$2"; shift 2 ;;
+        -o|--output-file) output_file="$2"; shift 2 ;;
         --quiet) quiet=1; shift ;;
         -v) printf "\
 ${progname}'s -v option is deprecated. The default mode of operation will
@@ -112,9 +301,35 @@ if [ $# -ne 0 ]; then
     exit 1
 fi
 
-if [ -L "$CFGFILE" ]; then
+# In user-specific mode, $conf_dir is required; let's check that.
+if [ $syswide_mode = 0 ]; then
+    if [ -z "$conf_dir" ]; then
+        printf "$progname: "
+        cat >&2 <<EOF
+unable to determine the configuration directory; you can
+specify it with --conf-dir
+EOF
+        exit 1
+    fi
+
+    # Make sure $conf_dir is an absolute path
+    if echo "$conf_dir" | grep -e '^[^/]'; then
+        conf_dir="${PWD}/${conf_dir}"
+    fi
+fi
+
+if [ -z "$output_file" ]; then
+    printf "$progname: "
+    cat >&2 <<EOF
+unable to determine where to write the output; you can specify
+that with --output-file
+EOF
+    exit 1
+fi
+
+if [ -L "$output_file" ]; then
     if [ $quiet = 0 ]; then
-        echo "$CFGFILE is a symbolic link; $progname won't do anything."
+        echo "$progname: $output_file is a symbolic link; won't do anything"
     fi
     exit 0
 fi
@@ -124,34 +339,71 @@ if ! [ -r "$CHECKFILE" ] ; then
     exit 1
 fi
 
+# Make sure the output directory exists (creating it if not) when running
+# in user-specific mode.
+if [ $syswide_mode = 0 ]; then
+    output_dir=$(dirname "$output_file")
+    if [ ! -d "$output_dir" ]; then
+        [ $quiet = 0 ] && printf "Creating directory '${output_dir}'... "
+        if ! mkdir -p "$output_dir"; then
+            echo "$progname: unable to create directory '$output_dir'" >&2
+            exit 1
+        fi
+        [ $quiet = 0 ] && echo "done."
+    fi
+fi
+
+# ****************************************************************************
+# *                               Actual work                                *
+# ****************************************************************************
 if [ $quiet = 0 ]; then
-  if [ -f "${CFGFILE}" ]; then
-    echo -n "Regenerating ${CFGFILE}... "
+  if [ -f "$output_file" ]; then
+    printf "Regenerating '${output_file}'... "
   else
-    echo -n "Generating ${CFGFILE}... "
+      printf "Generating '${output_file}'... "
   fi
 fi
 
-tempfile=$(mktemp -t "${progname}.XXXXXX") || exit 1
-# This should not be racy, because the file should be created by mktemp with
-# root as the owner (if we are running as root) and 600 as the mode. Depending
-# on local configuration, the owner group might be something else than root,
-# so we call chown to be sure, and then set the appropriate mode, i.e. 644.
-chown root:root "$tempfile"
-chmod 644 "$tempfile"
+# Creating the temporary file in the output directory gives it automatically
+# the default permissions appropriate for that directory, according to the
+# user's umask. When it is complete, we'll be able to rename it atomically to
+# the desired output file, which will therefore have the right permissions.
+tempfile="${output_file}.new"
 
-cat > "$tempfile" <<EOF
-${CC}${CC}${CC} This file is automatically generated by $progname
-${CC}
-${CC} PLEASE DO NOT EDIT THIS FILE DIRECTLY. It is meant to be generated from
-${CC} files in $CNFDIR
-${CC}
-${CC} If you want a smooth upgrade, please edit the files in ${CNFDIR},
-${CC} or create an additional one (with the extension .$EXT),
-${CC} and invoke $progname.
-${CC}${CC}
-EOF
+confdirs="${SYSWIDE_CONFDIR}/"
+[ $syswide_mode = 0 ] && confdirs="${confdirs}\n#    ${conf_dir}/"
 
+if ! printf "\
+${CC}${CC}${CC} This file was automatically generated by ${progname}.
+${CC}
+${CC} Please do not edit it directly. If you want to add or change
+${CC} anything here, please have a look at the files in:
+${CC}
+${CC}    $confdirs
+${CC}
+${CC} and invoke ${progname}.
+${CC}
+${CC}${CC}${CC}\n" >"$tempfile"; then
+    echo "$progname: cannot write to the temporary file '$tempfile'" >&2
+    exit 1
+fi
+
+-    # Does "$file" have the magic comment?
+-    if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
+-        # Is the package "$file" comes from still installed?
+-        if [ -d "$FONTMAP_MEMORY_DIR" ] \
+-            && find "$FONTMAP_MEMORY_DIR" -name '*.list' -print0 \
+-               | xargs -0r cat \
+-               | grep -E "^$(basename "$file" .cfg)\$" >/dev/null; then
+-            include_file "$file"
+-        else
+-            do_not_include_file "$file"
+-        fi
+-    else
+-        include_file "$file"
+-    fi
+-done
+find "$CNFDIR" -type f -name '*.'${EXT} | LC_COLLATE=C sort | while read file; do
 find "$CNFDIR" -type f -name '*.'${EXT} | LC_COLLATE=C sort | while read file; do
     # Does "$file" have the magic comment?
     if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
@@ -169,10 +421,28 @@ find "$CNFDIR" -type f -name '*.'${EXT} | LC_COLLATE=C sort | while read file; d
     fi
 done
 
-mv "$tempfile" "$CFGFILE"
+# From now on, $tempfile must be deleted on exit; therefore, cleanup() should
+# be used.
 
+if [ $syswide_mode = 1 ]; then
+    find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}
+else
+    find "$SYSWIDE_CONFDIR" "$conf_dir" -maxdepth 1 -type f -name '*.'${EXT}
+fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
+ 
+# This is atomic.
+mv "$tempfile" "$output_file"
+ 
 if [ $quiet = 0 ]; then
-    printf "done.\n\n"
-    echo "$progname has updated ${CFGFILE_BASENAME}."
+    if [ "$progname" = "update-language" ] ; then
+	printf "done.\n\n"
+	echo "$progname has updated '$output_file'. If you want to enable"
+	echo "the new patterns, you should run fmtutil (with option --all,"
+	echo "or choose a particular format)"
+    elif [ "$progname" = "update-updmap" ] ; then
+	printf "done.\n\n"
+	echo "$progname has updated '$output_file'. If you want to enable"
+	echo "the map files with this new file, you should run updmap."
 fi
+
 
