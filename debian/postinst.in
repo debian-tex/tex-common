@@ -68,6 +68,7 @@ EOF
     update-texmf
     update-fmtutil
     update-updmap
+    update-language
 
     ;;
   *)
@@ -77,3 +78,6 @@ esac
 
 #DEBHELPER#
 
+# Local Variables:
+# mode: shell-script
+# End:

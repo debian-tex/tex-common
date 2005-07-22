@@ -10,8 +10,10 @@
 <:$ETC="/etc/":>//
 <:$etc="/etc/texmf/":>//
 <:$doc="/usr/share/doc/$PACKAGE/":>//
-<:$VARTEXMF="/var/lib/texmf":>//
+<:$TEXMFSYSVAR="/var/lib/texmf":>//
 <:$MKTMPDIR="/tmp":>//
+<:$FONTMAP_MEMORY_DIR="/var/lib/tex-common/fontmap-cfg":>//
+<:$LANGUAGE_MEMORY_DIR="/var/lib/tex-common/language-cnf":>//
 <:$LANGUAGE_DIR="$etc/language.d":>//
 <:$LDAT_PATTERNS="inhyph.tex bahyph.tex cahyph.tex hrhyph.tex czhyph.tex \\
     dehypht.tex dehyphn.tex dkhyphen.tex nehyph.tex fi8hyph.tex frhyph.tex \\

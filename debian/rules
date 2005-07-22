@@ -65,6 +65,7 @@ install: build
 	cp conf/language.d/00tex.cnf $(INSTDIR)/etc/texmf/language.d/
 	# ucf files
 	cp conf/texmf.d/*cnf $(INSTDIR)/usr/share/tex-common/
+	ln -s /etc/texmf/texmf.cnf $(INSTDIR)/usr/share/texmf/web2c/texmf.cnf
 	cp conf/updmap.d/00updmap.cfg $(INSTDIR)/usr/share/tex-common/
 	cp -a debian/md5sums/* $(INSTDIR)/usr/share/tex-common/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/

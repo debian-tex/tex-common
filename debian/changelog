@@ -1,9 +1,10 @@
-tex-common (0.3.5) unstable; urgency=low
+tex-common (0.3.6) unstable; urgency=low
 
   * Merged update-updmap and update-language into one file
   * fixed location of memory in update-updmap
+  * Install the symlink to texmf.cnf
 
- -- Norbert Preining <preining@logic.at>  Mon, 18 Jul 2005 20:51:00 +0200
+ -- Frank Küster <frank@debian.org>  Thu, 21 Jul 2005 15:55:36 +0200
 
 tex-common (0.3.4) unstable; urgency=low
 
