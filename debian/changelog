@@ -1,20 +1,15 @@
-tex-common (0.3.6) unstable; urgency=low
-
-  * Merged update-updmap and update-language into one file
-  * fixed location of memory in update-updmap
-  * Install the symlink to texmf.cnf
-
- -- Frank Küster <frank@debian.org>  Thu, 21 Jul 2005 15:55:36 +0200
-
-tex-common (0.3.4) unstable; urgency=low
+tex-common (0.4) unstable; urgency=low
 
   * Bug fix: "tex-common: generalize TEXFONTMAPS and ENCFONTS", thanks to
     Norbert Preining and Hans Hagen (Closes: #318872).
   * language.dat is now a generated file in VARTEXMF, and the actual
     conffiles are in /etc/texmf/language.d.  This allows packages to add
     hyphenation patterns - many thanks again to Norbert.
+  * Merged update-updmap and update-language into one file, and
+    fixed location of memory files in update-updmap
+  * Install the symlink to texmf.cnf
 
- -- Frank Küster <frank@debian.org>  Mon, 18 Jul 2005 16:24:17 +0200
+ -- Frank Küster <frank@debian.org>  Mon, 25 Jul 2005 14:22:36 +0200
 
 tex-common (0.3) unstable; urgency=low
 
