@@ -8,7 +8,7 @@
 ## variables
 PURGE_EXTENSIONS="<:=$PURGE_EXTENSIONS:>"
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
-VARTEXMF="<:=$VARTEXMF:>"
+TEXMFSYSVAR="<:=$TEXMFSYSVAR:>"
 
 # give commandline args a name
 action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade, disappear
@@ -20,8 +20,8 @@ action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade
 case $action in
   remove)
     # remove /var/lib/texmf/web2c/*
-    rm -f $VARTEXMF/web2c/* 
-    rm -f $VARTEXMF/tex/generic/config/language.dat
+    rm -f $TEXMFSYSVAR/web2c/* 
+    rm -f $TEXMFSYSVAR/tex/generic/config/language.dat
 
     # now remove the directory
     # (if we were installed with an old version of tetex-base, the other package
@@ -37,7 +37,7 @@ case $action in
     purge_ucf_file  /etc/texmf/texmf.cnf
 
     # remove /var/lib/texmf/web2c/*
-    rm -f $VARTEXMF/web2c/* # nukes tetex-base's mktex.cnf
+    # rm -f $TEXMFSYSVAR/web2c/* # nukes tetex-base's mktex.cnf
     ;;
   *)
     ;;
