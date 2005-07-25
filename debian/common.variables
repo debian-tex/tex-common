@@ -27,17 +27,19 @@
 <:$TEX_COMMON_UCF_FILES="@TEXMF_PARTS_FULLNAME updmap.d/00updmap.cfg":>//
 <:$confstatedir="/var/lib/tetex":>//
 <:$no_config_prefix="admin-wants-no":>//
-<:# get the package version:>//
-<:open(CHANGELOG,"changelog");
+<:# get the package version - must be usable in subdirectories, too:>//)
+<:if(-f "changelog"){open(CHANGELOG,"changelog")} else {open(CHANGELOG, "../changelog")};
 # get the version even if the first line is blank
 while($VERSION=<CHANGELOG>){last if('' ne $VERSION=~s/$PACKAGE \((.*)\).*\n/$1/)}:>//
-<:# compute the corresponding version vor a sarge backport:>//
+<:# compute the corresponding version for a sarge backport:>//
 <:if ( ($rev=$VERSION)=~ s/.*-([[:digit:]]*).*/$1/, $rev == 0)
   # if the debian revision is 0 or 0.x, don't make a backport
   {$SARGEVERSION = ''}
 else {
-  $sarge_rev=$rev-1;
-  ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$sarge_rev.sarge$2/;
+  # currently, we only need to recompile: binary-only-NMU version number
+  # $sarge_rev=$rev-1;
+  # ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$sarge_rev.sarge$2/;
+  ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$rev.0.sarge1/;
 }:>//
 <:$FIRST_BASE_VERSION_WITH_COMMON="3.0-4":>//
 <:$README_sarge=''; $README_sarge='sarge/README.sarge' if -e 'sarge-stamp':>//
