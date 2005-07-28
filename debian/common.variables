@@ -42,7 +42,7 @@ else {
   ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$rev.0.sarge1/;
 }:>//
 <:$FIRST_BASE_VERSION_WITH_COMMON="3.0-4":>//
-<:$README_sarge=''; $README_sarge='sarge/README.sarge' if -e 'sarge-stamp':>//
+<:$README_sarge=''; $README_sarge='debian/sarge/README.sarge' if -e 'sarge-stamp':>//
 <:# upgrading stuff:>//
 <:$SYMLINK_MOVE_EXT="moved-by-preinst":>//
 <:# debconf:>//
