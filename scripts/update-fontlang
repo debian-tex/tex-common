@@ -49,8 +49,21 @@ elif [ "$progname" = "update-updmap" ] ; then
     CC="#"
     PCC="#"            # for printfCOMMENTCHAR
     HELPTEXT="Generate an updmap configuration file."
+elif [ "$progname" = "update-fmtutil" ] ; then
+    CNFDIR=fmt.d
+  # System-wide configuration directory
+    SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
+    EXT="cnf"
+    MEMORY_DIR=/var/lib/tex-common/fmtutil-cnf
+    SYSWIDE_VARD=/var/lib/texmf/web2c
+    DEFAULT_OUTPUTFILE_BASENAME=fmtutil.cnf
+    SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+    CC="#"
+    PCC="#"            # for printfCOMMENTCHAR
+    HELPTEXT="Generate a fmtutil configuration file."
 else
-    echo "Please call me either as update-updmap or update-language!"
+    echo "Please call me either as update-updmap, update-language, or update-fmtutil!"
     exit 1
 fi
 

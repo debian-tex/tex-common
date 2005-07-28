@@ -11,3 +11,4 @@ var/lib/texmf/web2c
 var/lib/texmf/tex/generic/config
 var/lib/tex-common/fontmap-cfg
 var/lib/tex-common/language-cnf
+var/lib/tex-common/fmtutil-cnf
