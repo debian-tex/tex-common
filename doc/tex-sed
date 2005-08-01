@@ -1,0 +1,2 @@
+#!/bin/bash
+sed -e 's@TeX@\\TeX{}@g;s@La\\TeX@\\LaTeX@g;s@Debian-\\TeX{}-policy@Debian-TeX-policy@g' < $1 > $2

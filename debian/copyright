@@ -48,8 +48,14 @@ Copyright Holders of individual files, sorted by directory:
 
 - doc:
 
-  Debian-TeX-Policy.sgml  Makefile  version.ent:
-	 Frank Küster (2004) <frank@debian.org>
+  Makefile  version.ent  tex-sed:
+	Frank Küster (2004,2005) <frank@debian.org>
+	Hilmar Preusse (2005) <hille42@web.de>
+  Debian-TeX-Policy.sgml:
+	Frank Küster (2004) <frank@debian.org>
+	Richard Lewis (2005) <rtf@jabble.com>
+	Norbert Preining (2005) <preining@logic.at>
+
 
 - dsfp:
 

@@ -10,8 +10,8 @@ policy-txt: Debian-TeX-Policy.sgml  version.ent
 policy-html: Debian-TeX-Policy.sgml  version.ent
 	debiandoc2html Debian-TeX-Policy.sgml
 
-policy-pdf: Debian-TeX-Policy.sgml  version.ent
-	debiandoc2pdf Debian-TeX-Policy.sgml
+policy-pdf: Debian-TeX-Policy.sgml  version.ent tex-sed
+	debiandoc2latexpdf -s ./tex-sed Debian-TeX-Policy.sgml
 
 install:
 	install -d $(DESTDIR)
