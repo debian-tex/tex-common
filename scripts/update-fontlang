@@ -146,7 +146,7 @@ handle_file()
         if [ -d "$MEMORY_DIR" ] \
             && find "$MEMORY_DIR" -type f -name '*.list' -print0 \
             | xargs -0r cat \
-            | grep -E "^$(basename "$file" .cfg)\$" >/dev/null; then
+            | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null; then
             include_file "$file"
         else
             do_not_include_file "$file"
@@ -430,6 +430,11 @@ if [ $quiet = 0 ]; then
 	printf "done.\n\n"
 	echo "$progname has updated '$output_file'. If you want to enable"
 	echo "the map files with this new file, you should run updmap."
+    elif [ "$progname" = "update-fmtutil" ] ; then
+	printf "done.\n\n"
+	echo "$progname has updated '$output_file'. If you want to enable"
+	echo "the new formats,  you should run fmtutil (with option --all"
+	echo "or --missing)"
     fi
 fi
 
