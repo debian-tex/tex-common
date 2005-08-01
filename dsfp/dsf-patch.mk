@@ -28,8 +28,8 @@
 # the following can be used to recreate or update the patches. 
 # 
 # First the patches should be applied by running debian/rules edit-*
-# or edit-patches. Then do the edits, then call debian/rules patches
-# or patch-*. Afterwards, clean is a good idea before committing
+# or edit-patches. Then do the edits, then call debian/rules create-patches
+# or create-patch-*. Afterwards, clean is a good idea before committing
 
 # define variables, may be overridden in $(DSF-PATCHLIST)
 stampdir = stampdir
@@ -60,8 +60,7 @@ $(stampdir)/create-$(patch): my-edit-stamp = $(stampdir)/edit-$(patch)-stamp \
 after-create-targets = nothing
 after-unapply-targets = nothing
 
-THISMAKE = $(MAKE) -i -f debian/rules.d/dsf-patch.mk
-DSF_FUNC = debian/rules.d/dsf-patchfunc
+THISMAKE = $(MAKE) -i -f /usr/share/dsfp/dsf-patch.mk
 
 # compute dependency prerequesites
 

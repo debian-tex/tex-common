@@ -11,7 +11,7 @@ sbin_manpages=$(foreach script,$(sbin_scripts), scripts/$(script).8) scripts/upd
 bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1) scripts/update-updmap.1
 
 # for the teTeX packages
-teTeX_buildfiles=debian/common.variables debian/common.functions
+teTeX_buildfiles=debian/common.variables debian/common.functions.in
 
 # create maintainer scripts etc.
 EPERL_FILES := debian/common.functions debian/postinst debian/postrm
