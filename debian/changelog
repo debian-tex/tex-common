@@ -1,12 +1,14 @@
-tex-common (0.4.1) unstable; urgency=low
+tex-common (0.4.2) unstable; urgency=low
 
   * Merge update-fmtutil into update-fontlang  (closes: #319651)
   * Fix installation of manpages
   * add bibtex/csf to texmf variable BSTINPUTS in 65BibTeX.cnf  (closes: #319650)
   * Many thanks to Norbert Preining <preining@logic.at> for providing
     patches for these changes.
+  * Increase trie_size in 95NonPath.cnf to 27000, to allow TeX-Live build
+    its formats with all languages installed
 
- -- Frank Küster <frank@debian.org>  Thu, 28 Jul 2005 18:26:13 +0200
+ -- Frank Küster <frank@debian.org>  Thu, 28 Jul 2005 18:52:03 +0200
 
 tex-common (0.4) unstable; urgency=low
 
