@@ -1,7 +1,0 @@
-% BibTeX bibliographies and style files.
-BIBINPUTS = .;$TEXMF/bibtex/bib//
-BSTINPUTS = .;$TEXMF/bibtex/bst//
-
-% MFT style files.
-MFTINPUTS = .;$TEXMF/mft//
-
