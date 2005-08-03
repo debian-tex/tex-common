@@ -22,7 +22,7 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 2004-2005 Frank Küster, Richard Lewis
+	  Copyright &copy; 2004-2005 Frank Küster, Richard Lewis, Norbert Preining
 	</copyrightsummary>
 	<p>
 	  This manual is free software; you may redistribute it and/or
@@ -65,7 +65,7 @@
       </p>
       <p>
 	The latest copy of this document can be found in the
-	<tt>Debian-TeX-policy</tt> files in the <package>tetex-bin</package>
+	<tt>Debian-TeX-policy</tt> files in the <package>tex-common</package>
 	package. 
     </chapt>
     <chapt>
@@ -128,7 +128,7 @@
 	<item>
 
 	  <p>The configuration information from files provided by
-	  differen TeX-related packages must be merged and made
+	  different TeX-related packages must be merged and made
 	  available in appropriate form to the various programs.  This
 	  is usually done by scripts that write files into the
 	  <var>TEXMFSYSVAR</var> tree.
@@ -138,8 +138,7 @@
 	  Currently, the configuration update programs provided by
 	  <package>tex-common</package> are:
 	  <file>update-texmf</file>, <file>update-fmtutil</file>,
-	  <file>update-language</file>, <file>update-updmap</file>, 
-	  and <file>updmap</file>.
+	  <file>update-language</file>, <file>update-updmap</file>.
 	  </p>
 
 	</item>
@@ -295,6 +294,31 @@
 	</p>
       </sect>
 
+      <sect id="documentation">
+	<heading>Documentation</heading>
+
+	<p>
+	Packages should make documentation available to
+	<prgn>texdoc</prgn>.  This can be done be either installing
+	the files below <file>/usr/share/doc/texmf</file>, or by
+	providing symlinks from subdirectories of that location to the
+	actual documentation files.
+	</p>
+
+	<p>
+	The entry points for documentation should have names that
+	indicate what they document.  Names like
+	<file>manual.pdf</file> or <file>index.html</file> should be
+	avoided, even if the directory name is unmistakable <footnote>
+	This allows users to say <tt>texdoc
+	<var>packagename</var></tt> directly.  Otherwise they will
+	first have to find the right command line (e.g. <tt>texdoc
+	<var>packagename</var>/user.dvi</tt>) using <tt>texdoc -s
+	<var>keyword</var></tt> </footnote>.
+	</p>
+
+      </sect>
+
     </chapt> 
     <chapt>
       <heading>Configuration</heading>
@@ -359,8 +383,8 @@
 	<sect1>
 	  <heading>Font configuration</heading>
 	  <p>
-	  A package that provides additional fonts for TeX should put
-	  the necessary <tt>map</tt> files below
+	  A package that provides additional Postscript Type1 fonts for
+	  TeX should put the necessary <tt>map</tt> files below
 	  <file>/etc/texmf/map/</file> (which must be symlinked from
 	  <file><var>TEXMFMAIN</var>/fonts/map</file> by the Basic TeX
 	  packages), and have them registered by putting a
@@ -369,7 +393,8 @@
 	  <tt>update-updmap --quiet</tt>.  The file contents will then
 	  be incorporated into
 	  <file>/var/lib/texmf/web2c/updmap.cfg</file>, the effective
-	  configuration file for <prgn>updmap</prgn>.
+	  configuration file for <prgn>updmap</prgn>. <prgn>updmap</prgn>
+	  has to be called afterwards.
 	  </p>
 	  <p>
 	  If a package is removed, but not purged, its <tt>map</tt>

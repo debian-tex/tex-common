@@ -2,7 +2,9 @@
 INDEXSTYLE = .;$TEXMF/makeindex//
 
 % Font encoding files (.enc).
-ENCFONTS = .;$TEXMF/{fonts/enc,}/{$progname,pdftex,dvips,}//
+% ENCFONTS = .;$TEXMF/{fonts/enc,}/{$progname,pdftex,dvips,}//
+% Temporarily add the old path
+ENCFONTS = .;$TEXMF/{fonts/enc,}/{$progname,pdftex,dvips,}//;$TEXMF/dvips//
 
 % CMap files.
 CMAPFONTS = .;$TEXMF/fonts/cmap//

@@ -1,4 +1,4 @@
-tex-common (0.4.2) unstable; urgency=low
+tex-common (0.5) unstable; urgency=low
 
   * Merge update-fmtutil into update-fontlang  (closes: #319651)
   * Fix installation of manpages
@@ -7,8 +7,11 @@ tex-common (0.4.2) unstable; urgency=low
     patches for these changes.
   * Increase trie_size in 95NonPath.cnf to 27000, to allow TeX-Live build
     its formats with all languages installed
+  * Editorial changes to the Policy Draft, thanks to Hilmar Preusse
+  * Add compatibility paths for ENCFONTS and TEXFONTMAP in texmf.d
+    (closes: #321074)
 
- -- Frank Küster <frank@debian.org>  Thu, 28 Jul 2005 18:52:03 +0200
+ -- Frank Küster <frank@debian.org>  Wed,  3 Aug 2005 12:04:42 +0200
 
 tex-common (0.4) unstable; urgency=low
 
