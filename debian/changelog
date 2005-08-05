@@ -1,3 +1,13 @@
+tex-common (0.5.1) unstable; urgency=low
+
+  * Refine the updmap transition code
+  * Increase hyph_size to 10000, to make the inclusion of current
+    hyphenation exception files (e.g. dehyphtex.tex) possible
+  * Also build a pdf version of the Policy draft, and Build-Depend on
+    tetex-bin.
+
+ -- Frank Küster <frank@debian.org>  Thu,  4 Aug 2005 12:02:16 +0200
+
 tex-common (0.5) unstable; urgency=low
 
   * Merge update-fmtutil into update-fontlang  (closes: #319651)

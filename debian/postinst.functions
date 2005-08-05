@@ -22,19 +22,36 @@ cleanup()
 }
 
 updmap_extract(){
-  # we extract the settings from an existing 00updmap.cfg that belong to us
-  # to the new version.  If the settings are unchanged from tetex-base's defaults 
+  # we extract the settings from an existing 00updmap.cfg that belonged to
+  # tetex-base.  If the settings are unchanged from tetex-base's defaults 
   # (2.0.2), ucf will know the md5sum and make the changes 2.0.2->3.0
   # 
   # The file itself is stored, so that tetex-base can also extract its settings.
   conffile=/etc/texmf/updmap.d/00updmap.cfg
   dfltfile=/usr/share/tex-common/00updmap.cfg
-  keepfile=/etc/texmf/updmap.d/00updmap.cfg_keep-for-tetex-base
+  keepfile=/etc/texmf/updmap.d/10tetex-base.cfg.postinst-old
+  tetex_base_file=/etc/texmf/updmap.d/10tetex-base.cfg
+  oldmd5sum="82884281d955998e22141cf67b45209d"
   options="dvipsPreferOutline pdftexDownloadBase14 dvipdfmDownloadBase14 dvipsDownloadBase35 LW35"
 
   # is no old version installed?
   test ! -f "$conffile" && return 0 || true
-  test -f $keepfile || cp $conffile $keepfile
+  
+  # is it changed?
+  if [ ! "$oldmd5sum" = "`md5sum $conffile | cut -d ' ' -f 1`" ]; then
+    # changed, stow away a copy for tetex-base
+    if [ ! -f $keepfile ]; then
+      cat > $keepfile <<EOF
+This file contains the parts of what was called 00updmap.cfg in 
+teTeX-2.0.2 that now are handled by tetex-base in 10tetex-base.cfg
+
+If you have local changes, please transfer them manually
+
+EOF
+      sed -e '0,/^# Map files should be marked by/ d; 1,/^$/ d' \
+	$conffile >> $keepfile
+    fi
+  fi
 
   # get the new defaults
   for option in $options; do
@@ -61,10 +78,11 @@ updmap_extract(){
   done
   if [ "$SETTING_CHANGED" = "true" ]; then
     mv $tempfile1 $conffile
+    # this mv command will give a "conffile changed by you or a script" message next time
+    # we change it - but that is exactly what has happened: The user has changed options, 
+    # and the script has just transferred them to a new file.
   fi
-  # the true is needed, because the last command likely was the failed [ above!
-  true; rm -rf "$tempdir"
-  return 0
+  rm -rf "$tempdir"
 }
 
 #################################################################
