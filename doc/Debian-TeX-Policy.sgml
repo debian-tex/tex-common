@@ -70,7 +70,7 @@
     </chapt>
     <chapt>
       <heading>Terms and Definitions</heading>
-      <p></p>
+      <p>The following terms are used in this document:</p>
       <p>
       <taglist>
         <tag>TeX-related package</tag>
@@ -257,7 +257,7 @@
 	already installed in a <var>TEXMF</var> tree, unless both
 	files are in subdirectories where they will only be found by
 	different applications, as determined by the
-	<tt>--progname</tt> switch to kpsewhich.
+	<tt>--progname</tt> or <tt>--format</tt> switches to kpsewhich.
 	</p>
 
 	<p>
@@ -270,7 +270,9 @@
 	change the output file.  A change of the output file may be
 	acceptable if an obviously buggy behavior is corrected,
 	<strong>and</strong> if it had previously not been possible to
-	easily fix this behavior in user's documents.
+	easily fix this behavior in user's documents (or if the
+	updated package and a possible fix in the document combined
+	lead to a correct document).
 	</p>
 
 	<p>
