@@ -1,6 +1,6 @@
 <:# Copyright (C) 1999, 2000, 01, 02 by Davide Giovanni Maria Salvetti <salve@debian.org>.:>//
 <:# Copyright (C) 2004, 05 by Frank Küster <frank@debian.org>.:>//
-<:# $Id: common.variables,v 1.4 2005/07/18 15:44:36 frank Exp $:>//
+<:# $Id$:>//
 <:# this list is from dpkg-1.10.9/include/dpkg.h.in:  :>//
 <:$DPKG_EXTENSIONS="'~' '%' .bak .dpkg-tmp .dpkg-new .dpkg-old .dpkg-dist":>//
 <:$PREINST_MOVE_EXT="preinst-bak":>//
@@ -27,6 +27,7 @@
 <:$TEX_COMMON_UCF_FILES="@TEXMF_PARTS_FULLNAME updmap.d/00updmap.cfg":>//
 <:$confstatedir="/var/lib/tetex":>//
 <:$no_config_prefix="admin-wants-no":>//
+<:$LSRS="/var/lib/texmf/ls-R /var/lib/texmf/ls-R-TEXMFMAIN /var/lib/texmf/ls-R-LOCAL /var/cache/fonts/ls-R":>//
 <:# get the package version - must be usable in subdirectories, too:>//)
 <:if(-f "changelog"){open(CHANGELOG,"changelog")} else {open(CHANGELOG, "../changelog")};
 # get the version even if the first line is blank
