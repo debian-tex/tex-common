@@ -1,4 +1,4 @@
-tex-common (0.5.1) UNRELEASED; urgency=low
+tex-common (0.6) unstable; urgency=low
 
   * Refine the updmap transition code
   * Increase hyph_size to 10000, to make the inclusion of current
@@ -7,7 +7,7 @@ tex-common (0.5.1) UNRELEASED; urgency=low
     tetex-bin.
   * Move LSRS variable to common.variables
 
- -- Frank Küster <frank@debian.org>  Tue, 16 Aug 2005 11:59:01 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 17 Aug 2005 11:04:33 +0200
 
 tex-common (0.5) unstable; urgency=low
 
