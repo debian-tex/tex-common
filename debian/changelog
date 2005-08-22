@@ -1,3 +1,10 @@
+tex-common (0.7) UNRELEASED; urgency=low
+
+  * take over installation of /var/cache/fonts/*, /usr/local/share/texmf
+    and the ls-R links from tetex (and texlive).
+
+ -- Norbert Preining <preining@logic.at>  Mon, 22 Aug 2005 15:26:11 +0200
+
 tex-common (0.6) unstable; urgency=low
 
   * Refine the updmap transition code
