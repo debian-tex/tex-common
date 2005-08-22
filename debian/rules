@@ -73,6 +73,17 @@ install: build
 	ln -s update-fontlang $(INSTDIR)/usr/sbin/update-fmtutil
 	ln -s ../sbin/update-fontlang $(INSTDIR)/usr/bin/update-updmap
 
+	# ship /var/cache/fonts with proper permissions
+	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/pk
+	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/tfm
+	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/source
+	
+	# Remove the out-of-date ls-R file from /usr/share/texmf and create a
+	# link to one in /var/lib/texmf that we can update without violating
+	# the FHS.
+	rm -f debian/$package/usr/share/texmf/ls-R
+	ln -s /var/lib/texmf/ls-R-TEXMFMAIN $(INSTDIR)/usr/share/texmf/ls-R
+	
 	cp $(teTeX_buildfiles) $(INSTDIR)/usr/share/tex-common/teTeX-build/
 
 
@@ -92,7 +103,7 @@ binary-arch: build install
 	dh_installman $(sbin_manpages) $(bin_manpages)
 	dh_link
 	dh_compress
-	dh_fixperms
+	dh_fixperms --exclude=var/cache/fonts
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol

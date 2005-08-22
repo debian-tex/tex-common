@@ -2,7 +2,7 @@
 #!/bin/sh -e
 # 
 # postinst maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id: postinst.in,v 1.4 2005/07/18 15:44:36 frank Exp $
+# $Id$
 <:=@COPYRIGHT:>//
 
 ## Define static variables we need
@@ -61,6 +61,18 @@ EOF
     for file in $UCF_FILES; do
       $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
     done
+
+#
+# create /usr/local/share/texmf, unless the filesystem is read-only:
+#
+    TEXMFLOCAL=/usr/local/share/texmf
+    if [ ! -e $TEXMFLOCAL ]; then
+      if mkdir $TEXMFLOCAL 2>/dev/null; then
+        chmod 2775 $TEXMFLOCAL 2>/dev/null || true
+	chown root:staff $TEXMFLOCAL 2>/dev/null || true
+	ln -s /var/lib/texmf/ls-R-LOCAL /$TEXMFLOCAL/ls-R
+      fi
+    fi
 
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 
