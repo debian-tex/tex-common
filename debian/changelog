@@ -2,8 +2,9 @@ tex-common (0.7) UNRELEASED; urgency=low
 
   * take over installation of /var/cache/fonts/*, /usr/local/share/texmf
     and the ls-R links from tetex (and texlive).
+  * increase lambdas main_memory to deal with a lot of languages
 
- -- Norbert Preining <preining@logic.at>  Mon, 22 Aug 2005 15:26:11 +0200
+ -- Norbert Preining <preining@logic.at>  Tue, 23 Aug 2005 15:08:11 +0200
 
 tex-common (0.6) unstable; urgency=low
 
