@@ -95,6 +95,9 @@ extra_mem_bot.context = 4000000
 main_memory.context = 1500000
 main_memory.mpost = 1500000
 
+% Lambda too is a memory hog with all languages installed
+main_memory.lambda = 2200000
+
 % Words of font info for TeX (total size of all TFM files, approximately). 
 font_mem_size = 500000
 
