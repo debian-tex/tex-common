@@ -12,7 +12,7 @@
 if [ "$DEBFULLNAME" ] ; then
     name=$DEBFULLNAME
 else
-    name=`awk -F : "/$LOGNAME/ {print \$5}" /etc/passwd`
+    name=`awk -F : "/$LOGNAME/ {print \\$5}" /etc/passwd`
 fi
 
 if [ "$DEBEMAIL" ] ; then
@@ -48,25 +48,37 @@ tmpdir=`mktemp -d`
 mkdir -p $tmpdir/debian/$packname/usr/share/texmf
 
 mapfiles=""
+fontfiles=""
+afmfiles=""
 for f in `find $tdsdir -type f` ; do
+    # $nn: final location of $f without leading slash
+    # $mapfiles: list of .map files
+    # $fontfiles, $afmfiles: list of font and .afm files *with path*
+    #     relative to TEXMF
     case $f in
       $tdsdir/fonts/map/*)
-      		nn=`echo $f | sed -e "s|$tdsdir/fonts|/etc/texmf|"`
-		mkdir -p `dirname "$tmpdir/debian/$packname/$nn"`
-		cp -p $f `dirname "$tmpdir/debian/$packname/$nn"`
+      		nn=`echo $f | sed -e "s|$tdsdir/fonts|etc/texmf|"`
 		mapfiles="$mapfiles `basename $f`"
 		;;
+      $tdsdir/fonts/type1/*)
+      		nn=`echo $f | sed -e "s|$tdsdir/||"`
+		fontfiles="$fontfiles $nn"
+                nn="usr/share/texmf/$nn"
+		;;
+      $tdsdir/fonts/afm/*)
+      		nn=`echo $f | sed -e "s|$tdsdir/||"`
+		afmfiles="$afmfiles $nn"
+                nn="usr/share/texmf/$nn"
+		;;
       $tdsdir/doc/*)
-      		nn=`echo $f | sed -e "s|$tdsdir/doc|/usr/share/doc/texmf|"`
-		mkdir -p `dirname "$tmpdir/debian/$packname/$nn"`
-		cp -p $f `dirname "$tmpdir/debian/$packname/$nn"`
+      		nn=`echo $f | sed -e "s|$tdsdir/doc|usr/share/doc/texmf|"`
 		;;
       *)
-      		nn=`echo $f | sed -e "s|$tdsdir|/usr/share/texmf|"`
-		mkdir -p `dirname "$tmpdir/debian/$packname/$nn"`
-		cp -p $f `dirname "$tmpdir/debian/$packname/$nn"`
+      		nn=`echo $f | sed -e "s|$tdsdir|usr/share/texmf|"`
 		;;
     esac
+    mkdir -p `dirname "$tmpdir/debian/$packname/$nn"`
+    cp -p $f `dirname "$tmpdir/debian/$packname/$nn"`
 done
 
 # configure map files for Debian
@@ -90,6 +102,21 @@ EOF
     mkdir -p $tmpdir/debian/$packname/var/lib/tex-common/fontmap-cfg
     echo "50$packname" > $tmpdir/debian/$packname/var/lib/tex-common/fontmap-cfg/$packname.list 
 fi
+
+# create links in /usr/X11R6/lib/X11/fonts/Type1 and fonts.scale
+if [ ! "X$fontfiles" = "X" ] ; then
+    mkdir -p $tmpdir/debian/$packname/usr/X11R6/lib/X11/fonts/Type1
+    mkdir -p $tmpdir/debian/$packname/etc/X11/fonts/Type1
+    for f in $fontfiles $afmfiles ; do
+        ln -s ../../../../../share/texmf/$f \
+            $tmpdir/debian/$packname/usr/X11R6/lib/X11/fonts/Type1
+    done
+    mkfontscale $tmpdir/debian/$packname/usr/X11R6/lib/X11/fonts/Type1
+    mv $tmpdir/debian/$packname/usr/X11R6/lib/X11/fonts/Type1/fonts.scale \
+        $tmpdir/debian/$packname/etc/X11/fonts/Type1/$packname.scale
+fi
+
+# create essential debian/* files
 
 cat > $tmpdir/debian/copyright <<EOF
 This package was debianized by $name <$email> 
@@ -118,7 +145,7 @@ Standards-Version: 3.6.2.1
 
 Package: $packname
 Architecture: all
-Depends: tex-common, tetex-base | texlive-basic
+Depends: tex-common, tetex-base | texlive-basic, xutils (>= 4.0.3)
 Description: Font Pack $2
  This package provides the fonts from font pack $2.
 EOF
@@ -127,7 +154,8 @@ cat > $tmpdir/debian/postinst <<EOF
 #!/bin/sh
 test -e /usr/bin/mktexlsr && mktexlsr /usr/share/texmf
 update-updmap --quiet
-updmap-sys
+updmap-sys --quiet
+#DEBHELPER#
 exit 0
 EOF
 
@@ -135,9 +163,12 @@ cat > $tmpdir/debian/postrm <<EOF
 #!/bin/sh
 test -e /usr/bin/mktexlsr && mktexlsr /usr/share/texmf
 if [ ! "X$1" = "Xupgrade" ] ; then
-        update-updmap --quiet
-	updmap-sys
+    update-updmap --quiet
+    echo -n "Running updmap... "
+    updmap-sys --quiet
+    echo "done."
 fi
+#DEBHELPER#
 exit 0
 EOF
 
@@ -145,6 +176,7 @@ echo "Changing to $tmpdir."
 cd $tmpdir
 fakeroot dh_testdir
 fakeroot dh_testroot
+fakeroot dh_installxfonts
 fakeroot dh_installdocs
 fakeroot dh_installchangelogs
 fakeroot dh_compress
