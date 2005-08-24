@@ -74,6 +74,30 @@ EOF
       fi
     fi
 
+#
+# remove left over fmt/efmt/log files in /usr/share/texmf/web2c/
+# move out of the way old config files
+# 
+    if [ -d /usr/share/texmf/web2c ] ; then
+      rm -rf /usr/share/texmf/web2c/*.fmt
+      rm -rf /usr/share/texmf/web2c/*.efmt
+      rm -rf /usr/share/texmf/web2c/*.base
+      rm -rf /usr/share/texmf/web2c/*.log
+      for cfgfile in fmtutil.cnf updmap.cfg ; do
+        $oldname = /usr/share/texmf/web2c/$cfgfile
+	$newname = /usr/share/texmf/web2c/$cfgfile.pre-upgrade
+        if [ -r $oldname ] ; then
+	  cat - > $newname <<EOF
+# This file conflicts with the new configuration location.
+# Please merge your changes to the correct location.
+
+EOF
+	  cat $oldname >> $newname
+	  rm $oldname
+	fi
+      done
+    fi
+
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 
 # a prior version

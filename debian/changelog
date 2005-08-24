@@ -1,10 +1,12 @@
 tex-common (0.7) UNRELEASED; urgency=low
 
   * take over installation of /var/cache/fonts/*, /usr/local/share/texmf
-    and the ls-R links from tetex (and texlive).
-  * increase lambdas main_memory to deal with a lot of languages
+    and the ls-R links from tetex (and texlive). [preining]
+  * increase lambdas main_memory to deal with a lot of languages [preining]
+  * move old config files in /usr/share/texmf/web2c out of the way [preining]
+  * remove old formats in /usr/share/texmf/web2c [preining]
 
- -- Norbert Preining <preining@logic.at>  Tue, 23 Aug 2005 15:08:11 +0200
+ -- Norbert Preining <preining@logic.at>  Wed, 24 Aug 2005 13:35:40 +0200
 
 tex-common (0.6) unstable; urgency=low
 
