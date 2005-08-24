@@ -84,8 +84,8 @@ EOF
       rm -rf /usr/share/texmf/web2c/*.base
       rm -rf /usr/share/texmf/web2c/*.log
       for cfgfile in fmtutil.cnf updmap.cfg ; do
-        $oldname = /usr/share/texmf/web2c/$cfgfile
-	$newname = /usr/share/texmf/web2c/$cfgfile.pre-upgrade
+        oldname=/usr/share/texmf/web2c/$cfgfile
+	newname=/usr/share/texmf/web2c/$cfgfile.pre-upgrade
         if [ -r $oldname ] ; then
 	  cat - > $newname <<EOF
 # This file conflicts with the new configuration location.

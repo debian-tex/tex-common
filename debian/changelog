@@ -1,4 +1,4 @@
-tex-common (0.7) UNRELEASED; urgency=low
+tex-common (0.7) unstable; urgency=low
 
   * take over installation of /var/cache/fonts/*, /usr/local/share/texmf
     and the ls-R links from tetex (and texlive). [preining]
@@ -6,7 +6,7 @@ tex-common (0.7) UNRELEASED; urgency=low
   * move old config files in /usr/share/texmf/web2c out of the way [preining]
   * remove old formats in /usr/share/texmf/web2c [preining]
 
- -- Norbert Preining <preining@logic.at>  Wed, 24 Aug 2005 13:35:40 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 17:18:34 +0200
 
 tex-common (0.6) unstable; urgency=low
 

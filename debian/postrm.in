@@ -2,7 +2,7 @@
 #!/bin/sh -e
 # 
 # postrm maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id: postrm.in,v 1.2 2005/07/07 08:53:12 frank Exp $
+# $Id$
 <:=@COPYRIGHT:>//
 
 ## variables
@@ -22,6 +22,7 @@ case $action in
     # remove /var/lib/texmf/web2c/*
     rm -f $TEXMFSYSVAR/web2c/* 
     rm -f $TEXMFSYSVAR/tex/generic/config/language.dat
+    rm -f $TEXMFSYSVAR/ls-R-LOCAL
 
     # now remove the directory
     # (if we were installed with an old version of tetex-base, the other package
