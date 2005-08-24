@@ -1,5 +1,5 @@
 # file dsf-patch.mk - keeping patches against single files
-# $Id: dsf-patch.mk,v 1.1.1.1 2005/06/13 17:21:58 frank Exp $
+# $Id$
 #
 # dsf-patch stands for "Debian single file patch system"
 # 
@@ -94,7 +94,7 @@ nothing:
 $(stampdir):
 	-mkdir $(stampdir)
 	# on fast systems, the generated files might end up to be not-older than stampdir. Really?
-	sleep 2
+	sleep 1
 
 # applying a patch
 $(apply-stamps): $(stampdir)/apply-%-stamp: $(patchdir)/% $(apply-prereq)
@@ -107,8 +107,9 @@ $(unapply-nostamps): $(stampdir)/unapply-%: $(patchdir)/% $(stampdir)/apply-%-st
 	rm $(stampdir)/apply-$*-stamp
 
 # edit a patch
-$(stampdir)/setup-edit-patches-stamp: $(stampdir)
+$(stampdir)/setup-edit-patches-stamp:
 	$(MAKE) -f debian/rules clean
+	$(THISMAKE) $(stampdir)
 	touch $@
 
 $(edit-stamps): $(stampdir)/edit-%-stamp: $(stampdir)/setup-edit-patches-stamp $(edit-prereq)
