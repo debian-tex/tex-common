@@ -46,13 +46,18 @@ Such changes will be preserved if the package in question is removed
 .Pp
 Users without local administration rights can use 
 .Nm
-with the options 
-.Fa Fl -conf-dir
-and 
-.Fa Fl -output-file
 to merge their local configuration and an updated site-wide
-configuration. 
-
+configuration (see 
+.Sx User-specific configuration 
+below).  The local configuration files, unless specified otherwise, are
+expected in 
+.Pa $TEXMFCONFIG/updmap.d ,
+(that is
+.Pa ~/.texmf-config/updmap.d ),
+and the default output file is
+.Pa $TEXMFVAR/web2c/updmap.cfg
+(in other words,
+.Pa ~/.texmf-var/web2c/updmap.cfg ).
 .Pp
 Thanks to
 .Nm ,
@@ -117,9 +122,10 @@ file: for instance,
 for
 .Pa /etc/texmf/updmap.d/10foo.cfg ;
 please refer to the Debian TeX Policy for details.
-.Pp
+.Ss "Names for configuration files"
+Filenames should begin with two digits and must have the extension 
+.Ql .cfg .
 The order used to process the
-.Ql .cfg
 files is obtained by running
 .Xr sort 1
 with the
@@ -127,10 +133,115 @@ with the
 locale (for ordinary alphanumeric characters, it corresponds to the
 .Tn ASCII
 order).  The result obtained by concatenating them is stored as the new
-.Pa /var/lib/texmf/web2c/updmap.cfg .
+.Pa updmap.cfg .
+Note that 
+.Xr updmap 1 Ns 
+and
+.Xr updmap-sys 8 Ns
+don't care about the order of entries, the sorting is just for the
+user's convenience.
 .Pp
-.Ss "Options"
+If you want to be able to use
+.Xr updmap 1 Ns 's
+or
+.Xr updmap-sys 8 Ns 's
+option
+.Fl -enable
+and 
+.Fl -setoption ,
+some further 
+.Sy Restrictions
+apply to the filenames used and the way
+entries are distributed among these files.  For
+.Fl -setoption
+to work, the options (like 
+.Ev dvipsPreferOutline )
+must be kept in a file named 
+.Pa 00updmap.cfg ,
+either
+in 
+.Pa /etc/texmf/updmap.d/
+as installed by the 
+.Nm tex-common
+package, or in the 
+.Va conf-dir
+you specified.  If you use 
+.Fl -enable
+.Ar Map some.map
+and there is no mention of 
+.Ar some.map
+in any file in 
+.Pa /etc/texmf/updmap.d/
+(and in 
+.Va conf-dir ,
+if specified), then the Map line will be introduced in a file whose name matches 
+.Pa *local*.cfg
+if it exists, or
+.Pa 99local.cfg
+will be created (in 
+.Va conf-dir
+if specified).  For this to work, you cannot have more than one file
+that matches that name, except that you can use
+.Pa conf-dir/*local.cfg
+to supersede the site-wide file in 
+.Pa /etc/texmf/updmap.d/ .
+.Pp
+In order to enable a Map file that already is listed in your
+configuration files, it must be commented with the string '#! '.  This
+is the sort of lines that
+.Dl updmap --disable some.map
+will produce - see also
+.Xr updmap.cfg 5 Ns .
+If such a line occurs in more than one file,
+.Xr updmap 1 Ns 
+ will fail.  Again the exception is a file in
+.Pa conf-dir
+that shadows entries in a site-wide file.
+.Pp
+Although not strictly mandatory, it is wise to keep corresponding Map
+entries in files with the same name in 
+.Pa conf-dir
+and the site-wide dir.  Otherwise, the results may seem unpredictable.
+.Ss "User-specific configuration"
+If you want a different configuration for
+.Xr updmap 1 Ns
+ than the setup at your site provides, you can place changed copies of
+the configuration files from
+.Pa /etc/texmf/updmap.d/
+in a directory below 
+.Va $TEXMFCONFIG ,
+or create additional files there.  Per default, files are looked for in
+.Pa $TEXMFCONFIG/updmap.d ,
+where
+.Ev $TEXMFCONFIG
+is
+.Pa ~/.texmf-config
+unless the configuration has been changed.  When you call
+.Nm
+as a user,  it will produce a user-specific 
+.Pa updmap.cfg
+file as follows: If files with the same name exist in both directories,
+the version in
+.Pa ~/.texmf-config/updmap.d/
+will be used; files with unique names will be used from either
+directory. 
+.Pp
+If you want to keep your files elsewhere, specify their location with
+options (see 
+.Sx OPTIONS
+below)
+.Sh OPTIONS
 .Bl -tag -width ".Fl -version"
+.It Fl o, -conf-dir Ev conf-dir
+in user-specific mode, use configuration files from 
+.Ev conf-dir
+instead of 
+.Pa $TEXMFCONFIG/updmap.d/
+.It Fl  o, -output-file Ev outputfile
+in user-specific mode, Generate 
+.Ev outputfile
+instead of
+.Pa $TEXMFVAR/web2c/updmap.cfg
 .It Fl -quiet
 don't write anything to the standard output during normal operation
 .It Fl -help
@@ -216,6 +327,8 @@ This manual page was written by
 .An Atsuhito Kohda Aq kohda@debian.org
 and updated by
 .An "Florent Rougon" Aq f.rougon@free.fr
+and 
+.An "Frank Kuester" Aq frank@debian.org
 for the Debian distribution (and may be used by others).
 .\" For Emacs:
 .\" Local Variables:
