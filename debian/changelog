@@ -1,3 +1,10 @@
+tex-common (0.7.1) UNRELEASED; urgency=low
+
+  * Change hyph_size to 8191 - according to DEK it should be a prime
+    number.  [frank]
+
+ -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 20:40:48 +0200
+
 tex-common (0.7) unstable; urgency=low
 
   * take over installation of /var/cache/fonts/*, /usr/local/share/texmf

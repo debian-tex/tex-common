@@ -333,7 +333,7 @@ EOF
     fi
 
     # Make sure $conf_dir is an absolute path
-    if echo "$conf_dir" | grep -e '^[^/]'; then
+    if echo "$conf_dir" | grep -e '^[^/]' >/dev/null; then
         conf_dir="${PWD}/${conf_dir}"
     fi
 fi
