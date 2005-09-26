@@ -4,6 +4,7 @@ tex-common (0.7.1) UNRELEASED; urgency=low
     number.  [frank]
   * Modify postrm.in script to remove TEXMFSYSVAR and /var/cache/fonts
     (thus also removing left over files at purge time) [preining]
+  * Add dependency alternative on debconf-2.0
 
  -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 20:40:48 +0200
 
