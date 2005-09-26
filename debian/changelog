@@ -2,6 +2,8 @@ tex-common (0.7.1) UNRELEASED; urgency=low
 
   * Change hyph_size to 8191 - according to DEK it should be a prime
     number.  [frank]
+  * Modify postrm.in script to remove TEXMFSYSVAR and /var/cache/fonts
+    (thus also removing left over files at purge time) [preining]
 
  -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 20:40:48 +0200
 

@@ -19,15 +19,11 @@ action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade
 ## do the things we have to do always
 case $action in
   remove)
-    # remove /var/lib/texmf/web2c/*
-    rm -f $TEXMFSYSVAR/web2c/* 
-    rm -f $TEXMFSYSVAR/tex/generic/config/language.dat
-    rm -f $TEXMFSYSVAR/ls-R-LOCAL
-
-    # now remove the directory
-    # (if we were installed with an old version of tetex-base, the other package
-    # might have deleted it already)
-    test -d /var/lib/texmf && rmdir --ignore-fail-on-non-empty /var/lib/texmf || true
+    # remove TEXMFSYSVAR: All files and dirs are created either by
+    # us, or by packages depending on us.
+    rm -rf $TEXMFSYSVAR
+    # same with /var/cache/fonts
+    rm -rf /var/cache/fonts
     ;;
   purge)
     # purge texmf_parts
