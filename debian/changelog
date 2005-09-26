@@ -2,11 +2,16 @@ tex-common (0.7.1) UNRELEASED; urgency=low
 
   * Change hyph_size to 8191 - according to DEK it should be a prime
     number.  [frank]
+  * Add a (closes:...) to the last version's changelog entry to make
+    tracking history easier, in fact the bug has been closed manually
+    [frank]. 
+  * fix update-texmf to not go into an endless loop when called with an
+    unknown option [frank]
   * Modify postrm.in script to remove TEXMFSYSVAR and /var/cache/fonts
     (thus also removing left over files at purge time) [preining]
   * Add dependency alternative on debconf-2.0
 
- -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 20:40:48 +0200
+ -- Frank Küster <frank@debian.org>  Mon, 29 Aug 2005 11:26:09 +0200
 
 tex-common (0.7) unstable; urgency=low
 
@@ -14,7 +19,7 @@ tex-common (0.7) unstable; urgency=low
     and the ls-R links from tetex (and texlive). [preining]
   * increase lambdas main_memory to deal with a lot of languages [preining]
   * move old config files in /usr/share/texmf/web2c out of the way [preining]
-  * remove old formats in /usr/share/texmf/web2c [preining]
+  * remove old formats in /usr/share/texmf/web2c  (closes: #323828) [preining]
 
  -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 17:18:34 +0200
 
