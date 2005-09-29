@@ -8,6 +8,7 @@
 ## Define static variables we need
 MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
+TEXMFSYSVAR="<:=$TEXMFSYSVAR:>"
 UCF="ucf --debconf-ok"
 #UCF="ucf -d --debconf-ok --verbose"
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
@@ -106,6 +107,47 @@ EOF
     update-updmap
     update-language
 
+#
+# set permission of ls-R files
+    db_get tex-common/managedlsr || true
+    if [ -n "$RET" ] ; then
+      MANAGEDLSR="$RET"
+      echo "Fixing permissions and group of ($MANAGEDLSR) ls-R as specified by debconf ..."
+
+      db_get tex-common/groupperm || true
+      if [ x"$RET" = x"true" ]; then
+        LSRPERMS=66
+      else
+        LSRPERMS=64
+      fi
+      db_get tex-common/userperm || true
+      if [ x"$RET" = x"true" ]; then
+        LSRPERMS="$LSRPERMS"6
+      else
+        LSRPERMS="$LSRPERMS"4
+      fi
+      db_get tex-common/groupname || true
+      LSRGROUP="$RET"
+      # work through the list, stolen from locales.postinst
+      list=`echo $MANAGEDLSR | sed -e 's/, /,/g'`
+      save_IFS=$IFS
+      IFS=,
+      for lsr in $list; do
+        case $lsr in 
+	  main) LSR=$TEXMFSYSVAR/ls-R-TEXMFMAIN ;;
+	  var)  LSR=$TEXMFSYSVAR/ls-R ;;
+	  local) LSR=$TEXMFSYSVAR/ls-R-LOCAL ;;
+	  cache) LSR=/var/cache/fonts/ls-R ;;
+	  *) echo "This should not happen: Don't know how to set this! $lsr" ;;
+	esac
+        chmod -v $LSRPERMS $LSR 2>/dev/null | fgrep changed || true
+	chgrp -v $LSRGROUP $LSR 2>/dev/null | fgrep changed || true
+      done
+      IFS=$save_IFS
+    else
+      echo "Fixing permissions of ls-R files ..."
+      chmod -v 644 $LSRS 2>/dev/null | fgrep changed || true
+    fi
     ;;
   *)
     ;;

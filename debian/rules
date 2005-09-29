@@ -14,7 +14,7 @@ bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1) scripts/updat
 teTeX_buildfiles=debian/common.variables debian/common.functions.in
 
 # create maintainer scripts etc.
-EPERL_FILES := debian/common.functions debian/postinst debian/postrm
+EPERL_FILES := debian/common.functions debian/postinst debian/postrm debian/config
 eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.functions \
    debian/common.variables debian/common.functions debian/postrm.functions 
 
@@ -95,6 +95,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
+	dh_installdebconf 
 	dh_installchangelogs 
 	dh_installdocs
 	dh_installexamples

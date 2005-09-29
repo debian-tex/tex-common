@@ -9,6 +9,7 @@ tex-common (0.7.1) UNRELEASED; urgency=low
     unknown option [frank]
   * Modify postrm.in script to remove TEXMFSYSVAR and /var/cache/fonts
     (thus also removing left over files at purge time) [preining]
+  * manage ls-R files using debconf [preining] (Closes: #328291)
   * Let the debconf dependency be created by debhelper, thus allowing
     debconf-2.0 as an alternative
 

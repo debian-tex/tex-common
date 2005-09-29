@@ -1,0 +1,76 @@
+#include variables
+#!/bin/sh -e
+# 
+# config maintainer script for the Debian <:=${PACKAGE}:> package.
+# $Id: config.in 114 2005-08-04 15:04:01Z frn $
+<:=@COPYRIGHT:>//
+
+# Give names to the commandline arguments
+action=$1
+installed_version=$2
+
+
+. <:=${CONFMODULE}:>
+db_version 2.0
+
+#
+# move the answers from tetex-bin to tex-common, if there are no answers
+# in the tex-common db
+maybe_move_answer_and_delete() {
+    $ans = $1
+    # did the user already see this question?
+    db_fget tex-common/$ans seen || true
+    if [ "$RET" = false ] ; then
+        # no, so if the user saw the tetex question, move the answer
+	# to the tex-common question and set the seen flag.
+	db_fget tetex-bin/$ans seen || true
+	if [ "$RET" = true ] ; then
+	    db_get tetex-bin/$ans || true
+	    db_set tex-common/$ans "$RET"
+	    db_fset tex-common/$ans seen true
+	    # now unregister the tetex question
+	    db_unregister tetex-bin/$ans || true
+	fi
+    fi
+}
+
+	
+## do the things we have to do for upgraders from old versions
+# it does not harm to do the checks also when $action is reconfigure.
+
+# suggest a user to rename old cnf files (copyright Atsuhito?)
+# (upgrade from woody, keep for etch?)
+if [ -d /etc/texmf/texmf.d ]; then
+    if ls /etc/texmf/texmf.d 2> /dev/null | egrep -vq '(\.cnf|\.dpkg-.*|~)$'; then
+	db_input medium tex-common/cnf_name || true
+	db_go || true
+    fi
+fi
+
+
+## do the things we have to do always
+db_input low tex-common/managedlsr || true
+db_go
+# we also unregister the tetex-bin/lsr-perms
+db_unregister tetex-bin/lsr-perms || true
+
+db_get tex-common/managedlsr && SELECTED_LSR="$RET"
+if [ ! -n "$SELECTED_LSR" ]; then
+    maybe_move_answer_and_delete groupname   
+    maybe_move_answer_and_delete groupperm
+    maybe_move_answer_and_delete userperm
+    db_beginblock
+    db_input low tex-common/groupname || true
+    db_input low tex-common/groupperm || true
+    db_input low tex-common/userperm || true
+    db_endblock
+fi
+
+db_go
+
+
+# Local Variables:
+# mode: shell-script
+# skeleton-pair: t
+# End:
+
