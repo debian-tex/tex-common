@@ -1,0 +1,505 @@
+#
+# tetex-bin po-debconf translation to spanish
+# Copyright (C) 2004 Software in the Public Interest
+# This file is distributed under the same license as the tetex-bin package.
+#
+# Changes:
+# - Initial translation
+#    Carlos Valdivia Yagüe <valyag@dat.etsit.upm.es>, 2003
+# - Revisions
+#    Javier Fernandez-Sanguino Peña <jfs@computer.org>, 2004
+#
+# Notas:
+#
+# - font -> Fuente tipográfica
+# - hyphenation pattern -> reglas de división de palabras
+#
+#  Traductores, si no conoce el formato PO, merece la pena leer la 
+#  documentación de gettext, especialmente las secciones dedicadas a este
+#  formato, por ejemplo ejecutando:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+# Equipo de traducción al español, por favor lean antes de traducir
+# los siguientes documentos:
+#
+# - El proyecto de traducción de Debian al español
+#   http://www.debian.org/intl/spanish/coordinacion
+#   especialmente las notas de traducción en
+#   http://www.debian.org/intl/spanish/notas
+#
+# - La guía de traducción de po's de debconf:
+#   /usr/share/doc/po-debconf/README-trans
+#   o http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tetex-bin 2.0.2-5.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-03 19:46+0200\n"
+"PO-Revision-Date: 2004-09-10 15:40+0200\n"
+"Last-Translator: Javier Fernandez-Sanguino Peña <jfs@computer.org>\n"
+"Language-Team: Debian l10n spanish <debian-l10n-spanish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid "Select the ls-R file which should be managed by debconf"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"There are many files installed in a typical TeX system. To speed up the "
+"search of these files a list of available files is stored in a file called "
+"ls-R. There are four different locations for TeX files on a Debian system:\n"
+" - main: usually /usr/share/texmf, contains only files installed\n"
+"   by debian packages.\n"
+" - local: usually /usr/local/share/texmf, contains local additions\n"
+" - var: usually /var/lib/texmf, contains generated files from the\n"
+"   TeX system like format files.\n"
+" - cache: usually /var/cache/fonts, contains generated fonts.\n"
+"You can select from these four locations those whose ls-R file should be "
+"managed by debconf."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"We suggest selecting cache and local (these are the defaults) and allowing a "
+"selected user group to modify these ls-R files out of the following reasons:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+#, fuzzy
+msgid ""
+"A lot of font files have to be generated before they can be used by xdvi, "
+"dvips etc. These files are stored in /var/cache/fonts, so that they do not "
+"need to be regenerated every time."
+msgstr ""
+"Se deben generar un elevando número de ficheros de fuentes tipográficas "
+"antes de que los programas que teTex utiliza para visualizar e imprimir "
+"(«xdvi», «dvips», etc.). Estos ficheros se almacenan en /var/cache/fonts "
+"para que no se tengan que generar cada vez. Los ficheros ls-R le indican al "
+"sistema qué ficheros están ya almacenados y dónde se encuentran."
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"Some users may have the right to add files to the local texmf tree, so they "
+"should also be allowed to change the ls-R file."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+#, fuzzy
+msgid ""
+"Accepting this option will allow you to easily manage the permissions of "
+"those ls-R files using debconf. Otherwise you will have to manually ensure "
+"that they get useful but safe permissions."
+msgstr ""
+"Si acepta esta opción le permitirá gestionar con sencillez los permisos de "
+"dichos ficheros ls-R usando debconf. Si no, tendrá que asegurarse "
+"manualmente de que tienen los permisos restrictivos pero útiles."
+
+#. Type: string
+#. Description
+#: ../templates:36
+msgid "Which group should own the ls-R files?"
+msgstr "¿A qué grupo deberían pertenecer los ficheros ls-R?"
+
+#. Type: string
+#. Description
+#: ../templates:36
+#, fuzzy
+msgid ""
+"Modification of ls-R files can be restricted to the members of one group "
+"which owns them.  To take advantage of this, add the users to the group of "
+"your choice, and enter that group name here.  The default group, 'users', is "
+"appropriate for most systems."
+msgstr ""
+"Se puede restringir la modificación de los ficheros ls-R a los miembros de "
+"un determinado grupo. Para hacer uso de esta característica, añada los "
+"usuarios desee al grupo que elija, e introduzca su nombre a continuación. En "
+"la mayoría de los sistemas, la opción predeterminada «users» es apropiada."
+
+#. Type: boolean
+#. Description
+#: ../templates:45
+msgid "Allow group members to modify ls-R files?"
+msgstr "¿Permitir a los miembros del grupo modificar los ficheros ls-R?"
+
+#. Type: boolean
+#. Description
+#: ../templates:45
+#, fuzzy
+msgid ""
+"Accepting this option will allow members of the owning group to modify the "
+"ls-R files."
+msgstr ""
+"Si acepta esta opción, los miembros del grupo elegido podrán modificar los "
+"ficheros ls-R. ¡Casi todo el mundo debería aceptar esta opción!"
+
+#. Type: boolean
+#. Description
+#: ../templates:52
+msgid "Allow all users to modify ls-R files?"
+msgstr "¿Permitir a todos los usuarios modificar los ficheros ls-R?"
+
+#. Type: boolean
+#. Description
+#: ../templates:52
+msgid ""
+"Accepting this option will allow all users to modify ls-R files.  This is "
+"generally not a good idea for security reasons; you should instead restrict "
+"such access to members of one group."
+msgstr ""
+"Si acepta esta opción, todos los usuarios podrán modificar los ficheros ls-"
+"R. En general, no es una buena idea por razones de seguridad, y debería "
+"restringir esa posibilidad a los miembros de un solo grupo."
+
+#. Type: note
+#. Description
+#: ../templates:59
+msgid "Change of name of files in /etc/texmf/texmf.d/"
+msgstr "Cambio de nombre de los ficheros en /etc/texmf/texmf.d/"
+
+#. Type: note
+#. Description
+#: ../templates:59
+#, fuzzy
+msgid ""
+"texmf.cnf has previously been generated by update-texmf from all files in /"
+"etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
+"extension '.cnf'"
+msgstr ""
+"update-texmf ha generado texmf.cnf a partir de los ficheros presentes en /"
+"etc/texmf/texmf.d/. Ahora, sin embargo, update-texmf sólo lee ficheros con "
+"extensión «.cnf»."
+
+#. Type: note
+#. Description
+#: ../templates:59
+#, fuzzy
+msgid ""
+"So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
+"cnf' to its name; for example, 22mymacro => 22mymacro.cnf"
+msgstr ""
+"Si tenía algún fichero privado en /etc/texmf/texmf.d/, añádale la extensión "
+"«.cnf» (por ejemplo, 22mymacro pasaría a ser 22mymacro.cnf), después ejecute "
+"update-texmf."
+
+#~ msgid "Use debconf to manage permissions of ls-R files?"
+#~ msgstr "¿Usar debconf para gestionar los permisos de los ficheros ls-R?"
+
+#~ msgid "Use update-fmtutil to automatically generate fmtutil.cnf?"
+#~ msgstr ""
+#~ "¿Desea utilizar «update-fmtutil» para generar de forma automática "
+#~ "«fmtutil.cnf»?"
+
+#~ msgid ""
+#~ "The file fmtutil.cnf is the central configuration file for TeX engines. "
+#~ "Automatic generation is recommended to make the setup work with other TeX-"
+#~ "related packages."
+#~ msgstr ""
+#~ "El fichero fmtutil.cnf es el lugar de configuración central para los "
+#~ "motores TeX. Se recomienda la generación automática para que la "
+#~ "configuración funcione con otros paquetes relacionados con TeX."
+
+#~ msgid ""
+#~ "After accepting this option, you should not edit fmtutil.cnf directly but "
+#~ "instead modify the files in /etc/texmf/fmt.d/ and run update-fmtutil.  "
+#~ "The generated fmtutil.cnf will then be placed under /var/lib/texmf/web2c/."
+#~ msgstr ""
+#~ "No debería editar fmtutil.cnf directamente si acepta esta opción, en "
+#~ "lugar de ésto, modifique los ficheros bajo «/etc/texmf/fmt.d/». El "
+#~ "fichero fmtutil.cnf que se genere se guardará posteriormente en /var/lib/"
+#~ "texmf/web2c."
+
+#~ msgid ""
+#~ "If you need to keep using an existing fmtutil.cnf then you may refuse "
+#~ "this option and maintain /etc/texmf/fmtutil.cnf manually.  However, "
+#~ "installation of some TeX-related packages will fail unless you accept "
+#~ "this option."
+#~ msgstr ""
+#~ "Si desea seguir usando un fmtutil.cnf que ya exista puede no aceptar esta "
+#~ "opción y mantener /etc/texmf/fmtutil.cnf manualmente. Tenga en cuenta que "
+#~ "es posible que no funcione la instalación automática de algunos "
+#~ "componentes de TeX si no acepta esta opción."
+
+#~ msgid "Use update-updmap to automatically generate updmap.cfg?"
+#~ msgstr ""
+#~ "¿Desea utilizar «update-updmap» para generar automáticamente updmap.cfg?"
+
+#~ msgid ""
+#~ "The file updmap.cfg is the central configuration file for the font system "
+#~ "of TeX.  Automatic generation is recommended to make the setup work with "
+#~ "TeX font packages."
+#~ msgstr ""
+#~ "El fichero updmap.cfg es el punto de configuración centrar para las "
+#~ "fuentes tipográficas de TeX del sistema. Se recomienda la generación "
+#~ "automática para que la configuración funcione con los paquetes de fuentes "
+#~ "de TeX."
+
+#~ msgid ""
+#~ "After accepting this option, you should not edit updmap.cfg directly but "
+#~ "instead modify the files in /etc/texmf/updmap.d/ and run update-updmap. "
+#~ "The generated updmap.cfg will be placed under /var/lib/texmf/web2c."
+#~ msgstr ""
+#~ "No debería editar updmap.cfg si acepta esta opción, en lugar de ésto, "
+#~ "modifique los ficheros bajo «/etc/texmf/updmap.d/» y ejecute update-"
+#~ "updmap. El fichero updmap.cfg que se genere se guardará bajo /var/lib/"
+#~ "texmf/web2c."
+
+#~ msgid ""
+#~ "If you need to keep an existing updmap.cfg then you may refuse this "
+#~ "option and maintain /etc/texmf/updmap.cfg manually.  However, "
+#~ "installation of TeX fonts will fail unless you accept this option."
+#~ msgstr ""
+#~ "Si desea mantaner un updmap.cfg ya existe puede rechazar esta opción y "
+#~ "mantener /etc/texmf/updmap.cfg manualmente. Tenga en cuenta que es "
+#~ "posible que no funcione la instalación automática de fuentes tipográficas "
+#~ "de TeX si no acepta esta opción."
+
+#~ msgid "Files in /etc/texmf/texmf.d/ must be renamed."
+#~ msgstr "Se tienen que renombrar los ficheros en /etc/texmf/texmf.d/."
+
+#~ msgid "Remove old (and harmful) file /etc/X11/Xresources/tetex-base?"
+#~ msgstr ""
+#~ "¿Desea borrar el fichero antiguo (y peligroso) /etc/X11/Xresources/tetex-"
+#~ "base?"
+
+#~ msgid ""
+#~ "An old version of tetex-bin installed /etc/X11/Xresources/tetex-base, but "
+#~ "it is now unused and it is even harmful for it to exist.  It is strongly "
+#~ "recommended to let the installation script remove this file right now!"
+#~ msgstr ""
+#~ "Una versión anterior de tetex-bin instaló el fichero /etc/X11/Xresources/"
+#~ "tetex-base, pero actualmente ya no se usa e incluso resulta perjudicial "
+#~ "si existe. Por ello, ¡es muy recomendable que permita que el programa de "
+#~ "instalación lo borre inmediatamente!"
+
+#~ msgid "Remove this file?"
+#~ msgstr "¿Borrar ese fichero?"
+
+#~ msgid "Manage language.dat with debconf?"
+#~ msgstr "¿Gestionar language.dat mediante debconf?"
+
+#~ msgid ""
+#~ "The language.dat file, which determines which hyphenation patterns are "
+#~ "enabled, can be handled by debconf."
+#~ msgstr ""
+#~ "El fichero language.dat, que contiene información sobre las reglas de "
+#~ "divisón de palabras a cargar, puede gestionarse con debconf."
+
+#~ msgid ""
+#~ "If you do not choose this, one pattern set for each supported language "
+#~ "will be enabled (two for german, with old and new orthography).  You can "
+#~ "choose debconf management if you want to exclude some patterns and get "
+#~ "smaller (La)TeX format files.  Manual editing is still possible, and your "
+#~ "changes will be preserved."
+#~ msgstr ""
+#~ "Se activará un conjunto de patrones para cada idioma soportado (dos para "
+#~ "alemán, uno para la antigua ortografía y otro para la nueva) si decide no "
+#~ "hacer esto. Puede elegir la gestión a través de debconf si quiere excluir "
+#~ "algunos patrones y obtener ficheros de formato TeX más pequeños (La). "
+#~ "Podrá seguir editándolos manualmente y se preservarán sus cambios."
+
+#~ msgid "Which hyphenation patterns should be loaded?"
+#~ msgstr "¿Qué rReglas de división de palabras deberían cargarse?"
+
+#~ msgid ""
+#~ "If you want to load extra hyphenation pattern(s) please select them from "
+#~ "the list."
+#~ msgstr ""
+#~ "Si desea cargar reglas adicionales de división de palabras, por favor, "
+#~ "elíjalas de entre la lista."
+
+#~ msgid ""
+#~ "If you want to change hyphenation pattern(s) afterwards, you may do so "
+#~ "with \"dpkg-reconfigure tetex-bin\". Manual editing is still possible, "
+#~ "and your changes will be preserved."
+#~ msgstr ""
+#~ "Si posteriormente decide los patrones de división de palabras, podrá "
+#~ "hacerlo con «dpkg-reconfigure tetex-bin».Podrá seguir editándolos "
+#~ "manualmente y se preservarán sus cambios."
+
+#~ msgid "TeX format generation failed."
+#~ msgstr "Falló la generación de los formatos TeX."
+
+#~ msgid ""
+#~ "The generation of some of the format files needed to run TeX, LaTeX etc. "
+#~ "has failed. You will not be able to run these programs until this is "
+#~ "fixed."
+#~ msgstr ""
+#~ "Se ha producido un falló al generar algunos de los ficheros de formato "
+#~ "necesarios para la ejecución de TeX, LaTeX, etc. No podrá ejecutar esos "
+#~ "programas hasta que solucione este error."
+
+#~ msgid ""
+#~ "The most frequent cause for such a failure is that a new version of tetex-"
+#~ "bin changed configuration files, but you did not accept the maintainers' "
+#~ "version of a file you manually changed."
+#~ msgstr ""
+#~ "Una de las razones más habituales para un fallo de este tipo es que la "
+#~ "nueva versión necesita nuevos ficheros de configuración y vd. no ha "
+#~ "aceptado la versión proporcionada por el desarrollador para un fichero "
+#~ "que ha cambiado manualmente."
+
+#~ msgid ""
+#~ "If you report this as a bug, please include the output of fmtutil, stored "
+#~ "in ${fmtutil_tempfile}"
+#~ msgstr ""
+#~ "Si desea informar de este error, por favor, incluya la salida de fmtutil, "
+#~ "ubicada en ${fmtutil_tempfile}"
+
+#~ msgid "Generation of TeX font information failed."
+#~ msgstr ""
+#~ "Se produjo un fallo en la generación de información de fuentes "
+#~ "tipográficas TeX."
+
+#~ msgid ""
+#~ "The generation of the font map files by the updmap script failed.  "
+#~ "Therefore, TeX, LaTeX etc. will have problems finding the font files they "
+#~ "need."
+#~ msgstr ""
+#~ "Se produjo un al generar los los ficheros de mapa de fuentes tipográficas "
+#~ "realizada por el programa updmap. TeX, LaTeX y otros programas no podrán "
+#~ "encontrar los ficheros de fuentes que necesiten."
+
+#~ msgid ""
+#~ "If you report this as a bug, please include the output of updmap, stored "
+#~ "in ${updmap_tempfile}"
+#~ msgstr ""
+#~ "Si desea reportar ésto como una errata, por favor, incluya la salida de "
+#~ "updmap, ubicada en ${updmap_tempfile}"
+
+#~ msgid ""
+#~ "We will preserve any manual changes you have made or will make. If you do "
+#~ "not select this option, you will have to do everything manually."
+#~ msgstr ""
+#~ "Preservaremos cualquier cambio manual que haya hecho o vaya a hacer. Si "
+#~ "no selecciona esta opción, tendrá que hacer todo manualmente."
+
+#~ msgid ""
+#~ "NOTE: to load too many hyphenation patterns might cause 'TeX capacity "
+#~ "exceeded' errors."
+#~ msgstr ""
+#~ "Nota: la carga de demasiadas reglas puede desbordar la capacidad de TeX y "
+#~ "generar errores."
+
+#~ msgid "users"
+#~ msgstr "users"
+
+#, fuzzy
+#~ msgid ""
+#~ "bahasa, basque, british, croatian, czech, danish, dutch, finnish, french"
+#~ "[=patois], german[=austrian-alte_Rechtschreibung], ngerman[=naustrian-"
+#~ "neue_Rechtschreibung], greek, italian, latin, magyar, norsk[old], norsk"
+#~ "[nohyphb.tex], norsk[nohyphbc.tex], polish, portuges, romanian, russian, "
+#~ "slovak, slovene, spanish, turkish, ukrainian[ukrhyph.tex], ukrainian"
+#~ "[ukrhyph.t2a], ukrainian[ukrhyph.lcy], ukrainian[ukrhyph.ot2]"
+#~ msgstr ""
+#~ "indonesio, vasco, británico, croata, checo, danés, holandés, finlandés, "
+#~ "griego, italiano, latín, húngaro, noruego[antiguo], noruego[nohyphb.tex], "
+#~ "noruego[nohyphbc.tex], polaco, portugués, rumano, ruso, eslovaco, "
+#~ "esloveno, español, turco, ucraniano[ukrhyph.tex], ucraniano[ukrhyph.t2a], "
+#~ "ucraniano[ukrhyph.lcy], ucraniano[ukrhyph.ot2]"
+
+#~ msgid ""
+#~ "The metafont program can store fonts generated by users running xdvi, "
+#~ "dvips, etc. so they need not be re-generated repeatedly.  They are stored "
+#~ "in /var/lib/texmf and /var/cache/fonts, with \"ls-R\" file lists showing "
+#~ "where the font files are stored."
+#~ msgstr ""
+#~ "El programa metafont puede guardar fuentes generadas por los usuarios "
+#~ "mediante xdvi, dvips, etc. no teniendo que regenerarlas continuamente. Se "
+#~ "almacenan en /var/lib/texmf y /var/cache/fonts, con ficheros «ls-R» que "
+#~ "indican dónde se encuentran las fuentes."
+
+#~ msgid ""
+#~ "Note that the configuration file will be handled by debconf if you select "
+#~ "this option but if not you will have to modify the file manually."
+#~ msgstr ""
+#~ "Si acepta esta opción, debconf gestionará la configuración de dicho "
+#~ "fichero, y sino tendrá que modificarlo manualmente."
+
+#~ msgid "Use automatic generation of texmf.cnf with update-texmf?"
+#~ msgstr "¿Generar automáticamente texmf.cnf con update-texmf?"
+
+#~ msgid ""
+#~ "Now we can generate texmf.cnf, the central configuration file for TeX "
+#~ "system, automatically with update-texmf script.  This is necessary for "
+#~ "other TeX related packages to update the contents of texmf.cnf"
+#~ msgstr ""
+#~ "Ahora se puede generar automáticamente texmf.cnf, el archivo con la "
+#~ "configuración principal del sistema TeX, con el guión update-texmf. Esto "
+#~ "es necesario para que otros paquetes relacionados con TeX puedan "
+#~ "actualizar los contenidos de texmf.cnf."
+
+#~ msgid ""
+#~ "But this overwrites the existing texmf.cnf so if you don't want it, don't "
+#~ "accept this.  Then you should modify /etc/texmf/texmf.cnf manually. But "
+#~ "REMARK that you could fail to install some TeX components afterwards."
+#~ msgstr ""
+#~ "Sin embargo hacer esto sobreescribirá el archivo texmf.cnf existente. Si "
+#~ "no quiere que esto sucede, no acepte esta opción. Debería modificar "
+#~ "entonces el archivo /etc/texmf/texmf.cf manualmente. ¡AVISO! Puede que "
+#~ "algunos componentes de TeX que instale posteriormente no se instalen "
+#~ "adecuadamente."
+
+#~ msgid ""
+#~ "For many users, it is recommended to accept this, despite the default was "
+#~ "set contrary, because this is necessary to install many other TeX related "
+#~ "packages and, if you want, you can custmize texmf.cnf freely only with "
+#~ "modifying files in /etc/texmf/texmf.d/ and adding necessary file(s) there."
+#~ msgstr ""
+#~ "Para la mayoría de los usuarios, lo recomendable es que acepten esto, "
+#~ "aunque el valor por omisión sea justo lo contrario, ya que esto es "
+#~ "necesarios para instalar muchos otros paquetes relacionados con TeX y, si "
+#~ "lo desea, puede adaptar texmf.cnf libremente simplemente modificando los "
+#~ "ficheros bajo /etc/texmf/texmf.d y añadiendo ahí el/los archivo/s "
+#~ "necesarios."
+
+#~ msgid "Use automatic generation of fmtutil.cnf with update-fmtutil?"
+#~ msgstr ""
+#~ "¿Utilizar la generación automática de fmtutil.cnf con update-fmtutil?"
+
+#~ msgid ""
+#~ "For many users, it is recommended to accept this, despite the default was "
+#~ "set contrary, because this is necessary to install many other TeX related "
+#~ "packages and, if you want, you can custmize fmtutil.cnf freely only with "
+#~ "modifying files in /etc/texmf/fmt.d/ and adding necessary file(s) there."
+#~ msgstr ""
+#~ "Para la mayoría de los usuarios, lo recomendable es que acepten esto, "
+#~ "aunque el valor por omisión sea justo lo contrario, ya que esto es "
+#~ "necesarios para instalar muchos otros paquetes relacionados con TeX y, si "
+#~ "lo desea, puede adaptar texmf.cnf libremente simplemente modificando los "
+#~ "ficheros bajo /etc/texmf/fmt.d y añadiendo ahí el/los archivo/s "
+#~ "necesarios."
+
+#~ msgid "Use automatic generation of updmap.cfg with update-updmap?"
+#~ msgstr "¿Utilizar generación automática de updmap.cfg con update-updmap?"
+
+#~ msgid ""
+#~ "For many users, it is recommended to accept this, despite the default was "
+#~ "set contrary, because this is necessary to use many fonts packages for "
+#~ "TeX and, if you want, you can custmize updmap.cfg freely only with "
+#~ "modifying files in /etc/texmf/updmap.d/ and adding necessary file(s) "
+#~ "there."
+#~ msgstr ""
+#~ "Para la mayoría de los usuarios, lo recomendable es que acepten esto, "
+#~ "aunque el valor por omisión sea justo lo contrario, ya que esto es "
+#~ "necesarios para utilizar muchos paquetes con tipografías para TeX, y si "
+#~ "lo desea, puede adaptar updmap.cfg libremente simplemente modificando los "
+#~ "ficheros bajo /etc/texmf/updmap.d y añadiendo ahí el/los archivo/s "
+#~ "necesarios."

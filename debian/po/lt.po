@@ -1,0 +1,351 @@
+# translation of tetex-bin.po to Lithuanian
+# This file is distributed under the same license as the tetex-bin package.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Kęstutis Biliūnas <kebil@kaunas.init.lt>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tetex-bin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-03 19:46+0200\n"
+"PO-Revision-Date: 2004-11-11 12:13+0200\n"
+"Last-Translator: Kęstutis Biliūnas <kebil@kaunas.init.lt>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid "Select the ls-R file which should be managed by debconf"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"There are many files installed in a typical TeX system. To speed up the "
+"search of these files a list of available files is stored in a file called "
+"ls-R. There are four different locations for TeX files on a Debian system:\n"
+" - main: usually /usr/share/texmf, contains only files installed\n"
+"   by debian packages.\n"
+" - local: usually /usr/local/share/texmf, contains local additions\n"
+" - var: usually /var/lib/texmf, contains generated files from the\n"
+"   TeX system like format files.\n"
+" - cache: usually /var/cache/fonts, contains generated fonts.\n"
+"You can select from these four locations those whose ls-R file should be "
+"managed by debconf."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"We suggest selecting cache and local (these are the defaults) and allowing a "
+"selected user group to modify these ls-R files out of the following reasons:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+#, fuzzy
+msgid ""
+"A lot of font files have to be generated before they can be used by xdvi, "
+"dvips etc. These files are stored in /var/cache/fonts, so that they do not "
+"need to be regenerated every time."
+msgstr ""
+"Daugelis šriftų failų turi būti sugeneruoti prieš tai, kai kol galės būti "
+"naudojami teTeX'o rodymo ekrane ir spausdinimo programų (xdvi, dvips it t."
+"t.). Šie failai yra saugomi kataloge /var/cache/fonts, taigi nėra būtinybės "
+"jų regeneruoti kiekvieną kartą naujai. Failai ls-R pasako sistemai, kurie "
+"failai ir kur yra saugomi."
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"Some users may have the right to add files to the local texmf tree, so they "
+"should also be allowed to change the ls-R file."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+#, fuzzy
+msgid ""
+"Accepting this option will allow you to easily manage the permissions of "
+"those ls-R files using debconf. Otherwise you will have to manually ensure "
+"that they get useful but safe permissions."
+msgstr ""
+"Sutikimas su šiuo pasirinkimu, leis Jums lengvai tvarkyti šių ls-R failų "
+"teises naudojantis programa debconf. Priešingu atveju Jūs turėsite rankiniu "
+"būdu rūpintis, kad jie įgytų naudingas ir saugias teises."
+
+#. Type: string
+#. Description
+#: ../templates:36
+msgid "Which group should own the ls-R files?"
+msgstr "Kuriai grupei turi priklausyti ls-R failai?"
+
+#. Type: string
+#. Description
+#: ../templates:36
+#, fuzzy
+msgid ""
+"Modification of ls-R files can be restricted to the members of one group "
+"which owns them.  To take advantage of this, add the users to the group of "
+"your choice, and enter that group name here.  The default group, 'users', is "
+"appropriate for most systems."
+msgstr ""
+"Failų ls-R modifikavimo teisė turi būti apribotas vienos grupės nariais. Tam "
+"kad pasinaudoti šiuo pranašumu, priskirkite naudotoją savo pasirinktai "
+"grupei. Pagal nutylėjimą naudojama grupė 'users' yra tinkama daugumai "
+"sistemų."
+
+#. Type: boolean
+#. Description
+#: ../templates:45
+msgid "Allow group members to modify ls-R files?"
+msgstr "Ar leisti grupės nariams modifikuoti ls-R failus?"
+
+#. Type: boolean
+#. Description
+#: ../templates:45
+#, fuzzy
+msgid ""
+"Accepting this option will allow members of the owning group to modify the "
+"ls-R files."
+msgstr ""
+"Sutikimas su šiuo pasirinkimu leis savininkų grupei modifikuoti ls-R failus. "
+"Beveik kiekvienas turėtų sutikti su šiuo pasirinkimu!"
+
+#. Type: boolean
+#. Description
+#: ../templates:52
+msgid "Allow all users to modify ls-R files?"
+msgstr "Ar leisti visiems naudotojams modifikuoti ls-R failus?"
+
+#. Type: boolean
+#. Description
+#: ../templates:52
+msgid ""
+"Accepting this option will allow all users to modify ls-R files.  This is "
+"generally not a good idea for security reasons; you should instead restrict "
+"such access to members of one group."
+msgstr ""
+"Sutikimas su šiuo pasirinkimu leis visiems naudotojams modifikuoti ls-R "
+"failus. Tai nėra gera mintis saugumo požiūriu; vietoje to Jūs turėtumėte "
+"apsiriboti šia teise vienai naudotojų grupei."
+
+#. Type: note
+#. Description
+#: ../templates:59
+msgid "Change of name of files in /etc/texmf/texmf.d/"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:59
+#, fuzzy
+msgid ""
+"texmf.cnf has previously been generated by update-texmf from all files in /"
+"etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
+"extension '.cnf'"
+msgstr ""
+"Failas texmf.cnf ankščiau buvo sugeneruotas programa update-texmf iš visų "
+"kataloge /etc/texmf/texmf.d/ esančių failu. Dabar update-texmf tik skaito "
+"failus su išplėtimu '.cnf'"
+
+#. Type: note
+#. Description
+#: ../templates:59
+#, fuzzy
+msgid ""
+"So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
+"cnf' to its name; for example, 22mymacro => 22mymacro.cnf"
+msgstr ""
+"Jei Jūs pridėjote betkokį nuosavą failą į katalogą /etc/texmf/texmf.d/, Jūs "
+"turite pridėti '.cnf' prie jo vardo (pvz. 22mymacro taps 22mymacro.cnf) ir "
+"paleisti vykdyti programą update-texmf."
+
+#~ msgid "Use debconf to manage permissions of ls-R files?"
+#~ msgstr "Ar naudoti debconf failų ls-R teisių tvarkymui?"
+
+#~ msgid "Use update-fmtutil to automatically generate fmtutil.cnf?"
+#~ msgstr ""
+#~ "Ar naudoti programą update-fmtutil automatiniam failo fmtutil.cnf "
+#~ "generavimui?"
+
+#~ msgid ""
+#~ "The file fmtutil.cnf is the central configuration file for TeX engines. "
+#~ "Automatic generation is recommended to make the setup work with other TeX-"
+#~ "related packages."
+#~ msgstr ""
+#~ "Failas fmtutil.cnf yra svarbiausias TeX variklio konfigūracijos failas. "
+#~ "Automatinis jo generavimas yra rekomenduotinas, tam kad nustatymai veiktų "
+#~ "ir su kitomis TeX giminingomis programomis."
+
+#~ msgid ""
+#~ "After accepting this option, you should not edit fmtutil.cnf directly but "
+#~ "instead modify the files in /etc/texmf/fmt.d/ and run update-fmtutil.  "
+#~ "The generated fmtutil.cnf will then be placed under /var/lib/texmf/web2c/."
+#~ msgstr ""
+#~ "Sutikus su šiuo pasirinkimu, Jūs turėtumėte nekeisti failo fmtutil.cnf "
+#~ "tiesiogiai, bet vietoje to modifikuoti failus kataloge /etc/texmf/fmt.d/, "
+#~ "ir po to paleisti vykdyti programą update-fmtutil. Tuomet sugeneruotas "
+#~ "failas fmtutil.cnf bus patalpintas kataloge /var/lib/texmf/web2c/."
+
+#~ msgid ""
+#~ "If you need to keep using an existing fmtutil.cnf then you may refuse "
+#~ "this option and maintain /etc/texmf/fmtutil.cnf manually.  However, "
+#~ "installation of some TeX-related packages will fail unless you accept "
+#~ "this option."
+#~ msgstr ""
+#~ "Jei Jūs norite išsaugoti naudojamu egzistuojantį failą fmtutil.cnf, "
+#~ "tuomet galite atsisakyti šio pasirinkimo ir tvarkyti failą /etc/texmf/"
+#~ "fmtutil.cnf rankiniu būdu. Tačiau, kai kurių TeX giminingų programų "
+#~ "įdiegimas nepavyks, jei Jūs pasirinksite šį variantą."
+
+#~ msgid "Use update-updmap to automatically generate updmap.cfg?"
+#~ msgstr ""
+#~ "Ar naudoti programą update-updmap automatiniam failo updmap.cfg "
+#~ "generavimui?"
+
+#~ msgid ""
+#~ "The file updmap.cfg is the central configuration file for the font system "
+#~ "of TeX.  Automatic generation is recommended to make the setup work with "
+#~ "TeX font packages."
+#~ msgstr ""
+#~ "Failas updmap.cfg yra svarbiausias TeX šriftų sistemos konfigūracijos "
+#~ "failas. Automatinis generavimas yra rekomenduotinas, tam kad nustatymai "
+#~ "veiktų su TeX šriftų paketais."
+
+#~ msgid ""
+#~ "After accepting this option, you should not edit updmap.cfg directly but "
+#~ "instead modify the files in /etc/texmf/updmap.d/ and run update-updmap. "
+#~ "The generated updmap.cfg will be placed under /var/lib/texmf/web2c."
+#~ msgstr ""
+#~ "Sutikus su šiuo pasirinkimu, Jūs turėtumėte nekeisti failo updmap.cfg "
+#~ "tiesiogiai, bet vietoje to modifikuoti failus kataloge /etc/texmf/updmap."
+#~ "d/, ir po to paleisti vykdyti programą update-updmap. Sugeneruotas failas "
+#~ "updmap.cfg bus patalpintas kataloge /var/lib/texmf/web2c/."
+
+#~ msgid ""
+#~ "If you need to keep an existing updmap.cfg then you may refuse this "
+#~ "option and maintain /etc/texmf/updmap.cfg manually.  However, "
+#~ "installation of TeX fonts will fail unless you accept this option."
+#~ msgstr ""
+#~ "Jei Jūs norite išsaugoti naudojamu egzistuojantį failą updmap.cfg, tuomet "
+#~ "galite atsisakyti šio pasirinkimo ir tvarkyti failą /etc/texmf/updmap.cfg "
+#~ "rankiniu būdu. Tačiau, kai kurių TeX šriftų įdiegimas nepavyks, jei Jūs "
+#~ "pasirinksite šį variantą."
+
+#~ msgid "Files in /etc/texmf/texmf.d/ must be renamed."
+#~ msgstr "Failai kataloge /etc/texmf/texmf.d/ turi būti pervadinti."
+
+#~ msgid "Remove old (and harmful) file /etc/X11/Xresources/tetex-base?"
+#~ msgstr ""
+#~ "Ar pašalinti seną (ir žalingą) failą /etc/X11/Xresources/tetex-base?"
+
+#~ msgid ""
+#~ "An old version of tetex-bin installed /etc/X11/Xresources/tetex-base, but "
+#~ "it is now unused and it is even harmful for it to exist.  It is strongly "
+#~ "recommended to let the installation script remove this file right now!"
+#~ msgstr ""
+#~ "Sena tetex-bin versija įdiegė failą /etc/X11/Xresources/tetex-base, bet "
+#~ "jis dabar nenaudojamas ir jo egzistavimas net žalingas. Griežtai "
+#~ "rekomenduojama leisti įdiegimo skriptui pašalinti ši failą kaip tik dabar!"
+
+#~ msgid "Remove this file?"
+#~ msgstr "Ar pašalinti šį failą?"
+
+#~ msgid "Manage language.dat with debconf?"
+#~ msgstr "Ar tvarkyti failą language.dat programos debconf pagalba?"
+
+#~ msgid ""
+#~ "The language.dat file, which determines which hyphenation patterns are "
+#~ "enabled, can be handled by debconf."
+#~ msgstr ""
+#~ "Failas language.dat, kuris nusako koks skiemenavimo šablonas yra leistas, "
+#~ "gali būti tvarkomas debconf pagalba."
+
+#~ msgid ""
+#~ "If you do not choose this, one pattern set for each supported language "
+#~ "will be enabled (two for german, with old and new orthography).  You can "
+#~ "choose debconf management if you want to exclude some patterns and get "
+#~ "smaller (La)TeX format files.  Manual editing is still possible, and your "
+#~ "changes will be preserved."
+#~ msgstr ""
+#~ "Jei Jūs nepasirinksite šio pasirinkimo, vienas šablono rinkinys "
+#~ "kiekvienai palaikomai kalbai bus leistas (vokiečių kalbai du rinkiniai, "
+#~ "su senąja ir naująja ortografija). Jūs galite pasirinkti tvarkymą debconf "
+#~ "pagalba, jei norite eliminuoti kai kuriuos skiemenavimo šablonus ir gauti "
+#~ "mažesnius (La)TeX formato failus.  Rankinis redagavimas taip pat "
+#~ "leistinas, ir Jūsų pakeitimai bus išsaugoti."
+
+#~ msgid "Which hyphenation patterns should be loaded?"
+#~ msgstr "Kurie skiemenavimo šablonai turi būti įkelti?"
+
+#~ msgid ""
+#~ "If you want to load extra hyphenation pattern(s) please select them from "
+#~ "the list."
+#~ msgstr ""
+#~ "Jei norite įkelti papildomus skiemenavimo šablonus, pasirinkite juos iš "
+#~ "sąrašo."
+
+#~ msgid ""
+#~ "If you want to change hyphenation pattern(s) afterwards, you may do so "
+#~ "with \"dpkg-reconfigure tetex-bin\". Manual editing is still possible, "
+#~ "and your changes will be preserved."
+#~ msgstr ""
+#~ "Jei norėsite keisti skiemenavimo šablonus vėliau, Jūs galite tai padaryti "
+#~ "vykdydami \"dpkg-reconfigure tetex-bin\". Rankinis redagavimas taip pat "
+#~ "leistinas, ir Jūsų pakeitimai bus išsaugoti."
+
+#~ msgid "TeX format generation failed."
+#~ msgstr "TeX formatų generavimas nepavyko."
+
+#~ msgid ""
+#~ "The generation of some of the format files needed to run TeX, LaTeX etc. "
+#~ "has failed. You will not be able to run these programs until this is "
+#~ "fixed."
+#~ msgstr ""
+#~ "Kai kurių formatų failų, reikalingų TeX, LaTeX ir pan. darbui, "
+#~ "generavimas nepavyko. Jūs negalėsite vykdyti šių programų, kol tai nebus "
+#~ "ištaisyta."
+
+#~ msgid ""
+#~ "The most frequent cause for such a failure is that a new version of tetex-"
+#~ "bin changed configuration files, but you did not accept the maintainers' "
+#~ "version of a file you manually changed."
+#~ msgstr ""
+#~ "Dažniausiai tokios nesėkmės priežastis yra tai, kad naujoje tetex-base "
+#~ "versijoje pasikeitę konfigūracijos failai, bet Jūs nesutikote su paketų "
+#~ "tvarkytojų failų versijomis, kuriuos Jūs esate keitę rankiniu būdu."
+
+#~ msgid ""
+#~ "If you report this as a bug, please include the output of fmtutil, stored "
+#~ "in ${fmtutil_tempfile}"
+#~ msgstr ""
+#~ "Jei Jūs raportuosite apie šį riktą (bug), prašau įdėti programos fmtutil "
+#~ "išvestį, saugomą faile ${fmtutil_tempfile}"
+
+#~ msgid "Generation of TeX font information failed."
+#~ msgstr "Tex šriftų informacijos generavimas nepavyko."
+
+#~ msgid ""
+#~ "The generation of the font map files by the updmap script failed.  "
+#~ "Therefore, TeX, LaTeX etc. will have problems finding the font files they "
+#~ "need."
+#~ msgstr ""
+#~ "Šriftų plano (map) failų generavimas, vykdant programą updmap, nepavyko. "
+#~ "Todėl TeX, LaTeX ir pan. turės problemų ieškant reikiamų šriftų failų."
+
+#~ msgid ""
+#~ "If you report this as a bug, please include the output of updmap, stored "
+#~ "in ${updmap_tempfile}"
+#~ msgstr ""
+#~ "Jei Jūs raportuosite apie šį riktą (bug), prašau įdėti programos updmap "
+#~ "išvestį, saugomą faile ${updmap_tempfile}"

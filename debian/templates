@@ -1,6 +1,6 @@
 Template: tex-common/managedlsr
 Type: multiselect
-_Choices: main, cache, local, var
+Choices: main, cache, local, var
 Default: cache, local
 _Description: Select the ls-R file which should be managed by debconf
  There are many files installed in a typical TeX system. To speed up the

@@ -1,0 +1,351 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tetex-bin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-03 19:46+0200\n"
+"PO-Revision-Date: 2004-09-11 17:53+0900\n"
+"Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid "Select the ls-R file which should be managed by debconf"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"There are many files installed in a typical TeX system. To speed up the "
+"search of these files a list of available files is stored in a file called "
+"ls-R. There are four different locations for TeX files on a Debian system:\n"
+" - main: usually /usr/share/texmf, contains only files installed\n"
+"   by debian packages.\n"
+" - local: usually /usr/local/share/texmf, contains local additions\n"
+" - var: usually /var/lib/texmf, contains generated files from the\n"
+"   TeX system like format files.\n"
+" - cache: usually /var/cache/fonts, contains generated fonts.\n"
+"You can select from these four locations those whose ls-R file should be "
+"managed by debconf."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"We suggest selecting cache and local (these are the defaults) and allowing a "
+"selected user group to modify these ls-R files out of the following reasons:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+#, fuzzy
+msgid ""
+"A lot of font files have to be generated before they can be used by xdvi, "
+"dvips etc. These files are stored in /var/cache/fonts, so that they do not "
+"need to be regenerated every time."
+msgstr ""
+"フォントファイルの多くは、teTeX の表示および印刷プログラム (xdvi や dvips な"
+"ど) によって使われる前に生成されていなければなりません。これらのファイルは、/"
+"var/cache/fonts に格納されるので、毎回再生成する必要はありません。ls-R ファイ"
+"ルは、システムにファイルが格納されているかどうか、どこにあるかを教えます。"
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"Some users may have the right to add files to the local texmf tree, so they "
+"should also be allowed to change the ls-R file."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+#, fuzzy
+msgid ""
+"Accepting this option will allow you to easily manage the permissions of "
+"those ls-R files using debconf. Otherwise you will have to manually ensure "
+"that they get useful but safe permissions."
+msgstr ""
+"これらの ls-R ファイルを debconf を使って簡単にパーミッションを管理するように"
+"するのであれば、この選択肢で「はい」を選んでください。そうでなければ、利用可"
+"能でかつ安全なパーミッションになることを手動で保証する必要があります。"
+
+#. Type: string
+#. Description
+#: ../templates:36
+msgid "Which group should own the ls-R files?"
+msgstr "ls-R ファイルを所有するグループを何にしますか?"
+
+#. Type: string
+#. Description
+#: ../templates:36
+#, fuzzy
+msgid ""
+"Modification of ls-R files can be restricted to the members of one group "
+"which owns them.  To take advantage of this, add the users to the group of "
+"your choice, and enter that group name here.  The default group, 'users', is "
+"appropriate for most systems."
+msgstr ""
+"ls-R ファイルの変更は、それを所有する 1 つのグループのメンバーに制限できま"
+"す。これを活用するには、あなたの選んだグループにユーザを追加して、そのグルー"
+"プ名をここに入力してください。デフォルトのグループ 'users' は、ほとんどのシス"
+"テムで適切です。"
+
+#. Type: boolean
+#. Description
+#: ../templates:45
+msgid "Allow group members to modify ls-R files?"
+msgstr "グループのメンバーに ls-R ファイルの変更を許可しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:45
+#, fuzzy
+msgid ""
+"Accepting this option will allow members of the owning group to modify the "
+"ls-R files."
+msgstr ""
+"ls-R ファイルの変更を所有するグループのメンバーに許可するにはこの選択肢で「は"
+"い」を選んでください。ほとんどすべての人は、この選択肢で「はい」と答えるべき"
+"です!"
+
+#. Type: boolean
+#. Description
+#: ../templates:52
+msgid "Allow all users to modify ls-R files?"
+msgstr "すべてのユーザに ls-R ファイルの変更を許可しますか?"
+
+#. Type: boolean
+#. Description
+#: ../templates:52
+msgid ""
+"Accepting this option will allow all users to modify ls-R files.  This is "
+"generally not a good idea for security reasons; you should instead restrict "
+"such access to members of one group."
+msgstr ""
+"ls-R ファイルの変更をすべてのユーザに許可するにはこの選択肢で「はい」を選んで"
+"ください。これはセキュリティの面で一般的に良い考えではありません。代わりに、"
+"そのようなアクセスを 1 つのグループのメンバーに制限すべきです。"
+
+#. Type: note
+#. Description
+#: ../templates:59
+msgid "Change of name of files in /etc/texmf/texmf.d/"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:59
+#, fuzzy
+msgid ""
+"texmf.cnf has previously been generated by update-texmf from all files in /"
+"etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
+"extension '.cnf'"
+msgstr ""
+"texmf.cnf は以前、/etc/texmf/texmf.d/ にあるすべてのファイルから update-"
+"texmf によって生成されていました。現在、update-texmf は拡張子 '.cnf' を持つ"
+"ファイルのみを読み込むようになっています。"
+
+#. Type: note
+#. Description
+#: ../templates:59
+#, fuzzy
+msgid ""
+"So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
+"cnf' to its name; for example, 22mymacro => 22mymacro.cnf"
+msgstr ""
+"もし /etc/texmf/texmf.d/ に独自のファイルを持っているのであれば、'.cnf' をそ"
+"の名前に追加して (たとえば、22mymacro を 22mymacro.cnf とします)、update-"
+"texmf を実行する必要があります。"
+
+#~ msgid "Use debconf to manage permissions of ls-R files?"
+#~ msgstr "ls-R ファイルのパーミッションの管理に debconf を使いますか?"
+
+#~ msgid "Use update-fmtutil to automatically generate fmtutil.cnf?"
+#~ msgstr "fmtutil.cnf を自動的に生成するために、update-fmtutil を使いますか?"
+
+#~ msgid ""
+#~ "The file fmtutil.cnf is the central configuration file for TeX engines. "
+#~ "Automatic generation is recommended to make the setup work with other TeX-"
+#~ "related packages."
+#~ msgstr ""
+#~ "ファイル fmtutil.cnf は TeX エンジンの集中設定ファイルです。ほかの TeX 関"
+#~ "連のパッケージが動作するようセットアップする上で、自動生成が推奨されます。"
+
+#~ msgid ""
+#~ "After accepting this option, you should not edit fmtutil.cnf directly but "
+#~ "instead modify the files in /etc/texmf/fmt.d/ and run update-fmtutil.  "
+#~ "The generated fmtutil.cnf will then be placed under /var/lib/texmf/web2c/."
+#~ msgstr ""
+#~ "「はい」と答えたら、fmtutil.cnf を直接編集するのではなく、代わりに /etc/"
+#~ "texmf/fmt.d/ にあるファイルを編集して update-fmtutil を実行するようにしま"
+#~ "す。生成された fmtutil.cnf は、/var/lib/texmf/web2c/ 以下に置かれます。"
+
+#~ msgid ""
+#~ "If you need to keep using an existing fmtutil.cnf then you may refuse "
+#~ "this option and maintain /etc/texmf/fmtutil.cnf manually.  However, "
+#~ "installation of some TeX-related packages will fail unless you accept "
+#~ "this option."
+#~ msgstr ""
+#~ "既存の fmtutil.cnf の利用を保持する必要があるなら、この質問に「いいえ」と"
+#~ "答えます。そして、/etc/texmf/fmtutil.cnf を手動で変更します。ただし、いく"
+#~ "つかの TeX 関連パッケージのインストールはここで「はい」としておかないと失"
+#~ "敗するかもしれません。"
+
+#~ msgid "Use update-updmap to automatically generate updmap.cfg?"
+#~ msgstr "updmap.cfg を自動的に生成するために、update-updmap を使いますか?"
+
+#~ msgid ""
+#~ "The file updmap.cfg is the central configuration file for the font system "
+#~ "of TeX.  Automatic generation is recommended to make the setup work with "
+#~ "TeX font packages."
+#~ msgstr ""
+#~ "ファイル updmap.cfg は TeX フォントシステムの集中設定ファイルです。ほかの "
+#~ "TeX フォントパッケージが動作するようセットアップする上で、自動生成が推奨さ"
+#~ "れます。"
+
+#~ msgid ""
+#~ "After accepting this option, you should not edit updmap.cfg directly but "
+#~ "instead modify the files in /etc/texmf/updmap.d/ and run update-updmap. "
+#~ "The generated updmap.cfg will be placed under /var/lib/texmf/web2c."
+#~ msgstr ""
+#~ "「はい」と答えたら、updmap.cfg を直接編集するのではなく、代わりに /etc/"
+#~ "texmf/updmap.d/ にあるファイルを編集して update-updmap を実行するようにし"
+#~ "ます。生成された updmap.cfg は、/var/lib/texmf/web2c/ 以下に置かれます。"
+
+#~ msgid ""
+#~ "If you need to keep an existing updmap.cfg then you may refuse this "
+#~ "option and maintain /etc/texmf/updmap.cfg manually.  However, "
+#~ "installation of TeX fonts will fail unless you accept this option."
+#~ msgstr ""
+#~ "既存の updmap.cfg の利用を保持する必要があるなら、この質問に「いいえ」と答"
+#~ "えます。そして、/etc/texmf/updmap.cfg を手動で変更します。ただし、いくつか"
+#~ "の TeX コンポーネントの自動インストールはここで「はい」としておかないと失"
+#~ "敗するかもしれません。"
+
+#~ msgid "Files in /etc/texmf/texmf.d/ must be renamed."
+#~ msgstr ""
+#~ "/etc/texmf/texmf.d/ にあるファイルは名前を変更しなければなりません。"
+
+#~ msgid "Remove old (and harmful) file /etc/X11/Xresources/tetex-base?"
+#~ msgstr ""
+#~ "古い (有害な) ファイル /etc/X11/Xresources/tetex-base を削除しますか?"
+
+#~ msgid ""
+#~ "An old version of tetex-bin installed /etc/X11/Xresources/tetex-base, but "
+#~ "it is now unused and it is even harmful for it to exist.  It is strongly "
+#~ "recommended to let the installation script remove this file right now!"
+#~ msgstr ""
+#~ "古いバージョンの tetex-bin は /etc/X11/Xresources/tetex-base をインストー"
+#~ "ルしましたが、これは現在は使われず、もし存在すると有害でさえあります。その"
+#~ "ため、インストールスクリプトにこのファイルを正しく削除させることを強くお勧"
+#~ "めします!"
+
+#~ msgid "Remove this file?"
+#~ msgstr "このファイルを削除しますか?"
+
+#~ msgid "Manage language.dat with debconf?"
+#~ msgstr "language.dat を debconf で管理しますか?"
+
+#~ msgid ""
+#~ "The language.dat file, which determines which hyphenation patterns are "
+#~ "enabled, can be handled by debconf."
+#~ msgstr ""
+#~ "読み込むハイフンの形式の定義を有効にする language.dat ファイルは、debconf "
+#~ "によって操作できます。"
+
+#~ msgid ""
+#~ "If you do not choose this, one pattern set for each supported language "
+#~ "will be enabled (two for german, with old and new orthography).  You can "
+#~ "choose debconf management if you want to exclude some patterns and get "
+#~ "smaller (La)TeX format files.  Manual editing is still possible, and your "
+#~ "changes will be preserved."
+#~ msgstr ""
+#~ "「いいえ」と答えると、それぞれのサポートされている言語向けのパターンセット"
+#~ "の 1 つが有効になります (ドイツでは旧と新の清書法 2 つ)。複数のパターンを"
+#~ "除外してより小さな (La) TeX フォーマットファイルを得たいのであれば、"
+#~ "debconf 管理を選べます。手動編集も常に利用でき、変更は保持されます。"
+
+#~ msgid "Which hyphenation patterns should be loaded?"
+#~ msgstr "読み込むハイフンパターンはどれですか?"
+
+#~ msgid ""
+#~ "If you want to load extra hyphenation pattern(s) please select them from "
+#~ "the list."
+#~ msgstr ""
+#~ "特定のハイフンパターンを読み込みたい場合は、リストから該当のものを選んでく"
+#~ "ださい。"
+
+#~ msgid ""
+#~ "If you want to change hyphenation pattern(s) afterwards, you may do so "
+#~ "with \"dpkg-reconfigure tetex-bin\". Manual editing is still possible, "
+#~ "and your changes will be preserved."
+#~ msgstr ""
+#~ "ハイフンパターンをあとで変更したいときには、\"dpkg-reconfigure tetex-bin"
+#~ "\" で可能です。手動編集も常に利用でき、変更は保持されます。"
+
+#~ msgid "TeX format generation failed."
+#~ msgstr "TeX フォーマットの生成に失敗しました。"
+
+#~ msgid ""
+#~ "The generation of some of the format files needed to run TeX, LaTeX etc. "
+#~ "has failed. You will not be able to run these programs until this is "
+#~ "fixed."
+#~ msgstr ""
+#~ "TeX、LaTeX などを実行するのに必要となるいくつかのフォーマットファイルの生"
+#~ "成に失敗しました。この問題が修正されるまで、これらのプログラムを実行できま"
+#~ "せん。"
+
+#~ msgid ""
+#~ "The most frequent cause for such a failure is that a new version of tetex-"
+#~ "bin changed configuration files, but you did not accept the maintainers' "
+#~ "version of a file you manually changed."
+#~ msgstr ""
+#~ "このような失敗でよくある問題は、tetex-bin の新しいバージョンの設定ファイル"
+#~ "が変更されたのにも関わらず、手動で変更したファイルに対してメンテナバージョ"
+#~ "ンを受け入れなかったというものです。"
+
+#~ msgid ""
+#~ "If you report this as a bug, please include the output of fmtutil, stored "
+#~ "in ${fmtutil_tempfile}"
+#~ msgstr ""
+#~ "これをバグとして報告するときには、${fmtutil_tempfile} に格納されている "
+#~ "fmtutil の出力を含めてください。"
+
+#~ msgid "Generation of TeX font information failed."
+#~ msgstr "TeX フォント情報の生成に失敗しました。"
+
+#~ msgid ""
+#~ "The generation of the font map files by the updmap script failed.  "
+#~ "Therefore, TeX, LaTeX etc. will have problems finding the font files they "
+#~ "need."
+#~ msgstr ""
+#~ "updmap スクリプトによるフォントマップファイルの生成に失敗しました。そのた"
+#~ "め、TeX、LaTeX などで必要となるフォントファイルを探すときに問題が生じま"
+#~ "す。"
+
+#~ msgid ""
+#~ "If you report this as a bug, please include the output of updmap, stored "
+#~ "in ${updmap_tempfile}"
+#~ msgstr ""
+#~ "これをバグとして報告するときには、${updmap_tempfile} に格納されている "
+#~ "updmap の出力を含めてください。"
