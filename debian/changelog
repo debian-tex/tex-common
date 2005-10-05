@@ -13,8 +13,12 @@ tex-common (0.7.1) UNRELEASED; urgency=low
     been copied over from tetex-bin [frank]. (Closes: #328291)
   * Let the debconf dependency be created by debhelper, thus allowing
     debconf-2.0 as an alternative [frank] (closes: #332115)
+  * In fact install the pdf version of the Policy draft, but include it in
+    the tar.gz file.  Thus we can drop the Build-dependency on
+    tetex-extra.  A working TeX system is only needed on the developer's
+    system if the policy source has been changed.
 
- -- Frank Küster <frank@debian.org>  Mon,  3 Oct 2005 19:47:59 +0200
+ -- Frank Küster <frank@debian.org>  Wed,  5 Oct 2005 16:14:46 +0200
 
 tex-common (0.7) unstable; urgency=low
 
