@@ -128,11 +128,8 @@ EOF
       fi
       db_get tex-common/groupname || true
       LSRGROUP="$RET"
-      # work through the list, stolen from locales.postinst
-      list=`echo $MANAGEDLSR | sed -e 's/, /,/g'`
-      save_IFS=$IFS
-      IFS=,
-      for lsr in $list; do
+      # fix permissions of all the ls-R files
+      for lsr in main var local cache ; do
         case $lsr in 
 	  main) LSR=$TEXMFSYSVAR/ls-R-TEXMFMAIN ;;
 	  var)  LSR=$TEXMFSYSVAR/ls-R ;;
@@ -140,13 +137,38 @@ EOF
 	  cache) LSR=/var/cache/fonts/ls-R ;;
 	  *) echo "This should not happen: Don't know how to set this! $lsr" ;;
 	esac
-        chmod -v $LSRPERMS $LSR 2>/dev/null | fgrep changed || true
-	chgrp -v $LSRGROUP $LSR 2>/dev/null | fgrep changed || true
+	# special check wether the local ls-R is actually a link to var
+	domanage=1
+	if [ $lsr = local ] ; then
+	  lsrlocalok=1
+	  if [ -L /usr/local/share/texmf/ls-R ] ; then
+	    linkdest=`readlink /usr/local/share/texmf/ls-R`
+	    if [ ! "X$linkdest" = "X$LSR" ] ; then
+	      lsrlocalok=0
+	    fi
+	  else
+	    lsrlocalok=0
+	  fi
+	  # /usr/local/share/texmf/ls-R is either not a link or not the
+	  # right link, ship out a message!
+	  if [ $lsrlocalok = 0 ] ; then
+	    # what do we do here?
+	    # can we inform the user that something is wrong here?
+	    domanage=0
+	  fi
+	fi
+	if [ $domanage = 1 ] ; then
+	  if echo "$MANAGEDLSR" | grep -q $lsr ; then
+	    # this lsr is managed by debconf
+	    chmod -v $LSRPERMS $LSR 2>/dev/null | fgrep changed || true
+	    chgrp -v $LSRGROUP $LSR 2>/dev/null | fgrep changed || true
+	  else
+	    # this lsr has standard permissions
+	    chmod -v 644 $LSR 2>/dev/null | fgrep changed || true
+	    chown -v root:staff $LSR 2>/dev/null | fgrep changed || true
+	  fi
+	fi
       done
-      IFS=$save_IFS
-    else
-      echo "Fixing permissions of ls-R files ..."
-      chmod -v 644 $LSRS 2>/dev/null | fgrep changed || true
     fi
     ;;
   *)

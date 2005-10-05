@@ -17,7 +17,7 @@ db_version 2.0
 # move the answers from tetex-bin to tex-common, if there are no answers
 # in the tex-common db
 maybe_move_answer_and_delete() {
-    $ans = $1
+    ans=$1
     # did the user already see this question?
     db_fget tex-common/$ans seen || true
     if [ "$RET" = false ] ; then
@@ -55,7 +55,7 @@ db_go
 db_unregister tetex-bin/lsr-perms || true
 
 db_get tex-common/managedlsr && SELECTED_LSR="$RET"
-if [ ! -n "$SELECTED_LSR" ]; then
+if [ -n "$SELECTED_LSR" ]; then
     maybe_move_answer_and_delete groupname   
     maybe_move_answer_and_delete groupperm
     maybe_move_answer_and_delete userperm

@@ -1,3 +1,11 @@
+tex-common (0.8.1) UNRELEASED; urgency=low
+
+  * Fix the management of ls-R files. Do not manage /usr/local/share/texmf
+    if it is not a link to /var/lib/texmf/ls-R-LOCAL. Always set the 
+    permissions and owners of all ls-R files. [preining] (Closes: #332264)
+
+ -- Norbert Preining <preining@logic.at>  Wed,  5 Oct 2005 19:05:00 +0200
+
 tex-common (0.8) unstable; urgency=low
 
   * Change hyph_size to 8191 - according to DEK it should be a prime
