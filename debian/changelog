@@ -12,7 +12,7 @@ tex-common (0.7.1) UNRELEASED; urgency=low
   * manage ls-R files using debconf [preining].  The translations have
     been copied over from tetex-bin [frank]. (Closes: #328291)
   * Let the debconf dependency be created by debhelper, thus allowing
-    debconf-2.0 as an alternative [frank]
+    debconf-2.0 as an alternative [frank] (closes: #332115)
 
  -- Frank Küster <frank@debian.org>  Mon,  3 Oct 2005 19:47:59 +0200
 
