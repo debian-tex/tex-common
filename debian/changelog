@@ -1,4 +1,4 @@
-tex-common (0.7.1) UNRELEASED; urgency=low
+tex-common (0.8) unstable; urgency=low
 
   * Change hyph_size to 8191 - according to DEK it should be a prime
     number.  [frank]
