@@ -65,15 +65,15 @@ EOF
 
 #
 # create /usr/local/share/texmf, unless the filesystem is read-only:
-#
-    TEXMFLOCAL=/usr/local/share/texmf
-    if [ ! -e $TEXMFLOCAL ]; then
-      if mkdir $TEXMFLOCAL 2>/dev/null; then
-        chmod 2775 $TEXMFLOCAL 2>/dev/null || true
-	chown root:staff $TEXMFLOCAL 2>/dev/null || true
-	ln -s /var/lib/texmf/ls-R-LOCAL /$TEXMFLOCAL/ls-R
-      fi
-    fi
+# this is against policy, disable
+#    TEXMFLOCAL=/usr/local/share/texmf
+#    if [ ! -e $TEXMFLOCAL ]; then
+#      if mkdir $TEXMFLOCAL 2>/dev/null; then
+#        chmod 2775 $TEXMFLOCAL 2>/dev/null || true
+#	chown root:staff $TEXMFLOCAL 2>/dev/null || true
+#	ln -s /var/lib/texmf/ls-R-LOCAL /$TEXMFLOCAL/ls-R
+#      fi
+#    fi
 
 #
 # remove left over fmt/efmt/log files in /usr/share/texmf/web2c/
@@ -111,42 +111,38 @@ EOF
 # set permission of ls-R files
     db_get tex-common/managedlsr || true
     if [ -n "$RET" ] ; then
-      MANAGEDLSR="$RET"
-      echo "Fixing permissions and group of ($MANAGEDLSR) ls-R as specified by debconf ..."
-
-      db_get tex-common/groupperm || true
-      if [ x"$RET" = x"true" ]; then
-        LSRPERMS=66
-      else
-        LSRPERMS=64
-      fi
-      db_get tex-common/userperm || true
-      if [ x"$RET" = x"true" ]; then
-        LSRPERMS="$LSRPERMS"6
-      else
-        LSRPERMS="$LSRPERMS"4
-      fi
+      falsegwritefiles=""
+      truegwritefiles=""
+      for i in var cache main ; do
+          if echo $RET | grep -q $i ; then
+	      truegwritefiles="$truegwritefiles $i"
+	  else
+	      falsegwritefiles="$falsegwritefiles $i"
+	  fi
+      done
+      for i in $truegwritefiles ; do
+          lsr=`select_lsrfile $i`
+	  chmod g+w $lsr
+      done
+      for i in $falsegwritefiles ; do
+          lsr=`select_lsrfile $i`
+	  chmod g-w $lsr
+      done
       db_get tex-common/groupname || true
       LSRGROUP="$RET"
-      # work through the list, stolen from locales.postinst
-      list=`echo $MANAGEDLSR | sed -e 's/, /,/g'`
-      save_IFS=$IFS
-      IFS=,
-      for lsr in $list; do
-        case $lsr in 
-	  main) LSR=$TEXMFSYSVAR/ls-R-TEXMFMAIN ;;
-	  var)  LSR=$TEXMFSYSVAR/ls-R ;;
-	  local) LSR=$TEXMFSYSVAR/ls-R-LOCAL ;;
-	  cache) LSR=/var/cache/fonts/ls-R ;;
-	  *) echo "This should not happen: Don't know how to set this! $lsr" ;;
-	esac
-        chmod -v $LSRPERMS $LSR 2>/dev/null | fgrep changed || true
-	chgrp -v $LSRGROUP $LSR 2>/dev/null | fgrep changed || true
-      done
-      IFS=$save_IFS
+      if [ -n $LSRGROUP ] ; then
+        for i in $truegwritefiles ; do
+	    lsr=`select_lsrfile $i`
+	    chgrp -v $LSRGROUP $lsr || true
+	done
+      fi
     else
-      echo "Fixing permissions of ls-R files ..."
-      chmod -v 644 $LSRS 2>/dev/null | fgrep changed || true
+      #
+      # In this case when no ls-R files are managed by debconf
+      # we do nothing. The files get the correct permissions on new
+      # installation, because we ship them like this. And if a user
+      # changes some of the parameters, he is responsible for himself.
+      echo "Leaving permissions of ls-R files as they are ..."
     fi
     ;;
   *)

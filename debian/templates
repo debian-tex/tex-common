@@ -1,58 +1,38 @@
 Template: tex-common/managedlsr
 Type: multiselect
-Choices: main, cache, local, var
-Default: cache, local
-_Description: Select the ls-R file which should be managed by debconf
+Choices: main, cache, var
+Default: cache
+_Description: Select the ls-R file which should be writable by their
+ respective group.
  There are many files installed in a typical TeX system. To speed up the
  search of these files a list of available files is stored in a file called
  ls-R. There are four different locations for TeX files on a Debian system:
   - main: usually /usr/share/texmf, contains only files installed
     by debian packages.
-  - local: usually /usr/local/share/texmf, contains local additions
   - var: usually /var/lib/texmf, contains generated files from the
     TeX system like format files.
   - cache: usually /var/cache/fonts, contains generated fonts.
- You can select from these four locations those whose ls-R file should be
- managed by debconf.
+ You can select from these three locations those whose ls-R files should
+ be group writable. Those ls-R which have not been selected will be removed
+ the group write permission.
  .
- We suggest selecting cache and local (these are the defaults) and allowing
+ We suggest selecting cache (this is the defaults) and allowing
  a selected user group to modify these ls-R files out of the following
  reasons:
  .
  A lot of font files have to be generated before they can be used by xdvi,
  dvips etc. These files are stored in /var/cache/fonts, so that they do not
  need to be regenerated every time.
- .
- Some users may have the right to add files to the local texmf tree, so
- they should also be allowed to change the ls-R file.
- .
- Accepting this option will allow you to easily manage the permissions of
- those ls-R files using debconf. Otherwise you will have to manually ensure
- that they get useful but safe permissions.
 
 Template: tex-common/groupname
 Type: string
 Default: users
 _Description: Which group should own the ls-R files?
- Modification of ls-R files can be restricted to the members of one group
- which owns them.  To take advantage of this, add the users to the group of
- your choice, and enter that group name here.  The default group, 'users',
- is appropriate for most systems.
-
-Template: tex-common/groupperm
-Type: boolean
-Default: true
-_Description: Allow group members to modify ls-R files?
- Accepting this option will allow members of the owning group to modify the
- ls-R files.
-
-Template: tex-common/userperm
-Type: boolean
-Default: false
-_Description: Allow all users to modify ls-R files?
- Accepting this option will allow all users to modify ls-R files.  This is
- generally not a good idea for security reasons; you should instead
- restrict such access to members of one group.
+ You can choose a specific group which the previously selected ls-R files
+ should belong to. If you do not enter a group name here, the group
+ ownership of the selected files will not be touched at all. If you
+ have selected 'cache' in the previous question, we would suggest to select
+ the group 'users' here.
 
 Template: tex-common/cnf_name
 Type: note

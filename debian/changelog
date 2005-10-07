@@ -1,3 +1,10 @@
+tex-common (0.8.1) UNRELEASED; urgency=low
+
+  * Change ls-R file handling to be useful. Don't use debconf as
+    registry. (Closes: #332264)
+
+ -- Norbert Preining <preining@logic.at>  Fri,  7 Oct 2005 13:32:46 +0200
+
 tex-common (0.8) unstable; urgency=low
 
   * Change hyph_size to 8191 - according to DEK it should be a prime

@@ -13,28 +13,9 @@ installed_version=$2
 . <:=${CONFMODULE}:>
 db_version 2.0
 
-#
-# move the answers from tetex-bin to tex-common, if there are no answers
-# in the tex-common db
-maybe_move_answer_and_delete() {
-    ans=$1
-    # did the user already see this question?
-    db_fget tex-common/$ans seen || true
-    if [ "$RET" = false ] ; then
-        # no, so if the user saw the tetex question, move the answer
-	# to the tex-common question and set the seen flag.
-	db_fget tetex-bin/$ans seen || true
-	if [ "$RET" = true ] ; then
-	    db_get tetex-bin/$ans || true
-	    db_set tex-common/$ans "$RET"
-	    db_fset tex-common/$ans seen true
-	    # now unregister the tetex question
-	    db_unregister tetex-bin/$ans || true
-	fi
-    fi
-}
+<:open(FUNCTIONS,'common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
+<:=@FUNCTIONS:>//
 
-	
 ## do the things we have to do for upgraders from old versions
 # it does not harm to do the checks also when $action is reconfigure.
 
@@ -48,26 +29,74 @@ if [ -d /etc/texmf/texmf.d ]; then
 fi
 
 
-## do the things we have to do always
-db_input low tex-common/managedlsr || true
-db_go
 # we also unregister the tetex-bin/lsr-perms
 db_unregister tetex-bin/lsr-perms || true
 
-db_get tex-common/managedlsr && SELECTED_LSR="$RET"
-if [ -n "$SELECTED_LSR" ]; then
-    maybe_move_answer_and_delete groupname   
-    maybe_move_answer_and_delete groupperm
-    maybe_move_answer_and_delete userperm
-    db_beginblock
-    db_input low tex-common/groupname || true
-    db_input low tex-common/groupperm || true
-    db_input low tex-common/userperm || true
-    db_endblock
-fi
+# and unregister old tex-common questions, they are not needed anymore
+db_unregister tex-common/groupperm || true
+db_unregister tex-common/userperm || true
 
+
+#
+# first we collect those ls-R files which are group writeable in gwritetrue
+# and those which are not group writeable in gwritefalse
+# furthermore we save the respective group and write permission in
+# ${i}group
+gwritetrue=""
+gwritefalse=""
+for i in var cache main ; do
+    eval ${i}group=""
+    lsr=`select_lsrfile $i`
+    if [ -r $lsr ] ; then
+    	tmp=`ls -l $lsr | awk '{print$4}'`
+	eval ${i}group=$tmp
+	if ls -l $lsr | grep -q ^.....w ; then
+	    gwritetrue="$gwritetrue $i"
+	else
+	    gwritefalse="$gwritefalse $i"
+	fi
+    fi
+done
+#
+# now we save the list of group writeable ls-R files to tex-common/managedlsr
+db_set tex-common/managedlsr $gwritetrue || true
+#
+# and ask the user to check if this selection is ok
+db_input low tex-common/managedlsr || true
 db_go
 
+#
+# get the answer of the users, ie what files should really be group writeable
+db_get tex-common/managedlsr && SELECTED_LSR="$RET" || true
+if [ -n "$SELECTED_LSR" ]; then
+    #
+    # we check wether all the group writeable files belong to the same group
+    # if yes, we suggest this group and ask the groupname question,
+    # otherwise we ignore this and do *not* play around with groups.
+    iscommongroup=-1
+    for i in $SELECTED_LSR ; do
+      eval tmp=${i}group
+      if [ "X$iscommongroup" = "X-1" ] ; then
+	 iscommongroup=$tmp
+      else
+         if [ ! $tmp = $iscommongroup ] ; then
+	    iscommongroup=""
+	 fi
+      fi
+    done
+    db_set tex-common/groupname "$iscommongroup" || true
+    if [ -n $iscommongroup ] ; then
+      #
+      # here we could be more intelligent and check wether the choosen group
+      # actually exist, and if not, reask again!
+      #
+      db_input low tex-common/groupname || true
+      db_go
+    fi
+fi
+#
+# we do not care for user permissions in this setting!
+#
 
 # Local Variables:
 # mode: shell-script

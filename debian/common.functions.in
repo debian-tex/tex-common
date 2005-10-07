@@ -3,7 +3,7 @@
 ## Function definitions - included from file common.functions
 #################################################################
 # Copyright (C) 2004 by Frank Küster <frank@debian.org>.
-# $Id: common.functions.in,v 1.2 2005/06/29 19:40:45 frank Exp $
+# $Id$
 
 # internal variables for common.functions
 MKTMPDIR=/tmp
@@ -191,6 +191,16 @@ postinst_remove_savedlink(){
     then
     rm -r $savedlink.$SYMLINK_MOVE_EXT
   fi
+}
+
+select_lsrfile() {
+    case $1 in
+     main) LSR=$TEXMFSYSVAR/ls-R-TEXMFMAIN ;;
+     var)  LSR=$TEXMFSYSVAR/ls-R ;;
+     cache) LSR=/var/cache/fonts/ls-R ;;
+     *) echo "select_lsr: don't know how to set this: $1" >&2 ;;
+    esac
+    echo $LSR
 }
 
 #################################################################
