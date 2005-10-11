@@ -2,8 +2,11 @@ tex-common (0.8.1) UNRELEASED; urgency=low
 
   * Change ls-R file handling to be useful. Don't use debconf as
     registry. (Closes: #332264)
+  * Translations:
+    - updated danish debconf translation, thanks to Claus Hindsgaul
+    <claus_h@image.dk> (closes: #332699) [frank]
 
- -- Norbert Preining <preining@logic.at>  Fri,  7 Oct 2005 13:32:46 +0200
+ -- Frank Küster <frank@debian.org>  Tue, 11 Oct 2005 11:28:02 +0200
 
 tex-common (0.8) unstable; urgency=low
 

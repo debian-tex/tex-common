@@ -1,26 +1,26 @@
 # translation of tetex-bin_2.0.2-8_da.po to Danish
 # translation of tetex-base Debian template to Danish
-# Claus Hindsgaul <claus_h@image.dk>, 2004.
+# Claus Hindsgaul <claus_h@image.dk>, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-03 19:46+0200\n"
-"PO-Revision-Date: 2004-09-10 17:45+0200\n"
+"PO-Revision-Date: 2005-10-07 12:08+0200\n"
 "Last-Translator: Claus Hindsgaul <claus_h@image.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
 msgid "Select the ls-R file which should be managed by debconf"
-msgstr ""
+msgstr "Vælg den ls-R-fil, der skal håndteres af debconf"
 
 #. Type: multiselect
 #. Description
@@ -38,6 +38,18 @@ msgid ""
 "You can select from these four locations those whose ls-R file should be "
 "managed by debconf."
 msgstr ""
+"Der er mange installerede filer i et typisk TeX-system. For at gøre det "
+"hurtigere at søge i disse filer, gemmes en liste over de tilgængelige filer "
+"i en fil med navnet ls-R. Der er fire forskellige placeringer af TeX-filer "
+"på et Debiansystem:\n"
+" - main: normalt /usr/share/texmf, indeholder kun filer, der installeres\n"
+"   af Debianpakker.\n"
+" - local: normalt /usr/local/share/texmf, indeholder lokale tilføjelser\n"
+" - var: normalt /var/lib/texmf, indeholder filer, der er genereret af\n"
+"   TeX-systemet, som f.eks. formatfiler.\n"
+" - cache: normalt /var/cache/fonts, indeholder genererede skrifttyper.\n"
+"Du kan vælge hvilke af disse fire placeringers ls-R-filer, der skal "
+"håndteres af debconf."
 
 #. Type: multiselect
 #. Description
@@ -46,20 +58,20 @@ msgid ""
 "We suggest selecting cache and local (these are the defaults) and allowing a "
 "selected user group to modify these ls-R files out of the following reasons:"
 msgstr ""
+"Vi foreslår at du vælger mellemlager og lokal (de er forvalgt) og tillader "
+"en udvalgt brugergruppe at redigere disse ls-R-filer af følgende årsager:"
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "A lot of font files have to be generated before they can be used by xdvi, "
 "dvips etc. These files are stored in /var/cache/fonts, so that they do not "
 "need to be regenerated every time."
 msgstr ""
-"En masse skrifttypefiler skal genereres, før de kan bruges af teTeX's "
-"fremvisnings- og udskriftsprogrammer (xdvi, dvips m.fl.). Disse filer gemmes "
-"i /var/cache/fonts, så de ikke behøver at blive genereret igen hver gang. ls-"
-"R-filer fortæller systemet, hvilke filer der er gemt og hvor."
+"En masse skrifttypefiler skal genereres, før de kan bruges af xdvi, dvips m."
+"fl. Disse filer gemmes i /var/cache/fonts, så de ikke behøver at blive "
+"genereret igen hver gang."
 
 #. Type: multiselect
 #. Description
@@ -68,19 +80,20 @@ msgid ""
 "Some users may have the right to add files to the local texmf tree, so they "
 "should also be allowed to change the ls-R file."
 msgstr ""
+"Nogle brugere kan have rettigheder til at tilføje filer til de lokale texmf-"
+"træ, så de skal også have rettighed til at ændre ls-R-filen."
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "Accepting this option will allow you to easily manage the permissions of "
 "those ls-R files using debconf. Otherwise you will have to manually ensure "
 "that they get useful but safe permissions."
 msgstr ""
 "Ved at acceptere denne indstilling, kan du nemt håndtere filrettighederne "
-"til ls-R-filer med debconf. Ellers vil du være nødt til selv at sikre dig at "
-"de får brugbare men sikre filrettigheder."
+"til disse ls-R-filer med debconf. Ellers vil du være nødt til selv at sikre "
+"dig at de får brugbare men sikre filrettigheder."
 
 #. Type: string
 #. Description
@@ -91,17 +104,16 @@ msgstr "Hvilken gruppe skal eje ls-R-filerne?"
 #. Type: string
 #. Description
 #: ../templates:36
-#, fuzzy
 msgid ""
 "Modification of ls-R files can be restricted to the members of one group "
 "which owns them.  To take advantage of this, add the users to the group of "
 "your choice, and enter that group name here.  The default group, 'users', is "
 "appropriate for most systems."
 msgstr ""
-"?dring af ls-R-filer kan begrænses til medlemmerne af en gruppe, der ejer "
-"dem. For at udnytte dette, skal du tilføje brugere til en selvvalgt gruppe "
-"og angive navnet her. Standardgruppen 'users' er passende for de fleste "
-"systemer."
+"Ædring af ls-R-filer kan begrænses til medlemmerne af en enkelt gruppe, der "
+"ejer dem. For at udnytte dette, skal du tilføje brugere til en, gruppe efter "
+"eget valg og angive navnet her. Standardgruppen 'users' er passende på de "
+"fleste systemer."
 
 #. Type: boolean
 #. Description
@@ -112,14 +124,12 @@ msgstr "Tillad gruppemedlemmer at ændre i ls-R-filer?"
 #. Type: boolean
 #. Description
 #: ../templates:45
-#, fuzzy
 msgid ""
 "Accepting this option will allow members of the owning group to modify the "
 "ls-R files."
 msgstr ""
-"Hvis du accepterer denne indstilling, vil medlemmer af ejergruppen have "
-"rettigheder til at rette i ls-R-filer. Næsten alle bør acceptere denne "
-"indstilling!"
+"Hvis du accepterer denne indstilling, vil medlemmer af ejergruppen få "
+"rettigheder til at rette i ls-R-filer."
 
 #. Type: boolean
 #. Description
@@ -148,7 +158,6 @@ msgstr "Ret navne på filerne i /etc/texmf/texmf.d/"
 #. Type: note
 #. Description
 #: ../templates:59
-#, fuzzy
 msgid ""
 "texmf.cnf has previously been generated by update-texmf from all files in /"
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
@@ -160,13 +169,12 @@ msgstr ""
 #. Type: note
 #. Description
 #: ../templates:59
-#, fuzzy
 msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
 "cnf' to its name; for example, 22mymacro => 22mymacro.cnf"
 msgstr ""
-"Hvis du tilføjede egne filer i /etc/texmf/texmf.d/, bør du tilføje '.cnf' "
-"til deres navne (f.eks. 22minmakro => 22minmakro.cnf) og køre update-texmf."
+"Hvis du tidligere har lagt egne filer i /etc/texmf/texmf.d/, bør du tilføje "
+"'.cnf' til deres navne (f.eks. 22minmakro => 22minmakro.cnf)"
 
 #~ msgid "Use debconf to manage permissions of ls-R files?"
 #~ msgstr "Brug debconf til håndtering af filrettigheder for ls-R-filer?"
