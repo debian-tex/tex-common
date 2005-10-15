@@ -50,8 +50,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		push @maps, @ARGV;
 	}
 
-	open(CFGFILE, ">$tmp/etc/texmf/updmap.d/50$package.cfg") || \
-		error("Cannot open $tmp/etc/texmf/updmap.d/10$package.cfg for writing!);
+	open(CFGFILE, ">$tmp/etc/texmf/updmap.d/50$package.cfg") || 
+		error("Cannot open $tmp/etc/texmf/updmap.d/10$package.cfg for writing!");
 	print CFGFILE <<EOF;
 # 50$package.cfg
 # You can change/add entries to this file and changes will be preserved
@@ -61,12 +61,12 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 # -_- DebPkgProvidedMaps -_-
 #
 EOF
-	while (@maps) {
+	foreach (@maps) {
 		print CFGFILE "Map $_\n";
 	}
 	close(CFGFILE);
-	open(LISTFILE, ">$tmp/var/lib/tex-common/fmtutil-cnf/$package.list")||\
-		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing!);
+	open(LISTFILE, ">$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
+		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing!");
 	print LISTFILE "50$package";
 	close(LISTFILE);
 
