@@ -28,8 +28,8 @@ works.
 
 =head1 NOTES
 
-See Debian policy, section 11.8.5. for details about doing fonts the Debian
-way.
+See Debian TeX policy, section 4.1.1. for details about doing fonts for TeX 
+the Debian way.
 
 =cut
 
@@ -50,6 +50,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		push @maps, @ARGV;
 	}
 
+
+        if ( ! -d "$tmp/etc/texmf/updmap.d/") {
+            doit("install","-d","$tmp/etc/texmf/updmap.d/");
+        }
 	open(CFGFILE, ">$tmp/etc/texmf/updmap.d/50$package.cfg") || 
 		error("Cannot open $tmp/etc/texmf/updmap.d/10$package.cfg for writing!");
 	print CFGFILE <<EOF;
@@ -65,6 +69,9 @@ EOF
 		print CFGFILE "Map $_\n";
 	}
 	close(CFGFILE);
+        if ( ! -d "$tmp/var/lib/tex-common/fontmap-cfg/") {
+            doit("install","-d","$tmp/var/lib/tex-common/fontmap-cfg/");
+        }
 	open(LISTFILE, ">$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
 		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing!");
 	print LISTFILE "50$package";
