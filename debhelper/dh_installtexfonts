@@ -1,0 +1,89 @@
+#!/usr/bin/perl -w
+
+=head1 NAME
+
+dh_installtexfonts - register TeX type1 fonts
+
+=cut
+
+use strict;
+use Debian::Debhelper::Dh_Lib;
+
+=head1 SYNOPSIS
+
+B<dh_installtexfonts> [S<I<debhelper options>>]
+
+=head1 DESCRIPTION
+
+dh_installtexfonts is a debhelper program that is responsible for
+registering type1 fonts for TeX.
+
+Your package should depend on tex-common (>= 0.7) so that the
+update-* commands are available. (This program adds that dependency to
+${misc:Depends}.)
+
+This program automatically generates the postinst and postrm commands needed
+to register TeX fonts.  See L<dh_installdeb(1)> for an explanation of how this
+works.
+
+=head1 NOTES
+
+See Debian policy, section 11.8.5. for details about doing fonts the Debian
+way.
+
+=cut
+
+init();
+
+foreach my $package (@{$dh{DOPACKAGES}}) {
+	my $tmp=tmpdir($package);
+	my $file=pkgfile($package,"maps");
+
+	my @maps;
+	if ($file) {
+		open(FOO, "<$file") || error("$file cannot be opened.");
+		@maps = <FOO>;
+		close(FOO);
+		chomp @maps;
+	}
+	if (($package eq $dh{FIRSTPACKAGE} || $dh{PARAMS_ALL}) && @ARGV) {
+		push @maps, @ARGV;
+	}
+
+	open(CFGFILE, ">$tmp/etc/texmf/updmap.d/50$package.cfg") || \
+		error("Cannot open $tmp/etc/texmf/updmap.d/10$package.cfg for writing!);
+	print CFGFILE <<EOF;
+# 50$package.cfg
+# You can change/add entries to this file and changes will be preserved
+# over upgrades, even if you have removed the main package prior
+# (not if you purged it). YOu should leave the following pseudo comment
+# present in the file!
+# -_- DebPkgProvidedMaps -_-
+#
+EOF
+	while (@maps) {
+		print CFGFILE "Map $_\n";
+	}
+	close(CFGFILE);
+	open(LISTFILE, ">$tmp/var/lib/tex-common/fmtutil-cnf/$package.list")||\
+		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing!);
+	print LISTFILE "50$package";
+	close(LISTFILE);
+
+	autoscript($package, "postinst", "postinst-texfonts", "");
+	autoscript($package, "postrm",   "postrm-texfonts",   "");
+
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 0.7");
+}
+
+=head1 SEE ALSO
+
+L<debhelper(7)>
+
+This program is till now not a part of debhelper.
+
+=head1 AUTHOR
+
+Norbert Preining <preining@logic.at>
+
+=cut
