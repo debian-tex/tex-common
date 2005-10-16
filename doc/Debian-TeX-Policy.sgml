@@ -390,12 +390,17 @@
 	  subdirectories such as <file>dvipdfm</file>, <file>dvips</file> and
 	  <file>pdftex</file>) is symlinked from
 	  <file><var>TEXMFMAIN</var>/fonts/map</file> by the Basic TeX
-	  packages.</footnote> and have them registered by putting a
-	  configuration file with extension <tt>.cfg</tt> into
-	  <file>/etc/texmf/updmap.d/</file> and calling <tt>update-updmap
-	  --quiet</tt>. The file contents will then be incorporated into
-	  <file>/var/lib/texmf/web2c/updmap.cfg</file>, the effective
-	  configuration file for <prgn>updmap-sys</prgn>.
+	  packages. For more details about the placement of map files and
+	  other TeX-related files, please refer to <file>TETEXDOC.pdf</file>
+	  (<tt>texdoc TETEXDOC</tt>) for teTeX, and more generally to the TeX
+	  Directory Structure, also known as TDS and found at <url
+	  id="http://www.tug.org/tds/" name="http://www.tug.org/tds/">
+	  (teTeX 3 follows TDS version 1.1).</footnote> and have them
+	  registered by putting a configuration file with extension
+	  <tt>.cfg</tt> into <file>/etc/texmf/updmap.d/</file> and calling
+	  <tt>update-updmap --quiet</tt>. The file contents will then be
+	  incorporated into <file>/var/lib/texmf/web2c/updmap.cfg</file>, the
+	  effective configuration file for <prgn>updmap-sys</prgn>.
 	  <prgn>updmap-sys</prgn> has to be called afterwards. It is
 	  recommended to invoke the three commands in the following order:
 
