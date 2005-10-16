@@ -1,10 +1,11 @@
 tex-common (0.8.1) UNRELEASED; urgency=low
 
   * Change ls-R file handling to be useful. Don't use debconf as
-    registry. (Closes: #332264)
+    registry. (Closes: #332264) [preining]
   * Translations:
     - updated danish debconf translation, thanks to Claus Hindsgaul
     <claus_h@image.dk> (closes: #332699) [frank]
+  * install debhelper dh_installtexfonts script (closes: #320147) [preining]
 
  -- Frank Küster <frank@debian.org>  Tue, 11 Oct 2005 11:28:02 +0200
 

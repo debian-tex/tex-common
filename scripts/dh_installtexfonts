@@ -1,0 +1,212 @@
+#!/usr/bin/perl -w
+
+=head1 NAME
+
+dh_installtexfonts - register TeX type1 fonts
+
+=cut
+
+use strict;
+use Debian::Debhelper::Dh_Lib;
+
+=head1 SYNOPSIS
+
+B<dh_installtexfonts> [S<I<debhelper options>>] [B<--priority=>I<n>] [S<I<maptype=mapfile ...>|I<cfg-file ...>>] 
+
+=head1 DESCRIPTION
+
+dh_installtexfonts is a debhelper program that is responsible for
+registering type1 fonts for TeX.
+
+Your package should depend on tex-common (>= 0.9) so that the
+update-* commands are available. (This program adds that dependency to
+${misc:Depends}.)
+
+Registering map files for TeX can be done in the following ways:
+1) You can specify cfg files on the cmd line. These cfg files will be 
+installed into etc/texmf/updmap.d/ with the standard priority 10 (but
+see below) and their original name (foo.cfg installs into 10foo.cfg).
+
+2) You can specify map lines on the cmdline, where the map type and the
+map files is connected with =. These map lines are stored in a cfg file
+10package.cfg.
+
+3) You create a file debian/package.maps or debian/maps. These files are
+installed with default priority and the name of the package (i.e.
+debian/package.maps is installed as 10package.cfg). The file debian/maps
+will be installed into the first package dh_installtexfonts is told to
+act on. By default this is the first binary package in debian/control, but
+if you use -p, -i, or -a flags, it will be the first package specified
+by those flags.
+
+If you mix these variants and the same file 10package.cfg would be created
+several times (by variant 1) if you provide a cfg file with the same name, 
+by 2) and by 3) if debian/package.maps is present), they will get renamed
+to 10package1.cfg and 10package2.cfg.
+
+The files as installed in variant 1) or 3) will get an additional header
+containing a explanation text and the magic header for correct updmap
+function. Please see the TeX Policy for more information on this
+magic header.
+
+This program automatically generates the postinst and postrm commands needed
+to register TeX fonts.  See L<dh_installdeb(1)> for an explanation of how this
+works.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<--priority=>I<n>
+
+Instead of using the default priority of 10 for the updmap-config file,
+use the priority specified by the --priority parameter.
+
+=head1 NOTES
+
+See Debian TeX policy, section 4.1.1. for details about doing fonts for TeX 
+the Debian way.
+
+=cut
+
+init();
+
+foreach my $package (@{$dh{DOPACKAGES}}) {
+	my $tmp=tmpdir($package);
+	my $file=pkgfile($package,"maps");
+	my $priority=10;
+	my @pkgcfg;
+	my @cmdlinemaps;
+	my @cmdlinecfgs;
+	my $pkgfilepresent = 0;
+	my $pkgfileext = "";
+	my @listlines;
+
+	if (defined($dh{PRIORITY}) && $dh{PRIORITY} ne '') {
+		$priority=$dh{PRIORITY};
+	}
+	if ($file) {
+		open(FOO, "<$file") || error("$file cannot be opened.");
+		@pkgcfg = <FOO>;
+		close(FOO);
+		$pkgfilepresent = 1;
+	}
+	if (($package eq $dh{FIRSTPACKAGE} || $dh{PARAMS_ALL}) && @ARGV) {
+		foreach my $entry (@ARGV) {
+			if ($entry =~ m/^(Map|MixedMap)=(.*)$/) {
+				push @cmdlinemaps, "$1 $2";
+			} elsif ($entry =~ m/\.cfg$/) {
+				my $bn=basename($entry);
+				if ($entry eq "$package.cfg") {
+					$pkgfileext = "1";
+				}
+				push @cmdlinecfgs, $entry;
+			} else {
+				error("$entry is neither of the form Map=filename.map, MixedMap=filename.map, or filename.cfg.");
+			}
+		}
+	}
+
+	if (!$pkgfilepresent && ($#cmdlinemaps < 0) && ($#cmdlinecfgs < 0)) {
+		# we have nothing to do here, skip to the next one!
+		next;
+	}
+
+        if ( ! -d "$tmp/etc/texmf/updmap.d/") {
+            doit("install","-d","$tmp/etc/texmf/updmap.d/");
+        }
+	#
+	# the cmd line cfg files
+	#
+	foreach my $cfg (@cmdlinecfgs) {
+		my $bn=basename($cfg);
+		print "cfg=...$cfg...\nbn=...$bn...\n";
+		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$bn") ||
+			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$bn for writing!");
+		print CFGFILE <<EOF;
+# $priority$bn
+# You can change/add entries to this file and changes will be preserved
+# over upgrades, even if you have removed the main package prior
+# (not if you purged it). You should leave the following pseudo comment
+# present in the file!
+# -_- DebPkgProvidedMaps -_-
+#
+EOF
+		open(FOO,"<$cfg") || error("Cannot open $cfg for reading!");
+		while (<FOO>) { print CFGFILE $_; }
+		close(FOO);
+		close(CFGFILE);
+		$bn =~ s/\.cfg$//;
+		push @listlines, "$priority$bn";
+	}
+	#
+	# now debian/package.maps and/or debian/maps
+	#
+	if ($pkgfilepresent) {
+		# here we rely on $pkgfileext either being "" or being "2"
+		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg") || 
+			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg for writing!");
+		print CFGFILE <<EOF;
+# $priority$package$pkgfileext.cfg
+# You can change/add entries to this file and changes will be preserved
+# over upgrades, even if you have removed the main package prior
+# (not if you purged it). You should leave the following pseudo comment
+# present in the file!
+# -_- DebPkgProvidedMaps -_-
+#
+EOF
+		foreach (@pkgcfg) {
+			print CFGFILE "$_";
+		}
+		close(CFGFILE);
+		push @listlines, "$priority$package$pkgfileext";
+	}
+	#
+	# finally do the cmdline maps
+	#
+	if ($#cmdlinemaps >= 0) {
+		$pkgfileext++;
+		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg") || 
+			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg for writing!");
+		print CFGFILE <<EOF;
+# $priority$package$pkgfileext.cfg
+# You can change/add entries to this file and changes will be preserved
+# over upgrades, even if you have removed the main package prior
+# (not if you purged it). You should leave the following pseudo comment
+# present in the file!
+# -_- DebPkgProvidedMaps -_-
+#
+EOF
+		foreach (@cmdlinemaps) {
+			print CFGFILE "$_\n";
+		}
+		close(CFGFILE);
+		push @listlines, "$priority$package$pkgfileext";
+	}
+
+	
+        if ( ! -d "$tmp/var/lib/tex-common/fontmap-cfg/") {
+            doit("install","-d","$tmp/var/lib/tex-common/fontmap-cfg/");
+        }
+	open(LISTFILE, ">$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
+		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing!");
+	foreach (@listlines) {
+		print LISTFILE "$_\n";
+	}
+	close(LISTFILE);
+
+	autoscript($package, "postinst", "postinst-texfonts", "");
+	autoscript($package, "postrm",   "postrm-texfonts",   "");
+
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 0.7");
+}
+
+=head1 SEE ALSO
+
+L<debhelper(7)>
+
+=head1 AUTHOR
+
+Norbert Preining <preining@logic.at>
+
+=cut
