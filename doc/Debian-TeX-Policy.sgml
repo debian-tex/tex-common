@@ -22,7 +22,8 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 2004-2005 Frank Küster, Richard Lewis, Norbert Preining
+	  Copyright &copy; 2004-2005 Frank Küster, Richard Lewis, Norbert
+          Preining, Ralf Stubner, Florent Rougon
 	</copyrightsummary>
 	<p>
 	  This manual is free software; you may redistribute it and/or
@@ -375,47 +376,52 @@
 
 	<p>
 	Packages that changed <file>updmap.cfg</file> must call
-	<prgn>updmap-sys</prgn>, packages that changed
-	<file>language.dat</file> or <file>fmtutil.cnf</file> must
-	call <prgn>fmtutil-sys</prgn>. They must make sure to issue
-	the necessary <prgn>mktexlsr</prgn> commands before this.
+	<prgn>updmap-sys</prgn> as detailed in <ref
+	id="sec-font-configuration">. Packages that changed
+	<file>language.dat</file> or <file>fmtutil.cnf</file> must call
+	<prgn>fmtutil-sys</prgn>. They must make sure to issue the
+	<prgn>mktexlsr</prgn> command before this.
 	</p>
 
-	<sect1>
+	<sect1 id="sec-font-configuration">
 	  <heading>Font configuration</heading>
 	  <p>
-	  A package named <var>package</var> that provides PostScript Type 1
-	  fonts for TeX should put the necessary <tt>map</tt> files below
-	  <file>/etc/texmf/map/</file><footnote>This directory (or relevant
-	  subdirectories such as <file>dvipdfm</file>, <file>dvips</file> and
-	  <file>pdftex</file>) is symlinked from
-	  <file><var>TEXMFMAIN</var>/fonts/map</file> by the Basic TeX
-	  packages. For more details about the placement of map files and
-	  other TeX-related files, please refer to <file>TETEXDOC.pdf</file>
-	  (<tt>texdoc TETEXDOC</tt>) for teTeX, and more generally to the TeX
-	  Directory Structure, also known as TDS and found at <url
-	  id="http://www.tug.org/tds/" name="http://www.tug.org/tds/">
-	  (teTeX 3 follows TDS version 1.1).</footnote> and have them
-	  registered by putting a configuration file with extension
-	  <tt>.cfg</tt> into <file>/etc/texmf/updmap.d/</file> and calling
-	  <tt>update-updmap --quiet</tt>. The file contents will then be
-	  incorporated into <file>/var/lib/texmf/web2c/updmap.cfg</file>, the
-	  effective configuration file for <prgn>updmap-sys</prgn>.
-	  <prgn>updmap-sys</prgn> has to be called afterwards. It is
-	  recommended to invoke the three commands in the following order:
 
-<example>
-update-updmap --quiet
-mktexlsr
-updmap-sys
-</example>
+	  A package named <var>package</var> that provides PostScript
+          Type&nbsp;1 fonts for TeX should be useable with any Basic TeX
+          Package. To achieve this, it should depend on
+          <package>tex-common</package> but not on a Basic TeX Package. It
+          should install the necessary map files below
+          <file>/etc/texmf/map/</file><footnote>This directory (or relevant
+          subdirectories such as <file>dvipdfm</file>, <file>dvips</file> and
+          <file>pdftex</file>) is symlinked from
+          <file><var>TEXMFMAIN</var>/fonts/map</file> by the Basic TeX
+          packages. For more details about the placement of map files and
+          other TeX-related files, please refer to <file>TETEXDOC.pdf</file>
+          (<tt>texdoc TETEXDOC</tt>) for teTeX, and more generally to the TeX
+          Directory Structure, also known as TDS and found at <url
+          id="http://www.tug.org/tds/" name="http://www.tug.org/tds/">
+          (teTeX&nbsp;3 follows TDS version&nbsp;1.1).</footnote> and have
+          them registered by putting a configuration file with extension
+          <tt>.cfg</tt> into <file>/etc/texmf/updmap.d/</file> and calling
+          <tt>update-updmap --quiet</tt>. The file contents will then be
+          incorporated into <file>/var/lib/texmf/web2c/updmap.cfg</file>, the
+          effective configuration file for <prgn>updmap-sys</prgn>.
+	  </p>
 
-          because the <prgn>mktexlsr</prgn> call is necessary for
-          <prgn>updmap-sys</prgn> to locate the newly installed files (map
+          <p>
+          <prgn>updmap-sys</prgn> has to be called afterwards. It is
+          recommended to invoke the three programs in the following order:
+          <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and then
+          <prgn>updmap-sys</prgn>; the <prgn>mktexlsr</prgn> call is necessary
+          for <prgn>updmap-sys</prgn> to locate the newly installed files (map
           files shipped by <var>package</var>; additionally,
           <file>/var/lib/texmf/web2c/updmap.cfg</file> might have been created
           by <prgn>update-updmap</prgn>, although it more probably already
-          existed), and it is of no use to <prgn>update-updmap</prgn>.
+          existed), and would be of no use to <prgn>update-updmap</prgn>.
+          Since <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> are provided
+          by the Basic TeX packages, <var>package</var> has to ensure that
+          they are only called when found in <tt>$PATH</tt>.
 	  </p>
 
 	  <p>
