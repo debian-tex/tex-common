@@ -28,11 +28,7 @@ update_fontmaps()
 }
 
 case "$1" in
-    configure)
-        update_fontmaps
-    ;;
-
-    abort-upgrade|abort-remove|abort-deconfigure)
+    configure|abort-upgrade|abort-remove|abort-deconfigure)
         update_fontmaps
     ;;
 
