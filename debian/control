@@ -9,7 +9,7 @@ Standards-Version: 3.6.1
 
 Package: tex-common
 Architecture: all
-Depends: ucf, debhelper (>= 4.0), ${perl:Depends}, ${misc:Depends}
+Depends: ucf, debhelper (>= 4.0), ${misc:Depends}
 Replaces: tetex-base (<= 3.0-7)
 Conflicts: tetex-bin (<= 3.0-4), tetex-base (<= 3.0-3)
 Description: Common infrastructure for using and building TeX in Debian
