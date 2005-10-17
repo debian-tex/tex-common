@@ -386,7 +386,6 @@
 	<sect1 id="sec-font-configuration">
 	  <heading>Font configuration</heading>
 	  <p>
-
 	  A package named <var>package</var> that provides PostScript
           Type&nbsp;1 fonts for TeX should be useable with any Basic TeX
           Package. To achieve this, it should depend on
@@ -421,7 +420,9 @@
           existed), and would be of no use to <prgn>update-updmap</prgn>.
           Since <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> are provided
           by the Basic TeX packages, <var>package</var> has to ensure that
-          they are only called when found in <tt>$PATH</tt>.
+          they are only called when found in <tt>$PATH</tt>. Sample
+          implementations for this behaviour can be found in <ref
+          id="appen-sample-font">. 
 	  </p>
 
 	  <p>
@@ -469,11 +470,13 @@
           <prgn>update-updmap</prgn>, and in the final map files by
           <prgn>updmap-sys</prgn>).
           </p>
+
           <p>
-          Implementations for the configuration scheme described in this
-          section can be found in <ref id="appen-sample-font"> and is
-          implemented in the <prgn>debhelper</prgn> program
-          <prgn>dh_installtexfonts</prgn>. 
+          The recommended way to implement the configuration scheme
+          described in this section is to use the <prgn>debhelper</prgn>
+          program <prgn>dh_installtexfonts</prgn> provided by
+          <package>tex-common</package>. See <manref
+          name="dh_installtexfonts" section="1"> for usage details.
           </p>
 	</sect1>
 
