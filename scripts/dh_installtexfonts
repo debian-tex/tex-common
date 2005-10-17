@@ -120,7 +120,6 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	#
 	foreach my $cfg (@cmdlinecfgs) {
 		my $bn=basename($cfg);
-		print "cfg=...$cfg...\nbn=...$bn...\n";
 		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$bn") ||
 			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$bn for writing!");
 		print CFGFILE <<EOF;
