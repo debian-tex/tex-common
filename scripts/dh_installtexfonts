@@ -79,7 +79,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	my @cmdlinemaps;
 	my @cmdlinecfgs;
 	my $pkgfilepresent = 0;
-	my $pkgfileext = "";
+	my $pkgfileext = 0;
 	my @listlines;
 
 	if (defined($dh{PRIORITY}) && $dh{PRIORITY} ne '') {
@@ -98,7 +98,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			} elsif ($entry =~ m/\.cfg$/) {
 				my $bn=basename($entry);
 				if ($entry eq "$package.cfg") {
-					$pkgfileext = "1";
+					$pkgfileext++;
 				}
 				push @cmdlinecfgs, $entry;
 			} else {
@@ -143,11 +143,12 @@ EOF
 	# now debian/package.maps and/or debian/maps
 	#
 	if ($pkgfilepresent) {
-		# here we rely on $pkgfileext either being "" or being "2"
-		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg") || 
-			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg for writing!");
+		my $p = $priority + $pkgfileext;
+		$pkgfileext++;
+		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$p$package.cfg") || 
+			error("Cannot open $tmp/etc/texmf/updmap.d/$p$package.cfg for writing!");
 		print CFGFILE <<EOF;
-# $priority$package$pkgfileext.cfg
+# $p$package.cfg
 # You can change/add entries to this file and changes will be preserved
 # over upgrades, even if you have removed the main package prior
 # (not if you purged it). You should leave the following pseudo comment
@@ -159,17 +160,17 @@ EOF
 			print CFGFILE "$_";
 		}
 		close(CFGFILE);
-		push @listlines, "$priority$package$pkgfileext";
+		push @listlines, "$p$package";
 	}
 	#
 	# finally do the cmdline maps
 	#
 	if ($#cmdlinemaps >= 0) {
-		$pkgfileext++;
-		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg") || 
-			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$package$pkgfileext.cfg for writing!");
+		my $p = $priority + $pkgfileext;
+		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$p$package.cfg") || 
+			error("Cannot open $tmp/etc/texmf/updmap.d/$p$package.cfg for writing!");
 		print CFGFILE <<EOF;
-# $priority$package$pkgfileext.cfg
+# $p$package.cfg
 # You can change/add entries to this file and changes will be preserved
 # over upgrades, even if you have removed the main package prior
 # (not if you purged it). You should leave the following pseudo comment
@@ -181,7 +182,7 @@ EOF
 			print CFGFILE "$_\n";
 		}
 		close(CFGFILE);
-		push @listlines, "$priority$package$pkgfileext";
+		push @listlines, "$p$package";
 	}
 
 	
