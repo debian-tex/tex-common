@@ -5,6 +5,8 @@
 #
 # Author: Florent Rougon <f.rougon@free.fr>
 #
+# comments are stripped from this file before installation!
+
 tell_that_errors_are_ok()
 {
     # Cheap option handling...
