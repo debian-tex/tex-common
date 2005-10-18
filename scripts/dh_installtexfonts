@@ -11,7 +11,7 @@ use Debian::Debhelper::Dh_Lib;
 
 =head1 SYNOPSIS
 
-B<dh_installtexfonts> [S<I<debhelper options>>] [B<--priority=>I<n>] [S<I<maptype=mapfile ...>>] [S<I<cfg-file[=I<n>] ...>>] 
+B<dh_installtexfonts> [S<I<debhelper options>>] [B<-n>] [B<--priority=>I<n>] [S<I<maptype=mapfile ...>>] [S<I<cfg-file[=I<n>] ...>>] 
 
 =head1 DESCRIPTION
 
@@ -60,6 +60,10 @@ works.
 =head1 OPTIONS
 
 =over 4
+
+=item B<-n>, B<--noscripts>
+
+Do not modify postinst/prerm scripts.
 
 =item B<--priority=>I<n>
 
@@ -198,8 +202,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	}
 	close(LISTFILE);
 
-	autoscript($package, "postinst", "postinst-texfonts", "");
-	autoscript($package, "postrm",   "postrm-texfonts",   "");
+	if (! $dh{NOSCRIPTS}) {
+		autoscript($package, "postinst", "postinst-texfonts", "");
+		autoscript($package, "postrm",   "postrm-texfonts",   "");
+	}
 
 	addsubstvar($package, "misc:Depends", "tex-common", ">= 0.7");
 }
