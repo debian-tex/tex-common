@@ -5,7 +5,9 @@
 #
 # Author: Florent Rougon <f.rougon@free.fr>
 #
-# comments are stripped from this file before installation!
+# Please note that comments in this file are stripped before installation
+# by calling a grep -v '^[ \t]*#'
+# So please be careful if you add stuff here!
 
 update_fontmaps()
 {
