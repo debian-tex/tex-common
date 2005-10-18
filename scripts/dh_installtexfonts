@@ -115,7 +115,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				push @cmdlinemaps, "$1 $2";
 			} elsif ($entry =~ m/^(.*\.cfg)(=([[:digit:]]+))?$/) {
 				my $fn=$1;
-				my $pr= ($3 eq "")?$priority:$3;
+				my $pr=$priority;
+				if (defined($3)) {
+					$pr=$3;
+				}
 				my $bn=basename($fn);
 				if ($bn eq "$package.cfg" && $pr == $priority) {
 					$pkgfileoncmdline = 1;
