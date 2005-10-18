@@ -5,10 +5,6 @@
     <titlepag>
       <title>The Debian TeX sub-policy</title>
       <author>
-	<name>Frank Küster</name>
-	<email>frank@debian.org</email>
-      </author>
-      <author>
 	<name>The Debian teTeX mailing List</name>
 	<email>debian-tetex-maint@lists.debian.org</email>
       </author>
@@ -178,8 +174,8 @@
         is a bug if a package only conforms to an outdated TDS version.
         It is a more severe bug, however, if it conforms to the current
         TDS version but does not make sure to depend on an appropriately
-        recent version of the Basic TeX packages (that support this TDS
-        version).
+        recent version of the Basic TeX packages or
+        <package>tex-common</package> (that support this TDS version).
         </p>
   
         <p>
@@ -189,7 +185,10 @@
         <file>/etc/texmf</file>.  The system-wide
         <var>TEXMFSYSCONFIG</var> tree, if defined, must be the same
         as the <var>TEXMFMAIN</var> tree; a TeX-related package must
-        not change this.
+        not change this.  In the future,
+        <file>/etc/texmf</file> might become a separate, additional
+        <var>TEXMF</var> tree <var>TEXMFSYSCONFIG</var>; a TeX-related
+        package should try to not rely on either setup.
         </p>
 
         <p>
@@ -247,7 +246,8 @@
 	<p>An exception is the generated file
         <file>/etc/texmf/texmf.cnf</file>.  It is not intended that
         local administrators edit that file, but if they do, the
-        configuration update programs must respect these changes.</p>
+        configuration update programs must respect these changes.
+        Debian packages must not alter that file.</p>
 
       </sect>
 
@@ -344,7 +344,7 @@
 	<file>fmtutil.cnf</file>, this is the only
 	method of configuration.  <file>texmf.cnf</file> can be edited
 	manually by local system administrators, and changes will be
-	handled by ucf.  Package installation scripts, however, should
+	handled by ucf.  Package installation scripts, however, must
 	not change this file, but use the <prgn>update-texmf</prgn>
 	mechanism.  Local administrators are encouraged to use the
 	<prgn>update-texmf</prgn> mechanism, too.
