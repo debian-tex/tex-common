@@ -8,8 +8,7 @@
 	<name>The Debian teTeX mailing List</name>
 	<email>debian-tetex-maint@lists.debian.org</email>
       </author>
-      <!-- Maybe an SVN Id should be used here. Hmmm? -->
-      <version>version 0.32, 2005-10-18</version>
+      <version>generated from $Id$</version>
 
       <abstract>
         This document provides a set of rules for the packaging of
@@ -282,7 +281,7 @@
 	sure to follow not only their own upstream development, but
 	also that of the package(s) that install the files in
 	<var>TEXMFMAIN,</var> and make sure not to get outdated with
-	respect to the files in <var>TEXMFMAIN</var>
+	respect to the files in <var>TEXMFMAIN</var>.
 	</p>
 
 	<p>
@@ -402,12 +401,9 @@
           following requirements:
             <enumlist>
               <item>
-                It should depend on <package>tex-common</package> (for
-                <prgn>update-updmap</prgn> and a sane <file>texmf.cnf</file>,
-                so that <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> can
-                be run safely if they are present) but not on any Basic TeX
-                Package, unless needed for another task than simply installing
-                the fonts for TeX.
+                It should depend on <package>tex-common</package> but not on
+                any Basic TeX Package, unless needed for another task than
+                simply installing the fonts for TeX.
               </item>
 
               <item>
@@ -422,21 +418,14 @@
                 </p>
 
                 <p>
-                For more details about the placement of map files and other
-                TeX-related files, please refer to <file>TETEXDOC.pdf</file>
-                (<tt>texdoc TETEXDOC</tt>) for teTeX, and more generally to
-                the TeX Directory Structure, also known as TDS and found at
-                <url id="http://www.tug.org/tds/"
-                name="http://www.tug.org/tds/"> (teTeX&nbsp;3 follows TDS
-                version&nbsp;1.1). Of course, when any these documents
-                mentions a directory under <file><var>TEXMFMAIN</var></file>
-                that is, due to the symbolic links installed by the Basic TeX
-                Packages, accessible under <file>/etc</file>,
-                <var>package</var> should install the files in the appropriate
-                subdirectory of <file>/etc</file>, because the symlinks mean
-                that the directory is considered to contain configuration
-                files (for instance, don't install map files into
-                <file>/usr/share/texmf/fonts/map/dvips/</file>; use
+                The precise location under <file>/etc/texmf/map/</file> must
+                conform to TDS version&nbsp;1.1, except that when parts of
+                <file><var>TEXMFMAIN</var></file> are accessible under
+                <file>/etc</file> due to symbolic links installed by the Basic
+                TeX Packages, the location under <file>/etc</file> should be
+                used (this is the case when a directory is supposed to contain
+                configuration files; for instance, don't install map files
+                into <file>/usr/share/texmf/fonts/map/dvips/</file>, but use
                 <file>/etc/texmf/map/dvips/</file> instead).
                 </p>
               </item>
@@ -493,140 +482,159 @@
 
                 This <file><var>package</var>.list</file> file must be shipped
                 in the <tt>.deb</tt>, so that when <var>package</var> is
-                removed but not purged, <file><var>package</var>.list</file>
-                disappears from <file>/var/lib/tex-common/fontmap-cfg/</file>.
-                </p>
-
-                <p>
-                The purpose of the "magic comment" in
-                <file>/etc/texmf/updmap.d/*.cfg</file> files and their
-                associated
-                <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-                files is explained below.
+                removed (not necessarily purged),
+                <file><var>package</var>.list</file> disappears from
+                <file>/var/lib/tex-common/fontmap-cfg/</file>.
                 </p>
               </item>
 
               <item>
                 <p>
-                It should run <tt>update-updmap --quiet</tt> to merge the
-                <tt>.cfg</tt> files from <file>/etc/texmf/updmap.d/</file>
-                into <file>updmap.cfg</file>. But before running
-                <prgn>updmap-sys</prgn> with the updated
-                <file>updmap.cfg</file>, <var>package</var> should call
-                <prgn>mktexlsr</prgn> so that <prgn>updmap-sys</prgn> can
-                locate the newly-installed files (in particular, the map files
-                shipped by <var>package</var>). It is recommended to run the
-                three commands in the following order: <tt>update-updmap
-                --quiet</tt>, <tt>mktexlsr</tt> and then <tt>updmap-sys</tt>.
-                </p>
-
-                <p>
-                <em>Rationale</em>: we have already explained why the
-                <prgn>mktexlsr</prgn> call is necessary before running
-                <prgn>updmap-sys</prgn>. It is also slightly better after
-                <prgn>update-updmap</prgn>, because
-                <file>/var/lib/texmf/web2c/updmap.cfg</file> might have been
-                created by <prgn>update-updmap</prgn>, although it more
-                probably already existed. And since it would be of no use to
-                call <prgn>mktexlsr</prgn> before <prgn>update-updmap</prgn>,
-                it is better after, just in case.
+                It should run:
+                <list compact>
+                  <item>
+                    in <file><var>package</var>.postinst</file>;
+                  </item>
+                  <item>
+                    when <file><var>package</var>.postrm</file> is called with
+                    <tt>remove</tt> or <tt>disappear</tt> as its first argument
+                  </item>
+                </list>
+                the following commands in this order: <tt>update-updmap
+                --quiet</tt>, <tt>mktexlsr</tt> and <tt>updmap-sys</tt>.
                 </p>
 
                 <p>
                 Since <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> are
-                provided by the Basic TeX Packages, <var>package</var> has to
-                ensure that they are only called when found in <tt>$PATH</tt>
-                (unless <var>package</var> depends on the Basic TeX Packages
-                for some reason). As long as <package>tex-common</package> is
-                configured, it is expected that <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn> can be safely run whenever available
-                (even if the packages that provide them aren't configured).
+                provided by the Basic TeX Packages,
+                <file><var>package</var>.postinst</file> has to ensure that
+                they are only called when found in <tt>$PATH</tt> (unless
+                <var>package</var> depends on the Basic TeX Packages for some
+                reason). In <file><var>package</var>.postrm</file>, the same
+                considerations must be taken into account, with the addition
+                that <package>tex-common</package> (that provides
+                <prgn>update-updmap</prgn>) can be unconfigured or even
+                uninstalled.
                 </p>
 
                 <p>
-                A sample implementation of this scheme can be found in <ref
-                id="appen-sample-font">, but don't forget that
-                <prgn>dh_installtexfonts</prgn> can do the work for you.
+                As long as <package>tex-common</package> is configured, it is
+                expected that <prgn>mktexlsr</prgn> and
+                <prgn>updmap-sys</prgn> can be safely run whenever available
+                (even if the packages that provide them aren't configured).
                 </p>
               </item>
             </enumlist>
           </p>
 
           <p>
-          The rest of this section explains the purpose of the "magic
-          comments" and the
-          <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-          file. Suppose that <var>package</var> is removed, but not purged.
-          Its map files will stay in subdirectories of
-          <file>/etc/texmf/map/</file>, but the actual font files below
-          <file>/usr/share/texmf/</file> will be removed, rendering the fonts
-          unusable. Therefore, <var>package</var> has to make sure that its
-          <prgn>update-updmap</prgn> configuration files in
-          <file>/etc/texmf/updmap.d/</file> are ignored when it is in this
-          state. Besides, we want the <file>/etc/texmf/updmap.d/*.cfg</file>
-          files to be conffiles (unless we really have no other choice),
-          because then <prgn>dpkg</prgn> automatically handles upgrades and
-          preserves user modifications for them. As a consequence, moving the
-          <file>.cfg</file> files from <var>package</var> out of the way when
-          it is removed is not an option. Moreover, the user would wonder
-          where his configuration files have gone in such a case.
+          A sample implementation of this scheme can be found in <ref
+          id="appen-sample-font">, but don't forget that
+          <prgn>dh_installtexfonts</prgn> can do the work for you.
           </p>
 
           <p>
-          The solution we chose was to add a little bit of logic into
-          <prgn>update-updmap</prgn>, so that whenever it sees a
-          <file>.cfg</file> file (let's call it <file>10foo.cfg</file>) that
-          has the "magic comment", it actually includes its contents into
-          <file>updmap.cfg</file> if, and only if <tt>10foo</tt> appears on a
-          line by itself in one of the <file>.list</file> files in
-          <file>/var/lib/tex-common/fontmap-cfg/</file>. Additionally, that
-          <file>.list</file> file should be
-          <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-          if <file>10foo.cfg</file> comes from <var>package</var>, for simple
-          reasons of tidiness.
-          </p>
-          
-          <p>
-          With this little mechanism in place, all the rest follows as
-          expected:
+          The rest of this section explains the rationale behind the previous
+          recommendations.
             <list>
               <item>
-                When <var>package</var> is removed, but not purged,
-                <file><var>package</var>.list</file> is first removed by
-                <prgn>dpkg</prgn> from
-                <file>/var/lib/tex-common/fontmap-cfg/</file>, thus disabling
-                the the <file>.cfg</file> files shipped by <var>package</var>
-                as far as <prgn>update-updmap</prgn> is concerned. Then,
-                <file><var>package</var>.postrm</file> calls
+                The dependency on <package>tex-common</package> ensures that
+                in <file><var>package</var>.postinst</file>,
+                <prgn>update-updmap</prgn> can be run and
+                <file>texmf.cnf</file> is in a sane state, so that
+                <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> can be run
+                safely if present.
+              </item>
+          
+              <item>
+                The recommended order for running the programs
                 <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn>, with the result that
-                <var>package</var>'s map files aren't listed anymore in the
-                final map files (<file>psfonts.map</file>,
-                <file>pdftex.map</file>...) generated by
-                <prgn>updmap-sys</prgn>.
+                <prgn>updmap-sys</prgn> ensures that <prgn>updmap-sys</prgn>
+                can locate the newly-installed files (in particular, the map
+                files shipped by <var>package</var>), since
+                <prgn>mktexlsr</prgn> is run before <prgn>updmap-sys</prgn>.
+                It is also run after <prgn>update-updmap</prgn>, because
+                <file>/var/lib/texmf/web2c/updmap.cfg</file> might have been
+                created by <prgn>update-updmap</prgn>, although it more
+                probably already existed. And since it would be of no use to
+                call <prgn>mktexlsr</prgn> before <prgn>update-updmap</prgn>,
+                we recommend to run it after, just in case.
               </item>
 
               <item>
-                If <var>package</var> is reinstalled later,
-                <file><var>package</var>.list</file> first reappears in
-                <file>/var/lib/tex-common/fontmap-cfg/</file>. Then,
-                <file><var>package</var>.postinst</file> runs
-                <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn>, and the <file>.cfg</file> files
-                shipped by <var>package</var> aren't ignored by
-                <prgn>update-updmap</prgn> this time, since they are
-                referenced in
-                <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>.
-                Thus, the map files shipped by <var>package</var> end up in
-                the final map files generated by <prgn>updmap-sys</prgn>.
-              </item>
-            </list>
 
-            All this with the <file>/etc/texmf/updmap.d/*.cfg</file> files
-            being simple conffiles, in order to let <prgn>dpkg</prgn> do the
-            tedious work of handling upgrades while preserving user
-            modifications.
-          </p>
+              <p>
+              Now, about the "magic comments" in
+              <file>/etc/texmf/updmap.d/*.cfg</file> and the
+              <file><var>package</var>.list</file> file in
+              <file>/var/lib/tex-common/fontmap-cfg/</file>. Suppose that
+              <var>package</var> is removed, but not purged. Its map files
+              will stay in subdirectories of <file>/etc/texmf/map/</file>, but
+              the actual font files below <file>/usr/share/texmf/</file> will
+              be removed, rendering the fonts unusable. Therefore,
+              <var>package</var> has to make sure that its
+              <prgn>update-updmap</prgn> configuration files in
+              <file>/etc/texmf/updmap.d/</file> are ignored when it is in this
+              state. Besides, we want the
+              <file>/etc/texmf/updmap.d/*.cfg</file> files to be conffiles
+              (unless we really have no other choice), because then
+              <prgn>dpkg</prgn> automatically handles upgrades while
+              preserving user modifications for them. As a consequence, moving
+              the <file>.cfg</file> files from <var>package</var> out of the
+              way when it is removed is not an option. Moreover, the user
+              would wonder where his configuration files have gone in such a
+              case.
+              </p>
+
+              <p>
+              The solution we chose was to add a little bit of logic into
+              <prgn>update-updmap</prgn>, so that whenever it sees a
+              <file>.cfg</file> file (let's call it <file>10foo.cfg</file>)
+              that has the "magic comment", it actually includes its contents
+              into <file>updmap.cfg</file> if, and only if <tt>10foo</tt>
+              appears on a line by itself in one of the <file>.list</file>
+              files in <file>/var/lib/tex-common/fontmap-cfg/</file>.
+              Additionally, that <file>.list</file> file should be named
+              <file><var>package</var>.list</file> if <file>10foo.cfg</file>
+              comes from <var>package</var>, for simple reasons of tidiness.
+              </p>
+          
+              <p>
+              With this little mechanism in place, all the rest follows as
+              expected:
+              <list>
+                <item>
+                  When <var>package</var> is removed, but not purged,
+                  <file><var>package</var>.list</file> is first removed by
+                  <prgn>dpkg</prgn> from
+                  <file>/var/lib/tex-common/fontmap-cfg/</file>, thus
+                  disabling the the <file>.cfg</file> files shipped by
+                  <var>package</var> as far as <prgn>update-updmap</prgn> is
+                  concerned. Then, <file><var>package</var>.postrm</file>
+                  calls <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
+                  <prgn>updmap-sys</prgn>, with the result that
+                  <var>package</var>'s map files aren't listed anymore in the
+                  final map files (<file>psfonts.map</file>,
+                  <file>pdftex.map</file>...) generated by
+                  <prgn>updmap-sys</prgn>.
+                </item>
+
+                <item>
+                  If <var>package</var> is reinstalled later,
+                  <file><var>package</var>.list</file> first reappears in
+                  <file>/var/lib/tex-common/fontmap-cfg/</file>. Then,
+                  <file><var>package</var>.postinst</file> runs
+                  <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
+                  <prgn>updmap-sys</prgn>, and the <file>.cfg</file> files
+                  shipped by <var>package</var> aren't ignored by
+                  <prgn>update-updmap</prgn> this time, since they are
+                  referenced in
+                  <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>.
+                  Thus, the map files shipped by <var>package</var> do end up
+                  in the final map files generated by <prgn>updmap-sys</prgn>.
+                  </item> </list>
+            </p>
+          </list>
 	</sect1>
 
 	<sect1>
