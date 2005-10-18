@@ -68,6 +68,10 @@ use the priority specified by the --priority parameter.
 
 =head1 NOTES
 
+Note that this command is not idempotent. "dh_clean -k" should be called
+between invocations of this command. Otherwise, it may cause multiple
+instances of the same text to be added to maintainer scripts.
+
 See Debian TeX policy, section 4.1.1. for details about doing fonts for TeX 
 the Debian way.
 
