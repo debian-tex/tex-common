@@ -2,7 +2,7 @@
 #
 # update-fontlang --- Generate updmap.cfg and language.dat from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
-# Copyright (C) 2004,2005 Florent Rougon
+# Copyright (C) 2004, 2005 Florent Rougon
 # Copyright (C) 2005 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
@@ -16,10 +16,10 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program; see the file COPYING. If not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-# MA 02111-1307, USA.
+# Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+# Boston, MA  02110-1301 USA.
 
-version="0.7"
+version="0.8"
 progname=$(basename "$0")
 
 if [ "$progname" = "update-language" ] ; then
@@ -35,7 +35,7 @@ if [ "$progname" = "update-language" ] ; then
     CC="%"		# for COMMENTCHAR
     # in printf, %% is one %
     PCC="%%"            
-    HELPTEXT="Generate language.dat, the hyphenation configuration file for LaTeX"
+    SHORT_DESC="Generate language.dat, the hyphenation configuration file for LaTeX"
 elif [ "$progname" = "update-updmap" ] ; then
     CNFDIR=updmap.d
   # System-wide configuration directory
@@ -48,7 +48,7 @@ elif [ "$progname" = "update-updmap" ] ; then
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="#"
     PCC="#"            # for printfCOMMENTCHAR
-    HELPTEXT="Generate an updmap configuration file."
+    SHORT_DESC="Generate an updmap configuration file"
 elif [ "$progname" = "update-fmtutil" ] ; then
     CNFDIR=fmt.d
   # System-wide configuration directory
@@ -61,20 +61,22 @@ elif [ "$progname" = "update-fmtutil" ] ; then
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="#"
     PCC="#"            # for printfCOMMENTCHAR
-    HELPTEXT="Generate a fmtutil configuration file."
+    SHORT_DESC="Generate an fmtutil configuration file"
 else
     echo "Please call me either as update-updmap, update-language, or update-fmtutil!"
     exit 1
 fi
 
 usage="Usage: $progname [OPTION...]
-$HELPTEXT
+${SHORT_DESC}.
 
 Options:
-      -c, --conf-dir     directory where the user-specific configuration is
+  -c, --conf-dir         directory where the user-specific configuration is
                          looked for in user-specific mode
-      -o, --output-file  file to write the output to 
-                         (default: $SYSWIDE_CFGFILE)
+  -o, --output-file      file to write the output to (default is
+                         $SYSWIDE_DEFAULT_OUTPUTFILE in system-wide-mode,
+                         and depends on your Kpathsea settings in
+                         user-specific mode)
       --quiet            don't write anything to the standard output during
                          normal operation
       --help             display this help message and exit
@@ -225,6 +227,40 @@ merge_files()
     fi
 }
 
+perform_sanity_checks()
+{
+    if [ -L "$output_file" ]; then
+        if [ $quiet = 0 ]; then
+            echo "$progname: $output_file is a symbolic link; won't do anything"
+        fi
+        exit 0
+    fi
+
+    if ! [ -r "$CHECKFILE" ] ; then
+        echo "$progname: cannot read $CHECKFILE" >&2
+        exit 1
+    fi
+
+    # Check for $DEFAULT_OUTPUTFILE_BASENAME in wrong places (currently,
+    # only enabled for update-updmap)
+    if [ "$progname" = "update-updmap" ]; then
+        badly_located_cfg_file="/usr/share/texmf/web2c/$DEFAULT_OUTPUTFILE_BASENAME"
+        badly_used_prg=updmap-sys
+        bad_options="--edit, --enable, --disable, --syncwithtrees, etc."
+
+        if [ -e "$badly_located_cfg_file" ]; then
+            printf "\
+Error: '$badly_located_cfg_file' should not exist when using the
+       Debian teTeX packages. Presumably, you used ${badly_used_prg} in maintainance
+       mode (options ${bad_options}).
+       This shouldn't be done with the Debian teTeX packages. Instead, you
+       should edit the files in ${SYSWIDE_CONFDIR}/ and run ${progname},
+       mktexlsr and ${badly_used_prg}.
+       Please remove '$badly_located_cfg_file' and try again.\n" >&2
+            exit 1
+        fi
+    fi
+}
 
 # The list of signals to trap is taken from teTeX 3's updmap script, but they
 # have been converted to signal names because we can only rely on these on
@@ -263,10 +299,9 @@ if [ $syswide_mode = 1 ]; then
 else
     # If tetex-bin is not installed, kpsewhich is not available, and we cannot 
     # do anything
-    if [ !  -x "`which kpsewhich`" ]; then
-	echo "tetex-bin is not yet installed: Cannot create"
-	echo "$DEFAULT_OUTPUTFILE_BASENAME"
-	echo "in user specific mode."
+    if ! which kpsewhich >/dev/null; then
+	echo "kpsewhich isn't available. Cannot create" \
+             "$DEFAULT_OUTPUTFILE_BASENAME in user-specific mode." >&2
 	exit 1
     fi
     # Is there an updmap.d/language.d directory somewhere in the expansion of
@@ -347,17 +382,7 @@ EOF
     exit 1
 fi
 
-if [ -L "$output_file" ]; then
-    if [ $quiet = 0 ]; then
-        echo "$progname: $output_file is a symbolic link; won't do anything"
-    fi
-    exit 0
-fi
-
-if ! [ -r "$CHECKFILE" ] ; then
-    echo "$progname: cannot read $CHECKFILE" >&2
-    exit 1
-fi
+perform_sanity_checks
 
 # Make sure the output directory exists (creating it if not) when running
 # in user-specific mode.
@@ -393,7 +418,7 @@ tempfile="${output_file}.new"
 confdirs="${SYSWIDE_CONFDIR}/"
 [ $syswide_mode = 0 ] && confdirs="${confdirs}\n#    ${conf_dir}/"
 
-if ! printf "\n
+if ! printf "\
 ${PCC}${PCC}${PCC} This file was automatically generated by ${progname}.
 ${PCC}
 ${PCC} Please do not edit it directly. If you want to add or change
@@ -421,20 +446,20 @@ fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
 mv "$tempfile" "$output_file"
 
 if [ $quiet = 0 ]; then
-    if [ "$progname" = "update-language" ] ; then
-	printf "done.\n\n"
-	echo "$progname has updated '$output_file'. If you want to enable"
-	echo "the new patterns, you should run fmtutil (with option --all,"
-	echo "or choose a particular format)"
-    elif [ "$progname" = "update-updmap" ] ; then
-	printf "done.\n\n"
-	echo "$progname has updated '$output_file'. If you want to enable"
-	echo "the map files with this new file, you should run updmap."
-    elif [ "$progname" = "update-fmtutil" ] ; then
-	printf "done.\n\n"
-	echo "$progname has updated '$output_file'. If you want to enable"
-	echo "the new formats,  you should run fmtutil (with option --all"
-	echo "or --missing)"
+    printf "done.\n\n"
+    echo "$progname has updated '$output_file'. If you want to"
+
+    if [ "$progname" = "update-language" ]; then
+        echo "enable the new patterns, you should run fmtutil-sys or fmtutil"
+        echo "(with option --all, or with a particular format specified)."
+    elif [ "$progname" = "update-updmap" ]; then
+	echo "enable the map files with this new file, you should run" \
+             "updmap-sys or updmap."
+    elif [ "$progname" = "update-fmtutil" ]; then
+        echo "enable the new formats,  you should run fmtutil-sys or fmtutil"
+        echo "(with option --all or --missing)."
+    else
+        echo "Unexpected \$progname: '$progname'" >&2
+        exit 1
     fi
 fi
-
