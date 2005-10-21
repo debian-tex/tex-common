@@ -15,19 +15,20 @@ This manual page was written for the Debian GNU/Linux distribution
 because the original script was designed for Debian packaging system.
 .PP
 .B update-fmtutil
-is a shell script to generate /var/lib/texmf/web2c/fmtutil.cnf from files in 
-/etc/texmf/fmt.d/*.cnf
+is a shell script to generate /var/lib/texmf/web2c/fmtutil.cnf from files
+matching the pattern /etc/texmf/fmt.d/*.cnf.
 .PP
-The main tetex-bin provides 00tetex.cnf only and we assume that other TeX 
-related packages should provide files with necessary contents.
-The two digit numeral determines the order in which update-fmtutil read a file.
+The tex-common package provides 00tex.cnf only and other TeX-related packages
+can provide their own .cnf files in /etc/texmf/fmt.d/. These files should have
+a name starting with a two-digit integer indicating the order in which
+update-fmtutil is supposed to read them.
 .PP
 A user who wants to customize /var/lib/texmf/web2c/fmtutil.cnf should add, 
-for example, 22myfmt.cnf in /etc/texmf/fmt.d/ and run 'update-fmtutil'.
+for example, 22local-foo.cnf in /etc/texmf/fmt.d/ and run 'update-fmtutil'.
 .SH OPTIONS
 .TP
 .B \-v
-Show verbose messages.
+Show verbose messages (deprecated; will be the default setting soon).
 .SH AUTHOR
 This manual page was written by Atsuhito Kohda <kohda@debian.org>,
 for the Debian GNU/Linux system (but may be used by others).

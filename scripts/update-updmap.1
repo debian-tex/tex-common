@@ -220,7 +220,7 @@ unless the configuration has been changed.  When you call
 .Nm
 as a user,  it will produce a user-specific 
 .Pa updmap.cfg
-file as follows: If files with the same name exist in both directories,
+file as follows: if files with the same name exist in both directories,
 the version in
 .Pa ~/.texmf-config/updmap.d/
 will be used; files with unique names will be used from either
@@ -229,16 +229,16 @@ directory.
 If you want to keep your files elsewhere, specify their location with
 options (see 
 .Sx OPTIONS
-below)
+below).
 .Sh OPTIONS
 .Bl -tag -width ".Fl -version"
-.It Fl o, -conf-dir Ev conf-dir
+.It Fl c, -conf-dir Ev conf-dir
 in user-specific mode, use configuration files from 
 .Ev conf-dir
 instead of 
 .Pa $TEXMFCONFIG/updmap.d/
 .It Fl  o, -output-file Ev outputfile
-in user-specific mode, Generate 
+in user-specific mode, generate 
 .Ev outputfile
 instead of
 .Pa $TEXMFVAR/web2c/updmap.cfg

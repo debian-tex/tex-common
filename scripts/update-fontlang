@@ -242,11 +242,11 @@ perform_sanity_checks()
     fi
 
     # Check for $DEFAULT_OUTPUTFILE_BASENAME in wrong places (currently,
-    # only enabled for update-updmap)
-    if [ "$progname" = "update-updmap" ]; then
+    # only enabled for update-updmap), if running in system-wide mode.
+    if [ $syswide_mode = 1 ] && [ "$progname" = "update-updmap" ]; then
         badly_located_cfg_file="/usr/share/texmf/web2c/$DEFAULT_OUTPUTFILE_BASENAME"
         badly_used_prg=updmap-sys
-        bad_options="--edit, --enable, --disable, --syncwithtrees, etc."
+        bad_options="--edit, --syncwithtrees, etc."
 
         if [ -e "$badly_located_cfg_file" ]; then
             printf "\
