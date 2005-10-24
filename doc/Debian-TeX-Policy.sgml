@@ -111,14 +111,18 @@
 
 	  </item>
 
+	<tag>TDS</tag>
+	<item>
+	
+	<p> The TeX Directory Structure, which describes file placement
+	  for TeX input files.  The latest version of the TDS is
+	  available at <tt><url name="http://www.tug.org/twg/tds/"
+	  id="http://www.tug.org/twg/tds/"></tt>.</p> </item>
+
 	<tag><var>TEXMF</var> tree</tag> 
 	<item> 
 
-	  <p>One directory tree, arranged according to the TeX Directory
-	  Structure.  The latest version of the TDS is available at
-	  <tt><url name="http://www.tug.org/twg/tds/"
-	  id="http://www.tug.org/twg/tds/"></tt>.</p>
-	  <p></p>
+	  <p>One directory tree, arranged according to the TDS
 	</item>
 	
 	<tag>configuration update programs</tag>
