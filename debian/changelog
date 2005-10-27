@@ -4,13 +4,15 @@ tex-common (0.8.1) UNRELEASED; urgency=low
     registry. (Closes: #332264) [preining]
   * Translations:
     - updated danish debconf translation, thanks to Claus Hindsgaul
-    <claus_h@image.dk> (closes: #332699) [frank]
+     <claus_h@image.dk> (closes: #332699) [frank]
+    - updated french debconf translation, thanks to Clément Stenac
+      <zorglub@via.ecp.fr> (closes: #335776) [frank]
   * install debhelper dh_installtexfonts script (closes: #320147) [preining]
   * A few changes to update-fontlang, most notably that it will now check,
     when invoked as update-updmap, whether /usr/share/texmf/web2c/updmap.cfg
     exists and abort with an explanation in that case. [frn]
 
- -- Frank Küster <frank@debian.org>  Tue, 11 Oct 2005 11:28:02 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Thu, 27 Oct 2005 18:11:35 +0200
 
 tex-common (0.8) unstable; urgency=low
 
@@ -32,7 +34,7 @@ tex-common (0.8) unstable; urgency=low
     tetex-extra.  A working TeX system is only needed on the developer's
     system if the policy source has been changed.
 
- -- Frank Küster <frank@debian.org>  Wed,  5 Oct 2005 16:14:46 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Wed,  5 Oct 2005 16:14:46 +0200
 
 tex-common (0.7) unstable; urgency=low
 
@@ -42,7 +44,7 @@ tex-common (0.7) unstable; urgency=low
   * move old config files in /usr/share/texmf/web2c out of the way [preining]
   * remove old formats in /usr/share/texmf/web2c  (closes: #323828) [preining]
 
- -- Frank Küster <frank@debian.org>  Wed, 24 Aug 2005 17:18:34 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Wed, 24 Aug 2005 17:18:34 +0200
 
 tex-common (0.6) unstable; urgency=low
 
@@ -53,7 +55,7 @@ tex-common (0.6) unstable; urgency=low
     tetex-bin.
   * Move LSRS variable to common.variables
 
- -- Frank Küster <frank@debian.org>  Wed, 17 Aug 2005 11:04:33 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Wed, 17 Aug 2005 11:04:33 +0200
 
 tex-common (0.5) unstable; urgency=low
 
@@ -68,7 +70,7 @@ tex-common (0.5) unstable; urgency=low
   * Add compatibility paths for ENCFONTS and TEXFONTMAP in texmf.d
     (closes: #321074)
 
- -- Frank Küster <frank@debian.org>  Wed,  3 Aug 2005 12:04:42 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Wed,  3 Aug 2005 12:04:42 +0200
 
 tex-common (0.4) unstable; urgency=low
 
@@ -81,7 +83,7 @@ tex-common (0.4) unstable; urgency=low
     fixed location of memory files in update-updmap
   * Install the symlink to texmf.cnf
 
- -- Frank Küster <frank@debian.org>  Mon, 25 Jul 2005 14:22:36 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Mon, 25 Jul 2005 14:22:36 +0200
 
 tex-common (0.3) unstable; urgency=low
 
@@ -90,7 +92,7 @@ tex-common (0.3) unstable; urgency=low
   * Add a versioned conflict on tetex-base - they would remove our
     00updmap.cfg file.
 
- -- Frank Küster <frank@debian.org>  Wed,  6 Jul 2005 17:36:30 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Wed,  6 Jul 2005 17:36:30 +0200
 
 tex-common (0.2) unstable; urgency=low
 
@@ -98,11 +100,11 @@ tex-common (0.2) unstable; urgency=low
   * Bug fix: "tex-common does not install: conflicts with tetex-bin",
     thanks to Hans Ulrich Niedermann (Closes: #314948).
 
- -- Frank Küster <frank@debian.org>  Wed, 29 Jun 2005 20:36:47 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Wed, 29 Jun 2005 20:36:47 +0200
 
 tex-common (0.1) unstable; urgency=low
 
   * Initial Release.
 
- -- Frank KÃ¼ster <frank@debian.org>  Mon, 13 Jun 2005 18:09:55 +0200
+ -- Frank KÃƒÂ¼ster <frank@debian.org>  Mon, 13 Jun 2005 18:09:55 +0200
 
