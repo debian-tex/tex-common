@@ -2,17 +2,19 @@ tex-common (0.8.1) UNRELEASED; urgency=low
 
   * Change ls-R file handling to be useful. Don't use debconf as
     registry. (Closes: #332264) [preining]
-  * Translations:
-    - updated danish debconf translation, thanks to Claus Hindsgaul
-     <claus_h@image.dk> (closes: #332699) [frank]
-    - updated french debconf translation, thanks to Cl�ment Stenac
-      <zorglub@via.ecp.fr> (closes: #335776) [frank]
   * install debhelper dh_installtexfonts script (closes: #320147) [preining]
   * A few changes to update-fontlang, most notably that it will now check,
     when invoked as update-updmap, whether /usr/share/texmf/web2c/updmap.cfg
     exists and abort with an explanation in that case. [frn]
+  * Translations:
+    - updated Danish debconf translation, thanks to Claus Hindsgaul
+     <claus_h@image.dk> (closes: #332699) [frank]
+    - updated French debconf translation, thanks to Clément Stenac
+      <zorglub@via.ecp.fr> (closes: #335776) [frank]
+    - updated Italian debconf translation, thanks to Luca Monducci
+    <luca.mo@tiscali.it> (closes: #336093) [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 27 Oct 2005 18:11:35 +0200
+ -- Frank Küster <frank@debian.org>  Fri, 28 Oct 2005 11:27:48 +0200
 
 tex-common (0.8) unstable; urgency=low
 
@@ -106,5 +108,5 @@ tex-common (0.1) unstable; urgency=low
 
   * Initial Release.
 
- -- Frank KÃ¼ster <frank@debian.org>  Mon, 13 Jun 2005 18:09:55 +0200
+ -- Frank Küster <frank@debian.org>  Mon, 13 Jun 2005 18:09:55 +0200
 
