@@ -83,8 +83,8 @@ install: build
 	# dh_installtexfonts(.1) is already installed via the bin_scripts
 	#cp scripts/postrm-texfonts $(INSTDIR)/usr/share/debhelper/autoscripts
 	#cp scripts/postinst-texfonts $(INSTDIR)/usr/share/debhelper/autoscripts
-	grep -v '^[ \t]*#' scripts/postrm-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts
-	grep -v '^[ \t]*#' scripts/postinst-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts
+	grep -v '^[ \t]*#' scripts/postrm-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texfonts
+	grep -v '^[ \t]*#' scripts/postinst-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texfonts
 
 	# ship /var/cache/fonts with proper permissions
 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/pk
