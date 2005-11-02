@@ -1,3 +1,10 @@
+tex-common (0.9.1) UNRELEASED; urgency=low
+
+  * tex-common should only Suggest debhelper, not Depend on it. It would
+    pull in too many dev packages for every normal user. [preining]
+
+ -- Norbert Preining <preining@logic.at>  Wed,  2 Nov 2005 13:13:29 +0100
+
 tex-common (0.9) unstable; urgency=low
 
   * Change ls-R file handling to be useful. Don't use debconf as
