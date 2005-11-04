@@ -12,8 +12,10 @@ tex-common (0.9.1) UNRELEASED; urgency=low
     <liw@iki.fi> (closes: #333308). [frank] 
   * Check for leftover .svn directories during build (closes: #327785)
     [frank] 
+  * Add the md5sum of a version with a newer comment to the list of known
+    md5sums for 00updmap.cfg (closes: #336713) [frank]
 
- -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 14:09:26 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 14:47:48 +0100
 
 tex-common (0.9) unstable; urgency=low
 
