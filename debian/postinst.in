@@ -14,6 +14,7 @@ UCF="ucf --debconf-ok"
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 OLD_LDAT=/etc/texmf/language.dat
 POSTINST_MOVE_EXT="<:=$POSTINST_MOVE_EXT:>"
+ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.'
 
 umask 022
 
@@ -63,19 +64,6 @@ EOF
       $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
     done
 
-#
-# create /usr/local/share/texmf, unless the filesystem is read-only:
-# this is against policy, disable
-#    TEXMFLOCAL=/usr/local/share/texmf
-#    if [ ! -e $TEXMFLOCAL ]; then
-#      if mkdir $TEXMFLOCAL 2>/dev/null; then
-#        chmod 2775 $TEXMFLOCAL 2>/dev/null || true
-#	chown root:staff $TEXMFLOCAL 2>/dev/null || true
-#	ln -s /var/lib/texmf/ls-R-LOCAL /$TEXMFLOCAL/ls-R
-#      fi
-#    fi
-
-#
 # remove left over fmt/efmt/log files in /usr/share/texmf/web2c/
 # move out of the way old config files
 # 
@@ -122,10 +110,12 @@ EOF
       done
       for i in $truegwritefiles ; do
           lsr=`select_lsrfile $i`
+	  test -e $lsr || echo "$ls_R_magic" > $lsr 
 	  chmod g+w $lsr
       done
       for i in $falsegwritefiles ; do
           lsr=`select_lsrfile $i`
+	  test -e $lsr || echo "$ls_R_magic" > $lsr 
 	  chmod g-w $lsr
       done
       db_get tex-common/groupname || true

@@ -4,10 +4,16 @@ tex-common (0.9.1) UNRELEASED; urgency=low
     pull in too many dev packages for every normal user. [preining]
   * Fix the syntax of some eval statements in the config script (closes:
     #336951) [frank]
-  * Make sure the default for the managed ls-R files (cache) is actually
-    selected on a fresh install.
+  * In postinst, create nonexistent ls-R files with proper magic content
+    if they are not already present (closes: #337073) [frank]
+  * The config script was not idempotent, and reset the debconf default
+    for group writable ls-R files on a fresh install. [frank]
+  * Remove the ls-R symlink in TEXMFLOCAL, thanks to Lars Wirzenius
+    <liw@iki.fi> (closes: #333308). [frank] 
+  * Check for leftover .svn directories during build (closes: #327785)
+    [frank] 
 
- -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 11:46:23 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 14:09:26 +0100
 
 tex-common (0.9) unstable; urgency=low
 
