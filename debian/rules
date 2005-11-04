@@ -39,6 +39,7 @@ build: build-stamp
 
 build-stamp: $(EPERL_FILES)
 	dh_testdir
+	$(check-svn)
 
 	# Add here commands to compile the package.
 	cd doc; $(MAKE)
@@ -107,6 +108,7 @@ binary-indep: build install
 # Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
+	$(check-svn)
 	dh_testroot
 	dh_installdebconf 
 	dh_installchangelogs 
@@ -126,3 +128,10 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
+
+define check-svn
+	if test -d debian/.svn; then \
+		echo "please clean subversion directories"; \
+		exit 1; \
+	fi
+endef

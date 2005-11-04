@@ -44,12 +44,14 @@ db_unregister tex-common/userperm || true
 # ${i}group
 gwritetrue=""
 gwritefalse=""
+lsrfile_exists=""
 for i in var cache main ; do
-    eval ${i}group=""
+    eval \$${i}group=""
     lsr=`select_lsrfile $i`
     if [ -r $lsr ] ; then
+        lsrfile_exists="true"
     	tmp=`ls -l $lsr | awk '{print$4}'`
-	eval ${i}group=$tmp
+	eval \$${i}group=$tmp
 	if ls -l $lsr | grep -q ^.....w ; then
 	    gwritetrue="$gwritetrue $i"
 	else
@@ -59,7 +61,10 @@ for i in var cache main ; do
 done
 #
 # now we save the list of group writeable ls-R files to tex-common/managedlsr
-db_set tex-common/managedlsr $gwritetrue || true
+# (but only if we found any.  On a fresh install, we'll show the default.')
+if [ "$lsrfile_exists" = "true" ]; then
+    db_set tex-common/managedlsr $gwritetrue || true
+fi
 #
 # and ask the user to check if this selection is ok
 db_input low tex-common/managedlsr || true
@@ -70,12 +75,12 @@ db_go
 db_get tex-common/managedlsr && SELECTED_LSR="$RET" || true
 if [ -n "$SELECTED_LSR" ]; then
     #
-    # we check wether all the group writeable files belong to the same group
+    # we check wether all the group writeable files belong to the same group.
     # if yes, we suggest this group and ask the groupname question,
     # otherwise we ignore this and do *not* play around with groups.
     iscommongroup=-1
     for i in $SELECTED_LSR ; do
-      eval tmp=${i}group
+      eval tmp=\$${i}group
       if [ "X$iscommongroup" = "X-1" ] ; then
 	 iscommongroup=$tmp
       else

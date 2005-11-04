@@ -2,8 +2,12 @@ tex-common (0.9.1) UNRELEASED; urgency=low
 
   * tex-common should only Suggest debhelper, not Depend on it. It would
     pull in too many dev packages for every normal user. [preining]
+  * Fix the syntax of some eval statements in the config script (closes:
+    #336951) [frank]
+  * Make sure the default for the managed ls-R files (cache) is actually
+    selected on a fresh install.
 
- -- Norbert Preining <preining@logic.at>  Wed,  2 Nov 2005 13:13:29 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 11:46:23 +0100
 
 tex-common (0.9) unstable; urgency=low
 
