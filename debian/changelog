@@ -14,6 +14,9 @@ tex-common (0.9.1) UNRELEASED; urgency=low
     [frank] 
   * Add the md5sum of a version with a newer comment to the list of known
     md5sums for 00updmap.cfg (closes: #336713) [frank]
+  * fix installation of debhelper snipper postrm-texfonts. [preining]
+  * actually allow multiple invocations of dh_installtexfonts and
+    stop with error if a cfg file is installed several times. [preining]
 
  -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 14:47:48 +0100
 

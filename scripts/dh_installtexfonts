@@ -184,6 +184,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	foreach my $fn (@cmdlinecfgs) {
 		my $bn=basename($fn);
 		my $pr=$cmdcfgshash{$fn};
+		-r "$tmp/etc/texmf/updmap.d/$pr$bn" &&
+			error("The config file $tmp/etc/texmf/updmap.d/$pr$bn already exists! Cannot recreate it, please call dh_clean -k!");
 		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$pr$bn") ||
 			error("Cannot open $tmp/etc/texmf/updmap.d/$pr$bn for writing!");
 		if (!magic_comment_present($fn)) {
@@ -202,6 +204,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	# merge in the cmd line arguments
 	#
 	if ($file || ($#cmdlinemaps >= 0)) {
+		-r "$tmp/etc/texmf/updmap.d/$priority$package.cfg" &&
+			error("The config file $tmp/etc/texmf/updmap.d/$priority$package.cfg already exists! Cannot recreate it, please call dh_clean -k!");
 		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$package.cfg") || 
 			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$package.cfg for writing!");
 		if (($file && !magic_comment_present($file)) ||
@@ -222,8 +226,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
         if ( ! -d "$tmp/var/lib/tex-common/fontmap-cfg/") {
             doit("install","-d","$tmp/var/lib/tex-common/fontmap-cfg/");
         }
-	open(LISTFILE, ">$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
-		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing!");
+	open(LISTFILE, ">>$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
+		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing/appending!");
 	foreach (@listlines) {
 		print LISTFILE "$_\n";
 	}
