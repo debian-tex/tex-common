@@ -1,4 +1,4 @@
-tex-common (0.9.1) UNRELEASED; urgency=low
+tex-common (0.10) unstable; urgency=low
 
   * tex-common should only Suggest debhelper, not Depend on it. It would
     pull in too many dev packages for every normal user. [preining]
@@ -14,11 +14,11 @@ tex-common (0.9.1) UNRELEASED; urgency=low
     [frank] 
   * Add the md5sum of a version with a newer comment to the list of known
     md5sums for 00updmap.cfg (closes: #336713) [frank]
-  * fix installation of debhelper snipper postrm-texfonts. [preining]
+  * fix installation of debhelper snippet postrm-texfonts. [preining]
   * actually allow multiple invocations of dh_installtexfonts and
     stop with error if a cfg file is installed several times. [preining]
 
- -- Frank Küster <frank@debian.org>  Fri,  4 Nov 2005 14:47:48 +0100
+ -- Frank Küster <frank@debian.org>  Wed,  9 Nov 2005 14:45:34 +0100
 
 tex-common (0.9) unstable; urgency=low
 
