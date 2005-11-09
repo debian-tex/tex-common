@@ -8,6 +8,7 @@
 # internal variables for common.functions
 MKTMPDIR=/tmp
 SYMLINK_MOVE_EXT=<:=$SYMLINK_MOVE_EXT:>
+TEXMFSYSVAR=<:=$TEXMFSYSVAR:>
 
 savemove(){
   source="$1"

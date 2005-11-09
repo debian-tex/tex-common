@@ -90,11 +90,17 @@ db_go
 db_get tex-common/managedlsr && SELECTED_LSR="$RET" || true
 if [ -n "$SELECTED_LSR" ]; then
     #
-    # we check wether all the group writeable files belong to the same group.
+    # we check wether all the group writeable files belong to the same group,
+    # but we do this for the old setting, so that one can add group-writable files.
     # if yes, we suggest this group and ask the groupname question,
     # otherwise we ignore this and do *not* play around with groups.
+  #
+  # if no ls-R files exist, or none were group-writable, we also ask the groupname question:
+  if [ "$lsrfile_exists" != "true" ] || [ -z "$gwritetrue" ]; then
+    iscommongroup=none
+  else
     iscommongroup=-1
-    for i in $SELECTED_LSR ; do
+    for i in $gwritetrue ; do
       eval tmp=\$${i}group
       if [ "X$iscommongroup" = "X-1" ] ; then
 	 iscommongroup=$tmp
@@ -104,15 +110,19 @@ if [ -n "$SELECTED_LSR" ]; then
 	 fi
       fi
     done
+    # $iscommongroup will be empty only if there were 2 or 3 group-writable
+    # ls-R files belonging to different groups.
     db_set tex-common/groupname "$iscommongroup" || true
-    if [ -n "$iscommongroup" ] ; then
+  fi
+
+  if [ -n "$iscommongroup" ] ; then
       #
       # here we could be more intelligent and check wether the choosen group
       # actually exist, and if not, reask again!
       #
-      db_input low tex-common/groupname || true
-      db_go
-    fi
+    db_input low tex-common/groupname || true
+    db_go
+  fi
 fi
 fi
 #
