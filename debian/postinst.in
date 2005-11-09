@@ -98,42 +98,39 @@ EOF
 #
 # set permission of ls-R files
     db_get tex-common/managedlsr || true
-    if [ -n "$RET" ] ; then
-      falsegwritefiles=""
-      truegwritefiles=""
-      for i in var cache main ; do
-          if echo $RET | grep -q $i ; then
-	      truegwritefiles="$truegwritefiles $i"
-	  else
-	      falsegwritefiles="$falsegwritefiles $i"
-	  fi
-      done
-      for i in $truegwritefiles ; do
-          lsr=`select_lsrfile $i`
-	  test -e $lsr || echo "$ls_R_magic" > $lsr 
-	  chmod g+w $lsr
-      done
-      for i in $falsegwritefiles ; do
-          lsr=`select_lsrfile $i`
-	  test -e $lsr || echo "$ls_R_magic" > $lsr 
-	  chmod g-w $lsr
-      done
-      db_get tex-common/groupname || true
-      LSRGROUP="$RET"
-      if [ -n $LSRGROUP ] ; then
-        for i in $truegwritefiles ; do
-	    lsr=`select_lsrfile $i`
-	    chgrp -v $LSRGROUP $lsr || true
-	done
+    falsegwritefiles=""
+    truegwritefiles=""
+    for i in var cache main ; do
+      if echo $RET | grep -q $i ; then
+	truegwritefiles="$truegwritefiles $i"
+      else
+	falsegwritefiles="$falsegwritefiles $i"
       fi
-    else
-      #
-      # In this case when no ls-R files are managed by debconf
-      # we do nothing. The files get the correct permissions on new
-      # installation, because we ship them like this. And if a user
-      # changes some of the parameters, he is responsible for himself.
-      echo "Leaving permissions of ls-R files as they are ..."
+    done
+    for i in $truegwritefiles ; do
+      lsr=`select_lsrfile $i`
+      test -e $lsr || echo "$ls_R_magic" > $lsr 
+      chmod g+w $lsr
+    done
+    for i in $falsegwritefiles ; do
+      lsr=`select_lsrfile $i`
+      test -e $lsr || echo "$ls_R_magic" > $lsr 
+      chmod g-w $lsr
+    done
+    db_get tex-common/groupname || true
+    LSRGROUP="$RET"
+    if [ -n "$LSRGROUP" ] ; then
+      for i in $truegwritefiles ; do
+	lsr=`select_lsrfile $i`
+	chgrp -v $LSRGROUP $lsr || true
+      done
     fi
+
+# the config script may be run twice: Once by dpkg-preconfigure, once
+# again by debconf when it is sourced in the postinst script.  On the
+# first pass, it sets a special flag, which must now be reset.
+    db_fset tex-common/managedlsr firstpass false || true
+
     ;;
   *)
     ;;

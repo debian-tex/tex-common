@@ -37,7 +37,22 @@ db_unregister tex-common/groupperm || true
 db_unregister tex-common/userperm || true
 
 
-#
+# there was a bug in 0.9 that caused debconf answers to have no effect:
+# reset the seen flag
+if [ "$installed_version" = 0.9 ]; then
+  db_fset tex-common/managedlsr seen false || true
+  db_fset tex-common/groupname seen false || true
+fi
+
+# this script may be run twice: Once by dpkg-preconfigure, once again by
+# debconf when it is sourced in the postinst script.  We must do the
+# following only once, therefore we fiddle with a special flag
+db_fget tex-common/managedlsr firstpass || true
+
+if [ "$RET" != "true" ]; then
+  # we are in the first pass, set the flag and do the things
+  db_fset tex-common/managedlsr firstpass true
+
 # first we collect those ls-R files which are group writeable in gwritetrue
 # and those which are not group writeable in gwritefalse
 # furthermore we save the respective group and write permission in
@@ -90,7 +105,7 @@ if [ -n "$SELECTED_LSR" ]; then
       fi
     done
     db_set tex-common/groupname "$iscommongroup" || true
-    if [ -n $iscommongroup ] ; then
+    if [ -n "$iscommongroup" ] ; then
       #
       # here we could be more intelligent and check wether the choosen group
       # actually exist, and if not, reask again!
@@ -98,6 +113,7 @@ if [ -n "$SELECTED_LSR" ]; then
       db_input low tex-common/groupname || true
       db_go
     fi
+fi
 fi
 #
 # we do not care for user permissions in this setting!
