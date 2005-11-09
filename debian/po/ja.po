@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 19:46+0200\n"
+"POT-Creation-Date: 2005-11-09 14:43+0100\n"
 "PO-Revision-Date: 2004-09-11 17:53+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -26,7 +26,8 @@ msgstr ""
 #. Type: multiselect
 #. Description
 #: ../templates:5
-msgid "Select the ls-R file which should be managed by debconf"
+msgid ""
+"Select the ls-R file which should be writable by their respective group."
 msgstr ""
 
 #. Type: multiselect
@@ -35,23 +36,28 @@ msgstr ""
 msgid ""
 "There are many files installed in a typical TeX system. To speed up the "
 "search of these files a list of available files is stored in a file called "
-"ls-R. There are four different locations for TeX files on a Debian system:\n"
+"ls-R. There are three different locations for TeX files on a Debian system:\n"
 " - main: usually /usr/share/texmf, contains only files installed\n"
 "   by debian packages.\n"
-" - local: usually /usr/local/share/texmf, contains local additions\n"
 " - var: usually /var/lib/texmf, contains generated files from the\n"
 "   TeX system like format files.\n"
-" - cache: usually /var/cache/fonts, contains generated fonts.\n"
-"You can select from these four locations those whose ls-R file should be "
-"managed by debconf."
+" - cache: usually /var/cache/fonts, contains generated fonts."
 msgstr ""
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
 msgid ""
-"We suggest selecting cache and local (these are the defaults) and allowing a "
-"selected user group to modify these ls-R files out of the following reasons:"
+"You can select from these three locations those whose ls-R files should be "
+"group writable. Group write permissions for deselected ls-R will be removed."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"We suggest selecting cache (this is the defaults) and allowing a selected "
+"user group to modify these ls-R files, because of the following reasons:"
 msgstr ""
 
 #. Type: multiselect
@@ -61,100 +67,41 @@ msgstr ""
 msgid ""
 "A lot of font files have to be generated before they can be used by xdvi, "
 "dvips etc. These files are stored in /var/cache/fonts, so that they do not "
-"need to be regenerated every time."
+"need to be regenerated every time.  Usually, these files are created on-the-"
+"fly  when needed.  Since the directory is group-writable, the ls-R file "
+"should be the same"
 msgstr ""
 "フォントファイルの多くは、teTeX の表示および印刷プログラム (xdvi や dvips な"
 "ど) によって使われる前に生成されていなければなりません。これらのファイルは、/"
 "var/cache/fonts に格納されるので、毎回再生成する必要はありません。ls-R ファイ"
 "ルは、システムにファイルが格納されているかどうか、どこにあるかを教えます。"
 
-#. Type: multiselect
-#. Description
-#: ../templates:5
-msgid ""
-"Some users may have the right to add files to the local texmf tree, so they "
-"should also be allowed to change the ls-R file."
-msgstr ""
-
-#. Type: multiselect
-#. Description
-#: ../templates:5
-#, fuzzy
-msgid ""
-"Accepting this option will allow you to easily manage the permissions of "
-"those ls-R files using debconf. Otherwise you will have to manually ensure "
-"that they get useful but safe permissions."
-msgstr ""
-"これらの ls-R ファイルを debconf を使って簡単にパーミッションを管理するように"
-"するのであれば、この選択肢で「はい」を選んでください。そうでなければ、利用可"
-"能でかつ安全なパーミッションになることを手動で保証する必要があります。"
-
 #. Type: string
 #. Description
-#: ../templates:36
+#: ../templates:32
 msgid "Which group should own the ls-R files?"
 msgstr "ls-R ファイルを所有するグループを何にしますか?"
 
 #. Type: string
 #. Description
-#: ../templates:36
-#, fuzzy
+#: ../templates:32
 msgid ""
-"Modification of ls-R files can be restricted to the members of one group "
-"which owns them.  To take advantage of this, add the users to the group of "
-"your choice, and enter that group name here.  The default group, 'users', is "
-"appropriate for most systems."
+"You can choose a specific group which the previously selected ls-R files "
+"should belong to. If you do not enter a group name here, the group ownership "
+"of the selected files will not be touched at all. If you have selected "
+"'cache' in the previous question, we would suggest to select the group "
+"'users' here."
 msgstr ""
-"ls-R ファイルの変更は、それを所有する 1 つのグループのメンバーに制限できま"
-"す。これを活用するには、あなたの選んだグループにユーザを追加して、そのグルー"
-"プ名をここに入力してください。デフォルトのグループ 'users' は、ほとんどのシス"
-"テムで適切です。"
-
-#. Type: boolean
-#. Description
-#: ../templates:45
-msgid "Allow group members to modify ls-R files?"
-msgstr "グループのメンバーに ls-R ファイルの変更を許可しますか?"
-
-#. Type: boolean
-#. Description
-#: ../templates:45
-#, fuzzy
-msgid ""
-"Accepting this option will allow members of the owning group to modify the "
-"ls-R files."
-msgstr ""
-"ls-R ファイルの変更を所有するグループのメンバーに許可するにはこの選択肢で「は"
-"い」を選んでください。ほとんどすべての人は、この選択肢で「はい」と答えるべき"
-"です!"
-
-#. Type: boolean
-#. Description
-#: ../templates:52
-msgid "Allow all users to modify ls-R files?"
-msgstr "すべてのユーザに ls-R ファイルの変更を許可しますか?"
-
-#. Type: boolean
-#. Description
-#: ../templates:52
-msgid ""
-"Accepting this option will allow all users to modify ls-R files.  This is "
-"generally not a good idea for security reasons; you should instead restrict "
-"such access to members of one group."
-msgstr ""
-"ls-R ファイルの変更をすべてのユーザに許可するにはこの選択肢で「はい」を選んで"
-"ください。これはセキュリティの面で一般的に良い考えではありません。代わりに、"
-"そのようなアクセスを 1 つのグループのメンバーに制限すべきです。"
 
 #. Type: note
 #. Description
-#: ../templates:59
+#: ../templates:41
 msgid "Change of name of files in /etc/texmf/texmf.d/"
 msgstr ""
 
 #. Type: note
 #. Description
-#: ../templates:59
+#: ../templates:41
 #, fuzzy
 msgid ""
 "texmf.cnf has previously been generated by update-texmf from all files in /"
@@ -167,7 +114,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../templates:59
+#: ../templates:41
 #, fuzzy
 msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
@@ -176,6 +123,53 @@ msgstr ""
 "もし /etc/texmf/texmf.d/ に独自のファイルを持っているのであれば、'.cnf' をそ"
 "の名前に追加して (たとえば、22mymacro を 22mymacro.cnf とします)、update-"
 "texmf を実行する必要があります。"
+
+#, fuzzy
+#~ msgid ""
+#~ "Accepting this option will allow you to easily manage the permissions of "
+#~ "those ls-R files using debconf. Otherwise you will have to manually "
+#~ "ensure that they get useful but safe permissions."
+#~ msgstr ""
+#~ "これらの ls-R ファイルを debconf を使って簡単にパーミッションを管理するよ"
+#~ "うにするのであれば、この選択肢で「はい」を選んでください。そうでなければ、"
+#~ "利用可能でかつ安全なパーミッションになることを手動で保証する必要がありま"
+#~ "す。"
+
+#, fuzzy
+#~ msgid ""
+#~ "Modification of ls-R files can be restricted to the members of one group "
+#~ "which owns them.  To take advantage of this, add the users to the group "
+#~ "of your choice, and enter that group name here.  The default group, "
+#~ "'users', is appropriate for most systems."
+#~ msgstr ""
+#~ "ls-R ファイルの変更は、それを所有する 1 つのグループのメンバーに制限できま"
+#~ "す。これを活用するには、あなたの選んだグループにユーザを追加して、そのグ"
+#~ "ループ名をここに入力してください。デフォルトのグループ 'users' は、ほとん"
+#~ "どのシステムで適切です。"
+
+#~ msgid "Allow group members to modify ls-R files?"
+#~ msgstr "グループのメンバーに ls-R ファイルの変更を許可しますか?"
+
+#, fuzzy
+#~ msgid ""
+#~ "Accepting this option will allow members of the owning group to modify "
+#~ "the ls-R files."
+#~ msgstr ""
+#~ "ls-R ファイルの変更を所有するグループのメンバーに許可するにはこの選択肢で"
+#~ "「はい」を選んでください。ほとんどすべての人は、この選択肢で「はい」と答え"
+#~ "るべきです!"
+
+#~ msgid "Allow all users to modify ls-R files?"
+#~ msgstr "すべてのユーザに ls-R ファイルの変更を許可しますか?"
+
+#~ msgid ""
+#~ "Accepting this option will allow all users to modify ls-R files.  This is "
+#~ "generally not a good idea for security reasons; you should instead "
+#~ "restrict such access to members of one group."
+#~ msgstr ""
+#~ "ls-R ファイルの変更をすべてのユーザに許可するにはこの選択肢で「はい」を選"
+#~ "んでください。これはセキュリティの面で一般的に良い考えではありません。代わ"
+#~ "りに、そのようなアクセスを 1 つのグループのメンバーに制限すべきです。"
 
 #~ msgid "Use debconf to manage permissions of ls-R files?"
 #~ msgstr "ls-R ファイルのパーミッションの管理に debconf を使いますか?"

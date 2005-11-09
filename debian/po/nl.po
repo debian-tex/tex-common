@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-03 19:46+0200\n"
+"POT-Creation-Date: 2005-11-09 14:43+0100\n"
 "PO-Revision-Date: 2004-09-17 12:49+0100\n"
 "Last-Translator: Luk Claes <luk.claes@ugent.be>\n"
 "Language-Team: Debian-Dutch <debian-i10n-dutch@lists.debian.org>\n"
@@ -26,7 +26,8 @@ msgstr ""
 #. Type: multiselect
 #. Description
 #: ../templates:5
-msgid "Select the ls-R file which should be managed by debconf"
+msgid ""
+"Select the ls-R file which should be writable by their respective group."
 msgstr ""
 
 #. Type: multiselect
@@ -35,23 +36,28 @@ msgstr ""
 msgid ""
 "There are many files installed in a typical TeX system. To speed up the "
 "search of these files a list of available files is stored in a file called "
-"ls-R. There are four different locations for TeX files on a Debian system:\n"
+"ls-R. There are three different locations for TeX files on a Debian system:\n"
 " - main: usually /usr/share/texmf, contains only files installed\n"
 "   by debian packages.\n"
-" - local: usually /usr/local/share/texmf, contains local additions\n"
 " - var: usually /var/lib/texmf, contains generated files from the\n"
 "   TeX system like format files.\n"
-" - cache: usually /var/cache/fonts, contains generated fonts.\n"
-"You can select from these four locations those whose ls-R file should be "
-"managed by debconf."
+" - cache: usually /var/cache/fonts, contains generated fonts."
 msgstr ""
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
 msgid ""
-"We suggest selecting cache and local (these are the defaults) and allowing a "
-"selected user group to modify these ls-R files out of the following reasons:"
+"You can select from these three locations those whose ls-R files should be "
+"group writable. Group write permissions for deselected ls-R will be removed."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../templates:5
+msgid ""
+"We suggest selecting cache (this is the defaults) and allowing a selected "
+"user group to modify these ls-R files, because of the following reasons:"
 msgstr ""
 
 #. Type: multiselect
@@ -61,7 +67,9 @@ msgstr ""
 msgid ""
 "A lot of font files have to be generated before they can be used by xdvi, "
 "dvips etc. These files are stored in /var/cache/fonts, so that they do not "
-"need to be regenerated every time."
+"need to be regenerated every time.  Usually, these files are created on-the-"
+"fly  when needed.  Since the directory is group-writable, the ls-R file "
+"should be the same"
 msgstr ""
 "Veel lettertypebestanden moeten aangemaakt worden alvorens ze gebruikt "
 "kunnen worden door het scherm en de printprogramma's (xdvi, dvips enz.) van "
@@ -69,104 +77,34 @@ msgstr ""
 "telkens opnieuw aangemaakt moeten worden. 'ls-R'-bestanden vertellen het "
 "systeem welke bestanden worden bewaard en waar."
 
-#. Type: multiselect
-#. Description
-#: ../templates:5
-msgid ""
-"Some users may have the right to add files to the local texmf tree, so they "
-"should also be allowed to change the ls-R file."
-msgstr ""
-
-# ../templates:53
-#. Type: multiselect
-#. Description
-#: ../templates:5
-#, fuzzy
-msgid ""
-"Accepting this option will allow you to easily manage the permissions of "
-"those ls-R files using debconf. Otherwise you will have to manually ensure "
-"that they get useful but safe permissions."
-msgstr ""
-"Aanvaarden van deze optie stelt u in staat om de rechten op 'ls-R'-bestanden "
-"eenvoudig te beheren met debconf. Zonder aanvaarden van deze optie zult u "
-"zich er handmatig van moeten verzekeren dat ze nuttige, maar veilige rechten "
-"hebben."
-
 # ../templates:65
 #. Type: string
 #. Description
-#: ../templates:36
+#: ../templates:32
 msgid "Which group should own the ls-R files?"
 msgstr "Welke groep moet de eigenaar van de ls-R bestanden zijn?"
 
-# ../templates:65
 #. Type: string
 #. Description
-#: ../templates:36
-#, fuzzy
+#: ../templates:32
 msgid ""
-"Modification of ls-R files can be restricted to the members of one group "
-"which owns them.  To take advantage of this, add the users to the group of "
-"your choice, and enter that group name here.  The default group, 'users', is "
-"appropriate for most systems."
+"You can choose a specific group which the previously selected ls-R files "
+"should belong to. If you do not enter a group name here, the group ownership "
+"of the selected files will not be touched at all. If you have selected "
+"'cache' in the previous question, we would suggest to select the group "
+"'users' here."
 msgstr ""
-"De mogelijkheid tot bewerken van 'ls-R'-bestanden kan beperkt worden tot de "
-"leden van de groep, die eigenaar is van deze bestanden. Om hier uw voordeel "
-"mee te doen, moet u hier een groep opgeven en gebruikers die u die rechten "
-"wil toekennen toevoegen aan deze groep. De standaardwaarde 'users' is voor "
-"de meeste systemen geschikt."
-
-# ../templates:74
-#. Type: boolean
-#. Description
-#: ../templates:45
-msgid "Allow group members to modify ls-R files?"
-msgstr "Mogen leden van de groep ls-R bestanden bewerken?"
-
-# ../templates:74
-#. Type: boolean
-#. Description
-#: ../templates:45
-#, fuzzy
-msgid ""
-"Accepting this option will allow members of the owning group to modify the "
-"ls-R files."
-msgstr ""
-"Aanvaarden van deze optie zal leden van de groep, die eigenaar is van de 'ls-"
-"R'-bestanden, in staat stellen deze te bewerken. Bijna iedereen zou deze "
-"optie moeten aanvaarden!"
-
-# ../templates:81
-#. Type: boolean
-#. Description
-#: ../templates:52
-msgid "Allow all users to modify ls-R files?"
-msgstr "Mogen alle gebruikers 'ls-R'-bestanden bewerken?"
-
-# ../templates:81
-#. Type: boolean
-#. Description
-#: ../templates:52
-msgid ""
-"Accepting this option will allow all users to modify ls-R files.  This is "
-"generally not a good idea for security reasons; you should instead restrict "
-"such access to members of one group."
-msgstr ""
-"Aanvaarden van deze optie geeft aan alle gebruikers de mogelijkheid tot het "
-"bewerken van 'ls-R'-bestanden. Dit is in het algemeen, om "
-"beveiligingsredenen, geen goed idee. Het beste is om de toegang te beperken "
-"tot de leden van één bepaalde groep."
 
 #. Type: note
 #. Description
-#: ../templates:59
+#: ../templates:41
 msgid "Change of name of files in /etc/texmf/texmf.d/"
 msgstr ""
 
 # ../templates:88
 #. Type: note
 #. Description
-#: ../templates:59
+#: ../templates:41
 #, fuzzy
 msgid ""
 "texmf.cnf has previously been generated by update-texmf from all files in /"
@@ -180,7 +118,7 @@ msgstr ""
 # ../templates:88
 #. Type: note
 #. Description
-#: ../templates:59
+#: ../templates:41
 #, fuzzy
 msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
@@ -189,6 +127,61 @@ msgstr ""
 "Als u private bestanden in /etc/texmf/texmf.d/ heeft toegevoegd, moet u '."
 "cnf' aan de bestandsnamen toevoegen (v.b. 22mijnmacro => 22mijnmacro.cnf) en "
 "update-texmf uitvoeren."
+
+# ../templates:53
+#, fuzzy
+#~ msgid ""
+#~ "Accepting this option will allow you to easily manage the permissions of "
+#~ "those ls-R files using debconf. Otherwise you will have to manually "
+#~ "ensure that they get useful but safe permissions."
+#~ msgstr ""
+#~ "Aanvaarden van deze optie stelt u in staat om de rechten op 'ls-R'-"
+#~ "bestanden eenvoudig te beheren met debconf. Zonder aanvaarden van deze "
+#~ "optie zult u zich er handmatig van moeten verzekeren dat ze nuttige, maar "
+#~ "veilige rechten hebben."
+
+# ../templates:65
+#, fuzzy
+#~ msgid ""
+#~ "Modification of ls-R files can be restricted to the members of one group "
+#~ "which owns them.  To take advantage of this, add the users to the group "
+#~ "of your choice, and enter that group name here.  The default group, "
+#~ "'users', is appropriate for most systems."
+#~ msgstr ""
+#~ "De mogelijkheid tot bewerken van 'ls-R'-bestanden kan beperkt worden tot "
+#~ "de leden van de groep, die eigenaar is van deze bestanden. Om hier uw "
+#~ "voordeel mee te doen, moet u hier een groep opgeven en gebruikers die u "
+#~ "die rechten wil toekennen toevoegen aan deze groep. De standaardwaarde "
+#~ "'users' is voor de meeste systemen geschikt."
+
+# ../templates:74
+#~ msgid "Allow group members to modify ls-R files?"
+#~ msgstr "Mogen leden van de groep ls-R bestanden bewerken?"
+
+# ../templates:74
+#, fuzzy
+#~ msgid ""
+#~ "Accepting this option will allow members of the owning group to modify "
+#~ "the ls-R files."
+#~ msgstr ""
+#~ "Aanvaarden van deze optie zal leden van de groep, die eigenaar is van de "
+#~ "'ls-R'-bestanden, in staat stellen deze te bewerken. Bijna iedereen zou "
+#~ "deze optie moeten aanvaarden!"
+
+# ../templates:81
+#~ msgid "Allow all users to modify ls-R files?"
+#~ msgstr "Mogen alle gebruikers 'ls-R'-bestanden bewerken?"
+
+# ../templates:81
+#~ msgid ""
+#~ "Accepting this option will allow all users to modify ls-R files.  This is "
+#~ "generally not a good idea for security reasons; you should instead "
+#~ "restrict such access to members of one group."
+#~ msgstr ""
+#~ "Aanvaarden van deze optie geeft aan alle gebruikers de mogelijkheid tot "
+#~ "het bewerken van 'ls-R'-bestanden. Dit is in het algemeen, om "
+#~ "beveiligingsredenen, geen goed idee. Het beste is om de toegang te "
+#~ "beperken tot de leden van één bepaalde groep."
 
 # ../templates:53
 #~ msgid "Use debconf to manage permissions of ls-R files?"

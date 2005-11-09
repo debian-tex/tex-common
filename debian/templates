@@ -2,27 +2,29 @@ Template: tex-common/managedlsr
 Type: multiselect
 Choices: main, cache, var
 Default: cache
-_Description: Select the ls-R file which should be writable by their
- respective group.
+_Description: Select the ls-R file which should be writable by their respective group.
  There are many files installed in a typical TeX system. To speed up the
  search of these files a list of available files is stored in a file called
- ls-R. There are four different locations for TeX files on a Debian system:
+ ls-R. There are three different locations for TeX files on a Debian system:
   - main: usually /usr/share/texmf, contains only files installed
     by debian packages.
   - var: usually /var/lib/texmf, contains generated files from the
     TeX system like format files.
   - cache: usually /var/cache/fonts, contains generated fonts.
+ .
  You can select from these three locations those whose ls-R files should
- be group writable. Those ls-R which have not been selected will be removed
- the group write permission.
+ be group writable. Group write permissions for deselected ls-R will
+ be removed.
  .
  We suggest selecting cache (this is the defaults) and allowing
- a selected user group to modify these ls-R files out of the following
+ a selected user group to modify these ls-R files, because of the following
  reasons:
  .
  A lot of font files have to be generated before they can be used by xdvi,
  dvips etc. These files are stored in /var/cache/fonts, so that they do not
- need to be regenerated every time.
+ need to be regenerated every time.  Usually, these files are created on-the-fly 
+ when needed.  Since the directory is group-writable, the ls-R file should
+ be the same
 
 Template: tex-common/groupname
 Type: string
