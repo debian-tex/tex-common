@@ -1,3 +1,11 @@
+tex-common (0.10.1) unstable; urgency=low
+
+  * Translations: 
+    - add Swedish debconf translation, thanks to Daniel Nylander
+      <yeager@lidkoping.net> (closes: #338866) [frank]
+
+ -- Frank Küster <frank@debian.org>  Sun, 13 Nov 2005 15:34:15 +0100
+
 tex-common (0.10) unstable; urgency=low
 
   * tex-common should only Suggest debhelper, not Depend on it. It would
