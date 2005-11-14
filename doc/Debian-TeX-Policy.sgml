@@ -707,6 +707,14 @@
 	internal changes (e.g. of format file extensions) to break the
 	depending package that does this check.
 	</p>
+	<p>
+	Local administrators can override settings from
+	<file>texmf.cnf</file> with environment variables; this has
+	sometimes lead to errors in <file>postinst</file> scripts.  It
+	is recommended that <file>postinst</file> scripts unset
+	relevant variables before format creation or other problematic
+	tasks. 
+	</p>
 <!-- 	<p> -->
 <!-- 	Format generation involves many configuration and input -->
 <!-- 	files.  In many cases format generation failed because of a bad -->
