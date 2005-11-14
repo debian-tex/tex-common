@@ -85,6 +85,53 @@ EOF
   rm -rf "$tempdir"
 }
 
+check_texfontmaps(){
+  file=$1
+  failed=false
+  line=""
+  line=`grep ^TEXFONTMAPS $file`
+  if [ -z "$line" ]; then
+    echo
+    echo "An essential entry is missing in $file:"
+    echo "No setting of TEXFONTMAPS."
+    echo "teTeX will not work without it, you need to fix your configuration"
+    echo "files.  The version of $file that is provided by the package"
+    echo "should be available as ${file}.dpkg-dist"
+    echo
+    echo "Exiting."
+    failed=true
+  else
+    if ! echo $line | grep -q '{fonts/map,}/{\$progname,pdftex,dvips,}//'; then
+      echo
+      echo "An essential entry is wrong in $file:"
+      echo "TEXFONTMAPS does not contain"
+      echo "{fonts/map,}/{\$progname,pdftex,dvips,}//"
+      echo "teTeX will not work without it, you need to fix your configuration"
+      echo "files.  The version of $file that is provided by the package"
+      echo "should be available as ${file}.dpkg-dist"
+      echo
+      failed=true
+    fi
+    # the following is for backwards compatibility; must be dropped once all 
+    # font packages follow TDS 1.1
+    if ! echo $line | grep -q '/dvips//'; then
+      echo
+      echo "An essential entry is wrong in $file:"
+      echo "TEXFONTMAPS does not contain"
+      echo "/dvips//"
+      echo "teTeX will not work without it, you need to fix your configuration"
+      echo "files.  The version of $file that is provided by the package"
+      echo "should be available as ${file}.dpkg-dist"
+      echo
+      failed=true
+    fi
+  fi
+  if [ "$failed" = "true" ]; then
+    echo "Exiting."
+    exit 1
+  fi
+}
+
 #################################################################
 ##  End of function definitions from file postinst.functions
 #################################################################

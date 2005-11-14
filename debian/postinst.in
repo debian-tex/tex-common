@@ -87,6 +87,9 @@ EOF
       done
     fi
 
+# Now we check for some essential settings
+    check_texfontmaps /etc/texmf/texmf.d/55Fonts.cnf
+
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 
 # a prior version
@@ -94,6 +97,9 @@ EOF
     update-fmtutil
     update-updmap
     update-language
+
+# Now we check again for essential settings, in the generated texmf.cnf
+    check_texfontmaps /etc/texmf/texmf.cnf
 
 #
 # set permission of ls-R files

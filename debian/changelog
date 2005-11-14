@@ -3,8 +3,12 @@ tex-common (0.10.1) unstable; urgency=low
   * Translations: 
     - add Swedish debconf translation, thanks to Daniel Nylander
       <yeager@lidkoping.net> (closes: #338866) [frank]
+  * Check for correct setting of TEXFONTMAPS after possible user
+    interaction in postinst, and fail with a clear error message, instead
+    waiting for teTeX's or TeXLive's updmap calls to fail (closes maybe:
+    #338585) [frank]
 
- -- Frank Küster <frank@debian.org>  Sun, 13 Nov 2005 15:34:15 +0100
+ -- Frank Küster <frank@debian.org>  Mon, 14 Nov 2005 14:37:37 +0100
 
 tex-common (0.10) unstable; urgency=low
 
