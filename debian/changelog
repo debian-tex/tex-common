@@ -1,8 +1,5 @@
 tex-common (0.10.1) unstable; urgency=low
 
-  * Translations: 
-    - add Swedish debconf translation, thanks to Daniel Nylander
-      <yeager@lidkoping.net> (closes: #338866) [frank]
   * Check for correct setting of TEXFONTMAPS after possible user
     interaction in postinst, and fail with a clear error message, instead
     waiting for teTeX's or TeXLive's updmap calls to fail (closes maybe:
@@ -10,6 +7,11 @@ tex-common (0.10.1) unstable; urgency=low
   * Add a function clean_texenvironment to common.functions, to be used
     from TeX package's postinst scripts, and document that in the Policy
     document. [frank]
+  * Translations: 
+    - add Swedish debconf translation, thanks to Daniel Nylander
+      <yeager@lidkoping.net> (closes: #338866) [frank]
+    - update Danish debconf translation, thanks to Claus Hindsgaul
+      <claus_h@image.dk> (closes: #339354) [frank]
 
  -- Frank Küster <frank@debian.org>  Mon, 14 Nov 2005 17:19:13 +0100
 

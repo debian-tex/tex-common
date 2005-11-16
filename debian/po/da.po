@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-11-09 14:43+0100\n"
-"PO-Revision-Date: 2005-10-07 12:08+0200\n"
+"PO-Revision-Date: 2005-11-14 14:04+0100\n"
 "Last-Translator: Claus Hindsgaul <claus_h@image.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -19,15 +19,12 @@ msgstr ""
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
-msgid ""
-"Select the ls-R file which should be writable by their respective group."
-msgstr "Vælg den ls-R-fil, der skal håndteres af debconf"
+msgid "Select the ls-R file which should be writable by their respective group."
+msgstr "Vælg den ls-R-fil, som den tilhørende gruppe skal kunne skrive til."
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "There are many files installed in a typical TeX system. To speed up the "
 "search of these files a list of available files is stored in a file called "
@@ -38,18 +35,15 @@ msgid ""
 "   TeX system like format files.\n"
 " - cache: usually /var/cache/fonts, contains generated fonts."
 msgstr ""
-"Der er mange installerede filer i et typisk TeX-system. For at gøre det "
+"Der er mange installerede filer på et typisk TeX-system. For at gøre det "
 "hurtigere at søge i disse filer, gemmes en liste over de tilgængelige filer "
 "i en fil med navnet ls-R. Der er fire forskellige placeringer af TeX-filer "
 "på et Debiansystem:\n"
 " - main: normalt /usr/share/texmf, indeholder kun filer, der installeres\n"
 "   af Debianpakker.\n"
-" - local: normalt /usr/local/share/texmf, indeholder lokale tilføjelser\n"
 " - var: normalt /var/lib/texmf, indeholder filer, der er genereret af\n"
 "   TeX-systemet, som f.eks. formatfiler.\n"
-" - cache: normalt /var/cache/fonts, indeholder genererede skrifttyper.\n"
-"Du kan vælge hvilke af disse fire placeringers ls-R-filer, der skal "
-"håndteres af debconf."
+" - cache: normalt /var/cache/fonts, indeholder genererede skrifttyper."
 
 #. Type: multiselect
 #. Description
@@ -58,22 +52,23 @@ msgid ""
 "You can select from these three locations those whose ls-R files should be "
 "group writable. Group write permissions for deselected ls-R will be removed."
 msgstr ""
+"Du kan vælge hvilke af disse tre placeringers ls-R-filer, der skal "
+"være skrivbare for gruppen. Gruppe-skriverettigheder for ikke-markerede "
+"ls-R-filer vil blive fjernet."
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "We suggest selecting cache (this is the defaults) and allowing a selected "
 "user group to modify these ls-R files, because of the following reasons:"
 msgstr ""
-"Vi foreslår at du vælger mellemlager og lokal (de er forvalgt) og tillader "
+"Vi foreslår at du vælger 'cache' (dette er forvalgt) og tillader "
 "en udvalgt brugergruppe at redigere disse ls-R-filer af følgende årsager:"
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "A lot of font files have to be generated before they can be used by xdvi, "
 "dvips etc. These files are stored in /var/cache/fonts, so that they do not "
@@ -83,7 +78,8 @@ msgid ""
 msgstr ""
 "En masse skrifttypefiler skal genereres, før de kan bruges af xdvi, dvips m."
 "fl. Disse filer gemmes i /var/cache/fonts, så de ikke behøver at blive "
-"genereret igen hver gang."
+"genereret forfra hver gang. Normalt oprettes disse filer, når de skal bruges. "
+"Da gruppen har skriveadgang til mappen, bør den også have det til ls-R-filen"
 
 #. Type: string
 #. Description
@@ -101,6 +97,10 @@ msgid ""
 "'cache' in the previous question, we would suggest to select the group "
 "'users' here."
 msgstr ""
+"Du kan vælge en bestemt gruppe, som de netop valgte ls-R-filer skal tilhøre. "
+"Hvis du ikke angiver et gruppenavn, vil gruppeejerskabet af de valgte gruppe "
+"ikke blive ændret. Hvis du valgte 'cache' i forrige spørgsmål, foreslår vi "
+"at du vælger gruppen 'users' her."
 
 #. Type: note
 #. Description
@@ -435,3 +435,4 @@ msgstr ""
 #~ msgstr ""
 #~ "Bemærk at opsætningsfilen bliver håndteret af debconf, hvis du vælger "
 #~ "dette, men at du ellers er nødt til selv at rette filen."
+
