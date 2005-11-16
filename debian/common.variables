@@ -3,8 +3,8 @@
 <:# $Id$:>//
 <:# this list is from dpkg-1.10.9/include/dpkg.h.in:  :>//
 <:$DPKG_EXTENSIONS="'~' '%' .bak .dpkg-tmp .dpkg-new .dpkg-old .dpkg-dist":>//
-<:$PREINST_MOVE_EXT=".preinst-bak":>//
-<:$POSTINST_MOVE_EXT=".postinst-bak":>//
+<:$PREINST_MOVE_EXT="preinst-bak":>//
+<:$POSTINST_MOVE_EXT="postinst-bak":>//
 <:$PURGE_EXTENSIONS="$DPKG_EXTENSIONS $PREINST_MOVE_EXT $POSTINST_MOVE_EXT":>//
 <:# package specific:>//
 <:$ETC="/etc/":>//

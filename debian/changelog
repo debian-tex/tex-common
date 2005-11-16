@@ -7,13 +7,18 @@ tex-common (0.10.1) unstable; urgency=low
   * Add a function clean_texenvironment to common.functions, to be used
     from TeX package's postinst scripts, and document that in the Policy
     document. [frank]
+  * Add the md5sum of the postinst-edited 00updmap.cfg to ucf's database.
+    Also fix the logic for taking over changed settings from tetex-base,
+    and create 00updmap.cfg with proper permissions.  Special thanks to
+    Junichi Uekawa <dancer@netfort.gr.jp> for insisting (closes: #335682,
+    #338689) [frank]
   * Translations: 
     - add Swedish debconf translation, thanks to Daniel Nylander
       <yeager@lidkoping.net> (closes: #338866) [frank]
     - update Danish debconf translation, thanks to Claus Hindsgaul
       <claus_h@image.dk> (closes: #339354) [frank]
 
- -- Frank Küster <frank@debian.org>  Mon, 14 Nov 2005 17:19:13 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 16 Nov 2005 13:37:31 +0100
 
 tex-common (0.10) unstable; urgency=low
 

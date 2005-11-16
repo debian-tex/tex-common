@@ -2,6 +2,9 @@
 ## Function definitions - included from file postinst.functions
 #################################################################
 
+# variables needed, please set in the main file
+# POSTINST_MOVE_EXT
+
 ###############################################################################
 # cfgval(variable)
 #   read variable ($1) from config file, first match wins
@@ -39,7 +42,9 @@ updmap_extract(){
   
   # is it changed?
   if [ ! "$oldmd5sum" = "`md5sum $conffile | cut -d ' ' -f 1`" ]; then
-    # changed, stow away a copy for tetex-base
+    # changed.
+
+    # stow away a copy for tetex-base
     if [ ! -f $keepfile ]; then
       cat > $keepfile <<EOF
 This file contains the parts of what was called 00updmap.cfg in 
@@ -51,38 +56,55 @@ EOF
       sed -e '0,/^# Map files should be marked by/ d; 1,/^$/ d' \
 	$conffile >> $keepfile
     fi
-  fi
 
-  # get the new defaults
-  for option in $options; do
-    eval dflt_$option=`cfgval $dfltfile $option`
-  done
+    # get the new defaults
+#     for option in $options; do
+#       eval dflt_$option=`cfgval $dfltfile $option`
+#     done
+    # set the settings we had in tetex-base 2.0.2
+    dflt_dvipsPreferOutline=true
+    dflt_LW35=URWkb
+    dflt_pdftexDownloadBase14=false
+    dflt_dvipdfmDownloadBase14=false
+    dflt_dvipsDownloadBase35=false
 
-  # compare with current settings, and create a new file
-  SETTING_CHANGED=false
-  tempdir=`mktemp -d -p $MKTMPDIR`
-  tempfile1=`mktemp -p $tempdir`
-  trap 'cleanup' HUP INT QUIT BUS PIPE TERM
-  cp -p $dfltfile $tempfile1
-  for option in $options; do
-    eval $option=`cfgval $conffile $option`
-    if eval [ ! "\$$option" = "\$dflt_$option" ]; then
-      SETTING_CHANGED=true
-      tempfile2=`mktemp -p $tempdir`
-      optname=$option
-      eval optvalue=\$$option
-      eval optoldvalue=\$dflt_$option
-      sed -e "s@^[[:space:]]*$optname[[:space:]]*$optoldvalue@$optname $optvalue@" $tempfile1 > $tempfile2
-      mv $tempfile2 $tempfile1
+    # compare with current settings, and create a new file
+    SETTING_CHANGED=false
+    tempdir=`mktemp -d -p $MKTMPDIR`
+    tempfile1=`mktemp -p $tempdir`
+    trap 'cleanup' HUP INT QUIT BUS PIPE TERM
+    cp -p $dfltfile $tempfile1
+    for option in $options; do
+      eval $option=`cfgval $conffile $option`
+      if eval [ ! "\$$option" = "\$dflt_$option" ]; then
+	SETTING_CHANGED=true
+	tempfile2=`mktemp -p $tempdir`
+	optname=$option
+	eval optvalue=\$$option
+	eval optoldvalue=\$dflt_$option
+	sed -e "s@^[[:space:]]*$optname[[:space:]]*$optoldvalue@$optname $optvalue@" $tempfile1 > $tempfile2
+	mv $tempfile2 $tempfile1
+      fi
+    done
+    if [ "$SETTING_CHANGED" = "true" ]; then
+      # this mv command will give a "conffile changed by you or a script" message next time
+      # we change it - but that is exactly what has happened: The user has changed options, 
+      # and the script has just transferred them to a new file.
+      mv $tempfile1 $conffile
+      chmod a+r $conffile
+    else
+      # this part is unchanged, just remove and copy the default file
+      rm -f $tempfile1 $conffile
+      cp -p $dfltfile $conffile
     fi
-  done
-  if [ "$SETTING_CHANGED" = "true" ]; then
-    mv $tempfile1 $conffile
-    # this mv command will give a "conffile changed by you or a script" message next time
-    # we change it - but that is exactly what has happened: The user has changed options, 
-    # and the script has just transferred them to a new file.
+    rm -rf "$tempdir"
+
+  else
+    # unchanged, just remove and copy the default file
+    rm -f $conffile
+    cp -p $dfltfile $conffile
   fi
-  rm -rf "$tempdir"
+
 }
 
 check_texfontmaps(){
