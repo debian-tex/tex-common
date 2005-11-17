@@ -382,9 +382,9 @@
 	Packages that changed <file>updmap.cfg</file> must call
 	<prgn>updmap-sys</prgn> as detailed in <ref
 	id="sec-font-configuration">. Packages that changed
-	<file>language.dat</file> or <file>fmtutil.cnf</file> must call
-	<prgn>fmtutil-sys</prgn>. They must make sure to issue the
-	<prgn>mktexlsr</prgn> command before this.
+	<file>language.dat</file> or <file>fmtutil.cnf</file> must
+	call <prgn>fmtutil-sys</prgn> (see below). They must make sure
+	to issue the <prgn>mktexlsr</prgn> command before this.
 	</p>
 
 	<sect1 id="sec-font-configuration">
@@ -675,6 +675,29 @@
           have the name <file><var>package</var>.list</file>.
 	  </p>
 	</sect1>
+	
+	<sect1>
+	  <heading>Format configuration</heading>
+	  <p>
+	  Packages that provide additional formats should put a
+	  configuration file according to <prgn>fmtutil.cnf(5)</prgn>
+	  into <file>/etc/texmf/fmt.d/</file>, run
+	  <prgn>update-fmtutil</prgn> and subsequently create the
+	  format with <tt>fmtutil --byfmt <var>format</var></tt>.
+	  <prgn>fmtutil</prgn> will only try to create the format if
+	  it can find the corresponding
+	  <file><var>format</var>.ini</file> file (the last argument
+	  in an <prgn>fmtutil.cnf</prgn> line).  Therefore the
+	  <file><var>format</var>.ini</file> file should not be a
+	  conffile.
+	  </p>
+	  <p>
+	  If a package needs to create formats at runtime, it should
+	  use a local <prgn>fmtutil.cnf</prgn> with the appropriate
+	  entries and specifiy its location to <prgn>fmtutil</prgn> on
+	  the command line, using the <tt>--cnffile</tt> switch.
+	  </p>
+	</sect1>
       </sect>
 
       <sect>
@@ -699,13 +722,21 @@
         <heading>Command execution and format files</heading>
 	<p>
 	If TeX formats need to be generated before execution, this
-	must be done in the post-installation script.  Packages that
+	should be done in the post-installation script.  Packages that
 	depend on an executable can thus simply declare
 	<tt>Depends:</tt> on the package providing the executable, and
 	<em>only</em> do that.  Any additional checks, e.g. for the
 	existence of format files, is unnecessary and harmful, causing
 	internal changes (e.g. of format file extensions) to break the
-	depending package that does this check.
+	depending package that does this check.  Maintainer scripts or
+	programs in Debian packages should always use
+	<prgn>fmtutil</prgn> or <prgn>fmtutil-sys</prgn> for format
+	generation, and either add a <file>fmtutil.cnf</file> snippet
+	in <file>/etc/texmf/fmt.d/</file> (with
+	<prgn>fmtutil-sys</prgn>, for site-wide formats), or use
+	<prgn>fmtutil</prgn> with the <tt>--cnffile</tt> option and an
+	appropriate local <file>fmtutil.cnf</file> (for runtime
+	programs) 
 	</p>
 	<p>
 	Local administrators can override settings from

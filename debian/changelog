@@ -17,8 +17,9 @@ tex-common (0.10.1) unstable; urgency=low
       <yeager@lidkoping.net> (closes: #338866) [frank]
     - update Danish debconf translation, thanks to Claus Hindsgaul
       <claus_h@image.dk> (closes: #339354) [frank]
+  * The Policy draft has been extended [frank]
 
- -- Frank Küster <frank@debian.org>  Wed, 16 Nov 2005 13:37:31 +0100
+ -- Frank Küster <frank@debian.org>  Thu, 17 Nov 2005 16:58:47 +0100
 
 tex-common (0.10) unstable; urgency=low
 
