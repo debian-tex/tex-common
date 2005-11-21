@@ -21,8 +21,9 @@ tex-common (0.10.1) unstable; urgency=low
   * change TEXMFSYSCONFIG to /etc/texmf and remove the !! before TEXMFCONFIG
     in TEXMF [preining]
   * add TEXMFSYSCONFIG to TEXMF and and reshuffle the order [preining]
+  * change TEXMFDBS [preining]
 
- -- Norbert Preining <preining@logic.at>  Mon, 21 Nov 2005 15:44:38 +0100
+ -- Norbert Preining <preining@logic.at>  Mon, 21 Nov 2005 16:37:32 +0100
 
 tex-common (0.10) unstable; urgency=low
 
