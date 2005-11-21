@@ -116,7 +116,7 @@ TEXMFCONFIG = $HOME/.texmf-config
 %
 % For texconfig to work properly, TEXMFCONGIG and TEXMFVAR should be named
 % explicitly and before all other trees.
-TEXMF = {$TEXMFCONFIG,!!$TEXMFVAR,$TEXMFHOME,!!$TEXMFLOCAL,!!$TEXMFSYSVAR,!!$TEXMFMAIN}
+TEXMF = {$TEXMFCONFIG,!!$TEXMFVAR,$TEXMFHOME,!!$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFLOCAL,!!$TEXMFMAIN}
 
 % The system trees.  These are the trees that are shared by all the users.
 SYSTEXMF = $TEXMFLOCAL;$TEXMFMAIN;$TEXMFDIST
