@@ -12,18 +12,20 @@ tex-common (0.10.1) unstable; urgency=low
     and create 00updmap.cfg with proper permissions.  Special thanks to
     Junichi Uekawa <dancer@netfort.gr.jp> for insisting (closes: #335682,
     #338689) [frank]
-  * Translations:
-    - add Swedish debconf translation, thanks to Daniel Nylander
-      <yeager@lidkoping.net> (closes: #338866) [frank]
-    - update Danish debconf translation, thanks to Claus Hindsgaul
-      <claus_h@image.dk> (closes: #339354) [frank]
   * The Policy draft has been extended [frank]
   * change TEXMFSYSCONFIG to /etc/texmf and remove the !! before TEXMFCONFIG
     in TEXMF [preining]
   * add TEXMFSYSCONFIG to TEXMF and and reshuffle the order [preining]
   * change TEXMFDBS [preining]
+  * Translations:
+    - add Swedish debconf translation, thanks to Daniel Nylander
+      <yeager@lidkoping.net> (closes: #338866) [frank]
+    - update Danish debconf translation, thanks to Claus Hindsgaul
+      <claus_h@image.dk> (closes: #339354) [frank]
+    - update Italian debconf translation, thanks to Luca Monducci
+      <luca.mo@tiscali.it> (closes: #340031) [frank] 
 
- -- Norbert Preining <preining@logic.at>  Mon, 21 Nov 2005 16:37:32 +0100
+ -- Frank Küster <frank@debian.org>  Tue, 22 Nov 2005 20:15:41 +0100
 
 tex-common (0.10) unstable; urgency=low
 
