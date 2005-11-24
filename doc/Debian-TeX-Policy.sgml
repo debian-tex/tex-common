@@ -198,37 +198,62 @@
         The following <var>TEXMF</var> trees are defined, as outlined
         below:
         <enumlist>
-          <item><file>/usr/share/texmf/</file>, referenced as <var>TEXMFMAIN</var>
-  	  <footnote>
-  	    The separation between a <var>TEXMFMAIN</var> tree (for the files
-              that have to match the binary executables) and a <var>TEXMFDIST</var>
-              tree (for other TeX input files) is not made in Debian,
-              because it is not necessary on a system with a decent
-              package managment system </footnote>
-  	</item>
+          <item><file>/usr/share/texmf-tetex/</file>, part of <var>TEXMFDIST</var></item>
+          <item><file>/usr/share/texmf-texlive/</file>, part of <var>TEXMFDIST</var></item>
+          <item><file>/usr/share/texmf/</file>, referenced as <var>TEXMFMAIN</var></item>
           <item><file>/var/lib/texmf/</file>, referenced as <var>TEXMFSYSVAR</var></item>
+          <item><file>/etc/texmf/</file>, referenced as <var>TEXMFSYSCONFIG</var></item>
           <item><file>/usr/share/texmf-site/</file>, referenced as <var>TEXMFSITE</var></item>
           <item><file>/usr/local/share/texmf/</file>, referenced as <var>TEXMFLOCAL</var></item>
-          <item>optionally user-specific directories for
-	      configuration files (<var>TEXMFCONFIG)</var> and generated files
-	      (<var>TEXMFVAR</var>)</item>
           <item> Any directories listed in the <var>TEXMFHOME</var> configuration
                  variable in <file>texmf.cnf</file> or as an environment
                  variable,
-  	</item>
+	  </item>
+          <item>optionally user-specific directories for
+	      configuration files (<var>TEXMFCONFIG)</var> and generated files
+	      (<var>TEXMFVAR</var>)</item>
         </enumlist>
 
           The search order is from bottom up (files in
           <var>TEXMFHOME</var> taking precedence over files in
-          <var>TEXMFMAIN).</var>
+          <var>TEXMFMAIN) etc.</var>
+	  </p>
+
+	  <p>
+	  The role of the trees <var>TEXMFMAIN</var> and
+          <var>TEXMFDIST</var> in Debian differ from upstream's
+          original usage.  Upstream uses <var>TEXMFMAIN</var> for the
+          files that have to match the binary executables and
+          <var>TEXMFDIST</var> for other TeX input files that are
+          replaced when a new texmf tarball appears; this distinction
+          is not necessary on a system with a decent package managment
+          system.  Instead, the basic TeX packages install their files
+          into their <var>TEXMFDIST</var> directories <footnote>This
+          is new, and the basic TeX packages currently transition
+          their files to the new place.</footnote> , while
+          <var>TEXMFMAIN</var> is used by TeX add-on packages for
+          their files and allows them to shadow older versions
+          provided by the basic TeX packages.
+        </p>
+
+        <p>
+	The order of basic TeX packages in <var>TEXMFDIST</var> may be
+	changed by the user or by the basic TeX packages, and no
+	implementation may rely on a particular order.  This implies
+	that for a package that needs a version of a particular file
+	newer than provided by one of the basic TeX packages, it is
+	not sufficient to declare a dependency on the other basic TeX
+	package(s)<footnote>Of course this is only a problem if the
+	file is needed in the configure phase.  If it is needed only
+	at runtime, a README file to instruct the local admin should be
+	sufficient.</footnote>.
         </p>
 
         <p>
         Debian packages generally install files in
-        <var>TEXMFMAIN</var> exclusively (but see <ref
-        id="sec-names-and-texmfsite">), and may ship or create empty
+        <var>TEXMFMAIN</var> exclusively, and may ship or create empty
         directories in the other trees, in accordance with Debian
-        Policy.  Packages should take care to ignore
+        Policy.  Configuration file handling is described below in .  Packages should take care to ignore
         <var>TEXMFHOME</var> in their maintainer scripts.
         </p>
       </sect>
@@ -241,9 +266,9 @@
 	<file>/var/cache/fonts</file>, all other generated files
 	should be below <file>/var/lib/texmf</file> (or the
 	user-specific variable directories), with the subdirectory
-	structure conforming to the TDS.  If necessary, symbolic links
-	can point from static <var>TEXMF</var> trees to files
-	below <file>/var/</file>.
+	structure conforming to the TDS.<!--   If necessary, symbolic links -->
+<!-- 	can point from static <var>TEXMF</var> trees to files -->
+<!-- 	below <file>/var/</file>. -->
 	</p>
 
 	<p>An exception is the generated file
@@ -266,33 +291,55 @@
 	</p>
 
 	<p>
-	As an exception to this rule, packages that need newer
-	versions of a file than already supplied by an other package
-	and installed in <var>TEXMFMAIN</var> can place them into
-	<var>TEXMFSITE.</var> The package must make sure that the
-	newer version is backward-compatible, meaning it must not
-	break compilation of any TeX document, and it should not
-	change the output file.  A change of the output file may be
-	acceptable if an obviously buggy behavior is corrected,
-	<strong>and</strong> if it had previously not been possible to
-	easily fix this behavior in user's documents (or if the
-	updated package and a possible fix in the document combined
-	lead to a correct document).
-	</p>
+	There are two exception to this rule:
+	<enumlist>
+  	  <item>
+	  Basic TeX packages install their files into their
+	  <var>TEXMFDIST</var> directory and will usually contain files
+	  that are also in other basic TeX packages.
+	  </item>
 
-	<p>
-	Packages that install files in <var>TEXMFSITE</var> must make
-	sure to follow not only their own upstream development, but
-	also that of the package(s) that install the files in
-	<var>TEXMFMAIN,</var> and make sure not to get outdated with
-	respect to the files in <var>TEXMFMAIN</var>.
-	</p>
+	  <item>
+	  <p>Packages that need newer versions of a file than already
+	  supplied by a basic TeX package and installed in
+	  <var>TEXMFDIST</var> can place them into
+	  <var>TEXMFMAIN</var>.  Thus, the outdated file will be
+	  shadowed, and the new one is in effect.  
+	  </p>
 
-	<p>
-	Installing more than two versions of a file will most likely
-	lead to confusion.  Therefore, the possibility to shadow a
-	file once using <var>TEXMFSITE</var> should be enough, and the
-	usage of <prgn>dpkg-divert</prgn> is discouraged.
+	  <p>
+	  The maintainer of the basic TeX package should be made aware
+	  of the problem <footnote>A wishlist bug on the shadowing
+	  package, blocked by an other wishlist bug on the basic TeX
+	  package, can help tracking these issues.</footnote> The
+	  package maintainer must make sure to follow new releases of
+	  the basic TeX packages and not continue shadowing a file
+	  that is newer than the version provided by the shadowing
+	  package. 
+	  </p>
+
+	  <p>
+	  The package must make sure that the newer version is
+	  backward-compatible, meaning it must not break compilation
+	  of any TeX document, and it should not change the output
+	  file.  A change of the output file may be acceptable if an
+	  obviously buggy behavior is corrected, <strong>and</strong>
+	  if it had previously not been possible to easily fix this
+	  behavior in user's documents (or if the updated package and
+	  a possible fix in the document combined lead to a correct
+	  document).
+	  </p>
+
+	  <p>
+	  Installing more than two versions of a file will most likely
+	  lead to confusion.  Therefore, the possibility to shadow a
+	  file once should be enough, and the usage of
+	  <prgn>dpkg-divert</prgn> is discouraged.
+	  </p>
+
+	  </item>
+
+	</enumlist>
 	</p>
 
 	<p>
@@ -310,6 +357,12 @@
 	the files below <file>/usr/share/doc/texmf</file>, or by
 	providing symlinks from subdirectories of that location to the
 	actual documentation files.
+	</p>
+	
+	<p>
+	A package must not install files into (subdirectories of)
+	<file>/usr/share/texmf/doc</file>, which is a symbolic link to
+	<file>/usr/share/doc/texmf</file>. 
 	</p>
 
 	<p>
@@ -329,6 +382,28 @@
     </chapt> 
     <chapt>
       <heading>Configuration</heading>
+      <sect>
+        <heading>Configuration files</heading>
+	<p>
+	In a TeX system, in principle every TeX input file can be
+	changed to change the behavior of the system, and thus be
+	regarded as a configuration file.  To prevent inflation of
+	configuration files, packages should not install any TeX input
+	files as conffiles or configuration files.  Instead, they
+	should create an empty directory below
+	<file>/etc/texmf/tex</file> and advice users which files are
+	likely places for configuration.  It is up to the local admin
+	or individual user to place changed copies in
+	<var>TEXMFSYSCONFIG</var> or <var>TEXMFCONFIG</var>,
+	respectively. 
+	</p>
+	<p>
+	Note that other subdirectories of <file>/etc/texmf/</file>
+	are not searched for TeX input files and can be used by
+	packages for configuration files that are not TeX input
+	files. 
+	</p>
+      </sect>
       <sect>
         <heading>Configuration update programs</heading>
 
@@ -674,6 +749,27 @@
           <file>/var/lib/tex-common/language-cnf/</file> which should
           have the name <file><var>package</var>.list</file>.
 	  </p>
+	  <p>
+	  Calling update-language is *not* sufficient to be able to
+	  use the new hyphenation patterns; instead the formats that
+	  use it need to be regenerated.  This can be done by running
+	  <tt>fmtutil-sys --byhyphen `kpsewhich --progname=latex
+	  language.dat`</tt>.
+	  </p>
+	  <p>
+	  If a package that provides additional hyphenation patterns
+	  is removed, it must make sure the formats are properly
+	  recreated without it.  With the "magic comment" mechanism,
+	  this means to run <prgn>update-language</prgn> and
+	  <tt>fmtutil-sys --byhyphen `kpsewhich --progname=latex
+	  language.dat`</tt> in <file>postrm</file>
+	  </p>
+	  <p>
+	  There is currently no mechanism (i.e., no
+	  <prgn>update-language</prgn>) for automatic addition of
+	  hyphenation patterns to formats that do not use the same
+	  hyphenation configuration file as LaTeX.
+	  </p>
 	</sect1>
 	
 	<sect1>
@@ -696,6 +792,12 @@
 	  use a local <prgn>fmtutil.cnf</prgn> with the appropriate
 	  entries and specifiy its location to <prgn>fmtutil</prgn> on
 	  the command line, using the <tt>--cnffile</tt> switch.
+	  </p>
+	  <p>
+	  Upon package removal, <prgn>update-fmtutil</prgn> must be
+	  called in postrm, and the created formats and log files
+	  should be removed from the directory specified by
+	  <tt>`kpsewhich -var-value=TEXMFSYSVAR`/web2c</tt>.
 	  </p>
 	</sect1>
       </sect>
