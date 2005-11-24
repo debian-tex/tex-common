@@ -1,3 +1,10 @@
+tex-common (0.11.1) UNRELEASED; urgency=low
+
+  * change ls_R_magic to include ., ./, and ls-R so that kpathsea does
+    not moan about unusable entry. [preining]
+
+ -- Norbert Preining <preining@logic.at>  Wed, 23 Nov 2005 19:49:16 +0100
+
 tex-common (0.11) unstable; urgency=low
 
   * Check for correct setting of TEXFONTMAPS after possible user

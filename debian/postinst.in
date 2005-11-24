@@ -14,7 +14,11 @@ UCF="ucf --debconf-ok"
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 OLD_LDAT=/etc/texmf/language.dat
 POSTINST_MOVE_EXT="<:=$POSTINST_MOVE_EXT:>"
-ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.'
+ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.
+./:
+.:
+ls-R
+'
 
 umask 022
 
