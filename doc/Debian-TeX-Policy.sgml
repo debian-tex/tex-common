@@ -240,14 +240,10 @@
         Debian packages generally install files in
         <var>TEXMFMAIN</var> exclusively, and may ship or create empty
         directories in the other trees, in accordance with Debian
-        Policy.  Configuration file handling is described below in .  Packages should take care to ignore
-        <var>TEXMFHOME</var> in their maintainer scripts.
+        Policy.  Configuration file handling is described below in
+        <ref id="configurationfiles">.  Packages should take care to
+        ignore <var>TEXMFHOME</var> in their maintainer scripts.
         </p>
-
-	<p>
-	For configuration file placement, see <ref
-	id="configurationfiles">. 
-	</p>
 
       </sect>
 
@@ -392,10 +388,16 @@
 	respectively. 
 	</p>
 	<p>
-	Note that other subdirectories of <file>/etc/texmf/</file>
-	are not searched for TeX input files and can be used by
-	packages for configuration files that are not TeX input
-	files. 
+	Note that <file>/etc/texmf/</file> is a usual TDS tree.  Files
+	can be put into appropriate TDS-conforming subdirectories
+	(e.g. <file>/etc/texmf/fonts/map/</file>), but directories not
+	specified in TDS (or added Debian-specifically in
+	<package>tex-common</package>'s files in
+	<file>/etc/texmf/texmf.d/</file>) are generally not searched
+	for TeX input files and can be used by packages for
+	configuration files that are not TeX input files (e.g. the
+	files in subdirectories <file>fmt.d</file> or
+	<file>updmap.d</file>).
 	</p>
       </sect>
       <sect>
