@@ -60,8 +60,10 @@ TEXMFMAIN = /usr/share/texmf
 
 % The main distribution tree:
 % TEXMFDIST = /usr/share/texmf-dist
-% TEXMFDIST is used for tetex and texlive
-TEXMFDIST = /usr/share/texmf-{tetex;texlive}
+% TEXMFDIST is used for tetex and texlive. If both are installed,
+% the first in the list wins; files only present in the second directory
+% are also found.
+TEXMFDIST = /usr/share/texmf-{tetex,texlive}
 
 
 % A place for local additions to a "standard" texmf tree.
@@ -116,7 +118,7 @@ TEXMFCONFIG = $HOME/.texmf-config
 %
 % For texconfig to work properly, TEXMFCONGIG and TEXMFVAR should be named
 % explicitly and before all other trees.
-TEXMF = {$TEXMFCONFIG,$TEXMFVAR,$TEXMFHOME,$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFLOCAL,!!$TEXMFMAIN}
+TEXMF = {$TEXMFCONFIG,$TEXMFVAR,$TEXMFHOME,$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFLOCAL,!!$TEXMFMAIN,!!$TEXMFDIST}
 
 % The system trees.  These are the trees that are shared by all the users.
 SYSTEXMF = $TEXMFLOCAL;$TEXMFMAIN;$TEXMFDIST
@@ -133,7 +135,7 @@ VARTEXFONTS = /var/cache/fonts
 % one of the TEXMF directories (avoids overlapping ls-R files).
 %
 % TEXMFDBS = $TEXMF;$VARTEXFONTS
-TEXMFDBS = $TEXMFSYSVAR;$TEXMFLOCAL;$TEXMFMAIN;$VARTEXFONTS;$TEXMFDIST
+TEXMFDBS = $TEXMFHOME;$TEXMFSYSVAR;$TEXMFLOCAL;$TEXMFMAIN;$VARTEXFONTS;$TEXMFDIST
 
 % It may be convenient to define TEXMF like this:
 %   TEXMF = {$TEXMFHOME,!!$TEXMFLOCAL,!!$TEXMFMAIN,$HOME}
