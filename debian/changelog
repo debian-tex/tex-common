@@ -4,8 +4,9 @@ tex-common (0.11.1) UNRELEASED; urgency=low
     not moan about unusable entry. [preining]
   * Document TEXMFSYSCONFIG in the Policy Draft, and add some more
     clarifications to the text [frank]
+  * change TEXMFDIST to include texmf-texlive and texmf-tetex
 
- -- Frank Küster <frank@debian.org>  Thu, 24 Nov 2005 16:03:23 +0100
+ -- Norbert Preining <preining@logic.at>  Fri, 25 Nov 2005 13:18:08 +0100
 
 tex-common (0.11) unstable; urgency=low
 

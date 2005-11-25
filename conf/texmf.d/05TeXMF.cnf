@@ -60,8 +60,8 @@ TEXMFMAIN = /usr/share/texmf
 
 % The main distribution tree:
 % TEXMFDIST = /usr/share/texmf-dist
-% TEXMFDIST is not used in Debian, everything is in $TEXMFMAIN
-TEXMFDIST = $TEXMFMAIN
+% TEXMFDIST is used for tetex and texlive
+TEXMFDIST = /usr/share/texmf-{tetex;texlive}
 
 
 % A place for local additions to a "standard" texmf tree.
@@ -133,7 +133,7 @@ VARTEXFONTS = /var/cache/fonts
 % one of the TEXMF directories (avoids overlapping ls-R files).
 %
 % TEXMFDBS = $TEXMF;$VARTEXFONTS
-TEXMFDBS = $TEXMFSYSVAR;$TEXMFLOCAL;$TEXMFMAIN;$VARTEXFONTS
+TEXMFDBS = $TEXMFSYSVAR;$TEXMFLOCAL;$TEXMFMAIN;$VARTEXFONTS;$TEXMFDIST
 
 % It may be convenient to define TEXMF like this:
 %   TEXMF = {$TEXMFHOME,!!$TEXMFLOCAL,!!$TEXMFMAIN,$HOME}
