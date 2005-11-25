@@ -182,19 +182,6 @@
         </p>
   
         <p>
-        Configuration files must be placed below
-        <file>/etc/texmf</file>, with symlinks pointing from the TDS
-        locations to files or directories below
-        <file>/etc/texmf</file>.  The system-wide
-        <var>TEXMFSYSCONFIG</var> tree, if defined, must be the same
-        as the <var>TEXMFMAIN</var> tree; a TeX-related package must
-        not change this.  In the future,
-        <file>/etc/texmf</file> might become a separate, additional
-        <var>TEXMF</var> tree <var>TEXMFSYSCONFIG</var>; a TeX-related
-        package should try to not rely on either setup.
-        </p>
-
-        <p>
         The following <var>TEXMF</var> trees are defined, as outlined
         below:
         <enumlist>
@@ -256,6 +243,12 @@
         Policy.  Configuration file handling is described below in .  Packages should take care to ignore
         <var>TEXMFHOME</var> in their maintainer scripts.
         </p>
+
+	<p>
+	For configuration file placement, see <ref
+	id="configurationfiles">. 
+	</p>
+
       </sect>
 
       <sect>
@@ -275,7 +268,8 @@
         <file>/etc/texmf/texmf.cnf</file>.  It is not intended that
         local administrators edit that file, but if they do, the
         configuration update programs must respect these changes.
-        Debian packages must not alter that file.</p>
+        Debian packages must not alter that file.
+	</p>
 
       </sect>
 
@@ -382,7 +376,7 @@
     </chapt> 
     <chapt>
       <heading>Configuration</heading>
-      <sect>
+      <sect id="configurationfiles">
         <heading>Configuration files</heading>
 	<p>
 	In a TeX system, in principle every TeX input file can be
@@ -487,25 +481,10 @@
 
               <item>
                 <p>
-                It should install the necessary map files (<file>.map</file>
-                extension) below <file>/etc/texmf/map/</file>. This directory
-                (or relevant subdirectories thereof, such as
-                <file>dvipdfm</file>, <file>dvips</file> and
-                <file>pdftex</file>) is symlinked from
-                <file><var>TEXMFMAIN</var>/fonts/map</file> by the Basic TeX
-                Packages.
-                </p>
-
-                <p>
-                The precise location under <file>/etc/texmf/map/</file> must
-                conform to TDS version&nbsp;1.1, except that when parts of
-                <file><var>TEXMFMAIN</var></file> are accessible under
-                <file>/etc</file> due to symbolic links installed by the Basic
-                TeX Packages, the location under <file>/etc</file> should be
-                used (this is the case when a directory is supposed to contain
-                configuration files; for instance, don't install map files
-                into <file>/usr/share/texmf/fonts/map/dvips/</file>, but use
-                <file>/etc/texmf/map/dvips/</file> instead).
+                It should install the necessary map files
+                (<file>.map</file> extension) below
+                <file><var>TEXMFMAIN</var>/fonts/map</file>.  The
+                precise location must conform to TDS version 1.1. 
                 </p>
               </item>
 
@@ -646,22 +625,22 @@
               Now, about the "magic comments" in
               <file>/etc/texmf/updmap.d/*.cfg</file> and the
               <file><var>package</var>.list</file> file in
-              <file>/var/lib/tex-common/fontmap-cfg/</file>. Suppose that
-              <var>package</var> is removed, but not purged. Its map files
-              will stay in subdirectories of <file>/etc/texmf/map/</file>, but
-              the actual font files below <file>/usr/share/texmf/</file> will
-              be removed, rendering the fonts unusable. Therefore,
-              <var>package</var> has to make sure that its
-              <prgn>update-updmap</prgn> configuration files in
-              <file>/etc/texmf/updmap.d/</file> are ignored when it is in this
-              state. Besides, we want the
-              <file>/etc/texmf/updmap.d/*.cfg</file> files to be conffiles
-              (unless we really have no other choice), because then
-              <prgn>dpkg</prgn> automatically handles upgrades while
-              preserving user modifications for them. As a consequence, moving
-              the <file>.cfg</file> files from <var>package</var> out of the
-              way when it is removed is not an option. Moreover, the user
-              would wonder where his configuration files have gone in such a
+              <file>/var/lib/tex-common/fontmap-cfg/</file>. When that
+              <var>package</var> is removed, but not purged, it has to
+              make sure that its <prgn>update-updmap</prgn>
+              configuration files in <file>/etc/texmf/updmap.d/</file>
+              are ignored.  Otherwise, any call to
+              <prgn>updmap-sys</prgn> by an other package or the local
+              admin would fail because it cannot find
+              <var>package</var>'s map files. Besides, we want the
+              <file>/etc/texmf/updmap.d/*.cfg</file> files to be
+              conffiles (unless we really have no other choice),
+              because then <prgn>dpkg</prgn> automatically handles
+              upgrades while preserving user modifications for
+              them. As a consequence, moving the <file>.cfg</file>
+              files from <var>package</var> out of the way when it is
+              removed is not an option. Moreover, the user would
+              wonder where his configuration files have gone in such a
               case.
               </p>
 
@@ -779,9 +758,9 @@
 	  configuration file according to <prgn>fmtutil.cnf(5)</prgn>
 	  into <file>/etc/texmf/fmt.d/</file>, run
 	  <prgn>update-fmtutil</prgn> and subsequently create the
-	  format with <tt>fmtutil --byfmt <var>format</var></tt>.
-	  <prgn>fmtutil</prgn> will only try to create the format if
-	  it can find the corresponding
+	  format with <tt>fmtutil-sys --byfmt <var>format</var></tt>.
+	  <prgn>fmtutil-sys</prgn> will only try to create the format
+	  if it can find the corresponding
 	  <file><var>format</var>.ini</file> file (the last argument
 	  in an <prgn>fmtutil.cnf</prgn> line).  Therefore the
 	  <file><var>format</var>.ini</file> file should not be a
