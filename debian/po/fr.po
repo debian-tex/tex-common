@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: tetex-bin 2.02-4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-11-09 14:43+0100\n"
-"PO-Revision-Date: 2005-10-14 19:51+0200\n"
-"Last-Translator: Clement Stenac <zorglub@via.ecp.fr>\n"
+"PO-Revision-Date: 2005-11-16 19:51+0200\n"
+"Last-Translator: Clement Stenac <zorglub@diwi.org>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
@@ -27,19 +27,18 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n>1;\n"
 
-# FIXME: "file" ou "files" ?
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "Select the ls-R file which should be writable by their respective group."
-msgstr "Fichier d'index (ls-R) devant être gérés automatiquement : "
+msgstr ""
+"Fichier d'index (ls-R) pour lequel le groupe devrait avoir la permission "
+"d'écriture : "
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "There are many files installed in a typical TeX system. To speed up the "
 "search of these files a list of available files is stored in a file called "
@@ -51,18 +50,14 @@ msgid ""
 " - cache: usually /var/cache/fonts, contains generated fonts."
 msgstr ""
 "De nombreux fichiers sont installés par TeX. Afin d'accélérer la recherche "
-"de ces fichiers ; une liste des fichiers disponibles est stockée dans un "
-"fichier appelé ls-R. Il y a quatre emplacements différents pour les fichiers "
-"TeX dans un système Debian :\n"
+"de ces fichiers, une liste des fichiers disponibles est stockée dans un "
+"fichier appelé ls-R. Dans un système Debian, il y a trois emplacements "
+"différents pour ces fichiers :\n"
 " - main : généralement /usr/share/texmf, qui ne contient que les fichiers "
 "installés par les paquets Debian ;\n"
-" - local : généralement /usr/local/share/texmf, qui contient les ajouts "
-"locaux ;\n"
 " - var : généralement /var/lib/texmf, qui contient les fichiers créés par le "
 "système TeX, comme les fichiers de formats ;\n"
-" - cache : généralement /var/cache/fonts, qui contient les fontes créées.\n"
-"Vous pouvez sélectionner quels fichiers ls-R pour ces quatre emplacements "
-"seront gérés automatiquement."
+" - cache : généralement /var/cache/fonts, qui contient les polices créées."
 
 #. Type: multiselect
 #. Description
@@ -71,23 +66,24 @@ msgid ""
 "You can select from these three locations those whose ls-R files should be "
 "group writable. Group write permissions for deselected ls-R will be removed."
 msgstr ""
+"Vous pouvez sélectionner les emplacements pour lesquels le groupe aura la "
+"permission d'écrire les fichiers ls-R. Les permissions d'écriture pour "
+"les fichiers ls-R non sélectionnés seront supprimées."
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "We suggest selecting cache (this is the defaults) and allowing a selected "
 "user group to modify these ls-R files, because of the following reasons:"
 msgstr ""
-"Il est conseillé de sélectionner « cache » et « local », qui sont les "
-"valeurs par défaut, et d'autoriser un groupe d'utilisateurs à modifier ces "
-"fichiers ls-R pour les raisons suivantes :"
+"Il est conseillé de sélectionner « cache », qui est la valeur par défaut, et "
+"d'autoriser un groupe d'utilisateurs à modifier ces fichiers ls-R pour les "
+"raisons suivantes :"
 
 #. Type: multiselect
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid ""
 "A lot of font files have to be generated before they can be used by xdvi, "
 "dvips etc. These files are stored in /var/cache/fonts, so that they do not "
@@ -95,10 +91,12 @@ msgid ""
 "fly  when needed.  Since the directory is group-writable, the ls-R file "
 "should be the same"
 msgstr ""
-"De nombreuses polices ont besoin d'être créées avant de pouvoir être "
-"utilisées par xdvi, dvips, etc. Ces fichiers sont conservés dans le "
-"répertoire /var/cache/fonts afin de ne pas devoir être créés à chaque "
-"utilisation."
+"De nombreuses polices doivent être créées avant de pouvoir être utilisées "
+"par xdvi, dvips, etc. Ces fichiers sont conservés dans le répertoire /var/"
+"cache/fonts afin de ne pas devoir être créés à chaque utilisation. Ces "
+"fichiers sont généralement créés lorsque c'est nécessaire. Comme le groupe a "
+"la permission d'écrire dans le répertoire, les permissions sur le fichier ls-"
+"R doivent être les mêmes."
 
 #. Type: string
 #. Description
@@ -116,6 +114,11 @@ msgid ""
 "'cache' in the previous question, we would suggest to select the group "
 "'users' here."
 msgstr ""
+"Vous pouvez sélectionner un groupe auquel les fichiers ls-R sélectionnés "
+"appartiendront. Si vous n'indiquez pas de nom de groupe, les appartenances "
+"des fichiers sélectionnés ne seront pas modifiées . Si vous avez sélectionné "
+"« cache » à la question précédente, il est conseillé de sélectionner le "
+"groupe « users »."
 
 #. Type: note
 #. Description
@@ -133,7 +136,7 @@ msgid ""
 msgstr ""
 "Le fichier texmf.cnf était créé par update-texmf à partir de tous les "
 "fichiers situés dans /etc/texmf/texmf.d. Cet utilitaire a été modifié et "
-"n'utilise plus désormais que les fichiers comportant l'extension « .cnf »."
+"n'utilise désormais que les fichiers comportant l'extension « .cnf »."
 
 #. Type: note
 #. Description
@@ -145,58 +148,3 @@ msgstr ""
 "Si vous avez placé un fichier personnel dans /etc/texmf/texmf.d/, il est "
 "donc nécessaire d'ajouter « .cnf » à son nom (par exemple, 22mamacro devient "
 "22mamacro.cnf)."
-
-#~ msgid ""
-#~ "Some users may have the right to add files to the local texmf tree, so "
-#~ "they should also be allowed to change the ls-R file."
-#~ msgstr ""
-#~ "Certains utilisateurs pourraient avoir le droit d'ajouter des fichiers à "
-#~ "l'arborescence texmf locale, ils devraient donc avoir le droit de "
-#~ "modifier le fichier ls-R."
-
-#~ msgid ""
-#~ "Accepting this option will allow you to easily manage the permissions of "
-#~ "those ls-R files using debconf. Otherwise you will have to manually "
-#~ "ensure that they get useful but safe permissions."
-#~ msgstr ""
-#~ "Si vous choisissez cette option, vous pourrez configurer facilement les "
-#~ "permissions de ces fichiers ls-R. Dans le cas contraire, vous devrez "
-#~ "vérifier vous-même qu'ils possèdent des permissions suffisantes mais "
-#~ "sûres."
-
-#~ msgid ""
-#~ "Modification of ls-R files can be restricted to the members of one group "
-#~ "which owns them.  To take advantage of this, add the users to the group "
-#~ "of your choice, and enter that group name here.  The default group, "
-#~ "'users', is appropriate for most systems."
-#~ msgstr ""
-#~ "La modification des fichiers ls-R peut être réservée aux membres du "
-#~ "groupe qui en sera le propriétaire. Pour utiliser cette possibilité, "
-#~ "veuillez ajouter les utilisateurs au groupe de votre choix et indiquer ce "
-#~ "groupe ici. Le groupe par défaut « users » convient à la plupart des "
-#~ "systèmes."
-
-#~ msgid "Allow group members to modify ls-R files?"
-#~ msgstr ""
-#~ "Faut-il permettre aux membres du groupe de modifier les fichiers ls-R ?"
-
-#~ msgid ""
-#~ "Accepting this option will allow members of the owning group to modify "
-#~ "the ls-R files."
-#~ msgstr ""
-#~ "Si vous acceptez, les membres du groupe propriétaire des fichiers ls-R "
-#~ "pourront modifier ces fichiers."
-
-#~ msgid "Allow all users to modify ls-R files?"
-#~ msgstr ""
-#~ "Faut-il permettre à tous les utilisateurs de modifier les fichiers ls-R ?"
-
-#~ msgid ""
-#~ "Accepting this option will allow all users to modify ls-R files.  This is "
-#~ "generally not a good idea for security reasons; you should instead "
-#~ "restrict such access to members of one group."
-#~ msgstr ""
-#~ "Si vous choisissez cette option, tous les utilisateurs pourront modifier "
-#~ "les fichiers ls-R. Ce choix est déconseillé pour des raisons de "
-#~ "sécurité ; vous devriez plutôt restreindre cet accès aux membres d'un "
-#~ "groupe donné."

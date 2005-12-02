@@ -1,12 +1,15 @@
-tex-common (0.11.1) UNRELEASED; urgency=low
+tex-common (0.12) unstable; urgency=low
 
   * change ls_R_magic to include ., ./, and ls-R so that kpathsea does
     not moan about unusable entry. [preining]
   * Document TEXMFSYSCONFIG in the Policy Draft, and add some more
     clarifications to the text [frank]
-  * change TEXMFDIST to include texmf-texlive and texmf-tetex
+  * change TEXMFDIST to include texmf-texlive and texmf-tetex [preining] 
+  * Translations:
+    - Update French debconf translation, thanks to Clément Stenac
+      <zorglub@via.ecp.fr> (closes: #341721) [frank]
 
- -- Norbert Preining <preining@logic.at>  Fri, 25 Nov 2005 13:18:08 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  2 Dec 2005 17:40:04 +0100
 
 tex-common (0.11) unstable; urgency=low
 
