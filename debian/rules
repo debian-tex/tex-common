@@ -14,9 +14,6 @@ sbin_manpages=$(foreach script,$(sbin_scripts), scripts/$(script).8) scripts/upd
 bin_installfiles=$(foreach script,$(bin_scripts), scripts/$(script))
 bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1) scripts/update-updmap.1
 
-# for the teTeX packages
-teTeX_buildfiles=debian/common.variables debian/common.functions.in
-
 # create maintainer scripts etc.
 EPERL_FILES := debian/common.functions debian/postinst debian/postrm debian/config
 eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.functions \
@@ -66,7 +63,6 @@ install: build
 
 	# Add here commands to install the package into debian/tex-common.
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
-	cp dsfp/* $(INSTDIR)/usr/share/dsfp/
 	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
 	cp conf/language.d/00tex.cnf $(INSTDIR)/etc/texmf/language.d/
 	# ucf files
@@ -98,7 +94,8 @@ install: build
 	rm -f debian/$package/usr/share/texmf/ls-R
 	ln -s /var/lib/texmf/ls-R-TEXMFMAIN $(INSTDIR)/usr/share/texmf/ls-R
 
-	cp $(teTeX_buildfiles) $(INSTDIR)/usr/share/tex-common/teTeX-build/
+	# Create a symlink in TEXMFMAIN for docs
+	ln -s ../doc/texmf $(INSTDIR)/usr/share/texmf/doc
 
 
 # Build architecture-independent files here.

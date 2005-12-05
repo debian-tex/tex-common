@@ -11,7 +11,7 @@ Package: tex-common
 Architecture: all
 Depends: ucf, ${misc:Depends}
 Suggests: debhelper (>= 4.0)
-Replaces: tetex-base (<= 3.0-7)
+Replaces: tetex-base (<= 3.0-10)
 Conflicts: tetex-bin (<= 3.0-4), tetex-base (<= 3.0-3)
 Description: Common infrastructure for using and building TeX in Debian
  This package contains a number of scripts and common configuration
