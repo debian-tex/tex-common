@@ -1,3 +1,11 @@
+tex-common (0.12.1) UNRELEASED; urgency=low
+
+  * Translations: 
+    - Update Czech debconf translation, thanks to Miroslav Kure
+      <kurem@upcase.inf.upol.cz> (closes: #341941) [frank]
+
+ -- Frank Küster <frank@debian.org>  Mon,  5 Dec 2005 12:29:36 +0100
+
 tex-common (0.12) unstable; urgency=low
 
   * change ls_R_magic to include ., ./, and ls-R so that kpathsea does
