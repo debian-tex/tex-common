@@ -25,8 +25,8 @@
 <:$TEXMF_PARTS="05TeXMF 15Plain 45TeXinputs 55Fonts 65BibTeX 75DviPS 85Misc 90TeXDoc 95NonPath":>//
 <:for (@TEXMF_PARTS_FULLNAME=split(/ /,$TEXMF_PARTS)){s{(.*)}{texmf.d/$1.cnf}}:>//
 <:$TEX_COMMON_UCF_FILES="@TEXMF_PARTS_FULLNAME updmap.d/00updmap.cfg":>//
-<:$confstatedir="/var/lib/tetex":>//
-<:$no_config_prefix="admin-wants-no":>//
+<:#$confstatedir="/var/lib/tetex":>//
+<:#$no_config_prefix="admin-wants-no":>//
 <:$LSRS="/var/lib/texmf/ls-R /var/lib/texmf/ls-R-TEXMFMAIN /var/lib/texmf/ls-R-LOCAL /var/cache/fonts/ls-R":>//
 <:# get the package version - must be usable in subdirectories, too:>//)
 <:if(-f "changelog"){open(CHANGELOG,"changelog")} else {open(CHANGELOG, "../changelog")};

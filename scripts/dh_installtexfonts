@@ -188,6 +188,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			error("The config file $tmp/etc/texmf/updmap.d/$pr$bn already exists! Cannot recreate it, please call dh_clean -k!");
 		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$pr$bn") ||
 			error("Cannot open $tmp/etc/texmf/updmap.d/$pr$bn for writing!");
+		verbose_print("Writing $tmp/etc/texmf/updmap.d/$pr$bn");
 		if (!magic_comment_present($fn)) {
 			print CFGFILE "# $pr$bn\n";
 			print CFGFILE $magicheader;
@@ -208,6 +209,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			error("The config file $tmp/etc/texmf/updmap.d/$priority$package.cfg already exists! Cannot recreate it, please call dh_clean -k!");
 		open(CFGFILE, ">$tmp/etc/texmf/updmap.d/$priority$package.cfg") || 
 			error("Cannot open $tmp/etc/texmf/updmap.d/$priority$package.cfg for writing!");
+		verbose_print("Writing $tmp/etc/texmf/updmap.d/$priority$package.cfg");
 		if (($file && !magic_comment_present($file)) ||
 		    (!$file && ($#cmdlinemaps >= 0))) {
 			print CFGFILE "# $priority$package.cfg\n";
@@ -228,6 +230,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
         }
 	open(LISTFILE, ">>$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
 		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing/appending!");
+	verbose_print("Writing $tmp/var/lib/tex-common/fmtutil-cnf/$package.list");
 	foreach (@listlines) {
 		print LISTFILE "$_\n";
 	}

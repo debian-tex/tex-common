@@ -10,7 +10,14 @@ MKTMPDIR=/tmp
 SYMLINK_MOVE_EXT=<:=$SYMLINK_MOVE_EXT:>
 TEXMFSYSVAR=<:=$TEXMFSYSVAR:>
 
-savemove(){
+debug(){
+  true "$*"
+}
+# debug(){
+#   echo -en "$*"
+# }
+
+xsavemove(){
   source="$1"
   dest="$2"
   chown --reference=$dest $source
@@ -220,6 +227,74 @@ VARTEXFONTS VFFONTS WEB2C WEBINPUTS"
   done
 
 }
+
+get_newfilename(){
+  file="$1" # without leading /etc/texmf
+  basedir=${file%%/*}
+  restname=$(echo ${file#*/})
+  case $basedir in
+    $file)
+      case $file in
+	modes.mf)
+	  echo metafont/misc/modes.mf
+	  ;;
+	mktex.cnf)
+	  echo web2c/mktex.cnf
+      esac
+      ;;
+    map)
+      echo fonts/$file
+      ;;
+    dvips)
+      echo $basedir/config/$restname
+      ;;
+      *)
+      echo tex/$basedir/config/$restname
+      ;;
+  esac
+}
+
+dpkg_md5sum(){
+  grep "$1[[:space:]]"  /var/lib/dpkg/status | cut -f 3 -d ' '
+}
+
+ucf_md5sum(){
+  grep "$1$"  /var/lib/ucf/hashfile | cut -f 1 -d ' '
+}
+
+preinst_remove_or_move(){
+  file=/etc/texmf/$1
+  newname=`get_newfilename $1`
+  debug $file
+  test -f "$file" || return 0
+  debug "handled\n"
+  oldmd5sum=`dpkg_md5sum $file`
+  currmd5sum=`md5sum $file | cut -d ' ' -f 1`
+  if [ "$oldmd5sum" = "$currmd5sum" ]; then
+    mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
+  else
+    newdir=`dirname /etc/texmf/$newname`
+    mkdir -p $newdir
+    mv $file /etc/texmf/$newname
+  fi
+}
+preinst_remove_or_move_ucf(){
+  file=/etc/texmf/$1
+  newname=`get_newfilename $1`
+  debug $file
+  test -f "$file" || return 0
+  debug "handled\n"
+  oldmd5sum=`ucf_md5sum $file`
+  currmd5sum=`md5sum $file | cut -d ' ' -f 1`
+  if [ "$oldmd5sum" = "$currmd5sum" ]; then
+    mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
+  else
+    mv $file /etc/texmf/$newname
+    if [ -x /usr/bin/ucf ]; then ucf --purge $file; fi
+  fi
+}
+
+
 
 #################################################################
 ##  End of function definitions from file common.functions
