@@ -2,14 +2,16 @@ tex-common (0.12.1) UNRELEASED; urgency=low
 
   * tex-common now provides the symlink /usr/share/texmf/doc -->
     ../doc/texmf, because tetex-doc now puts its files into TEXMFDIST
-    [frank]. 
+    [frank].
   * Do no longer install teTeX's common.* files and dsf-patch.mk, they are
     no longer used.
-  * Translations: 
+  * Translations:
     - Update Czech debconf translation, thanks to Miroslav Kure
       <kurem@upcase.inf.upol.cz> (closes: #341941) [frank]
+  * Implement --flavor for dh_installtexfonts, first flavors are only 
+    for generating config files for maps [preining].
 
- -- Frank Küster <frank@debian.org>  Mon,  5 Dec 2005 16:13:38 +0100
+ -- Norbert Preining <preining@logic.at>  Fri,  9 Dec 2005 11:40:48 +0100
 
 tex-common (0.12) unstable; urgency=low
 
