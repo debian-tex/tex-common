@@ -255,11 +255,134 @@ get_newfilename(){
 }
 
 dpkg_md5sum(){
-  grep "$1[[:space:]]"  /var/lib/dpkg/status | cut -f 3 -d ' '
+  file=$1
+  md5sum=`grep "$file[[:space:]]"  /var/lib/dpkg/status | cut -f 3 -d ' '`
+  if [ -z "$md5sum" ]; then
+    get_sarge_md5sum_from_list $file
+  fi
+  echo $md5sum
 }
 
 ucf_md5sum(){
-  grep "$1$"  /var/lib/ucf/hashfile | cut -f 1 -d ' '
+  file=$1
+  md5sum=`grep "$file$"  /var/lib/ucf/hashfile | cut -f 1 -d ' '`
+  if [ -z "$md5sum" ]; then
+    get_sarge_md5sum_from_list $file
+  fi
+  echo $md5sum
+}
+
+
+
+sarge_md5sum_list="
+ /etc/texmf/mktex.cnf 6491db33ef75bbe4f38a6dcbdcab7db8 
+ /etc/texmf/dvips/config.builtin35 5775e9a2ec5e89c44f03c49a84133c76 
+ /etc/texmf/updmap.d/00updmap.cfg 82884281d955998e22141cf67b45209d 
+ /etc/texmf/dvipdfm/config 8713d15e9e574109c61474a3990b677f 
+ /etc/texdoctk/texdocrc 9957008bc9073607c1090f4ce55cc3c0 
+ /etc/texmf/dvipdfm/README.config 2731fe134e122f315d91cae400a6b13e
+ /etc/texmf/dvips/config.ps 7402075ae27071bff26ddeb1143ace07
+ /etc/texmf/dvips/context.map 0c886351c178a140f3e2b6e39656ee44
+ /etc/texmf/dvips/config.outline e671960560b7cb570aef7f19af14519a
+ /etc/texmf/dvips/config.dfaxhigh 1c7ef7c0bcc006af534241df17d1e085
+ /etc/texmf/dvips/config.pdf d05ab1e98fcf0d2a4eccd4bb7ad9b0e4
+ /etc/texmf/dvips/config.dfaxlo 25b7f9a41d13d188b75fb6ec63e8fa09
+ /etc/texmf/dvips/config.pk 44348634a3771beda74b4133a8614fa5
+ /etc/texmf/dvips/config.download35 39bb1088ea568d10973f48293c205a8e
+ /etc/texmf/dvips/config.www ba6b447883942b5f0d653d878072321b
+ /etc/texmf/dvips/config.gsftopk e02bc7dd315e819e349c52191837975a
+ /etc/texmf/modes.mf 17886f0a39f023a1830538073a743047
+ /etc/texmf/pdftex/context/il2-ams-cmr.map cc471142a76445139def6ad5b5202ad4
+ /etc/texmf/pdftex/context/original-adobe-euro.map ee2826182cf6f1b95890e8b7d0fc9633
+ /etc/texmf/pdftex/context/original-ams-cmr.map 5912f95748bc1917f14632e48cc223ac
+ /etc/texmf/pdftex/context/original-ams-euler.map 878c01a7de86554eb41ff74a0b752f5f
+ /etc/texmf/pdftex/context/original-context-symbol.map 7090f11f5bee8f5e9b46841f286d1df9
+ /etc/texmf/pdftex/context/original-vogel-symbol.map e4f07d28e80b93ad2513a3e812541f32
+ /etc/texmf/pdftex/context/original-youngryu-px.map b17cc8cb081cb34cbff9e197c1e97512
+ /etc/texmf/pdftex/context/original-youngryu-tx.map 229dbd1882f3378c4dd21e353489f03a
+ /etc/texmf/pdftex/context/pl0-ams-cmr.map 0bf5e38fde2a67bb4df7cdb11e499175
+ /etc/texmf/pdftex/cmttf.map 6b87723795683cdcfd846c2d8d60cb3e
+ /etc/texmf/pdftex/pdftex.cfg 8d08d2723661c86cd45e4a1408a5f923
+ /etc/texmf/latex/color.cfg d77957eef96e7e9a4bdc3d1d24a49df3
+ /etc/texmf/latex/graphics.cfg 3f384c52d267b7f0a50fb71fab57d60f
+ /etc/texmf/latex/latex.ini 09e4f410ade0befce1e0bacf8e272789
+ /etc/texmf/latex/latex209.cfg c9af399f9747715e21b6e64daa4e5916
+ /etc/texmf/latex/ltxdoc.cfg 50cf6ee9115a007246d2d79e350a8592
+ /etc/texmf/latex/ltxguide.cfg cc8dbfee5a57b4ae20bb77cc6aeb0e1f
+ /etc/texmf/latex/texsys.cfg 055c0b3967730e2dd75dee66ccde2687
+ /etc/texmf/latex/fontmath.cfg ee0a90dac1a81d3aee68f1abdbbd5839
+ /etc/texmf/latex/fonttext.cfg 6be6de7b54df7d13a8831138e7f1297b
+ /etc/texmf/latex/preload.cfg a2df76edd8245ce697c998dd4cbf060f
+ /etc/texmf/etex/etex.ini eb7eeca34d4f7c338480ae2f1e95dae6
+ /etc/texmf/etex/language.def e28ea8119d0edaea53f2a55bd5a13bf5
+ /etc/texmf/platex/hyphen.cfg 1199fd3dbe752e8eedaca7a5a6df9258
+ /etc/texmf/platex/language.dat 8e3525fe40ae72bb08f673b30eca1236
+ /etc/texmf/platex/platex.ini c865212575be3a09cbadb694a803ca55
+ /etc/texmf/context/cont-cz.ini 984f5ed1242258775b9c6e5e8b219a26
+ /etc/texmf/context/cont-de.ini c2c75aaddf59e7cd1d14ef3661578eef
+ /etc/texmf/context/cont-en.ini 5d7064e3adc9acdaf94e37e9bc5c1a29
+ /etc/texmf/context/cont-it.ini 96366065e347eab53a30e72d9a6e4ca0
+ /etc/texmf/context/cont-nl.ini 25cbcc11164d749693de4eea197a9c65
+ /etc/texmf/context/cont-ro.ini a94fd43e68156f57e6bf3ac4a901af14
+ /etc/texmf/dvips/config.www ba6b447883942b5f0d653d878072321b
+ /etc/texmf/dvips/config.gsftopk e02bc7dd315e819e349c52191837975a
+ /etc/texmf/modes.mf 17886f0a39f023a1830538073a743047
+ /etc/texmf/pdftex/context/il2-ams-cmr.map cc471142a76445139def6ad5b5202ad4
+ /etc/texmf/pdftex/context/original-adobe-euro.map ee2826182cf6f1b95890e8b7d0fc9633
+ /etc/texmf/pdftex/context/original-ams-cmr.map 5912f95748bc1917f14632e48cc223ac
+ /etc/texmf/pdftex/context/original-ams-euler.map 878c01a7de86554eb41ff74a0b752f5f
+ /etc/texmf/pdftex/context/original-context-symbol.map 7090f11f5bee8f5e9b46841f286d1df9
+ /etc/texmf/pdftex/context/original-vogel-symbol.map e4f07d28e80b93ad2513a3e812541f32
+ /etc/texmf/pdftex/context/original-youngryu-px.map b17cc8cb081cb34cbff9e197c1e97512
+ /etc/texmf/pdftex/context/original-youngryu-tx.map 229dbd1882f3378c4dd21e353489f03a
+ /etc/texmf/pdftex/context/pl0-ams-cmr.map 0bf5e38fde2a67bb4df7cdb11e499175
+ /etc/texmf/pdftex/cmttf.map 6b87723795683cdcfd846c2d8d60cb3e
+ /etc/texmf/pdftex/pdftex.cfg 8d08d2723661c86cd45e4a1408a5f923
+ /etc/texmf/latex/color.cfg d77957eef96e7e9a4bdc3d1d24a49df3
+ /etc/texmf/latex/graphics.cfg 3f384c52d267b7f0a50fb71fab57d60f
+ /etc/texmf/latex/latex.ini 09e4f410ade0befce1e0bacf8e272789
+ /etc/texmf/latex/latex209.cfg c9af399f9747715e21b6e64daa4e5916
+ /etc/texmf/latex/ltxdoc.cfg 50cf6ee9115a007246d2d79e350a8592
+ /etc/texmf/latex/ltxguide.cfg cc8dbfee5a57b4ae20bb77cc6aeb0e1f
+ /etc/texmf/latex/texsys.cfg 055c0b3967730e2dd75dee66ccde2687
+ /etc/texmf/latex/fontmath.cfg ee0a90dac1a81d3aee68f1abdbbd5839
+ /etc/texmf/latex/fonttext.cfg 6be6de7b54df7d13a8831138e7f1297b
+ /etc/texmf/latex/preload.cfg a2df76edd8245ce697c998dd4cbf060f
+ /etc/texmf/etex/etex.ini eb7eeca34d4f7c338480ae2f1e95dae6
+ /etc/texmf/etex/language.def e28ea8119d0edaea53f2a55bd5a13bf5
+ /etc/texmf/platex/hyphen.cfg 1199fd3dbe752e8eedaca7a5a6df9258
+ /etc/texmf/platex/language.dat 8e3525fe40ae72bb08f673b30eca1236
+ /etc/texmf/platex/platex.ini c865212575be3a09cbadb694a803ca55
+ /etc/texmf/context/cont-cz.ini 984f5ed1242258775b9c6e5e8b219a26
+ /etc/texmf/context/cont-de.ini c2c75aaddf59e7cd1d14ef3661578eef
+ /etc/texmf/context/cont-en.ini 5d7064e3adc9acdaf94e37e9bc5c1a29
+ /etc/texmf/context/cont-it.ini 96366065e347eab53a30e72d9a6e4ca0
+ /etc/texmf/context/cont-nl.ini 25cbcc11164d749693de4eea197a9c65
+ /etc/texmf/context/cont-ro.ini a94fd43e68156f57e6bf3ac4a901af14
+ /etc/texmf/context/cont-uk.ini ee6f13cd52623786f7a13c151900ec50
+ /etc/texmf/context/cont-usr.tex 15b671e578d517dc54df1db022c3f412
+ /etc/texmf/context/texexec.ini 1497213cfcfded9d1ae2e5546cf55fc4
+ /etc/texmf/cyrplain/cyramstx.ini 15d4ba30419b36376851a124619e20ba
+ /etc/texmf/cyrplain/cyrtex.cfg 843bd70324caf63d72269dd3afdd8eb1
+ /etc/texmf/cyrplain/cyrtex.ini 40ae6def8399827a80f3736e5fb1cdf5
+ /etc/texmf/cyrplain/cyrtxinf.ini 797f2dae2d06396a4b40b1454609f025
+ /etc/texmf/cslatex/fonttext.cfg 1129c41c24cf37f4d2cad6deca949fb1
+ /etc/texmf/cslatex/hyphen.cfg 987e934d95d372902b0e1a81d3dc3802
+"
+
+get_sarge_md5sum_from_list(){
+  file=$1
+  set $sarge_md5sum_list
+  while [ $# -gt 0 ]; do
+    if [ $file = $1 ]; then
+      echo $2
+      return 0
+    else
+      shift 2
+    fi
+  done
+  echo "$file: md5sum not known. Exiting" >&2
+  return 1
 }
 
 preinst_remove_or_move(){
@@ -289,6 +412,8 @@ preinst_remove_or_move_ucf(){
   if [ "$oldmd5sum" = "$currmd5sum" ]; then
     mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
   else
+    newdir=`dirname /etc/texmf/$newname`
+    mkdir -p $newdir
     mv $file /etc/texmf/$newname
     if [ -x /usr/bin/ucf ]; then ucf --purge $file; fi
   fi
