@@ -8,10 +8,12 @@ tex-common (0.12.1) UNRELEASED; urgency=low
   * Translations:
     - Update Czech debconf translation, thanks to Miroslav Kure
       <kurem@upcase.inf.upol.cz> (closes: #341941) [frank]
-  * Implement --flavor for dh_installtexfonts, first flavors are only 
+  * Implement --flavor for dh_installtexfonts, first flavors are only
     for generating config files for maps [preining].
+  * Fix brace expansion in pdksh, patch from Robert Luberda 
+    (closes: #342781) [preining]
 
- -- Norbert Preining <preining@logic.at>  Fri,  9 Dec 2005 11:40:48 +0100
+ -- Norbert Preining <preining@logic.at>  Sun, 11 Dec 2005 11:12:24 +0100
 
 tex-common (0.12) unstable; urgency=low
 

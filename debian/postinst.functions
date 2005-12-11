@@ -126,7 +126,7 @@ check_texfontmaps(){
     echo "Exiting."
     failed=true
   else
-    if ! echo $line | grep -q '{fonts/map,}/{\$progname,pdftex,dvips,}//'; then
+    if ! echo "$line" | grep -q '{fonts/map,}/{\$progname,pdftex,dvips,}//'; then
       echo
       echo "An essential entry is wrong in $file:"
       echo "TEXFONTMAPS does not contain"
@@ -139,7 +139,7 @@ check_texfontmaps(){
     fi
     # the following is for backwards compatibility; must be dropped once all 
     # font packages follow TDS 1.1
-    if ! echo $line | grep -q '/dvips//'; then
+    if ! echo "$line" | grep -q '/dvips//'; then
       echo
       echo "An essential entry is wrong in $file:"
       echo "TEXFONTMAPS does not contain"
