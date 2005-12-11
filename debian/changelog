@@ -9,12 +9,14 @@ tex-common (0.12.1) UNRELEASED; urgency=low
     for generating config files for maps [preining].
   * Fix brace expansion in pdksh, patch from Robert Luberda 
     (closes: #342781) [preining]
+  * Add fonts/hbf to the search path for T1 fonts, this is needed by
+    cjk-latex. [frank]
   * Translations:
     - Update Czech debconf translation, thanks to Miroslav Kure
       <kurem@upcase.inf.upol.cz> (closes: #341941) [frank]
     - Fix italian translation file, this really closes: #340031 [frank]
 
- -- Frank Küster <frank@debian.org>  Sun, 11 Dec 2005 12:45:51 +0100
+ -- Frank Küster <frank@debian.org>  Sun, 11 Dec 2005 14:53:05 +0100
 
 tex-common (0.12) unstable; urgency=low
 

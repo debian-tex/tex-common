@@ -4,7 +4,7 @@ TEXPSHEADERS = .;$TEXMF/{dvips,fonts/{enc,type1,type3}}//
 TEXPSHEADERS.gsftopk = .;$TEXMF/{dvips,fonts/{enc,type1,type3,truetype}}//
 
 % PostScript Type 1 outline fonts.
-T1FONTS = .;$TEXMF/fonts/type1//
+T1FONTS = .;$TEXMF/fonts/{type1,hbf}//
 
 % PostScript AFM metric files.
 AFMFONTS = .;$TEXMF/fonts/afm//
