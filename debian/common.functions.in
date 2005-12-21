@@ -17,7 +17,7 @@ debug(){
 #   echo -en "$*"
 # }
 
-xsavemove(){
+savemove(){
   source="$1"
   dest="$2"
   chown --reference=$dest $source
@@ -293,6 +293,7 @@ sarge_md5sum_list="
  /etc/texmf/dvips/config.gsftopk e02bc7dd315e819e349c52191837975a
  /etc/texmf/modes.mf 17886f0a39f023a1830538073a743047
  /etc/texmf/pdftex/context/il2-ams-cmr.map cc471142a76445139def6ad5b5202ad4
+ /etc/texmf/map/dvips/context/il2-ams-cmr.map cc471142a76445139def6ad5b5202ad4
  /etc/texmf/pdftex/context/original-adobe-euro.map ee2826182cf6f1b95890e8b7d0fc9633
  /etc/texmf/pdftex/context/original-ams-cmr.map 5912f95748bc1917f14632e48cc223ac
  /etc/texmf/pdftex/context/original-ams-euler.map 878c01a7de86554eb41ff74a0b752f5f
@@ -301,6 +302,7 @@ sarge_md5sum_list="
  /etc/texmf/pdftex/context/original-youngryu-px.map b17cc8cb081cb34cbff9e197c1e97512
  /etc/texmf/pdftex/context/original-youngryu-tx.map 229dbd1882f3378c4dd21e353489f03a
  /etc/texmf/pdftex/context/pl0-ams-cmr.map 0bf5e38fde2a67bb4df7cdb11e499175
+ /etc/texmf/map/dvips/context/pl0-ams-cmr.map 0bf5e38fde2a67bb4df7cdb11e499175
  /etc/texmf/pdftex/cmttf.map 6b87723795683cdcfd846c2d8d60cb3e
  /etc/texmf/pdftex/pdftex.cfg 8d08d2723661c86cd45e4a1408a5f923
  /etc/texmf/latex/color.cfg d77957eef96e7e9a4bdc3d1d24a49df3
