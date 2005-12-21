@@ -37,10 +37,9 @@ while($VERSION=<CHANGELOG>){last if('' ne $VERSION=~s/$PACKAGE \((.*)\).*\n/$1/)
   # if the debian revision is 0 or 0.x, don't make a backport
   {$SARGEVERSION = ''}
 else {
-  # currently, we only need to recompile: binary-only-NMU version number
-  # $sarge_rev=$rev-1;
-  # ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$sarge_rev.sarge$2/;
-  ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$rev.0.sarge1/;
+  $sarge_rev=$rev-1;
+  ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1${sarge_rev}sarge$rev$2/;
+#   ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$rev.0.sarge1/;
 }:>//
 <:$FIRST_BASE_VERSION_WITH_COMMON="3.0-4":>//
 <:$README_sarge=''; $README_sarge='debian/sarge/README.sarge' if -e 'sarge-stamp':>//

@@ -1,6 +1,7 @@
 usr/sbin
 usr/bin
 usr/share/debhelper/autoscripts
+usr/share/tex-common
 usr/share/texmf/web2c
 usr/share/doc/texmf
 etc/texmf/fmt.d

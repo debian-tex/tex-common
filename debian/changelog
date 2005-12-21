@@ -1,4 +1,4 @@
-tex-common (0.12.1) UNRELEASED; urgency=low
+tex-common (0.13) unstable; urgency=low
 
   * tex-common now provides the symlink /usr/share/texmf/doc -->
     ../doc/texmf, because tetex-doc now puts its files into TEXMFDIST
