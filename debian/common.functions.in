@@ -6,7 +6,7 @@
 # $Id$
 
 # internal variables for common.functions
-MKTMPDIR=/tmp
+: ${MKTMPDIR:=/tmp}
 SYMLINK_MOVE_EXT=<:=$SYMLINK_MOVE_EXT:>
 TEXMFSYSVAR=<:=$TEXMFSYSVAR:>
 

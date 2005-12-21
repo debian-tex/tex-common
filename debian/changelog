@@ -1,3 +1,11 @@
+tex-common (0.13.1) UNRELEASED; urgency=low
+
+  * Bump standards version to 3.6.2 (no changes needed)
+  * Move debiandoc-sgml from Build-Dep to Build-Dep-Indep
+  * Fix a couple of lintian errors and warnings
+
+ -- Frank Küster <frank@debian.org>  Wed, 21 Dec 2005 12:26:57 +0100
+
 tex-common (0.13) unstable; urgency=low
 
   * tex-common now provides the symlink /usr/share/texmf/doc -->
