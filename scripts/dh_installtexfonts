@@ -298,7 +298,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		open(CNFFILE, ">$tmp/usr/share/texmf/dvips/config/config.$f") ||
 			error("Cannot open $tmp/usr/share/texmf/dvips/config/config.$f for writing!");
 		verbose_print("Writing $tmp/usr/share/texmf/dvips/config/config.$f");
-		print CNFFILE "Map +$m\n";
+		print CNFFILE "p +$m\n";
 		close(CNFFILE);
 	}
 	if (! $dh{NOSCRIPTS}) {
