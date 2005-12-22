@@ -4,8 +4,9 @@ tex-common (0.13.1) UNRELEASED; urgency=low
   * Move debiandoc-sgml from Build-Dep to Build-Dep-Indep
   * Fix a couple of lintian errors and warnings
   * Fix dvips config syntax, thanks to Danai SAE-HAN [preining]
+  * Rework the debhelper snippets post(inst|rm)-texfonts [preining]
 
- -- Norbert Preining <preining@logic.at>  Thu, 22 Dec 2005 09:33:57 +0100
+ -- Norbert Preining <preining@logic.at>  Thu, 22 Dec 2005 16:38:54 +0100
 
 tex-common (0.13) unstable; urgency=low
 

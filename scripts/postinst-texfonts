@@ -3,37 +3,57 @@
 #
 # postinst snippets for installing fonts for TeX
 #
-# Author: Florent Rougon <f.rougon@free.fr>
+# Authors:
+#	Florent Rougon <f.rougon@free.fr>
+#	Norbert Preining <preining@logic.at>
 #
 # Please note that comments in this file are stripped before installation
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
 
-update_fontmaps()
+update_lsr_files ()
 {
-    update-updmap --quiet
-    # mktexlsr is recommended now because updmap-sys relies heavily on
-    # Kpathsea to locate updmap.cfg and the map files. Also, it is slightly
-    # better not to specify a particular directory to refresh because
-    # updmap.cfg is typically found in $TEXMFSYSVAR while the map files are in
-    # $TEXMFMAIN.
-    # According to the Debian TeX policy, running mktexlsr and updmap-sys
-    # should work as long as tex-common is configured and these files are
-    # available (general Debian policy wouldn't assure that without this
-    # override from the Debian TeX policy).
-    if which mktexlsr >/dev/null; then mktexlsr; fi
-    if which updmap-sys >/dev/null; then
-        printf "Running updmap-sys... "
-        updmap-sys --quiet
-        echo "done."
+    tempfile=`mktemp -p /tmp mktexlsr.XXXXXXXX`
+    echo -n "Running mktexlsr. This may take some time. ..."
+    if mktexlsr > $tempfile 2>&1 ; then
+        rm -f $tempfile
+	echo " done."
+    else
+    	echo
+	echo "mktexlsr failed. Output has been stored in"
+	echo "$tempfile"
+	echo "Please include this file if you report a bug."
+	echo
+	exit 1
     fi
+}
 
-    return 0
+create_fontmaps ()
+{
+    tempfile=`mktemp -p /tmp updmap.XXXXXXXX`
+    echo -n "Running updmap-sys. This may take some time. ..."
+    if updmap-sys > $tempfile 2>&1 ; then
+    	rm -f $tempfile
+	echo " done."
+    else
+    	echo
+	echo "updmap failed. Output has been stored in"
+	echo "$tempfile"
+	echo "Please include this file if you report a bug."
+	echo
+	exit 1
+    fi
 }
 
 case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
-        update_fontmaps
+        update-updmap
+	if which mktexlsr >/dev/null; then 
+	    update_lsr_files
+	fi
+	if which updmap-sys >/dev/null; then
+	    create_fontmaps
+	fi
     ;;
 
     *)
