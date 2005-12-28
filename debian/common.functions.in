@@ -6,7 +6,8 @@
 # $Id$
 
 # internal variables for common.functions
-: ${MKTMPDIR:=/tmp}
+: ${MKTMPDIR:=$TMPDIR} # mktemp will create its files there
+: ${MKTMPDIR:=<:=$MKTMPDIR:>}
 SYMLINK_MOVE_EXT=<:=$SYMLINK_MOVE_EXT:>
 TEXMFSYSVAR=<:=$TEXMFSYSVAR:>
 
