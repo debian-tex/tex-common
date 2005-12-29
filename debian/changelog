@@ -1,4 +1,4 @@
-tex-common (0.13.1) UNRELEASED; urgency=low
+tex-common (0.14) unstable; urgency=low
 
   * Bump standards version to 3.6.2 (no changes needed)
   * Move debiandoc-sgml from Build-Dep to Build-Dep-Indep
