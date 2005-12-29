@@ -125,6 +125,15 @@
 	  <p>One directory tree, arranged according to the TDS
 	</item>
 	
+	<tag>TeX input file</tag> 
+	<item> 
+
+	  <p>A file that is meant to be used by a TeX-related program;
+	technically any file that can be found by the
+	<package>/kpathsea/kpse</package> library.  This includes
+	e.g. Type1 font files.
+	</item>
+	
 	<tag>configuration update programs</tag>
 	<item>
 
@@ -148,6 +157,15 @@
     </chapt>
     <chapt>
       <heading>File Placement</heading>
+      <p>
+      This chapter describes the placement of TeX input files, so that
+      they can be found by programs.  Files that are not TeX input
+      files must not be put in a TEXMF tree (put them into
+      <file>/usr/share/<var>package</var></file> instead).  As an
+      exception, documentation files in plain text may be used inside
+      a <var>TEXMF</var> tree, e.g. to explain the purpose of an
+      otherwise empty directory.
+      </p>
       <sect>
       <heading>Path searching and <package>libkpathsea</package> / <package>libkpse</package></heading>
 
