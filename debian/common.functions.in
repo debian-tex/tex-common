@@ -396,12 +396,10 @@ preinst_remove_or_move(){
   debug "handled\n"
   oldmd5sum=`dpkg_md5sum $file`
   currmd5sum=`md5sum $file | cut -d ' ' -f 1`
-  if [ "$oldmd5sum" = "$currmd5sum" ]; then
+  if [ "$oldmd5sum" != "$currmd5sum" ]; then
     mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
   else
-    newdir=`dirname /etc/texmf/$newname`
-    mkdir -p $newdir
-    mv $file /etc/texmf/$newname
+    rm $file
   fi
 }
 preinst_remove_or_move_ucf(){
@@ -412,12 +410,10 @@ preinst_remove_or_move_ucf(){
   debug "handled\n"
   oldmd5sum=`ucf_md5sum $file`
   currmd5sum=`md5sum $file | cut -d ' ' -f 1`
-  if [ "$oldmd5sum" = "$currmd5sum" ]; then
+  if [ "$oldmd5sum" != "$currmd5sum" ]; then
     mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
   else
-    newdir=`dirname /etc/texmf/$newname`
-    mkdir -p $newdir
-    mv $file /etc/texmf/$newname
+    rm $file
     if [ -x /usr/bin/ucf ]; then ucf --purge $file; fi
   fi
 }
