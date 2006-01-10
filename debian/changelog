@@ -2,8 +2,11 @@ tex-common (0.14.1) UNRELEASED; urgency=low
 
   * Fix functions in common.functions.in, so that old conffiles of teTeX
     are properly handled, thanks to Ralf Stubner
+  * Add more checks for essential entries in texmf.cnf, and bail out with
+    a user-friendly error message if they are missing (closes: #346326)
+    [frank] 
 
- -- Frank Küster <frank@debian.org>  Mon,  9 Jan 2006 18:11:40 +0100
+ -- Frank Küster <frank@debian.org>  Tue, 10 Jan 2006 10:59:10 +0100
 
 tex-common (0.14) unstable; urgency=low
 

@@ -110,15 +110,17 @@ EOF
 
 }
 
-check_texfontmaps(){
+check_texmf(){
   file=$1
+  variable=$2
+  pattern="$3"
   failed=false
   line=""
-  line=`grep ^TEXFONTMAPS $file`
+  line=`egrep ^$variable $file`
   if [ -z "$line" ]; then
     echo
     echo "An essential entry is missing in $file:"
-    echo "No setting of TEXFONTMAPS."
+    echo "No setting of $variable."
     echo "teTeX will not work without it, you need to fix your configuration"
     echo "files.  The version of $file that is provided by the package"
     echo "should be available as ${file}.dpkg-dist"
@@ -126,17 +128,18 @@ check_texfontmaps(){
     echo "Exiting."
     failed=true
   else
-    if ! echo "$line" | grep -q '{fonts/map,}/{\$progname,pdftex,dvips,}//'; then
+    if ! echo "$line" | egrep -q "$pattern"; then
       echo
       echo "An essential entry is wrong in $file:"
-      echo "TEXFONTMAPS does not contain"
-      echo "{fonts/map,}/{\$progname,pdftex,dvips,}//"
+      echo "$variable does not contain"
+      echo "$pattern"
       echo "teTeX will not work without it, you need to fix your configuration"
       echo "files.  The version of $file that is provided by the package"
       echo "should be available as ${file}.dpkg-dist"
       echo
       failed=true
     fi
+    if [ "$variable" = TEXFONTMAPS ]; then
     # the following is for backwards compatibility; must be dropped once all 
     # font packages follow TDS 1.1
     if ! echo "$line" | grep -q '/dvips//'; then
@@ -150,11 +153,13 @@ check_texfontmaps(){
       echo
       failed=true
     fi
+    fi
   fi
   if [ "$failed" = "true" ]; then
     echo "Exiting."
     exit 1
   fi
+  
 }
 
 #################################################################
