@@ -142,17 +142,17 @@ check_texmf(){
     if [ "$variable" = TEXFONTMAPS ]; then
     # the following is for backwards compatibility; must be dropped once all 
     # font packages follow TDS 1.1
-    if ! echo "$line" | grep -q '/dvips//'; then
-      echo
-      echo "An essential entry is wrong in $file:"
-      echo "TEXFONTMAPS does not contain"
-      echo "/dvips//"
-      echo "teTeX will not work without it, you need to fix your configuration"
-      echo "files.  The version of $file that is provided by the package"
-      echo "should be available as ${file}.dpkg-dist"
-      echo
-      failed=true
-    fi
+      if ! echo "$line" | grep -q '/dvips//'; then
+	echo
+	echo "An essential entry is wrong in $file:"
+	echo "TEXFONTMAPS does not contain"
+	echo "/dvips//"
+	echo "teTeX will not work without it, you need to fix your configuration"
+	echo "files.  The version of $file that is provided by the package"
+	echo "should be available as ${file}.dpkg-dist"
+	echo
+	failed=true
+      fi
     fi
   fi
   if [ "$failed" = "true" ]; then
