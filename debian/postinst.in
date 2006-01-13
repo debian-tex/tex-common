@@ -92,8 +92,8 @@ EOF
     fi
 
 # Now we check for some essential settings
-    check_texmf /etc/texmf/texmf.d/55Fonts.cnf TEXFONTMAPS "{fonts/map,}/{\$progname,pdftex,dvips,}//"
-    check_texmf /etc/texmf/texmf.cnf TEXFONTMAPS "{fonts/map,}/{\$progname,pdftex,dvips,}//"
+    check_texmf /etc/texmf/texmf.d/55Fonts.cnf TEXFONTMAPS "$TEXMF/{fonts/,}map//;$TEXMF/dvips////"
+    check_texmf /etc/texmf/texmf.cnf TEXFONTMAPS "$TEXMF/{fonts/,}map//;$TEXMF/dvips////"
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFMAIN "/usr/share/texmf"
     check_texmf /etc/texmf/texmf.cnf TEXMFMAIN "/usr/share/texmf"
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFDIST \

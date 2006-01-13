@@ -21,7 +21,7 @@ MISCFONTS = .;$TEXMF/fonts/misc//
 % font name map files.
 % TEXFONTMAPS = .;$TEXMF/{fonts/map,}/{$progname,pdftex,dvips,}//
 % temporarily add the old path
-TEXFONTMAPS = .;$TEXMF/{fonts/map,}/{$progname,pdftex,dvips,}//;$TEXMF/dvips//
+TEXFONTMAPS = .;$TEXMF/{fonts/,}map//;$TEXMF/dvips//
 
 % support non"k"-xdvi:
 PKFONTS.XDvi    = .:$TEXMF/%s:$VARTEXFONTS/pk/{%m,modeless}//
