@@ -1,0 +1,113 @@
+#
+# postinst-tex
+#
+# postinst snippets for installing stuff for TeX
+#
+# Authors:
+#	Florent Rougon <f.rougon@free.fr>
+#	Norbert Preining <preining@logic.at>
+#
+# Please note that comments in this file are stripped before installation
+# by calling a grep -v '^[ \t]*#'
+# So please be careful if you add stuff here!
+
+update_lsr_files ()
+{
+    tempfile=`mktemp -p /tmp mktexlsr.XXXXXXXX`
+    echo -n "Running mktexlsr. This may take some time. ..."
+    if mktexlsr > $tempfile 2>&1 ; then
+        rm -f $tempfile
+	echo " done."
+    else
+    	echo
+	echo "mktexlsr failed. Output has been stored in"
+	echo "$tempfile"
+	echo "Please include this file if you report a bug."
+	echo
+	exit 1
+    fi
+}
+
+create_fontmaps ()
+{
+    tempfile=`mktemp -p /tmp updmap.XXXXXXXX`
+    echo -n "Running updmap-sys. This may take some time. ..."
+    if updmap-sys > $tempfile 2>&1 ; then
+    	rm -f $tempfile
+	echo " done."
+    else
+    	echo
+	echo "updmap failed. Output has been stored in"
+	echo "$tempfile"
+	echo "Please include this file if you report a bug."
+	echo
+	exit 1
+    fi
+}
+
+
+build_format_if_format_exists ()
+{
+    v=`kpsewhich -var-value TEXMFSYSVAR`
+    c=`kpsewhich -var-value TEXMFSYSCONFIG`
+    TEXMFVAR="$v"
+    TEXMFCONFIG="$c"
+    export TEXMFVAR TEXMFCONFIG
+    fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
+    X=`cat $fmtcnffile | grep "^$2[[:space:]]" || true`
+    if [ ! "X$X" = "X" ] ; then
+        if [ "X$1" = "X--byhyphen" ] ; then
+            build_format --byhyphen $3
+        else
+            build_format $1 $2
+        fi
+    fi
+}
+
+build_format ()
+{
+
+    tempfile=`mktemp -p /tmp fmtutil.XXXXXXXX`
+    echo -n "Building format(s) $1 `basename "$2"`. This may take some time. ..."
+    if fmtutil-sys $1 $2 > $tempfile 2>&1 ; then
+        rm -f $tempfile
+        echo " done."
+    else
+        echo
+        echo "fmtutil-sys failed. Output has been stored in"
+        echo "$tempfile"
+        echo "Please include this file if you report a bug."
+        echo
+        exit 1
+    fi
+}
+
+
+case "$1" in
+    configure|abort-upgrade|abort-remove|abort-deconfigure)
+    	# it doesn't hurt to cal all of them
+        update-updmap
+	update-language
+	update-fmtutil
+	update_lsr_files
+	for i in #WHATTODO# ; do
+		if [ $i = map ] ; then
+			create_fontmaps
+		fi
+		if [ $i = format ] ; then
+			for fmt in #FORMATS# ; do
+				build_format --byfmt $fmt
+			done
+		fi
+		if [ $i = language ] ; then
+			build_format_if_format_exists --byhyphen latex `kpsewhich language.dat`
+		fi
+	done
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+

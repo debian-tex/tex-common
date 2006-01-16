@@ -280,8 +280,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
             doit("install","-d","$tmp/var/lib/tex-common/fontmap-cfg/");
         }
 	open(LISTFILE, ">>$tmp/var/lib/tex-common/fontmap-cfg/$package.list")||
-		error("Cannot open $tmp/var/lib/tex-common/fmtutil-cnf/$package.list for writing/appending!");
-	verbose_print("Writing $tmp/var/lib/tex-common/fmtutil-cnf/$package.list");
+		error("Cannot open $tmp/var/lib/tex-common/fontmap-cfg/$package.list for writing/appending!");
+	verbose_print("Writing $tmp/var/lib/tex-common/fontmap-cfg/$package.list");
 	foreach (@listlines) {
 		print LISTFILE "$_\n";
 	}

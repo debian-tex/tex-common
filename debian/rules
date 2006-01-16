@@ -6,6 +6,7 @@
 INSTDIR=$(CURDIR)/debian/tex-common
 
 bin_scripts=dh_installtexfonts
+#bin_scripts=dh_installtexfonts dh_installtex
 sbin_scripts=update-texmf update-fontlang
 
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))
@@ -41,6 +42,7 @@ build-stamp: $(EPERL_FILES)
 	# Add here commands to compile the package.
 	cd doc; $(MAKE)
 	cd scripts; pod2man dh_installtexfonts > dh_installtexfonts.1
+	#cd scripts; pod2man dh_installtex > dh_installtex.1
 
 	touch build-stamp
 
