@@ -8,12 +8,16 @@ tex-common (0.14.1) UNRELEASED; urgency=low
   * Drop unneeded paths from TEXFONTMAPS, we now have only 3.0's upstream
     value plus our backward-compatibility paths; also change the check in
     the postinst accordingly (although the old one would still work, we do
-    not allow it for simplicity's sake).
+    not allow it for simplicity's sake). [frank]
   * Fix typo in dh_installtexfonts which would echo wrong file names, and
     add --quiet to the call of update-updmap in the debhelper scripts
     [preining]
+  * Again fixed extensions of files to purge, and take over correct
+    language.dat handling from tetex-base (see: #321804). [frank]
+  * Move the handling of 00updmap.cfg from postinst to preinst, where it
+    belongs [frank]
 
- -- Norbert Preining <preining@logic.at>  Tue, 17 Jan 2006 12:59:25 +0100
+ -- Frank Küster <frank@debian.org>  Tue, 17 Jan 2006 15:33:27 +0100
 
 tex-common (0.14) unstable; urgency=low
 

@@ -11,7 +11,6 @@ UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
 TEXMFSYSVAR="<:=$TEXMFSYSVAR:>"
 UCF="ucf --debconf-ok"
 #UCF="ucf -d --debconf-ok --verbose"
-FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 OLD_LDAT=/etc/texmf/language.dat
 POSTINST_MOVE_EXT="<:=$POSTINST_MOVE_EXT:>"
 ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.
@@ -50,14 +49,19 @@ case $action in
 
 # is there a file /etc/texmf/language.dat already? Move it out of the way
     if [ -f $OLD_LDAT ]; then
-      cat > $OLD_LDAT.$POSTINST_MOVE_EXT <<EOF
+      old_ldat_md5sum=`md5sum $OLD_LDAT`
+      # do nothing if the md5sum matches sarge's or woody's default:
+      if [ ! "$old_ldat_md5sum" = fe9baf0768ade79a585a9df568dac5f6 ] && \
+	[ ! "$old_ldat_md5sum" = 1d2d9b25a41ab1cec892bd3382af7645 ]; then
+	cat > $OLD_LDAT.$POSTINST_MOVE_EXT <<EOF
 This file is no longer used and has therefore been renamed by the postinst 
-script of the tex-common package.
+script of the tetex-base package.
 
 Please use the mechanism described in update-language(8) instead.
 
 EOF
-      cat $OLD_LDAT >> $OLD_LDAT.$POSTINST_MOVE_EXT 
+	cat $OLD_LDAT >> $OLD_LDAT.$POSTINST_MOVE_EXT 
+      fi
       rm $OLD_LDAT
     fi
 
@@ -68,7 +72,10 @@ EOF
       $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
     done
 
-# remove left over fmt/efmt/log files in /usr/share/texmf/web2c/
+# remove left over fmt/efmt/log files in /usr/share/texmf/web2c/.  If they are
+# there, it's because of an old bug or user misconfiguration, and they are
+# never registered to dpkg.
+#
 # move out of the way old config files
 # 
     if [ -d /usr/share/texmf/web2c ] ; then

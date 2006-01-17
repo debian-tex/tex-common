@@ -16,9 +16,9 @@ bin_installfiles=$(foreach script,$(bin_scripts), scripts/$(script))
 bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1) scripts/update-updmap.1
 
 # create maintainer scripts etc.
-EPERL_FILES := debian/common.functions debian/postinst debian/postrm debian/config
+EPERL_FILES := debian/common.functions debian/postinst debian/postrm debian/config debian/preinst
 eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.functions \
-   debian/common.variables debian/common.functions debian/postrm.functions 
+   debian/common.variables debian/common.functions debian/postrm.functions
 
 # Eperl is simply great: thanks, Davide!
 % :: %.in $(eperl_sourcefiles) 
