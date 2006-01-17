@@ -47,7 +47,7 @@ check_run_without_errors ()
 
 case "$1" in
     remove|disappear)
-        check_run_without_errors update-updmap
+        check_run_without_errors update-updmap --quiet
 	check_run_without_errors mktexlsr
 	check_run_without_errors updmap-sys
     ;;

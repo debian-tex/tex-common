@@ -47,7 +47,7 @@ create_fontmaps ()
 
 case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
-        update-updmap
+        update-updmap --quiet
 	if which mktexlsr >/dev/null; then 
 	    update_lsr_files
 	fi

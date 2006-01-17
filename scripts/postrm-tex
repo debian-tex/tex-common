@@ -76,7 +76,7 @@ build_format ()
 case "$1" in
     remove|disappear)
     	# it doesn't hurt to cal all of them
-        check_run_without_errors update-updmap
+        check_run_without_errors update-updmap --quiet
 	check_run_without_errors update-language
 	check_run_without_errors update-fmtutil
 	check_run_without_errors mktexlsr

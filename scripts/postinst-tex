@@ -46,7 +46,7 @@ create_fontmaps ()
 }
 
 
-build_format_if_format_exists ()
+build_hyphen_format_if_format_exists ()
 {
     v=`kpsewhich -var-value TEXMFSYSVAR`
     c=`kpsewhich -var-value TEXMFSYSCONFIG`
@@ -54,13 +54,13 @@ build_format_if_format_exists ()
     TEXMFCONFIG="$c"
     export TEXMFVAR TEXMFCONFIG
     fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
-    X=`cat $fmtcnffile | grep "^$2[[:space:]]" || true`
+    # this is slow, and since we hope/assure that all ini files
+    # are installed if the format is active, we don't need the
+    # extra check fmtutil does when called with catcfg
+    # X=`fmtutil-sys --catcfg | grep "^$1[[:space:]]" || true`
+    X=`grep "^[[:space:]]*$1[[:space:]]" $fmtcnffile || true`
     if [ ! "X$X" = "X" ] ; then
-        if [ "X$1" = "X--byhyphen" ] ; then
-            build_format --byhyphen $3
-        else
-            build_format $1 $2
-        fi
+        build_format --byhyphen $2
     fi
 }
 
@@ -86,7 +86,7 @@ build_format ()
 case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
     	# it doesn't hurt to cal all of them
-        update-updmap
+        update-updmap --quiet
 	update-language
 	update-fmtutil
 	update_lsr_files
@@ -100,7 +100,7 @@ case "$1" in
 			done
 		fi
 		if [ $i = language ] ; then
-			build_format_if_format_exists --byhyphen latex `kpsewhich language.dat`
+			build_hyphen_format_if_format_exists latex `kpsewhich language.dat`
 		fi
 	done
     ;;
