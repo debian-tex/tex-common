@@ -30,7 +30,7 @@ check_texmf(){
   pattern="$3"
   failed=false
   line=""
-  line=`egrep ^$variable $file`
+  line=`egrep "^$variable" $file`
   if [ -z "$line" ]; then
     echo
     echo "An essential entry is missing in $file:"

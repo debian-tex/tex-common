@@ -39,13 +39,6 @@ db_version 2.0
 
 case $action in
   configure|reconfigure)
-    ## upgrade from 2.0.2 in sarge
-    configured_version=$2
-    # we must keep changes to the option part of 00updmap.cfg, if it is 
-    # installed (from an older tetex-base package)
-    dpkg --compare-versions \
-      $FIRST_VERSION_WITH_UPGRADE_PATH gt "$configured_version" && \
-      updmap_extract
 
 # is there a file /etc/texmf/language.dat already? Move it out of the way
     if [ -f $OLD_LDAT ]; then
@@ -98,34 +91,31 @@ EOF
       done
     fi
 
+    update-texmf
 # Now we check for some essential settings
-    check_texmf /etc/texmf/texmf.d/55Fonts.cnf TEXFONTMAPS "$TEXMF/{fonts/,}map//;$TEXMF/dvips////"
-    check_texmf /etc/texmf/texmf.cnf TEXFONTMAPS "$TEXMF/{fonts/,}map//;$TEXMF/dvips////"
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFMAIN "/usr/share/texmf"
-    check_texmf /etc/texmf/texmf.cnf TEXMFMAIN "/usr/share/texmf"
+    check_texmf /etc/texmf/texmf.d/55Fonts.cnf TEXFONTMAPS '.TEXMF/{fonts/,}map//;.TEXMF/dvips//'
+    check_texmf /etc/texmf/texmf.cnf TEXFONTMAPS '.TEXMF/{fonts/,}map//;.TEXMF/dvips//'
+    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFMAIN '/usr/share/texmf'
+    check_texmf /etc/texmf/texmf.cnf TEXMFMAIN '/usr/share/texmf'
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFDIST \
-          "/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}"
+          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}'
     check_texmf /etc/texmf/texmf.cnf TEXMFDIST \
-          "/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}"
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf "TEXMF( |=)" TEXMFSYSCONFIG
-    check_texmf /etc/texmf/texmf.cnf "TEXMF( |=)" TEXMFSYSCONFIG
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf "TEXMF( |=)" TEXMFSYSVAR
-    check_texmf /etc/texmf/texmf.cnf "TEXMF( |=)" TEXMFSYSVAR
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf "TEXMF( |=)" TEXMFMAIN
-    check_texmf /etc/texmf/texmf.cnf "TEXMF( |=)" TEXMFMAIN
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf "TEXMF( |=)" TEXMFDIST
-    check_texmf /etc/texmf/texmf.cnf "TEXMF( |=)" TEXMFDIST
+          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}'
+    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFSYSCONFIG
+    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFSYSCONFIG
+    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFSYSVAR
+    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFSYSVAR
+    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFMAIN
+    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFMAIN
+    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFDIST
+    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFDIST
 
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 
 # a prior version
-    update-texmf
     update-fmtutil
     update-updmap
     update-language
-
-# Now we check again for essential settings, in the generated texmf.cnf
-    check_texfontmaps /etc/texmf/texmf.cnf
 
 #
 # set permission of ls-R files

@@ -38,11 +38,11 @@ updmap_extract(){
     if [ ! -f $keepfile ]; then
       cat > $keepfile <<EOF
 This file contains the parts of what was called 00updmap.cfg in 
-teTeX-2.0.2 that now are handled by tetex-base in 10tetex-base.cfg
+teTeX-2.0.2 that now are handled by tetex-base in 10tetex-base.cfg, 
+or tetex-extra in 20tetex-extra.cfg.
 
 If you have local changes, please transfer them manually.  Changes 
-in the items that are still in 00updmap.cfg have been transferred, 
-but changed comments are only here.
+in the items that are still in 00updmap.cfg have been transferred.
 
 EOF
       sed -e '0,/^# Map files should be marked by/ d; 1,/^$/ d' \
@@ -85,17 +85,18 @@ EOF
       mv $tempfile1 $conffile
       chmod a+r $conffile
     else
-      # this part is unchanged, just remove and copy the default file
-      # (a copy is already saved).
+      # this part is unchanged, just remove and ucf-purge the file, it will be
+      # reinstalled by postinst (a copy is already saved).
       rm -f $tempfile1 $conffile
-      cp -p $dfltfile $conffile
+      ucf --purge $conffile
     fi
     rm -rf "$tempdir"
 
   else
-    # unchanged, just remove and copy the default file
+    # unchanged, just remove  and ucf-purge the file, it will be
+    # reinstalled by postinst 
     rm -f $conffile
-    cp -p $dfltfile $conffile
+    ucf --purge $conffile
   fi
 
 }
@@ -117,7 +118,7 @@ case "$1" in
     # installed (from an older tetex-base package)
     dpkg --compare-versions \
       $FIRST_VERSION_WITH_UPGRADE_PATH gt "$configured_version" && \
-      updmap_extract
+      updmap_extract || true
 
     ;;
   failed-upgrade|abort-upgrade)
