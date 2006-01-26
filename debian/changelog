@@ -16,8 +16,10 @@ tex-common (0.14.1) UNRELEASED; urgency=low
     language.dat handling from tetex-base (see: #321804). [frank]
   * Move the handling of 00updmap.cfg from postinst to preinst, where it
     belongs [frank]
+  * Fix typo in manpage for update-language, thanks to Nicolas François
+    <nicolas.francois@centraliens.net> (closes: #349723) [frank]
 
- -- Frank Küster <frank@debian.org>  Tue, 17 Jan 2006 15:33:27 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 25 Jan 2006 16:11:26 +0100
 
 tex-common (0.14) unstable; urgency=low
 
