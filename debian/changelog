@@ -1,10 +1,12 @@
-tex-common (0.14.1) UNRELEASED; urgency=low
+tex-common (0.15) unstable; urgency=high
 
-  * Fix functions in common.functions.in, so that old conffiles of teTeX
-    are properly handled, thanks to Ralf Stubner
+  * Urgency high, because this version adds important checks that should
+    be present when the teTeX packages enter testing
   * Add more checks for essential entries in texmf.cnf, and bail out with
     a user-friendly error message if they are missing (closes: #346326)
     [frank]
+  * Fix functions in common.functions.in, so that old conffiles of teTeX
+    are properly handled, thanks to Ralf Stubner
   * Drop unneeded paths from TEXFONTMAPS, we now have only 3.0's upstream
     value plus our backward-compatibility paths; also change the check in
     the postinst accordingly (although the old one would still work, we do
@@ -19,7 +21,7 @@ tex-common (0.14.1) UNRELEASED; urgency=low
   * Fix typo in manpage for update-language, thanks to Nicolas François
     <nicolas.francois@centraliens.net> (closes: #349723) [frank]
 
- -- Frank Küster <frank@debian.org>  Wed, 25 Jan 2006 16:11:26 +0100
+ -- Frank Küster <frank@debian.org>  Thu, 26 Jan 2006 22:24:06 +0100
 
 tex-common (0.14) unstable; urgency=low
 
