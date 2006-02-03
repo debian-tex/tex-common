@@ -26,7 +26,7 @@ B<dh_installtex>
 
 =head1 DESCRIPTION
 
-dh_installtexfonts is a debhelper program that is responsible for
+dh_installtex is a debhelper program that is responsible for
 registering map files, new formats, and new languages with TeX.
 
 Your package should depend on tex-common so that the
@@ -72,7 +72,7 @@ You create a file debian/package.maps or debian/maps,
 debian/package.languages or debian/languages, 
 debian/package.formats or debian/formats. These files are
 installed with default priority and the name of the package. Each of these
-files will be installed into the first package dh_installtexfonts
+files will be installed into the first package dh_installtex
 is told to act on. By default this is the first binary package in
 debian/control, but if you use -p, -i, or -a flags, it will be the first
 package specified by those flags.
