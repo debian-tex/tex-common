@@ -337,6 +337,26 @@ sarge_md5sum_list="
  /etc/texmf/platex/platex.ini c865212575be3a09cbadb694a803ca55
  /etc/texmf/updmap.d/00updmap.cfg 82884281d955998e22141cf67b45209d 
  /etc/texdoctk/texdocrc 9957008bc9073607c1090f4ce55cc3c0 
+
+ /etc/texmf/dvips/config.ams df69e80e8157afde30550f21317bbd6d 
+ /etc/texmf/dvips/config.cm 363c5ef43576af28b14330ae78ed5de8 
+ /etc/texmf/dvips/config.amz 0ef9213edceaaba3185a79e5946c8411 
+ /etc/texmf/dvips/config.cmz 949213a1865415e6f5199188ee57419e 
+ /etc/texmf/latex/SIunits.cfg e1c35ec7ca1a5a17ac67ecbdabb6990b 
+ /etc/texmf/latex/draftcopy.cfg 339604ed6e259f766281201bc26a3ebf 
+ /etc/texmf/latex/geometry.cfg 10ea5acebcdd8c1f6e50c6059a86fc4b 
+ /etc/texmf/latex/hyperref.cfg 6865c020b50d426d7d3893193933f852 
+ /etc/texmf/latex/lettrine.cfg 980963bc52386638361f704f2316092b 
+ /etc/texmf/latex/seminar.con e72fce0eed20a2c0ffe505578a517937 
+ /etc/texmf/latex/listings.cfg cda21886f370b2a08959be5b7c522bd0 
+ /etc/texmf/latex/jblong.cfg 1ff923049f25d755e3c598f1f9bd7321 
+ /etc/texmf/latex/jurabib.cfg d4655b3681c0a8be21267ee31a200164 
+ /etc/texmf/latex/efxmpl.cfg 8e5a8e1829832aefb9e6190365201470 
+ /etc/texmf/latex/adrplaner.cfg 26a0aedd3f777b141037b8bf0b992c92 
+ /etc/texmf/latex/adrdir.cfg fafff964038150fa8cf034d92a56ee77 
+ /etc/texmf/latex/adrsmall.cfg 6fdd42917d54ebb2389c6f4e4a13ae6c 
+ /etc/texmf/latex/htex4ht.cfg 9f3b36f33fd350aa315a4a3a40c87ef9 
+ /etc/texmf/lambda/language.dat b7b70636a817d3f75f28a107c240d2cf 
 "
 
 woody_md5sum_list="
