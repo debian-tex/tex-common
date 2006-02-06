@@ -58,7 +58,7 @@ Example:
 
         dh_installtex map=Map,foo.map language=greek,grphyph4.tex,polygreek
 
-would install a file /etc/texmf/updmap.d/10package.cfg containing the lines
+would install a file /etc/texmf/updmap.d/10package.cfg containing the line
 
         Map foo.map
 
@@ -209,8 +209,15 @@ my @magicheader = ( "You can change/add entries to this file and changes will be
 
 #
 # collect data
-# for maps this is the list of map files depending on the doconfig value
-# for formats the list of formats to be generated
+# This function is used to extract certain information from the respective
+# config files. Up to now we have to do the following:
+# for config file for maps
+# 	if we select to generate all dvips config files
+# 	(with map:config_for_active_maps or map:config_for_all_maps)
+# 	we collect the map files
+# for config file for formats
+# 	we extract the formats which have to be generated with
+# 	fmtutil-sys --byfmt
 sub collect_data {
 	my ($type,$dataref,$entry) = @_;
 	my $m;
@@ -224,9 +231,7 @@ sub collect_data {
 
 sub extract_format {
 	my ($line) = @_;
-	print "DEBUG extract format line=...$line...\n";
 	if ($line =~ m/^[^\w#]*(\w+)*/) {
-		print "DEBUG extracted: ...$1...\n";
 		return $1;
 	}
 }
@@ -245,9 +250,8 @@ sub extract_map {
 }
 
 #
-# build a line to be written to the config file
-# we get the argument as specified on the cmd line and have to reform
-# it properly for the respective flavor
+# build_line
+# used to create a correct config file entry from a cmd-line specification
 sub build_line {
 	my ($type,$line) = @_;
 	if ($type eq "map") {

@@ -1,3 +1,9 @@
+tex-common (0.15.1) UNRELEASED; urgency=low
+
+  * Add dh_installtex for public perusal. [preining]
+
+ -- Norbert Preining <preining@logic.at>  Mon,  6 Feb 2006 10:14:01 +0100
+
 tex-common (0.15) unstable; urgency=high
 
   * Urgency high, because this version adds important checks that should

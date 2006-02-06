@@ -35,7 +35,7 @@ check_run_without_errors ()
     return 0
 }
 
-build_format_if_format_exists ()
+build_hyphen_format_if_format_exists ()
 {
     v=`kpsewhich -var-value TEXMFSYSVAR`
     c=`kpsewhich -var-value TEXMFSYSCONFIG`
@@ -43,13 +43,9 @@ build_format_if_format_exists ()
     TEXMFCONFIG="$c"
     export TEXMFVAR TEXMFCONFIG
     fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
-    X=`cat $fmtcnffile | grep "^$2[[:space:]]" || true`
+    X=`cat $fmtcnffile | grep "^[[:space:]]*$1[[:space:]]" || true`
     if [ ! "X$X" = "X" ] ; then
-        if [ "X$1" = "X--byhyphen" ] ; then
-            build_format --byhyphen $3
-        else
-            build_format $1 $2
-        fi
+        build_format --byhyphen $2
     fi
 }
 
@@ -91,7 +87,7 @@ case "$1" in
 		fi
 		if [ $i = language ] ; then
 			if which fmtutil-sys >/dev/null ; then
-				build_format_if_format_exists --byhyphen latex `kpsewhich language.dat`
+				build_hyphen_format_if_format_exists latex `kpsewhich language.dat`
 			fi
 		fi
 	done

@@ -5,8 +5,7 @@
 
 INSTDIR=$(CURDIR)/debian/tex-common
 
-bin_scripts=dh_installtexfonts
-#bin_scripts=dh_installtexfonts dh_installtex
+bin_scripts=dh_installtexfonts dh_installtex
 sbin_scripts=update-texmf update-fontlang
 
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))
@@ -42,7 +41,7 @@ build-stamp: $(EPERL_FILES)
 	# Add here commands to compile the package.
 	cd doc; $(MAKE)
 	cd scripts; pod2man dh_installtexfonts > dh_installtexfonts.1
-	#cd scripts; pod2man dh_installtex > dh_installtex.1
+	cd scripts; pod2man dh_installtex > dh_installtex.1
 
 	touch build-stamp
 
@@ -80,10 +79,10 @@ install: build
 
 	# debhelper stuff
 	# dh_installtexfonts(.1) is already installed via the bin_scripts
-	#cp scripts/postrm-texfonts $(INSTDIR)/usr/share/debhelper/autoscripts
-	#cp scripts/postinst-texfonts $(INSTDIR)/usr/share/debhelper/autoscripts
 	grep -v '^[ \t]*#' scripts/postrm-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-texfonts
 	grep -v '^[ \t]*#' scripts/postinst-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texfonts
+	grep -v '^[ \t]*#' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
+	grep -v '^[ \t]*#' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
 
 	# ship /var/cache/fonts with proper permissions
 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/pk
