@@ -15,7 +15,7 @@ check_run_without_errors ()
 {
     tempfile=`mktemp -p /tmp checkrun.XXXXXXXX`
     if which $1  >/dev/null; then
-        echo -n "Running $*. This may take some time. ..."
+        printf "Running $*. This may take some time..."
 	set +e
 	if $* > $tempfile 2>&1 ; then
 	    rm -f $tempfile
