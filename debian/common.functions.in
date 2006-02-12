@@ -435,9 +435,13 @@ woody_md5sum_list="
  /etc/texmf/varfontdirs.debian 7a37da968bb865bde339fb44818ba44a
 "
 
+teTeX3_md5sumlist="
+ /etc/texmf/latex/microtype.cfg 649944bb5f193e75dba7604b9515317f
+"
+
 get_sarge_md5sum_from_list(){
   file=$1
-  set $sarge_md5sum_list $woody_md5sum_list
+  set $sarge_md5sum_list $woody_md5sum_list $teTeX3_md5sumlist
   while [ $# -gt 0 ]; do
     if [ $file = $1 ]; then
       echo $2

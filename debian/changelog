@@ -2,9 +2,9 @@ tex-common (0.15.1) UNRELEASED; urgency=low
 
   * Add dh_installtex for public perusal. [preining]
   * Add md5sums for tetex-extra's former configuration files (closes:
-    #351649) [frank]
+    #351649, #352486) [frank]
 
- -- Frank Küster <frank@debian.org>  Mon,  6 Feb 2006 15:09:04 +0100
+ -- Frank Küster <frank@debian.org>  Sun, 12 Feb 2006 21:20:37 +0100
 
 tex-common (0.15) unstable; urgency=high
 
