@@ -11,7 +11,7 @@
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
 
-update_lsr_files ()
+dhitf_update_lsr_files ()
 {
     tempfile=`mktemp -p /tmp mktexlsr.XXXXXXXX`
     printf "Running mktexlsr. This may take some time..."
@@ -28,7 +28,7 @@ update_lsr_files ()
     fi
 }
 
-create_fontmaps ()
+dhitf_create_fontmaps ()
 {
     tempfile=`mktemp -p /tmp updmap.XXXXXXXX`
     printf "Running updmap-sys. This may take some time..."
@@ -37,7 +37,7 @@ create_fontmaps ()
 	echo " done."
     else
     	echo
-	echo "updmap failed. Output has been stored in"
+	echo "updmap-sys failed. Output has been stored in"
 	echo "$tempfile"
 	echo "Please include this file if you report a bug."
 	echo
@@ -49,10 +49,10 @@ case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
         update-updmap --quiet
 	if which mktexlsr >/dev/null; then 
-	    update_lsr_files
+	    dhitf_update_lsr_files
 	fi
 	if which updmap-sys >/dev/null; then
-	    create_fontmaps
+	    dhitf_create_fontmaps
 	fi
     ;;
 

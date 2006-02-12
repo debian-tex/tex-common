@@ -11,7 +11,7 @@
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
 
-update_lsr_files ()
+dhit_update_lsr_files ()
 {
     tempfile=`mktemp -p /tmp mktexlsr.XXXXXXXX`
     printf "Running mktexlsr. This may take some time..."
@@ -28,7 +28,7 @@ update_lsr_files ()
     fi
 }
 
-create_fontmaps ()
+dhit_create_fontmaps ()
 {
     tempfile=`mktemp -p /tmp updmap.XXXXXXXX`
     printf "Running updmap-sys. This may take some time..."
@@ -37,7 +37,7 @@ create_fontmaps ()
 	echo " done."
     else
     	echo
-	echo "updmap failed. Output has been stored in"
+	echo "updmap-sys failed. Output has been stored in"
 	echo "$tempfile"
 	echo "Please include this file if you report a bug."
 	echo
@@ -46,7 +46,7 @@ create_fontmaps ()
 }
 
 
-build_hyphen_format_if_format_exists ()
+dhit_build_hyphen_format_if_format_exists ()
 {
     v=`kpsewhich -var-value TEXMFSYSVAR`
     c=`kpsewhich -var-value TEXMFSYSCONFIG`
@@ -59,17 +59,17 @@ build_hyphen_format_if_format_exists ()
     # extra check fmtutil does when called with catcfg
     # X=`fmtutil-sys --catcfg | grep "^$1[[:space:]]" || true`
     X=`grep "^[[:space:]]*$1[[:space:]]" $fmtcnffile || true`
-    if [ ! "X$X" = "X" ] ; then
-        build_format --byhyphen $2
+    if [ -n "$X" ] ; then
+        build_format --byhyphen "$2"
     fi
 }
 
-build_format ()
+dhit_build_format ()
 {
 
     tempfile=`mktemp -p /tmp fmtutil.XXXXXXXX`
-    echo -n "Building format(s) $1 `basename "$2"`. This may take some time. ..."
-    if fmtutil-sys $1 $2 > $tempfile 2>&1 ; then
+    printf "Building format(s) $1 `basename "$2"`. This may take some time..."
+    if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo " done."
     else
@@ -89,18 +89,19 @@ case "$1" in
         update-updmap --quiet
 	update-language
 	update-fmtutil
-	update_lsr_files
+	dhit_update_lsr_files
 	for i in #WHATTODO# ; do
-		if [ $i = map ] ; then
-			create_fontmaps
+		if [ "$i" = map ] ; then
+			dhit_create_fontmaps
 		fi
-		if [ $i = format ] ; then
+		if [ "$i" = format ] ; then
 			for fmt in #FORMATS# ; do
-				build_format --byfmt $fmt
+				dhit_build_format --byfmt $fmt
 			done
 		fi
-		if [ $i = language ] ; then
-			build_hyphen_format_if_format_exists latex `kpsewhich language.dat`
+		if [ "$i" = language ] ; then
+			dhit_build_hyphen_format_if_format_exists \
+                          latex `kpsewhich language.dat`
 		fi
 	done
     ;;

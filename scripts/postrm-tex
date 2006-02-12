@@ -11,13 +11,13 @@
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
 
-check_run_without_errors ()
+dhit_check_run_without_errors ()
 {
     tempfile=`mktemp -p /tmp checkrun.XXXXXXXX`
-    if which $1  >/dev/null; then
+    if which "$1"  >/dev/null; then
         printf "Running $*. This may take some time..."
 	set +e
-	if $* > $tempfile 2>&1 ; then
+	if "$@" > $tempfile 2>&1 ; then
 	    rm -f $tempfile
 	    echo " done."
 	else
@@ -25,7 +25,7 @@ check_run_without_errors ()
 	    echo "$* failed. Output has been stored in"
 	    echo "$tempfile"
 	    echo "If tex-common is not configured you can ignore this error message!"
-	    echo "Otherwise please include this file if you report a bug."
+	    echo "Otherwise, please include this file if you report a bug."
 	    echo
 	fi
 	set -e
@@ -35,26 +35,12 @@ check_run_without_errors ()
     return 0
 }
 
-build_hyphen_format_if_format_exists ()
-{
-    v=`kpsewhich -var-value TEXMFSYSVAR`
-    c=`kpsewhich -var-value TEXMFSYSCONFIG`
-    TEXMFVAR="$v"
-    TEXMFCONFIG="$c"
-    export TEXMFVAR TEXMFCONFIG
-    fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
-    X=`cat $fmtcnffile | grep "^[[:space:]]*$1[[:space:]]" || true`
-    if [ ! "X$X" = "X" ] ; then
-        build_format --byhyphen $2
-    fi
-}
-
-build_format ()
+dhit_build_format ()
 {
 
     tempfile=`mktemp -p /tmp fmtutil.XXXXXXXX`
-    echo -n "Building format(s) $1 `basename "$2"`. This may take some time. ..."
-    if fmtutil-sys $1 $2 > $tempfile 2>&1 ; then
+    printf "Building format(s) $1 `basename "$2"`. This may take some time..."
+    if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo " done."
     else
@@ -67,27 +53,41 @@ build_format ()
     fi
 }
 
+dhit_build_hyphen_format_if_format_exists ()
+{
+    v=`kpsewhich -var-value TEXMFSYSVAR`
+    c=`kpsewhich -var-value TEXMFSYSCONFIG`
+    TEXMFVAR="$v"
+    TEXMFCONFIG="$c"
+    export TEXMFVAR TEXMFCONFIG
+    fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
+    X=`cat $fmtcnffile | grep "^[[:space:]]*$1[[:space:]]" || true`
+    if [ -n "$X" ] ; then
+        dhit_build_format --byhyphen "$2"
+    fi
+}
 
 
 case "$1" in
     remove|disappear)
-    	# it doesn't hurt to cal all of them
-        check_run_without_errors update-updmap --quiet
-	check_run_without_errors update-language
-	check_run_without_errors update-fmtutil
-	check_run_without_errors mktexlsr
+	# it doesn't hurt to cal all of them
+	dhit_check_run_without_errors update-updmap --quiet
+	dhit_check_run_without_errors update-language
+	dhit_check_run_without_errors update-fmtutil
+	dhit_check_run_without_errors mktexlsr
 	for i in #WHATTODO# ; do
-		if [ $i = map ] ; then
-			check_run_without_errors updmap-sys
+		if [ "$i" = map ] ; then
+			dhit_check_run_without_errors updmap-sys
 		fi
-		if [ $i = format ] ; then
+		if [ "$i" = format ] ; then
 			for fmt in #FORMATS# ; do
 				rm -f /var/lib/texmf/web2c/$fmt.*
 			done
 		fi
-		if [ $i = language ] ; then
+		if [ "$i" = language ] ; then
 			if which fmtutil-sys >/dev/null ; then
-				build_hyphen_format_if_format_exists latex `kpsewhich language.dat`
+				dhit_build_hyphen_format_if_format_exists \
+                                  latex `kpsewhich language.dat`
 			fi
 		fi
 	done
