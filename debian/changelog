@@ -1,12 +1,15 @@
 tex-common (0.15.1) UNRELEASED; urgency=low
 
   * Add dh_installtex for public perusal. [preining]
-  * Add md5sums for tetex-extra's former configuration files (closes:
-    #351649, #352486) [frank]
-  * Also add some forgotten md5sums for tetex-base, and make sure scripts
-    really stop if the md5sum is unknown (closes: #352688) [frank]
-
- -- Frank Küster <frank@debian.org>  Mon, 13 Feb 2006 15:56:30 +0100
+  * common.functions.in:
+    - Add md5sums for tetex-extra's former configuration files (closes:
+      #351649, #352486) [frank]
+    - Also add some forgotten md5sums for tetex-base, and make sure scripts
+      really stop if the md5sum is unknown (closes: #352688) [frank]
+    - remove LaTeX and pdfLaTeX format files before trying to recreate all
+      format (closes: #352391) [frank]
+  
+ -- Frank Küster <frank@debian.org>  Mon, 13 Feb 2006 16:04:44 +0100
 
 tex-common (0.15) unstable; urgency=high
 
