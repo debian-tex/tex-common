@@ -357,6 +357,13 @@ sarge_md5sum_list="
  /etc/texmf/latex/adrsmall.cfg 6fdd42917d54ebb2389c6f4e4a13ae6c 
  /etc/texmf/latex/htex4ht.cfg 9f3b36f33fd350aa315a4a3a40c87ef9 
  /etc/texmf/lambda/language.dat b7b70636a817d3f75f28a107c240d2cf 
+
+ /etc/texmf/dvips/config.qbk ba3f00776ea78362953c9211a09c09d7
+ /etc/texmf/dvips/config.qcr 13822cff599bb1dc574a038f0d86a362
+ /etc/texmf/dvips/config.qhv 7c77d2e5f9ca96fbfda5f3f6c68d8287
+ /etc/texmf/dvips/config.qpl b36d7997a69aec7389a9580513750755
+ /etc/texmf/dvips/config.qtm 8cc586156ba303881e41671f7d5d8227
+ /etc/texmf/dvips/config.qzc ba705b343b90b615012fa41d5a7016d5
 "
 
 woody_md5sum_list="
@@ -451,7 +458,7 @@ get_sarge_md5sum_from_list(){
     fi
   done
   echo "$file: md5sum not known. Exiting" >&2
-  return 1
+  exit 1
 }
 
 preinst_remove_or_move(){
