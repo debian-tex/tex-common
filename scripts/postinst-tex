@@ -17,9 +17,9 @@ dhit_update_lsr_files ()
     printf "Running mktexlsr. This may take some time..."
     if mktexlsr > $tempfile 2>&1 ; then
         rm -f $tempfile
-	echo " done."
+        echo " done."
     else
-    	echo
+        echo
 	echo "mktexlsr failed. Output has been stored in"
 	echo "$tempfile"
 	echo "Please include this file if you report a bug."
@@ -85,25 +85,33 @@ dhit_build_format ()
 
 case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
-    	# it doesn't hurt to cal all of them
+    	# it doesn't hurt to call all of them
+	# these commands are all in tex-common and can be run immediately
         update-updmap --quiet
 	update-language
 	update-fmtutil
-	dhit_update_lsr_files
-	for i in #WHATTODO# ; do
+	# mktexlsr may not be present
+	if which mktexlsr >/dev/null; then
+	    dhit_update_lsr_files
+	fi
+	# all of the following needs an installed and configured
+	# base TeX system, so check this
+	if kpsewhich --version > /dev/null 2>&1 ; then
+	    for i in #WHATTODO# ; do
 		if [ "$i" = map ] ; then
-			dhit_create_fontmaps
+		    dhit_create_fontmaps
 		fi
 		if [ "$i" = format ] ; then
-			for fmt in #FORMATS# ; do
-				dhit_build_format --byfmt $fmt
-			done
+		    for fmt in #FORMATS# ; do
+			dhit_build_format --byfmt $fmt
+		    done
 		fi
 		if [ "$i" = language ] ; then
-			dhit_build_hyphen_format_if_format_exists \
-                          latex `kpsewhich language.dat`
+		    dhit_build_hyphen_format_if_format_exists \
+                        latex `kpsewhich language.dat`
 		fi
-	done
+	    done
+	fi
     ;;
 
     *)

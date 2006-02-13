@@ -76,20 +76,20 @@ case "$1" in
 	dhit_check_run_without_errors update-fmtutil
 	dhit_check_run_without_errors mktexlsr
 	for i in #WHATTODO# ; do
-		if [ "$i" = map ] ; then
-			dhit_check_run_without_errors updmap-sys
+	    if [ "$i" = map ] ; then
+		dhit_check_run_without_errors updmap-sys
+	    fi
+	    if [ "$i" = format ] ; then
+		for fmt in #FORMATS# ; do
+		    rm -f /var/lib/texmf/web2c/$fmt.*
+		done
+	    fi
+	    if [ "$i" = language ] ; then
+		if which fmtutil-sys >/dev/null ; then
+		    dhit_build_hyphen_format_if_format_exists \
+                        latex `kpsewhich language.dat`
 		fi
-		if [ "$i" = format ] ; then
-			for fmt in #FORMATS# ; do
-				rm -f /var/lib/texmf/web2c/$fmt.*
-			done
-		fi
-		if [ "$i" = language ] ; then
-			if which fmtutil-sys >/dev/null ; then
-				dhit_build_hyphen_format_if_format_exists \
-                                  latex `kpsewhich language.dat`
-			fi
-		fi
+	    fi
 	done
     ;;
 
