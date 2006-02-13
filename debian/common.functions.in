@@ -42,8 +42,8 @@ create_tetex_formats(){
   echo "Running fmtutil-sys. This may take some time. ..."
   # for jadetex safety (see #352391 and friends), remove old latex formats
   if [ "$options" = "--all" ];
-    then for file in latex.fmt latex.efmt latex.lg pdflatex.fmt pdflatex.efmt pdflatex.log; do
-      rm $TEXMFSYSVAR/web2c/file
+    then for file in latex.fmt latex.efmt latex.log pdflatex.fmt pdflatex.efmt pdflatex.log; do
+      rm $TEXMFSYSVAR/web2c/$file
     done
   fi
   if fmtutil-sys $options > $tempfile; then
