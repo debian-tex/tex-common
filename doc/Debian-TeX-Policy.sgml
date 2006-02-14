@@ -583,23 +583,29 @@
                 </p>
 
                 <p>
-                Since <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> are
-                provided by the Basic TeX Packages,
-                <file><var>package</var>.postinst</file> has to ensure that
-                they are only called when found in <tt>$PATH</tt> (unless
-                <var>package</var> depends on the Basic TeX Packages for some
-                reason). In <file><var>package</var>.postrm</file>, the same
-                considerations must be taken into account, with the addition
-                that <package>tex-common</package> (that provides
-                <prgn>update-updmap</prgn>) can be unconfigured or even
-                uninstalled.
+                Since <prgn>mktexlsr</prgn> and
+                <prgn>updmap-sys</prgn> are provided by the Basic TeX
+                Packages, <file><var>package</var>.postinst</file> has
+                to ensure that they are only called when found in
+                <tt>$PATH</tt> (unless <var>package</var> depends
+                on the Basic TeX Packages for some reason). In
+                <file><var>package</var>.postrm</file>, the same
+                considerations must be taken into account, with the
+                addition that <package>tex-common</package> (that
+                provides <prgn>update-updmap</prgn>) can be
+                unconfigured or even uninstalled.
                 </p>
 
                 <p>
-                As long as <package>tex-common</package> is configured, it is
-                expected that <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn> can be safely run whenever available
-                (even if the packages that provide them aren't configured).
+                Note that even when <package>tex-common</package> is
+                configured, it cannot be assumed that
+                <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> can
+                be safely run whenever available, because they
+                internally use <prgn>kpsewhich</prgn> which only works
+                after the <file>libkpathsea</file> library in a
+                separate package has been configured
+                properly
+
                 </p>
               </item>
             </enumlist>
@@ -867,17 +873,14 @@
       <sect>
         <heading>The Dpkg Post-Invoke Mechanism</heading>
 
-	<p>To be done...</p>
-
-	<p>
-	Packages should be able to delay running of mktexlsr, updmap
-	and perhaps even "fmtutil --all" until all TeX-related
+	<p>This section was intended to deal with a once-planned
+	mechanism that would allow to delay running of mktexlsr,
+	updmap and perhaps even "fmtutil --all" until all TeX-related
 	packages that want to do this are configured.  Thus, it would
 	be unnecessary to call the programs multiple times.  Coding
-	this is easy, however it is unclear how it can be made sure
-	that failures get attributed to the correct program (even
-	updmap has recently been reported to fail).
-	</p>
+	this is not hard, however it is unclear how it could be made
+	sure that failures get attributed to the correct package.
+	Therefore this plan has been dropped.</p>
 
       </sect>
     </chapt>
