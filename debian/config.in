@@ -35,99 +35,40 @@ db_unregister tetex-bin/lsr-perms || true
 # and unregister old tex-common questions, they are not needed anymore
 db_unregister tex-common/groupperm || true
 db_unregister tex-common/userperm || true
+db_unregister tex-common/managedlsr || true
 
-
-# there was a bug in 0.9 that caused debconf answers to have no effect:
-# reset the seen flag
-if [ "$installed_version" = 0.9 ]; then
-  db_fset tex-common/managedlsr seen false || true
-  db_fset tex-common/groupname seen false || true
-fi
+# we set the groupname seen flag to false in any case since now it has
+# a completely new meaning
+db_fset tex-common/groupname seen false || true
 
 # this script may be run twice: Once by dpkg-preconfigure, once again by
 # debconf when it is sourced in the postinst script.  We must do the
 # following only once, therefore we fiddle with a special flag
-db_fget tex-common/managedlsr firstpass || true
+db_fget tex-common/managecache firstrundone || true
 
 if [ "$RET" != "true" ]; then
   # we are in the first pass, set the flag and do the things
-  db_fset tex-common/managedlsr firstpass true
+  db_fset tex-common/managecache firstrundone true
 
-# first we collect those ls-R files which are group writeable in gwritetrue
-# and those which are not group writeable in gwritefalse
-# furthermore we save the respective group and write permission in
-# ${i}group
-gwritetrue=""
-gwritefalse=""
-lsrfile_exists=""
-for i in var cache main ; do
-    eval ${i}group=""
-    lsr=`select_lsrfile $i`
-    if [ -r $lsr ] ; then
-        lsrfile_exists="true"
-    	tmp=`ls -l $lsr | awk '{print$4}'`
-	eval ${i}group=$tmp
-	if ls -l $lsr | grep -q ^.....w ; then
-	    gwritetrue="$gwritetrue $i"
-	else
-	    gwritefalse="$gwritefalse $i"
-	fi
-    fi
-done
-#
-# now we save the list of group writeable ls-R files to tex-common/managedlsr
-# (but only if we found any.  On a fresh install, we'll show the default.')
-if [ "$lsrfile_exists" = "true" ]; then
-    db_set tex-common/managedlsr $gwritetrue || true
-fi
-#
-# and ask the user to check if this selection is ok
-db_input low tex-common/managedlsr || true
-db_go
-
-#
-# get the answer of the users, ie what files should really be group writeable
-db_get tex-common/managedlsr && SELECTED_LSR="$RET" || true
-if [ -n "$SELECTED_LSR" ]; then
-    #
-    # we check wether all the group writeable files belong to the same group,
-    # but we do this for the old setting, so that one can add group-writable files.
-    # if yes, we suggest this group and ask the groupname question,
-    # otherwise we ignore this and do *not* play around with groups.
-  #
-  # if no ls-R files exist, or none were group-writable, we also ask the groupname question:
-  if [ "$lsrfile_exists" != "true" ] || [ -z "$gwritetrue" ]; then
-    iscommongroup=none
+  # check wether the directory /var/cache/fonts is group writeable and
+  # for which group
+  PERMS=$(stat --format="%a" /var/cache/fonts)
+  GROUP=$(stat --format="%G" /var/cache/fonts)
+  if [ $PERMS = 2775 ] ; then
+    db_set tex-common/managecache true || true
+    db_set tex-common/groupname "$GROUP" || true
   else
-    iscommongroup=-1
-    for i in $gwritetrue ; do
-      eval tmp=\$${i}group
-      if [ "X$iscommongroup" = "X-1" ] ; then
-	 iscommongroup=$tmp
-      else
-         if [ ! $tmp = $iscommongroup ] ; then
-	    iscommongroup=""
-	 fi
-      fi
-    done
-    # $iscommongroup will be empty only if there were 2 or 3 group-writable
-    # ls-R files belonging to different groups.
-    db_set tex-common/groupname "$iscommongroup" || true
+    db_set tex-common/managecache false || true
   fi
+  db_input low tex-common/managecache || true
+  db_go
 
-  if [ -n "$iscommongroup" ] ; then
-      #
-      # here we could be more intelligent and check wether the choosen group
-      # actually exist, and if not, reask again!
-      #
+  db_get tex-common/managecache || true
+  if [ "$RET" = true ]; then
     db_input low tex-common/groupname || true
     db_go
   fi
 fi
-fi
-#
-# we do not care for user permissions in this setting!
-#
 
 # Local Variables:
 # mode: shell-script

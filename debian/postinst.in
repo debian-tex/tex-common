@@ -117,41 +117,22 @@ EOF
     update-updmap
     update-language
 
-#
-# set permission of ls-R files
-    db_get tex-common/managedlsr || true
-    falsegwritefiles=""
-    truegwritefiles=""
-    for i in var cache main ; do
-      if echo $RET | grep -q $i ; then
-	truegwritefiles="$truegwritefiles $i"
-      else
-	falsegwritefiles="$falsegwritefiles $i"
+    #
+    # do the config stuff
+    db_get tex-common/managecache || true
+    if [ $RET = true ] ; then
+      db_get tex-common/groupname || true
+      GROUP="$RET"
+      if [ -n "$GROUP" ] ; then
+        find /var/cache/fonts -type d -print0 | xargs -0r chmod 02755
+	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
       fi
-    done
-    for i in $truegwritefiles ; do
-      lsr=`select_lsrfile $i`
-      test -e $lsr || echo "$ls_R_magic" > $lsr 
-      chmod g+w $lsr
-    done
-    for i in $falsegwritefiles ; do
-      lsr=`select_lsrfile $i`
-      test -e $lsr || echo "$ls_R_magic" > $lsr 
-      chmod g-w $lsr
-    done
-    db_get tex-common/groupname || true
-    LSRGROUP="$RET"
-    if [ -n "$LSRGROUP" ] ; then
-      for i in $truegwritefiles ; do
-	lsr=`select_lsrfile $i`
-	chgrp -v $LSRGROUP $lsr || true
-      done
     fi
 
-# the config script may be run twice: Once by dpkg-preconfigure, once
-# again by debconf when it is sourced in the postinst script.  On the
-# first pass, it sets a special flag, which must now be reset.
-    db_fset tex-common/managedlsr firstpass false || true
+    # the config script may be run twice: Once by dpkg-preconfigure, once
+    # again by debconf when it is sourced in the postinst script.  On the
+    # first pass, it sets a special flag, which must now be reset.
+    db_fset tex-common/managecache firstrundone false || true
 
     ;;
   *)

@@ -1,40 +1,22 @@
-Template: tex-common/managedlsr
-Type: multiselect
-Choices: main, cache, var
-Default: cache
-_Description: Select the ls-R file which should be writable by their respective group.
- There are many files installed in a typical TeX system. To speed up the
- search of these files a list of available files is stored in a file called
- ls-R. There are three different locations for TeX files on a Debian system:
-  - main: usually /usr/share/texmf, contains only files installed
-    by debian packages.
-  - var: usually /var/lib/texmf, contains generated files from the
-    TeX system like format files.
-  - cache: usually /var/cache/fonts, contains generated fonts.
+Template: tex-common/managecache
+Type: boolean
+Default: true
+_Description: Manage the permissions of the TeX font cache with debconf.
+ A TeX system may have to generate new font data (pixel data, metric,
+ sources) on the fly. These files can be saved into the TeX font cache
+ in /var/cache/fonts and later reused.
  .
- You can select from these three locations those whose ls-R files should
- be group writable. Group write permissions for deselected ls-R will
- be removed.
- .
- We suggest selecting cache (this is the defaults) and allowing
- a selected user group to modify these ls-R files, because of the following
- reasons:
- .
- A lot of font files have to be generated before they can be used by xdvi,
- dvips etc. These files are stored in /var/cache/fonts, so that they do not
- need to be regenerated every time.  Usually, these files are created on-the-fly 
- when needed.  Since the directory is group-writable, the ls-R file should
- be the same
+ If you accept, you can specify a group name and *all* directories under
+ /var/cache/fonts will get ownership root:<groupname> and permission
+ bits 2755 (i.e. writeable for the group <groupname> and sticky bit set).
 
 Template: tex-common/groupname
 Type: string
 Default: users
-_Description: Which group should own the ls-R files?
- You can choose a specific group which the previously selected ls-R files
- should belong to. If you do not enter a group name here, the group
- ownership of the selected files will not be touched at all. If you
- have selected 'cache' in the previous question, we would suggest to select
- the group 'users' here.
+_Description: Which group should own the TeX font cache.
+ You can choose a specific group which will own all directories under and
+ including the TeX font cache /var/cache/fonts. These directories will 
+ get permission bits 2755. We suggest to select the group 'users' here.
 
 Template: tex-common/cnf_name
 Type: note
