@@ -1,6 +1,6 @@
 DESTDIR=/usr/share/doc/tex-common
 
-CLEANFILES=Debian-TeX-Policy.txt Debian-TeX-Policy.html Debian-TeX-Policy.tpt 
+CLEANFILES=Debian-TeX-Policy.txt Debian-TeX-Policy.html Debian-TeX-Policy.tpt
 
 all: policy-txt policy-html policy-pdf
 
