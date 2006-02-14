@@ -74,9 +74,8 @@ if [ "$RET" != "true" ]; then
     # - or the permissions as shipped by old tetex versions
     # then set the managecache to true, otherwise to false
     # we will later change it to 3775 in the true case
-    if [ $PERMS = 3775 -o $PERMS = 1777 ] ; then
+    if [ $PERMS = 3775 ] || [ $PERMS = 1777 ] ; then
       db_set tex-common/managecache true || true
-      db_set tex-common/groupname "$GROUP" || true
     else
       db_set tex-common/managecache false || true
     fi
