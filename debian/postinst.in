@@ -124,7 +124,7 @@ EOF
       db_get tex-common/groupname || true
       GROUP="$RET"
       if [ -n "$GROUP" ] ; then
-        find /var/cache/fonts -type d -print0 | xargs -0r chmod 02755
+        find /var/cache/fonts -type d -print0 | xargs -0r chmod 03755
 	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
       fi
     fi

@@ -54,7 +54,7 @@ if [ "$RET" != "true" ]; then
   # for which group
   PERMS=$(stat --format="%a" /var/cache/fonts)
   GROUP=$(stat --format="%G" /var/cache/fonts)
-  if [ $PERMS = 2775 ] ; then
+  if [ $PERMS = 3775 ] ; then
     db_set tex-common/managecache true || true
     db_set tex-common/groupname "$GROUP" || true
   else
