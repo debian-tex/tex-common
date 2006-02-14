@@ -54,7 +54,13 @@ if [ "$RET" != "true" ]; then
   # for which group
   PERMS=$(stat --format="%a" /var/cache/fonts)
   GROUP=$(stat --format="%G" /var/cache/fonts)
-  if [ $PERMS = 3775 ] ; then
+
+  # if the permissions are 
+  # - either the new permissions 3775 as we want to ship them
+  # - or the permissions as shipped by old tetex versions
+  # then set the managecache to true, otherwise to false
+  # we will later change it to 3775 in the true case
+  if [ $PERMS = 3775 -o $PERMS = 1777 ] ; then
     db_set tex-common/managecache true || true
     db_set tex-common/groupname "$GROUP" || true
   else
