@@ -8,7 +8,7 @@
 ## variables
 PURGE_EXTENSIONS="<:=$PURGE_EXTENSIONS:>"
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
-TEXMFSYSVAR="<:=$TEXMFSYSVAR:>"
+TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
 
 # give commandline args a name
 action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade, disappear
@@ -19,9 +19,9 @@ action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade
 ## do the things we have to do always
 case $action in
   remove)
-    # remove TEXMFSYSVAR: All files and dirs are created either by
+    # remove TEXMFSYSVARDIR: All files and dirs are created either by
     # us, or by packages depending on us.
-    rm -rf $TEXMFSYSVAR
+    rm -rf $TEXMFSYSVARDIR
     # same with /var/cache/fonts
     rm -rf /var/cache/fonts
     ;;

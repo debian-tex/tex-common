@@ -10,7 +10,7 @@
 <:$ETC="/etc/":>//
 <:$etc="/etc/texmf/":>//
 <:$doc="/usr/share/doc/$PACKAGE/":>//
-<:$TEXMFSYSVAR="/var/lib/texmf":>//
+<:$TEXMFSYSVARDIR="/var/lib/texmf":>//
 <:$MKTMPDIR="/tmp":>//
 <:$FONTMAP_MEMORY_DIR="/var/lib/tex-common/fontmap-cfg":>//
 <:$LANGUAGE_MEMORY_DIR="/var/lib/tex-common/language-cnf":>//
