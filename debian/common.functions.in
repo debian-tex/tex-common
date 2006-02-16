@@ -9,7 +9,7 @@
 : ${MKTMPDIR:=$TMPDIR} # mktemp will create its files there
 : ${MKTMPDIR:=<:=$MKTMPDIR:>}
 SYMLINK_MOVE_EXT=<:=$SYMLINK_MOVE_EXT:>
-TEXMFSYSVAR=<:=$TEXMFSYSVAR:>
+TEXMFSYSVARDIR=<:=$TEXMFSYSVARDIR:>
 
 debug(){
   true "$*"
@@ -43,7 +43,7 @@ create_tetex_formats(){
   # for jadetex safety (see #352391 and friends), remove old latex formats
   if [ "$options" = "--all" ];
     then for file in latex.fmt latex.efmt latex.log pdflatex.fmt pdflatex.efmt pdflatex.log; do
-      rm $TEXMFSYSVAR/web2c/$file
+      rm -f $TEXMFSYSVARDIR/web2c/$file
     done
   fi
   if fmtutil-sys $options > $tempfile; then
@@ -210,8 +210,8 @@ postinst_remove_savedlink(){
 
 select_lsrfile() {
     case $1 in
-     main) LSR=$TEXMFSYSVAR/ls-R-TEXMFMAIN ;;
-     var)  LSR=$TEXMFSYSVAR/ls-R ;;
+     main) LSR=$TEXMFSYSVARDIR/ls-R-TEXMFMAIN ;;
+     var)  LSR=$TEXMFSYSVARDIR/ls-R ;;
      cache) LSR=/var/cache/fonts/ls-R ;;
      *) echo "select_lsr: don't know how to set this: $1" >&2 ;;
     esac
