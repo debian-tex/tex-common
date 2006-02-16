@@ -9,6 +9,10 @@
 action=$1
 installed_version=$2
 
+# common variables
+FONTCACHE_PERMS=<:=$FONTCACHE_PERMS:>
+
+
 
 . <:=${CONFMODULE}:>
 db_version 2.0
@@ -52,8 +56,8 @@ if [ "$RET" != "true" ]; then
 
   # check wether the directory /var/cache/fonts is group writeable and
   # for which group
-  PERMS=$(stat --format="%a" /var/cache/fonts)
-  GROUP=$(stat --format="%G" /var/cache/fonts)
+  PERMS=$(stat --format="%a" /var/cache/fonts 2>/dev/null)
+  GROUP=$(stat --format="%G" /var/cache/fonts 2>/dev/null)
 
   # see wether we already have asked this question once
   db_fget tex-common/managecache seen || true
@@ -61,8 +65,8 @@ if [ "$RET" != "true" ]; then
 
   if [ $SEEN = true ] ; then
     # this question was already shown
-    # if the permissions are still 3775 we set managecache to true
-    if [ $PERMS = 3775 ] ; then
+    # if the permissions are still <:=$FONTCACHE_PERMS:> we set managecache to true
+    if [ $PERMS = $FONTCACHE_PERMS ] ; then
       db_set tex-common/managecache true || true
       db_set tex-common/groupname "$GROUP" || true
     else
@@ -70,11 +74,13 @@ if [ "$RET" != "true" ]; then
     fi
   else
     # this question has not been seen, so if the permissions are 
-    # - either the new permissions 3775 as we want to ship them
+    # - either the permissions as shipped in the deb
+    # - or empty, because the file is not yet present
+    # - or the new permissions <:=$FONTCACHE_PERMS:> as we want to ship them
     # - or the permissions as shipped by old tetex versions
     # then set the managecache to true, otherwise to false
-    # we will later change it to 3775 in the true case
-    if [ $PERMS = 3775 ] || [ $PERMS = 1777 ] ; then
+    # we will later change it to <:=$FONTCACHE_PERMS:> in the true case
+    if [ "$PERMS" = 755 ] || [ -z "$PERMS" ] || [ "$PERMS" = $FONTCACHE_PERMS ] || [ "$PERMS" = 1777 ]; then
       db_set tex-common/managecache true || true
     else
       db_set tex-common/managecache false || true

@@ -8,7 +8,7 @@
 ## Define static variables we need
 MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
-TEXMFSYSVAR="<:=$TEXMFSYSVAR:>"
+TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
 UCF="ucf --debconf-ok"
 #UCF="ucf -d --debconf-ok --verbose"
 OLD_LDAT=/etc/texmf/language.dat
@@ -18,6 +18,8 @@ ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.
 .:
 ls-R
 '
+FONTCACHE_PERMS=<:=$FONTCACHE_PERMS:>
+
 
 umask 022
 
@@ -124,7 +126,7 @@ EOF
       db_get tex-common/groupname || true
       GROUP="$RET"
       if [ -n "$GROUP" ] ; then
-        find /var/cache/fonts -type d -print0 | xargs -0r chmod 03755
+        find /var/cache/fonts -type d -print0 | xargs -0r chmod $FONTCACHE_PERMS
 	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
       fi
     fi

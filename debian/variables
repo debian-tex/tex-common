@@ -1,7 +1,8 @@
 <:# Copyright (C) 2004 by Frank Küster <frank@kuesterei.ch>.:>//
-<:# $Id: variables,v 1.2 2005/06/28 16:32:32 frank Exp $:>//
+<:# $Id$:>//
 <:use File::Basename:>//
 <:$PACKAGE="tex-common":>//
+<:$FONTCACHE_PERMS="3775":>//
 #include "common.variables"
 <:
 # Local variables:
