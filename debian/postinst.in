@@ -19,6 +19,7 @@ ls_R_magic='% ls-R -- filename database for kpathsea; do not change this line.
 ls-R
 '
 FONTCACHE_PERMS=<:=$FONTCACHE_PERMS:>
+FONTCACHE_LSR=/var/cache/fonts/ls-R
 
 
 umask 022
@@ -126,8 +127,13 @@ EOF
       db_get tex-common/groupname || true
       GROUP="$RET"
       if [ -n "$GROUP" ] ; then
+	echo -n "Adjusting permissions of TeX font cache ... "
+	test -e $FONTCACHE_LSR || echo "$ls_R_magic" > $FONTCACHE_LSR
+	chmod 664 $FONTCACHE_LSR
+	chown ":$GROUP" $FONTCACHE_LSR
         find /var/cache/fonts -type d -print0 | xargs -0r chmod $FONTCACHE_PERMS
 	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
+	echo "done."
       fi
     fi
 

@@ -8,8 +8,9 @@ _Description: Manage the permissions of the TeX font cache with debconf.
  .
  If you accept, you can specify a group name and *all* directories under
  /var/cache/fonts will get ownership root:<groupname> and permission
- bits 3755 (i.e. writeable for the group <groupname>, sticky and setgid
- bit set).
+ bits 3755 (i.e. writable for the group <groupname>, sticky and setgid
+ bit set).  Accordingly, the ls-R index file will be owned and writable
+ by that group.
 
 Template: tex-common/groupname
 Type: string
