@@ -483,9 +483,9 @@
 	  A package that provides PostScript Type&nbsp;1 fonts for TeX should
           be usable with any Basic TeX Package. The recommended way to
           implement the configuration scheme described below is to use the
-          <prgn>debhelper</prgn> program <prgn>dh_installtexfonts</prgn>
+          <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
           provided by <package>tex-common</package>. See <manref
-          name="dh_installtexfonts" section="1"> for usage details.
+          name="dh_installtex" section="1"> for usage details.
 
           <p>
           For the rest of this section, we'll assume we are dealing with a
@@ -614,7 +614,7 @@
           <p>
           A sample implementation of this scheme can be found in <ref
           id="appen-sample-font">, but don't forget that
-          <prgn>dh_installtexfonts</prgn> can do the work for you.
+          <prgn>dh_installtex</prgn> can do the work for you.
           </p>
 
           <p>
@@ -725,7 +725,15 @@
 	  <heading>Language/Hyphenation configuration</heading>
 	  <p>
 	  A package that provides additional hyphenation patterns for
-	  TeX should put the actual hyphenation file into the respective
+	  TeX should be usable with any Basic TeX Package. The recommended 
+	  way to implement the configuration scheme described below is to 
+	  use the <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
+	  provided by <package>tex-common</package>. See 
+	  <manref name="dh_installtex" section="1"> for usage details.
+	  </p>
+	  <p>
+	  These packages 
+	  should put the actual hyphenation file into the respective
 	  places in <var>TEXMFMAIN</var>, and have them registered by
 	  putting a configuration file with extension <tt>.cnf</tt> into
 	  <file>/etc/texmf/language.d</file> and calling
@@ -775,12 +783,26 @@
 	  hyphenation patterns to formats that do not use the same
 	  hyphenation configuration file as LaTeX.
 	  </p>
+	  <p>
+	  Don't forget that <prgn>dh_installtex</prgn> can do the work 
+	  for you.
+	  </p>
 	</sect1>
 	
 	<sect1>
 	  <heading>Format configuration</heading>
 	  <p>
-	  Packages that provide additional formats should put a
+	  As with font map configuration and language hyphenation patterns
+	  configuration, packages that provide additional formats should
+	  be usable with any Basic TeX Package. The recommended
+	  way to implement the configuration scheme described below is to
+	  use the <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
+	  provided by <package>tex-common</package>. See
+	  <manref name="dh_installtex" section="1"> for usage details.
+	  </p>
+
+	  <p>
+	  These packages should put a
 	  configuration file according to <prgn>fmtutil.cnf(5)</prgn>
 	  into <file>/etc/texmf/fmt.d/</file>, run
 	  <prgn>update-fmtutil</prgn> and subsequently create the
@@ -804,6 +826,10 @@
 	  should be removed from the directory specified by
 	  <tt>`kpsewhich -var-value=TEXMFSYSVAR`/web2c</tt>.
 	  </p>
+          <p>
+          Don't forget that <prgn>dh_installtex</prgn> can do the work
+          for you.
+          </p>
 	</sect1>
       </sect>
 
