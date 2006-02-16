@@ -1,1 +1,1 @@
-- Manually build acl2, look why "/usr/bin/make mini-proveall" fails.
+- Manually build acl2, find out why "/usr/bin/make mini-proveall" fails.
