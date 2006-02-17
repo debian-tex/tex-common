@@ -121,9 +121,13 @@ EOF
       db_get tex-common/groupname || true
       GROUP="$RET"
       if [ -n "$GROUP" ] ; then
-	echo -n "Adjusting permissions of TeX font cache ... "
+	echo -n "Adjusting permissions of TeX font cache... "
         find /var/cache/fonts -type d -print0 | xargs -0r chmod $FONTCACHE_PERMS
 	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
+	if [ -f /var/cache/fonts/ls-R ]; then
+	  chmod 664 /var/cache/fonts/ls-R
+	  chown "root:$GROUP" /var/cache/fonts/ls-R
+	fi
 	echo "done."
       fi
     fi
