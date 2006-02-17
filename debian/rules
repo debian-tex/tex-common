@@ -40,7 +40,7 @@ build-stamp: $(EPERL_FILES)
 
 	# Add here commands to compile the package.
 	cd doc; $(MAKE)
-	cd scripts; pod2man dh_installtexfonts > dh_installtexfonts.1
+	#cd scripts; pod2man dh_installtexfonts > dh_installtexfonts.1
 	cd scripts; pod2man dh_installtex > dh_installtex.1
 
 	touch build-stamp
@@ -78,9 +78,9 @@ install: build
 	ln -s ../sbin/update-fontlang $(INSTDIR)/usr/bin/update-updmap
 
 	# debhelper stuff
-	# dh_installtexfonts(.1) is already installed via the bin_scripts
-	grep -v '^[ \t]*#' scripts/postrm-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-texfonts
-	grep -v '^[ \t]*#' scripts/postinst-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texfonts
+	# dh_installtex(.1) is already installed via the bin_scripts
+	#grep -v '^[ \t]*#' scripts/postrm-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-texfonts
+	#grep -v '^[ \t]*#' scripts/postinst-texfonts > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texfonts
 	grep -v '^[ \t]*#' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
 	grep -v '^[ \t]*#' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
 

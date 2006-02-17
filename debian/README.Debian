@@ -8,7 +8,7 @@ Since this allows every group member to create arbitrary files on the
 /var partition, this might be a security risk, depending on local
 requirements and policy.
 
-If you don't like this, use "dpkg-reconfigure tex-common" to switch
+If you don't like this, use "dpkg-reconfigure -plow tex-common" to switch
 group ownership of the directory to a different group, or remove the
 group write permission.  In this case, the local administrator should
 probably fill the font cache, using the commands "allneeded" or
