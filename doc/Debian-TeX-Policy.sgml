@@ -599,12 +599,21 @@
                 <p>
                 Note that even when <package>tex-common</package> is
                 configured, it cannot be assumed that
-                <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> can
-                be safely run whenever available, because they
-                internally use <prgn>kpsewhich</prgn> which only works
-                after the <file>libkpathsea</file> library in a
-                separate package has been configured
-                properly
+                <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
+                <prgn>updmap-sys</prgn> can be safely run whenever available,
+                because they internally use <prgn>kpsewhich</prgn> which only
+                works after the <file>libkpathsea</file> library in a separate
+                package has been configured properly. The following check can
+                be used to determine whether <file>libkpathsea</file> is
+                configured:
+
+<example>
+if kpsewhich --version >/dev/null 2>&1; then
+    echo "kpsewhich is installed and libkpathsea is configured."
+else
+    echo "Either kpsewhich is not installed, or libkpathsea is not configured."
+fi
+</example>
 
                 </p>
               </item>
@@ -627,7 +636,8 @@
                 <prgn>update-updmap</prgn> can be run and
                 <file>texmf.cnf</file> is in a sane state, so that
                 <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> can be run
-                safely if present.
+                safely (if present and if <file>libkpathsea</file> is
+                configured).
               </item>
           
               <item>
@@ -924,27 +934,28 @@
 #
 # postinst-texfonts
 #
-# postinst snippets for installing fonts for TeX
+# postinst snippet for installing Type 1 fonts for TeX
 #
 # Author: Florent Rougon &lt;f.rougon@free.fr&gt;
 #
 update_fontmaps()
 {
-    update-updmap --quiet
-    # all of the following needs an installed and configured
-    # base TeX system, so check this
-    if kpsewhich --version > /dev/null 2>&1 ; then
+    # All of the following needs an installed and configured
+    # basic TeX system, so check this.
+    if kpsewhich --version >/dev/null 2>&1; then
+        update-updmap --quiet
         # mktexlsr is recommended now because updmap-sys relies 
-	# heavily on Kpathsea to locate updmap.cfg and the map files. 
-	# Also, it is slightly better not to specify a particular 
-	# directory to refresh because updmap.cfg is typically found 
-	# in $TEXMFSYSVAR while the map files are in # $TEXMFMAIN.
+        # heavily on Kpathsea to locate updmap.cfg and the map files. 
+        # Also, it is slightly better not to specify a particular 
+        # directory to refresh because updmap.cfg is typically found 
+        # in TEXMFSYSVAR while the map files are in TEXMFMAIN or
+        # TEXMFDIST.
         if which mktexlsr >/dev/null; then mktexlsr; fi
         if which updmap-sys >/dev/null; then
             printf "Running updmap-sys... "
             updmap-sys --quiet
             echo "done."
-	fi
+        fi
     fi
 
     return 0
@@ -956,7 +967,7 @@ case "$1" in
     ;;
 
     *)
-        echo "postinst called with unknown argument \`$1'" >&2
+        echo "postinst called with unknown argument '$1'" >&2
         exit 1
     ;;
 esac
@@ -968,7 +979,7 @@ esac
 #
 # postrm-texfonts
 #
-# postrm snippets for installing fonts for TeX
+# postrm snippet for installing Type 1 fonts for TeX
 #
 # Author: Florent Rougon &lt;f.rougon@free.fr&gt;
 #
@@ -983,10 +994,6 @@ tell_that_errors_are_ok()
         endwith='\n'
     fi
 
-    # According to the Debian TeX policy, running mktexlsr and updmap-sys
-    # should work as long as tex-common is configured and these files are
-    # available (general Debian policy wouldn't assure that without this
-    # override from the Debian TeX policy).
     printf "\
 Trying to run '$prog' (error messages can be ignored if tex-common
 is not configured)...$endwith"
@@ -1008,6 +1015,12 @@ is not configured)...$endwith"
 # calls.
 try_to_update_fontmaps()
 {
+    # All of the following needs an installed and configured basic TeX system.
+    # If there is one, register the fonts. Otherwise, that will be done later
+    # when the basic TeX system is configured, so we can exit without
+    # worrying.
+    kpsewhich --version >/dev/null 2>&1 || return 0
+
     # Don't print alarming error messages if the programs aren't even
     # available.
     if which update-updmap >/dev/null; then
@@ -1018,8 +1031,8 @@ try_to_update_fontmaps()
     # mktexlsr is recommended now because updmap-sys relies heavily on
     # Kpathsea to locate updmap.cfg and the map files. Also, it is slightly
     # better not to specify a particular directory to refresh because
-    # updmap.cfg is typically found in $TEXMFSYSVAR while the map files are in
-    # $TEXMFMAIN.
+    # updmap.cfg is typically found in TEXMFSYSVAR while the map files are in
+    # TEXMFMAIN.
     if which mktexlsr >/dev/null; then
         tell_that_errors_are_ok mktexlsr
         mktexlsr || true
@@ -1052,7 +1065,7 @@ case "$1" in
     ;;
 
     *)
-        echo "postrm called with unknown argument \`$1'" >&2
+        echo "postrm called with unknown argument '$1'" >&2
         exit 1
     ;;
 esac

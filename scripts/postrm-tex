@@ -4,31 +4,42 @@
 # postinst snippets for installing stuff for TeX
 #
 # Authors:
-#	Florent Rougon <f.rougon@free.fr>
-#	Norbert Preining <preining@logic.at>
+#       Florent Rougon <f.rougon@free.fr>
+#       Norbert Preining <preining@logic.at>
 #
 # Please note that comments in this file are stripped before installation
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
 
+
+# Tell if kpsewhich works. If this is the case:
+#
+#   1. kpsewhich is installed and;
+#
+#   2. libkpathsea is configured.
+dhit_libkpathsea_configured ()
+{
+    return kpsewhich --version >/dev/null 2>&1
+}
+
 dhit_check_run_without_errors ()
 {
-    tempfile=`mktemp -p /tmp checkrun.XXXXXXXX`
-    if which "$1"  >/dev/null; then
+    tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
+    if which "$1" >/dev/null; then
         printf "Running $*. This may take some time..."
-	set +e
-	if "$@" > $tempfile 2>&1 ; then
-	    rm -f $tempfile
-	    echo " done."
-	else
-	    echo
-	    echo "$* failed. Output has been stored in"
-	    echo "$tempfile"
-	    echo "If tex-common is not configured you can ignore this error message!"
-	    echo "Otherwise, please include this file if you report a bug."
-	    echo
-	fi
-	set -e
+        set +e
+        if "$@" > $tempfile 2>&1 ; then
+            rm -f $tempfile
+            echo " done."
+        else
+            echo
+            echo "$* failed. Output has been stored in"
+            echo "$tempfile"
+            echo "If tex-common is not configured you can ignore this error message!"
+            echo "Otherwise, please include this file if you report a bug."
+            echo
+        fi
+        set -e
     else
         rm -f $tempfile
     fi
@@ -38,8 +49,8 @@ dhit_check_run_without_errors ()
 dhit_build_format ()
 {
 
-    tempfile=`mktemp -p /tmp fmtutil.XXXXXXXX`
-    printf "Building format(s) $1 `basename "$2"`. This may take some time..."
+    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+    printf "Building format(s) $1 $(basename "$2"). This may take some time..."
     if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo " done."
@@ -55,13 +66,13 @@ dhit_build_format ()
 
 dhit_build_hyphen_format_if_format_exists ()
 {
-    v=`kpsewhich -var-value TEXMFSYSVAR`
-    c=`kpsewhich -var-value TEXMFSYSCONFIG`
+    v=$(kpsewhich -var-value TEXMFSYSVAR)
+    c=$(kpsewhich -var-value TEXMFSYSCONFIG)
     TEXMFVAR="$v"
     TEXMFCONFIG="$c"
     export TEXMFVAR TEXMFCONFIG
-    fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
-    X=`cat $fmtcnffile | grep "^[[:space:]]*$1[[:space:]]" || true`
+    fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
+    X=$(grep "^[[:space:]]*$1[[:space:]]" "$fmtcnffile" || true)
     if [ -n "$X" ] ; then
         dhit_build_format --byhyphen "$2"
     fi
@@ -70,27 +81,33 @@ dhit_build_hyphen_format_if_format_exists ()
 
 case "$1" in
     remove|disappear)
-	# it doesn't hurt to cal all of them
-	dhit_check_run_without_errors update-updmap --quiet
-	dhit_check_run_without_errors update-language
-	dhit_check_run_without_errors update-fmtutil
-	dhit_check_run_without_errors mktexlsr
-	for i in #WHATTODO# ; do
-	    if [ "$i" = map ] ; then
-		dhit_check_run_without_errors updmap-sys
-	    fi
-	    if [ "$i" = format ] ; then
-		for fmt in #FORMATS# ; do
-		    rm -f /var/lib/texmf/web2c/$fmt.*
-		done
-	    fi
-	    if [ "$i" = language ] ; then
-		if which fmtutil-sys >/dev/null ; then
-		    dhit_build_hyphen_format_if_format_exists \
-                        latex `kpsewhich language.dat`
-		fi
-	    fi
-	done
+        # The following needs an installed and configured basic TeX system, so
+        # check this.
+        if dhit_libkpathsea_configured; then
+            # It doesn't hurt to call all of them.
+            dhit_check_run_without_errors update-updmap --quiet
+            dhit_check_run_without_errors update-language
+            dhit_check_run_without_errors update-fmtutil
+            dhit_check_run_without_errors mktexlsr
+        fi
+        for i in #WHATTODO# ; do
+            if [ "$i" = map ] ; then
+                dhit_libkpathsea_configured && \
+                    dhit_check_run_without_errors updmap-sys
+            fi
+            if [ "$i" = format ] ; then
+                for fmt in #FORMATS# ; do
+                    rm -f /var/lib/texmf/web2c/$fmt.*
+                done
+            fi
+            if [ "$i" = language ] ; then
+                if dhit_libkpathsea_configured && \
+                    which fmtutil-sys >/dev/null; then
+                    dhit_build_hyphen_format_if_format_exists \
+                        latex $(kpsewhich language.dat)
+                fi
+            fi
+        done
     ;;
 
     purge|upgrade|failed-upgrade|abort-upgrade|abort-install)
@@ -101,5 +118,3 @@ case "$1" in
         exit 1
     ;;
 esac
-
-

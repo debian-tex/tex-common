@@ -4,61 +4,72 @@
 # postinst snippets for installing stuff for TeX
 #
 # Authors:
-#	Florent Rougon <f.rougon@free.fr>
-#	Norbert Preining <preining@logic.at>
+#       Florent Rougon <f.rougon@free.fr>
+#       Norbert Preining <preining@logic.at>
 #
 # Please note that comments in this file are stripped before installation
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
 
+
+# Tell if kpsewhich works. If this is the case:
+#
+#   1. kpsewhich is installed and;
+#
+#   2. libkpathsea is configured.
+dhit_libkpathsea_configured ()
+{
+    return kpsewhich --version >/dev/null 2>&1
+}
+
 dhit_update_lsr_files ()
 {
-    tempfile=`mktemp -p /tmp mktexlsr.XXXXXXXX`
-    printf "Running mktexlsr. This may take some time..."
+    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+    printf "Running mktexlsr. This may take some time... "
     if mktexlsr > $tempfile 2>&1 ; then
         rm -f $tempfile
-        echo " done."
+        echo "done."
     else
         echo
-	echo "mktexlsr failed. Output has been stored in"
-	echo "$tempfile"
-	echo "Please include this file if you report a bug."
-	echo
-	exit 1
+        echo "mktexlsr failed. Output has been stored in"
+        echo "$tempfile"
+        echo "Please include this file if you report a bug."
+        echo
+        exit 1
     fi
 }
 
 dhit_create_fontmaps ()
 {
-    tempfile=`mktemp -p /tmp updmap.XXXXXXXX`
-    printf "Running updmap-sys. This may take some time..."
+    tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
+    printf "Running updmap-sys. This may take some time... "
     if updmap-sys > $tempfile 2>&1 ; then
-    	rm -f $tempfile
-	echo " done."
+        rm -f $tempfile
+        echo "done."
     else
-    	echo
-	echo "updmap-sys failed. Output has been stored in"
-	echo "$tempfile"
-	echo "Please include this file if you report a bug."
-	echo
-	exit 1
+        echo
+        echo "updmap-sys failed. Output has been stored in"
+        echo "$tempfile"
+        echo "Please include this file if you report a bug."
+        echo
+        exit 1
     fi
 }
 
 
 dhit_build_hyphen_format_if_format_exists ()
 {
-    v=`kpsewhich -var-value TEXMFSYSVAR`
-    c=`kpsewhich -var-value TEXMFSYSCONFIG`
+    v=$(kpsewhich -var-value TEXMFSYSVAR)
+    c=$(kpsewhich -var-value TEXMFSYSCONFIG)
     TEXMFVAR="$v"
     TEXMFCONFIG="$c"
     export TEXMFVAR TEXMFCONFIG
-    fmtcnffile=`kpsewhich --format='web2c files' fmtutil.cnf`
+    fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
     # this is slow, and since we hope/assure that all ini files
     # are installed if the format is active, we don't need the
     # extra check fmtutil does when called with catcfg
-    # X=`fmtutil-sys --catcfg | grep "^$1[[:space:]]" || true`
-    X=`grep "^[[:space:]]*$1[[:space:]]" $fmtcnffile || true`
+    # X=$(fmtutil-sys --catcfg | grep "^$1[[:space:]]" || true)
+    X=$(grep "^[[:space:]]*$1[[:space:]]" $fmtcnffile || true)
     if [ -n "$X" ] ; then
         build_format --byhyphen "$2"
     fi
@@ -67,11 +78,11 @@ dhit_build_hyphen_format_if_format_exists ()
 dhit_build_format ()
 {
 
-    tempfile=`mktemp -p /tmp fmtutil.XXXXXXXX`
-    printf "Building format(s) $1 `basename "$2"`. This may take some time..."
+    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+    printf "Building format(s) $1 $(basename "$2"). This may take some time... "
     if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
         rm -f $tempfile
-        echo " done."
+        echo "done."
     else
         echo
         echo "fmtutil-sys failed. Output has been stored in"
@@ -85,33 +96,33 @@ dhit_build_format ()
 
 case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
-    	# it doesn't hurt to call all of them
-	# these commands are all in tex-common and can be run immediately
-        update-updmap --quiet
-	update-language
-	update-fmtutil
-	# mktexlsr may not be present
-	if which mktexlsr >/dev/null; then
-	    dhit_update_lsr_files
-	fi
-	# all of the following needs an installed and configured
-	# base TeX system, so check this
-	if kpsewhich --version > /dev/null 2>&1 ; then
-	    for i in #WHATTODO# ; do
-		if [ "$i" = map ] ; then
-		    dhit_create_fontmaps
-		fi
-		if [ "$i" = format ] ; then
-		    for fmt in #FORMATS# ; do
-			dhit_build_format --byfmt $fmt
-		    done
-		fi
-		if [ "$i" = language ] ; then
-		    dhit_build_hyphen_format_if_format_exists \
-                        latex `kpsewhich language.dat`
-		fi
-	    done
-	fi
+        # All of the following needs an installed and configured
+        # basic TeX system, so check this.
+        if dhit_libkpathsea_configured; then
+            # It doesn't hurt to call all of them.
+            # These programs are all in tex-common and can be run immediately.
+            update-updmap --quiet
+            update-language
+            update-fmtutil
+            # mktexlsr may not be present
+            if which mktexlsr >/dev/null; then
+                dhit_update_lsr_files
+            fi
+            for i in #WHATTODO# ; do
+                if [ "$i" = map ] ; then
+                    dhit_create_fontmaps
+                fi
+                if [ "$i" = format ] ; then
+                    for fmt in #FORMATS# ; do
+                        dhit_build_format --byfmt $fmt
+                    done
+                fi
+                if [ "$i" = language ] ; then
+                    dhit_build_hyphen_format_if_format_exists \
+                        latex $(kpsewhich language.dat)
+                fi
+            done
+        fi
     ;;
 
     *)
@@ -119,4 +130,3 @@ case "$1" in
         exit 1
     ;;
 esac
-
