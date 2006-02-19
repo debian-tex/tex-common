@@ -19,7 +19,7 @@
 #   2. libkpathsea is configured.
 dhit_libkpathsea_configured ()
 {
-    return kpsewhich --version >/dev/null 2>&1
+    kpsewhich --version >/dev/null 2>&1
 }
 
 dhit_check_run_without_errors ()
@@ -80,13 +80,13 @@ dhit_build_hyphen_format_if_format_exists ()
 
 case "$1" in
     remove|disappear)
-        # The following needs an installed and configured basic TeX system, so
-        # check this.
+        # It doesn't hurt to call all of them.
+        dhit_check_run_without_errors update-updmap --quiet
+        dhit_check_run_without_errors update-language
+        dhit_check_run_without_errors update-fmtutil
+        # The mktexlsr call needs an installed and configured basic TeX
+        # system, so check this.
         if dhit_libkpathsea_configured; then
-            # It doesn't hurt to call all of them.
-            dhit_check_run_without_errors update-updmap --quiet
-            dhit_check_run_without_errors update-language
-            dhit_check_run_without_errors update-fmtutil
             dhit_check_run_without_errors mktexlsr
         fi
         for i in #WHATTODO# ; do
