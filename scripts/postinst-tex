@@ -110,7 +110,9 @@ case "$1" in
             fi
             for i in #WHATTODO# ; do
                 if [ "$i" = map ] ; then
-                    dhit_create_fontmaps
+                    if which updmap-sys >/dev/null; then
+                        dhit_create_fontmaps
+                    fi
                 fi
                 if [ "$i" = format ] ; then
                     for fmt in #FORMATS# ; do

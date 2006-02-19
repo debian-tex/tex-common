@@ -24,8 +24,8 @@ dhit_libkpathsea_configured ()
 
 dhit_check_run_without_errors ()
 {
-    tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
     if which "$1" >/dev/null; then
+        tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
         printf "Running $*. This may take some time..."
         set +e
         if "$@" > $tempfile 2>&1 ; then
@@ -40,9 +40,8 @@ dhit_check_run_without_errors ()
             echo
         fi
         set -e
-    else
-        rm -f $tempfile
     fi
+
     return 0
 }
 
