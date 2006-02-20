@@ -610,9 +610,12 @@
                 <prgn>updmap-sys</prgn> can be safely run whenever available,
                 because they internally use <prgn>kpsewhich</prgn> which only
                 works after the <file>libkpathsea</file> library in a separate
-                package has been configured properly. The following check can
-                be used to determine whether <file>libkpathsea</file> is
-                configured:
+                package has been configured properly.<footnote>However,
+                <prgn>update-updmap</prgn> uses <file>libkpathsea</file> only
+                in user-specific-mode. In system-wide mode, it doesn't matter
+                whether <file>libkpathsea</file> is configured or
+                not.</footnote> The following check can be used to determine
+                whether <file>libkpathsea</file> is configured:
 
 <example>
 if kpsewhich --version >/dev/null 2>&1; then
