@@ -950,10 +950,10 @@ fi
 #
 update_fontmaps()
 {
+    update-updmap --quiet
     # All of the following needs an installed and configured
     # basic TeX system, so check this.
     if kpsewhich --version >/dev/null 2>&1; then
-        update-updmap --quiet
         # mktexlsr is recommended now because updmap-sys relies 
         # heavily on Kpathsea to locate updmap.cfg and the map files. 
         # Also, it is slightly better not to specify a particular 
@@ -1025,12 +1025,6 @@ is not configured)...$endwith"
 # calls.
 try_to_update_fontmaps()
 {
-    # All of the following needs an installed and configured basic TeX system.
-    # If there is one, register the fonts. Otherwise, that will be done later
-    # when the basic TeX system is configured, so we can exit without
-    # worrying.
-    kpsewhich --version >/dev/null 2>&1 || return 0
-
     # Don't print alarming error messages if the programs aren't even
     # available.
     if which update-updmap >/dev/null; then
@@ -1038,6 +1032,13 @@ try_to_update_fontmaps()
         update-updmap --quiet || true
         echo "done."
     fi
+
+    # All of the following needs an installed and configured basic TeX system.
+    # If there is one, register the fonts. Otherwise, that will be done later
+    # when the basic TeX system is configured, so we can exit without
+    # worrying.
+    kpsewhich --version >/dev/null 2>&1 || return 0
+
     # mktexlsr is recommended now because updmap-sys relies heavily on
     # Kpathsea to locate updmap.cfg and the map files. Also, it is slightly
     # better not to specify a particular directory to refresh because
