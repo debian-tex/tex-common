@@ -239,7 +239,14 @@
           <var>TEXMFMAIN</var> is used by TeX add-on packages for
           their files and allows them to shadow older versions
           provided by the basic TeX packages.
-        </p>
+	  A couple of files from the basic TeX packages still need to be
+	  placed in <var>TEXMFMAIN</var>
+	  <footnote>
+	    Reasons include hardcoded paths in executables as well as
+	    the need for e.g. pool files to exactly match the binaries'
+	    version, so that shadowing must be prevented.
+	  </footnote>.
+	  </p>
 
         <p>
 	The order of basic TeX packages in <var>TEXMFDIST</var> may be
