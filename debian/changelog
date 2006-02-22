@@ -1,4 +1,4 @@
-tex-common (0.15.1) UNRELEASED; urgency=low
+tex-common (0.16) unstable; urgency=low
 
   * Add dh_installtex for public perusal. [preining]
     - add dh_installtex and man page
@@ -12,9 +12,9 @@ tex-common (0.15.1) UNRELEASED; urgency=low
     - remove LaTeX and pdfLaTeX format files before trying to recreate all
       format (closes: #352391) [frank]
     - use different variable names for /var/lib/texmf as a texmf.cnf
-      variable and as a maintainer script variable
-  * rework debconf usage (Closes: #352394) [preining]
-    - do not manage the ls-R files permissions from now on
+      variable and as a maintainer script variable [frank]
+  * rework debconf usage (Closes: #352394) [preining,frank]
+    - only care for ls-R file permissions of the font cache from now on
     - manage the group and permissions of /var/cache/fonts
   * TeX Policy Draft:
     - document dh_installtex and some additional checks needed in
@@ -22,7 +22,7 @@ tex-common (0.15.1) UNRELEASED; urgency=low
     - Clarify that some files from the Basic TeX Packages stay in
       TEXMFMAIN [frank]
 
- -- Frank Küster <frank@debian.org>  Mon, 20 Feb 2006 13:09:25 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 22 Feb 2006 13:43:32 +0100
 
 tex-common (0.15) unstable; urgency=high
 
