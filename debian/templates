@@ -1,6 +1,6 @@
 Template: tex-common/managecache
 Type: boolean
-Default: true
+Default: false
 _Description: Manage the permissions of the TeX font cache with debconf.
  A TeX system may have to generate new font data (pixel data, metric,
  sources) on the fly. These files can be saved into the TeX font cache
@@ -11,6 +11,11 @@ _Description: Manage the permissions of the TeX font cache with debconf.
  bits 3755 (i.e. writable for the group <groupname>, sticky and setgid
  bit set).  Accordingly, the ls-R index file will be owned and writable
  by that group.
+ .
+ The default is not to manage permissions with debconf, but this is just
+ because this is required for building other Debian packages.  In almost
+ every other setup, like desktop machines or multi-user servers, accepting 
+ this is stronlgy recommended!
 
 Template: tex-common/groupname
 Type: string

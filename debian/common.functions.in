@@ -450,6 +450,7 @@ woody_md5sum_list="
 
 teTeX3_md5sumlist="
  /etc/texmf/latex/microtype.cfg 649944bb5f193e75dba7604b9515317f
+ /etc/texmf/map/dvips/ams/psfonts.ams 4b9748dab405dfea8ed231f49c6d41be  
 "
 
 get_sarge_md5sum_from_list(){

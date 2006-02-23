@@ -86,7 +86,7 @@ if [ "$RET" != "true" ]; then
       db_set tex-common/managecache false || true
     fi
   fi
-  db_input low tex-common/managecache || true
+  db_input medium tex-common/managecache || true
   db_go
 
   db_get tex-common/managecache || true
