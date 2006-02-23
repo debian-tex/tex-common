@@ -40,7 +40,7 @@ check_texmf(){
     echo "should be available as ${file}.dpkg-dist"
     echo
     echo "Exiting."
-    failed=true
+    checkfailed=true
   else
     if ! echo "$line" | egrep -q "$pattern"; then
       echo
@@ -51,7 +51,7 @@ check_texmf(){
       echo "files.  The version of $file that is provided by the package"
       echo "should be available as ${file}.dpkg-dist"
       echo
-      failed=true
+      checkfailed=true
     fi
     if [ "$variable" = TEXFONTMAPS ]; then
     # the following is for backwards compatibility; must be dropped once all 
@@ -65,15 +65,10 @@ check_texmf(){
 	echo "files.  The version of $file that is provided by the package"
 	echo "should be available as ${file}.dpkg-dist"
 	echo
-	failed=true
+	checkfailed=true
       fi
     fi
   fi
-  if [ "$failed" = "true" ]; then
-    echo "Exiting."
-    exit 1
-  fi
-  
 }
 
 #################################################################

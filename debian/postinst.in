@@ -90,6 +90,7 @@ EOF
 
     update-texmf
 # Now we check for some essential settings
+    checkfailed=false
     check_texmf /etc/texmf/texmf.d/55Fonts.cnf TEXFONTMAPS '.TEXMF/{fonts/,}map//;.TEXMF/dvips//'
     check_texmf /etc/texmf/texmf.cnf TEXFONTMAPS '.TEXMF/{fonts/,}map//;.TEXMF/dvips//'
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFMAIN '/usr/share/texmf'
@@ -106,6 +107,10 @@ EOF
     check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFMAIN
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFDIST
     check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFDIST
+
+    if [ $checkfailed = true ]; then
+      exit 1
+    fi
 
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 
