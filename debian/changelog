@@ -1,9 +1,14 @@
-tex-common (0.16.1) unstable; urgency=low
+tex-common (0.17) unstable; urgency=low
 
   * Restore the previous behavior by making the subdirectories of
     /var/cache/fonts world-writable by default.  Since this is unsafe,
     advice the user in the debconf template, and increase the question's
-    priority to medium.  Thanks to Lars Wirzenius, closes: #354113 [frank]
+    priority to medium.  Thanks to Lars Wirzenius, closes: #354113.
+
+    We do not fix existing systems, since this is mainly targeted at
+    pbuilder environments and similar, where tex-common is only installed
+    on demand.  [frank]
+  
   * fix an error in dh_installtex when grepping for the magic header [ralf]
   * Add an md5sum for psfonts.ams, thanks to Andreas Tille [frank]
 
