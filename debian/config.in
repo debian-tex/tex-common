@@ -1,5 +1,5 @@
 #include variables
-#!/bin/sh -e
+#!/bin/sh -ex
 # 
 # config maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id: config.in 114 2005-08-04 15:04:01Z frn $
@@ -74,13 +74,16 @@ if [ "$RET" != "true" ]; then
     fi
   else
     # this question has not been seen, so if the permissions are 
-    # - either the permissions as shipped in the deb
-    # - or empty, because the file is not yet present
+    # - either empty, because the file is not yet present
     # - or the new permissions <:=$FONTCACHE_PERMS:> as we want to ship them
     # - or the permissions as shipped by old tetex versions
     # then set the managecache to true, otherwise to false
     # we will later change it to <:=$FONTCACHE_PERMS:> in the true case
-    if [ "$PERMS" = 755 ] || [ -z "$PERMS" ] || [ "$PERMS" = $FONTCACHE_PERMS ] || [ "$PERMS" = 1777 ]; then
+    #
+    # If the permissions are as shipped in the deb, don't set to true
+    # (after noninteractive install in pbuilder etc., dir needs to be world-writable).
+
+    if [ -z "$PERMS" ] || [ "$PERMS" = $FONTCACHE_PERMS ] || [ "$PERMS" = 1777 ]; then
       db_set tex-common/managecache true || true
     else
       db_set tex-common/managecache false || true

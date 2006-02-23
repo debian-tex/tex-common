@@ -3,18 +3,23 @@ Security information:
 =====================
 
 By default and according to long-standing tradition, the TeX font
-cache directory /var/cache/fonts is writable by the "users" group.
-Since this allows every group member to create arbitrary files on the
-/var partition, this might be a security risk, depending on local
-requirements and policy.
+cache directory /var/cache/fonts is world-writable.  We suggest that
+you at least restrict write permissions to a particular group,
+e.g. "users".  Since this still allows every group member to create
+arbitrary files on the /var partition, even this might be a security
+risk, depending on local requirements and policy.
 
-If you don't like this, use "dpkg-reconfigure -plow tex-common" to switch
-group ownership of the directory to a different group, or remove the
-group write permission.  In this case, the local administrator should
-probably fill the font cache, using the commands "allneeded" or
-"allcm" and "allec" in the teTeX or TeXlive packages.
+You can use "dpkg-reconfigure -plow tex-common" to restrict write
+access to some group.  Alternatively, you could put /var/cache/fonts
+on a different partition, e.g. using bind-mount.
 
-Alternatively, you could put /var/cache/fonts on a different
-partition, e.g. using bind-mount.
+Removing group write permission completely must be done manually (but
+will be respected by debconf, of course).  In this case, the local
+administrator should probably fill the font cache, using the commands
+"allneeded" or "allcm" and "allec" in the teTeX or TeXlive packages.
 
- -- Frank Küster <frank@debian.org>, Fri Feb 17 10:53:28 2006
+If you had version 0.16 installed and want to get back world-writable
+cache directories, please make this change manually.
+
+
+ -- Frank Küster <frank@debian.org>, Thu Feb 23 18:02:37 2006
