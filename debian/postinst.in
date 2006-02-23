@@ -109,8 +109,10 @@ EOF
     check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFDIST
 
     if [ $checkfailed = true ]; then
+      echo "Exiting."
       exit 1
     fi
+
 
 # run our scripts - this way we ensure that the generated files are
 # corrected, should one of the scripts have produced buggy output in 
