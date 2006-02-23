@@ -2,8 +2,10 @@ tex-common (0.17.1) UNRELEASED; urgency=low
 
   * Perform all config checks in the postinst script instead of exiting
     after the first failure
+  * Call debconf-updatepo in the clean and build targets, thanks to Thomas
+    Huriaux <thomas.huriaux@gmail.com> (closes: #354138) [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 23 Feb 2006 18:45:44 +0100
+ -- Frank Küster <frank@debian.org>  Thu, 23 Feb 2006 18:54:07 +0100
 
 tex-common (0.17) unstable; urgency=low
 

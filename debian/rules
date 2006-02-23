@@ -34,7 +34,7 @@ foo:
 
 build: build-stamp
 
-build-stamp: $(EPERL_FILES)
+build-stamp: $(EPERL_FILES) debian/po/templates.pot
 	dh_testdir
 	$(check-svn)
 
@@ -45,6 +45,13 @@ build-stamp: $(EPERL_FILES)
 
 	touch build-stamp
 
+debian/po/templates.pot: debian/templates
+	debconf-updatepo
+	grep "Last-Translator" debian/po/*.po | \
+	  sed -e 's/.*\(<.*@.*>\).*/\1, /g' | \
+	  tr "\n" " " | sed -e 's/,  $$/\n/' \
+	  > debian/recent-translators
+
 clean:
 	dh_testdir
 	dh_testroot
@@ -53,6 +60,7 @@ clean:
 	# Add here commands to clean up after the build process.
 	cd doc; $(MAKE) clean
 	-rm $(EPERL_FILES)
+	debconf-updatepo
 
 	dh_clean 
 
