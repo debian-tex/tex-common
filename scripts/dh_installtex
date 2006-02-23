@@ -350,9 +350,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		my $pkgprovidedfile = 0;
 		my $pkgfileoncmdline = 0;
 		my @listlines;
-		my $foo = pkgfile($package,$pkgfileext{$type});
-		if ($foo) {
-			open(FOO, "<$foo") || error("$foo cannot be opened.");
+		my $pkgfilename = pkgfile($package,$pkgfileext{$type});
+		if ($pkgfilename) {
+			open(FOO, "<$pkgfilename") || error("$pkgfilename cannot be opened.");
 			my @bar = <FOO>;
 			close(FOO);
 			$pkgprovidedfilecontents{$type} = \@bar;
@@ -365,7 +365,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		if (defined($cmdlineargs{$type})) {
 			@cmdlinearguments = @{$cmdlineargs{$type}};
 		}
-		foreach $foo (@cmdlineconfigfiles) {
+		foreach my $foo (@cmdlineconfigfiles) {
 			my $bn=basename($foo);
 			if ($bn eq "$package.$configfileext{$type}" && $cmdlinefilespriority{$type}{$foo} == $priority) {
 				$pkgfileoncmdline = 1;
@@ -421,7 +421,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			open(CFGFILE, ">$dofilen") || 
 				error("Cannot open $dofilen for writing!");
 			verbose_print("Writing $dofilen");
-			if (($pkgprovidedfile && !magic_comment_present($pkgprovidedfile)) ||
+			if (($pkgprovidedfile && !magic_comment_present($pkgfilename)) ||
 		    	    (!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
 				print CFGFILE "$commentchar{$type} $priority$package.$configfileext{$type}\n";
 				foreach (@magicheader) {

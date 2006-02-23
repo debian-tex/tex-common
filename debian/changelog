@@ -1,3 +1,9 @@
+tex-common (0.16.1) UNRELEASED; urgency=low
+
+  * fix an error in dh_installtex when grepping for the magic header [ralf]
+
+ -- Norbert Preining <preining@logic.at>  Thu, 23 Feb 2006 10:39:16 +0100
+
 tex-common (0.16) unstable; urgency=low
 
   * Add dh_installtex for public perusal. [preining]
