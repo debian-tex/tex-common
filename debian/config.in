@@ -1,5 +1,5 @@
 #include variables
-#!/bin/sh -ex
+#!/bin/sh -e
 # 
 # config maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id: config.in 114 2005-08-04 15:04:01Z frn $

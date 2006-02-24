@@ -4,8 +4,10 @@ tex-common (0.17.1) UNRELEASED; urgency=low
     after the first failure
   * Call debconf-updatepo in the clean and build targets, thanks to Thomas
     Huriaux <thomas.huriaux@gmail.com> (closes: #354138) [frank]
+  * Remove "set -x" from config.in, a leftover from debugging.  Sorry.
+    (closes: #354181) [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 23 Feb 2006 18:54:07 +0100
+ -- Frank Küster <frank@debian.org>  Fri, 24 Feb 2006 10:03:58 +0100
 
 tex-common (0.17) unstable; urgency=low
 

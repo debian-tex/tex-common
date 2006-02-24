@@ -109,7 +109,6 @@ EOF
     check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFDIST
 
     if [ $checkfailed = true ]; then
-      echo "Exiting."
       exit 1
     fi
 

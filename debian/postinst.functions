@@ -51,6 +51,7 @@ check_texmf(){
       echo "files.  The version of $file that is provided by the package"
       echo "should be available as ${file}.dpkg-dist"
       echo
+      echo "Exiting."
       checkfailed=true
     fi
     if [ "$variable" = TEXFONTMAPS ]; then
@@ -65,6 +66,7 @@ check_texmf(){
 	echo "files.  The version of $file that is provided by the package"
 	echo "should be available as ${file}.dpkg-dist"
 	echo
+	echo "Exiting."
 	checkfailed=true
       fi
     fi
