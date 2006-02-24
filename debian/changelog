@@ -6,8 +6,11 @@ tex-common (0.17.1) UNRELEASED; urgency=low
     Huriaux <thomas.huriaux@gmail.com> (closes: #354138) [frank]
   * Remove "set -x" from config.in, a leftover from debugging.  Sorry.
     (closes: #354181) [frank]
+  * Add many more md5sums for obsolete conffiles.  And add a script in the
+    source package to check whether we now catch all of them.  Many thanks
+    to Andreas Tille! [frank]
 
- -- Frank Küster <frank@debian.org>  Fri, 24 Feb 2006 10:03:58 +0100
+ -- Frank Küster <frank@debian.org>  Fri, 24 Feb 2006 18:35:01 +0100
 
 tex-common (0.17) unstable; urgency=low
 

@@ -451,6 +451,125 @@ woody_md5sum_list="
 teTeX3_md5sumlist="
  /etc/texmf/latex/microtype.cfg 649944bb5f193e75dba7604b9515317f
  /etc/texmf/map/dvips/ams/psfonts.ams 4b9748dab405dfea8ed231f49c6d41be  
+ /etc/texmf/map/dvips/ams/psfonts.amz b50e059ec6e8100fe2117c6369f481be
+ /etc/texmf/map/dvips/ams/psfonts.cm 32e4fd405f16fba1efa4b30b3eb6fbb2
+ /etc/texmf/map/dvips/ams/psfonts.cmz 5e4704775fe8b7a50da60d0c89bddbb6
+ /etc/texmf/map/dvips/misc/eurosym.map d166c4724e8ba420f96a1f09a520a571
+ /etc/texmf/map/dvips/omega/omega.map 4e8b9ee7c3eeaf1f29acfb4e8498a300
+ /etc/texmf/map/dvips/tetex/bsr-interpolated.map ff9ed6a46c278b41fe8fbbb6a2dff340
+ /etc/texmf/map/dvips/tetex/bsr.map 0b0b15d8614b7b0fea0e39c4e0aac0d5
+ /etc/texmf/map/dvips/xypic/xypic.map 76252f9400b09fd41094c59d3ec887ae
+
+ /etc/texmf/latex/mt-bch.cfg 614a80d4ecd37228b91cc2218bf2318e
+ /etc/texmf/latex/mt-cmr.cfg 0628cdefd394aa8cf76e81b25b202939
+ /etc/texmf/latex/mt-pad.cfg b8eb5e92c7fc74cfc76981cd2060efb1
+ /etc/texmf/latex/mt-pmn.cfg 9590d6f8df10679a1bb1b3688debdc60
+ /etc/texmf/latex/mt-ppl.cfg fd4be8fc50f24b2f71af4437aecd1b45
+ /etc/texmf/latex/mt-ptm.cfg d45476b9dc1ccafdbe47ab3421ed6487
+ /etc/texmf/latex/pict2e.cfg b16b3616fed72f01eb96e9db61b4c6b2
+ /etc/texmf/latex/subfig.cfg 6576eee12179b8e6e74a61803dccd4e8
+ /etc/texmf/latex/subfigure.cfg 42ba738bf6f1cec796106a69840777a4
+
+ /etc/texmf/map/dvips/tetex/ttcmex.map 30b444ca3bdddc7385674a264a88fc71
+ /etc/texmf/map/dvips/tetex/txfonts.map 1517cdcd00753f4cf479e1cd902e5565
+ /etc/texmf/map/dvips/urwvn/urwvn.map 3957d2189b90cf29432d11f3940f07a9
+ /etc/texmf/map/dvips/vntex/vnr.map e24ba6c5dba7177b97b1f09674b2efdd
+ /etc/texmf/map/dvips/context/8r-base.map 79cfc6242d56d94a474f82cf68b9b4f7
+ /etc/texmf/map/dvips/context/context-base.map 47f25cd8bbd06782c0c37e3a59fd2ad5
+ /etc/texmf/map/dvips/context/cork-public-lm.map 52c874fe89509d5c5680f7bf065021a8
+ /etc/texmf/map/dvips/context/cork-var-exclusive-public-lm.map d390da268671bfe0534a0e2f6f755ebe
+ /etc/texmf/map/dvips/context/cork-var-public-lm.map a9736f8a7e667b6e25a5d73743779424
+ /etc/texmf/map/dvips/context/ec-base.map dac422cda2e42ebc444a9c0a5270118d
+ /etc/texmf/map/dvips/context/ec-public-lm.map 52c874fe89509d5c5680f7bf065021a8
+ /etc/texmf/map/dvips/context/ec-var-exclusive-public-lm.map 8d8b3e2d03a46945abe9166ae8717980
+ /etc/texmf/map/dvips/context/ec-var-public-lm.map 5bba1aec7dc180ab5c7a14a8c7f37307
+ /etc/texmf/map/dvips/context/original-adobe-euro.map ee2826182cf6f1b95890e8b7d0fc9633
+ /etc/texmf/map/dvips/context/original-base.map d2769316abae0730b0ba7302f8445bad
+ /etc/texmf/map/dvips/context/original-context-symbol.map 7090f11f5bee8f5e9b46841f286d1df9
+ /etc/texmf/map/dvips/context/original-dummy.map c73e4c248c1b10fb4c2dba637e2ab5ac
+ /etc/texmf/map/dvips/context/original-empty.map c62254f50983f6bd7a9ba0b9c8a454e1
+ /etc/texmf/map/dvips/context/original-micropress-informal.map b1193c3602a01d34e7325a154d7d0752
+ /etc/texmf/map/dvips/context/original-public-csr.map 1b65adecb4e19df833eb7e74a0ba81f1
+ /etc/texmf/map/dvips/context/original-public-lm.map 0e1d5937d6b78e933e6e9c82ef9aef60
+ /etc/texmf/map/dvips/context/original-public-plr.map bb5e9c65080da1f780d52ca6d665c53b
+ /etc/texmf/map/dvips/context/original-vogel-symbol.map e4f07d28e80b93ad2513a3e812541f32
+ /etc/texmf/map/dvips/context/psclean.map 3827b27c947b8ccf50010649d7deebd0
+ /etc/texmf/map/dvips/context/qx-base.map 114614226629844c7e2895907254747b
+ /etc/texmf/map/dvips/context/qx-public-lm.map 6f4469307efb3d5219f8a59eb90439a0
+ /etc/texmf/map/dvips/context/texnansi-base.map 4b4834091ada92c2bea9d04d64f367cc
+ /etc/texmf/map/dvips/context/texnansi-public-lm.map 19dd099ceadcc329c4b6a46e8c1f8837
+ /etc/texmf/map/dvips/context/texnansi-var-exclusive-public-lm.map f06fac31ec825d35a478551652c28764
+ /etc/texmf/map/dvips/context/texnansi-var-public-lm.map 9114ed6275fb2d9e17bb5fb7de8d76a6
+ /etc/texmf/map/dvips/context/original-public-vnr.map f83114a5d4489dea4223d3d54dbaed2a
+ /etc/texmf/map/dvips/context/t5-base.map edfab2c556e71e69081803d366c32f36
+ /etc/texmf/map/dvips/context/t5-public-lm.map ba63279e67979c19cadcd2115b1a9b8d
+ /etc/texmf/map/dvipdfm/tetex/cm-dvipdfm-fix.map 6df4e61f14013914f4c232465f38b096
+ /etc/texmf/map/pdftex/cmttf/cmttf.map 6b87723795683cdcfd846c2d8d60cb3e
+ /etc/texmf/map/dvips/tetex/contnav.map 841fb6fa662cdee17994748492e8493c
+ /etc/texmf/generic/pdftexconfig.tex edd42bc8e0c2768a6e84c3bd5f41eb4a
+ /etc/texmf/generic/fontmath.cfg bf78874db3d6425f6f98d7dc6fd3ad74
+ /etc/texmf/generic/fonttext.cfg 1871c2f77ee3c2ea6bad3c786d4b6b4f
+ /etc/texmf/generic/preload.cfg 63a7532825e1f8f5742fa392577e9101
+ /etc/texmf/map/dvips/context/original-ams-euler.map baef813cea1c95eaf5782cd5c4db593d
+ /etc/texmf/map/dvips/context/original-ams-cmr.map 9f6c7359622ba2fe1cbbe36c8b40c07f
+ /etc/texmf/map/dvips/context/original-youngryu-tx.map efd89c4c9790b92c19dd9c94307c2497
+ /etc/texmf/pdftex/context/original-youngryu-px.map aac975fbf317cb2c3af057ae011f0356
+
+ /etc/texmf/map/dvips/qfonts/qbk.map a880a86dc59af79fa21176109426e002
+ /etc/texmf/map/dvips/qfonts/qcr.map 0dde05fe1edf9d22c1c33abb308337b5
+ /etc/texmf/map/dvips/qfonts/qhv.map 1b7d8cecc9b2037b4e14be6aec821425
+ /etc/texmf/map/dvips/qfonts/qpl.map 7d59433ee7e9ba0bab61973797280d01
+ /etc/texmf/map/dvips/qfonts/qtm.map 440385da4f2f40e53440d9e0e7782a6b
+ /etc/texmf/map/dvips/qfonts/qzc.map 59e87840844241fe3eede78368c13ff6
+ /etc/texmf/map/dvips/tetex/dvipdfm35.map ed194cf7240a45cb458c5ec174045cc6
+ /etc/texmf/map/dvips/tetex/dvips35.map ca61c59bcecd9f75c90f8b03416533f9
+ /etc/texmf/map/dvips/tetex/hoekwater.map bc6bdcc34147938cac35dd9cbfcf5461
+ /etc/texmf/map/dvips/tetex/lucidabr-o.map d8125ebea10915ba2e5ab2d5168f1a4e
+ /etc/texmf/map/dvips/tetex/lumath-o.map 374a42867948c28911301aa8ae4b9f73
+ /etc/texmf/map/dvips/tetex/mathpple.map bc2531931c6ab748e6a507803cc06f28
+ /etc/texmf/map/dvips/tetex/mt-belleek.map 347a0440cf51e36f53fe76e205c71280
+ /etc/texmf/map/dvips/tetex/mt-plus.map 4895bcb036ff481e067daec1a196b25a
+ /etc/texmf/map/dvips/tetex/mt-yy.map 7fb24232a249e9e899c97eaf33f6a7af
+ /etc/texmf/map/dvips/tetex/pdftex35.map 29f11fe462735f27af57ca893e37362d
+ /etc/texmf/map/dvips/tetex/ps2pk35.map f0d12d8dd8472e7fee1019c46b8718b6
+ /etc/texmf/map/dvips/tetex/pxfonts.map d92a7aba5febb36b3179de747bd7c099
+
+ /etc/texmf/map/dvips/antp/antp.map 50e9ff27840e0c2225fe2ab10658b5d3
+ /etc/texmf/map/dvips/antt/cork-antt.map b6d42f790e3bff20f56735ff6b612f57
+ /etc/texmf/map/dvips/antt/cs-antt.map 19e8e4a13d77ca47e0a0c1acb254ad0d
+ /etc/texmf/map/dvips/antt/exp-antt.map 08919cd0c39577f860f8b4c7a64c2b3d
+ /etc/texmf/map/dvips/antt/greek-antt.map 67f6c7038c5963663bd5516c10acba4e
+ /etc/texmf/map/dvips/antt/qx-antt.map 669ebfc8198223b41e4008ef3d74f508
+ /etc/texmf/map/dvips/antt/t2a-antt.map 1c9bd0a971ecf0cfa0e9ee9c57bbb100
+ /etc/texmf/map/dvips/antt/t2b-antt.map 0f3018935e9047a6965941dc1899fdfa
+ /etc/texmf/map/dvips/antt/t2c-antt.map 1d57e45d10a6d9015e393cf7160be328
+ /etc/texmf/map/dvips/antt/texnansi-antt.map 4baf42d2478c8a7e7d7e19b7dff03256
+ /etc/texmf/map/dvips/antt/wncy-antt.map 60aeb6f763540cb9eae371bf6977c84f
+ /etc/texmf/map/dvips/antt/t5-antt.map afbb27d29fbebd8976f22623811a940e
+ /etc/texmf/map/dvips/cc-pl/ccpl.map f2b809a52174b30918426e94ef56b86b
+ /etc/texmf/map/dvips/lucida/lucidabr-k.map 30174ed3e1f4cba2731c22dd9571f1b1
+ /etc/texmf/map/dvips/lucida/lucidabr.map c3b6c5489b772e235158b3c22117a95a
+ /etc/texmf/map/dvips/lucida/lumath-k.map ef1b8f1edbab74b19e450d732c8befa4
+ /etc/texmf/map/dvips/lucida/lumath.map fed199fec8770f09c201208602978e04
+ /etc/texmf/map/dvips/misc/cmcyr.map 1fa90ba90a5ac959be73acbbf993aaa6
+ /etc/texmf/map/dvips/misc/cs.map b9727dbb85c735942232d9e77c548892
+ /etc/texmf/map/dvips/misc/marvosym.map b62e3abdcb114dbc2a09cf34f7d8d1d3
+ /etc/texmf/map/dvips/misc/pcrr8rn.map 798d4ca99e50961a24f8eaea20978ceb
+ /etc/texmf/map/dvips/misc/dstroke.map 48c4f60d6a6326675a9c377c8d835e6a
+ /etc/texmf/map/dvips/pl/pl.map facfcd8e0cfd0be291ea542fb6c10148
+ /etc/texmf/map/dvips/psnfss/charter.map 993695ecc0d071d7fc3377129338cba1
+ /etc/texmf/map/dvips/psnfss/pazo.map d3595db441a758df87659e4818b38690
+ /etc/texmf/map/dvips/psnfss/psnfss.map 9bc5893a55f916e90839073715bbc390
+ /etc/texmf/map/dvips/psnfss/fpls.map 277c296a5fed1dab839c3b50169b22cf
+ /etc/texmf/map/dvips/psnfssx/pcr8y.map d50bbaffee15c71b4f37a3e57ef8ae92
+ /etc/texmf/map/dvips/psnfssx/phv8y.map 1a5eb8c9a441bf0f828212b0b3be535e
+ /etc/texmf/map/dvips/psnfssx/ptm8y.map 2f3991312960f9f9fd00156b34c0b4de
+ /etc/texmf/plain/language.def e28ea8119d0edaea53f2a55bd5a13bf5
+
+ /etc/texmf/map/dvips/psnfssx/README.mapfiles de70bcb7f559055385f0b450fce51d03
+ /etc/texmf/dvips/omega.cfg 20f3291d20f52a0af681cea63d491f22
+ /etc/texmf/dvips/config.omega 20f3291d20f52a0af681cea63d491f22
+ /etc/texmf/context/texexec.rme aca8d2729ceb83bc24852c0876cf884b
 "
 
 get_sarge_md5sum_from_list(){
