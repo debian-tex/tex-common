@@ -12,8 +12,11 @@ tex-common (0.18) unstable; urgency=low
   * Fix the missing dhit_ prefix to the build_format call in
     postinst-tex autoscript [preining]
   * Fix spelling error in template, thanks to Matt Krai (closes: #354318)
+  * Replace wrong mode 3755 with 3775 in templates. [florent]
+  * Add myself to the Uploaders field. [florent]
+  * Remove duplicate Build-Depends-Indep on debiandoc-sgml. [florent]
 
- -- Florent Rougon <frn@debian.org>  Sat, 25 Feb 2006 12:26:18 +0100
+ -- Florent Rougon <frn@debian.org>  Sat, 25 Feb 2006 12:58:27 +0100
 
 tex-common (0.17) unstable; urgency=low
 
