@@ -1,4 +1,4 @@
-tex-common (0.17.1) UNRELEASED; urgency=low
+tex-common (0.18) unstable; urgency=low
 
   * Perform all config checks in the postinst script instead of exiting
     after the first failure
@@ -13,7 +13,7 @@ tex-common (0.17.1) UNRELEASED; urgency=low
     postinst-tex autoscript [preining]
   * Fix spelling error in template, thanks to Matt Krai (closes: #354318)
 
- -- Norbert Preining <preining@logic.at>  Sat, 25 Feb 2006 04:33:57 +0100
+ -- Florent Rougon <frn@debian.org>  Sat, 25 Feb 2006 12:26:18 +0100
 
 tex-common (0.17) unstable; urgency=low
 
