@@ -71,7 +71,7 @@ dhit_build_hyphen_format_if_format_exists ()
     # X=$(fmtutil-sys --catcfg | grep "^$1[[:space:]]" || true)
     X=$(grep "^[[:space:]]*$1[[:space:]]" $fmtcnffile || true)
     if [ -n "$X" ] ; then
-        build_format --byhyphen "$2"
+        dhit_build_format --byhyphen "$2"
     fi
 }
 

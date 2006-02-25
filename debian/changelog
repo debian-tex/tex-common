@@ -9,8 +9,10 @@ tex-common (0.17.1) UNRELEASED; urgency=low
   * Add many more md5sums for obsolete conffiles.  And add a script in the
     source package to check whether we now catch all of them.  Many thanks
     to Andreas Tille! [frank]
+  * Fix the missing dhit_ prefix to the build_format call in
+    postinst-tex autoscript [preining]
 
- -- Frank Küster <frank@debian.org>  Fri, 24 Feb 2006 18:35:01 +0100
+ -- Norbert Preining <preining@logic.at>  Sat, 25 Feb 2006 04:17:21 +0100
 
 tex-common (0.17) unstable; urgency=low
 
