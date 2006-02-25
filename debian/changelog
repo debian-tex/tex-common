@@ -11,8 +11,9 @@ tex-common (0.17.1) UNRELEASED; urgency=low
     to Andreas Tille! [frank]
   * Fix the missing dhit_ prefix to the build_format call in
     postinst-tex autoscript [preining]
+  * Fix spelling error in template, thanks to Matt Krai (closes: #354318)
 
- -- Norbert Preining <preining@logic.at>  Sat, 25 Feb 2006 04:17:21 +0100
+ -- Norbert Preining <preining@logic.at>  Sat, 25 Feb 2006 04:33:57 +0100
 
 tex-common (0.17) unstable; urgency=low
 
