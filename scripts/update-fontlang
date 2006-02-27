@@ -463,3 +463,7 @@ if [ $quiet = 0 ]; then
         exit 1
     fi
 fi
+
+#
+# Let vim know that we don't want tabs
+# vim:set expandtab: #

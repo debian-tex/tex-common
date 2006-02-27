@@ -101,3 +101,7 @@ chmod 644 ${TXMF}/texmf.cnf
 if [ "${VERBOSE}" = "true" ]; then
   echo "done"
 fi
+
+#
+# Let vim know that we don't want tabs
+# vim:set expandtab: #

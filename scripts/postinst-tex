@@ -10,6 +10,9 @@
 # Please note that comments in this file are stripped before installation
 # by calling a grep -v '^[ \t]*#'
 # So please be careful if you add stuff here!
+#
+# Let vim know that we don't want tabs
+# vim:set expandtab: #
 
 
 # Tell if kpsewhich works. If this is the case:
