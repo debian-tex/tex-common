@@ -59,6 +59,10 @@ if [ "$RET" != "true" ]; then
   PERMS=$(stat --format="%a" /var/cache/fonts 2>/dev/null)
   GROUP=$(stat --format="%G" /var/cache/fonts 2>/dev/null)
 
+  if [ "$GROUP" = "UNKNOWN" ] ; then
+    GROUP=$(stat --format="%g" /var/cache/fonts 2>/dev/null)
+  fi
+
   # see wether we already have asked this question once
   db_fget tex-common/managecache seen || true
   SEEN="$RET"

@@ -1,3 +1,10 @@
+tex-common (0.18.1) UNRELEASED; urgency=low
+
+  * cater for groups without a name when setting the groupname debconf
+    variable (Closes: #354401) [preining]
+
+ -- Norbert Preining <preining@logic.at>  Mon, 27 Feb 2006 02:58:53 +0100
+
 tex-common (0.18) unstable; urgency=low
 
   * Perform all config checks in the postinst script instead of exiting
