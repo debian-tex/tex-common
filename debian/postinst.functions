@@ -28,45 +28,40 @@ check_texmf(){
   file=$1
   variable=$2
   pattern="$3"
-  failed=false
+  checkfailed=false
+  removepattern='( |=)'
   line=""
   line=`egrep "^$variable" $file`
   if [ -z "$line" ]; then
-    echo
-    echo "An essential entry is missing in $file:"
-    echo "No setting of $variable."
-    echo "teTeX will not work without it, you need to fix your configuration"
-    echo "files.  The version of $file that is provided by the package"
-    echo "should be available as ${file}.dpkg-dist"
-    echo
-    echo "Exiting."
+    variable=${variable%$removepattern}
+    db_subst tex-common/check_texmf_missing filename $file
+    db_subst tex-common/check_texmf_missing variable $variable
+    db_fset tex-common/check_texmf_missing seen false || true
+    db_input critical tex-common/check_texmf_missing || true
+    db_go || true
     checkfailed=true
   else
     if ! echo "$line" | egrep -q "$pattern"; then
-      echo
-      echo "An essential entry is wrong in $file:"
-      echo "$variable does not contain"
-      echo "$pattern"
-      echo "teTeX will not work without it, you need to fix your configuration"
-      echo "files.  The version of $file that is provided by the package"
-      echo "should be available as ${file}.dpkg-dist"
-      echo
-      echo "Exiting."
+      variable=${variable%$removepattern}
+      db_subst tex-common/check_texmf_wrong filename $file
+      db_subst tex-common/check_texmf_wrong variable $variable
+      db_subst tex-common/check_texmf_wrong pattern $pattern
+      db_fset tex-common/check_texmf_wrong seen false || true
+      db_input critical  tex-common/check_texmf_wrong || true
+      db_go || true
       checkfailed=true
     fi
     if [ "$variable" = TEXFONTMAPS ]; then
     # the following is for backwards compatibility; must be dropped once all 
     # font packages follow TDS 1.1
       if ! echo "$line" | grep -q '/dvips//'; then
-	echo
-	echo "An essential entry is wrong in $file:"
-	echo "TEXFONTMAPS does not contain"
-	echo "/dvips//"
-	echo "teTeX will not work without it, you need to fix your configuration"
-	echo "files.  The version of $file that is provided by the package"
-	echo "should be available as ${file}.dpkg-dist"
-	echo
-	echo "Exiting."
+	variable=${variable%$removepattern}
+	db_subst tex-common/check_texmf_wrong filename $file
+	db_subst tex-common/check_texmf_wrong variable $variable
+	db_subst tex-common/check_texmf_wrong pattern "/dvips//"
+	db_fset tex-common/check_texmf_wrong seen false || true
+	db_input critical tex-common/check_texmf_wrong || true
+	db_go || true
 	checkfailed=true
       fi
     fi

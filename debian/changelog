@@ -2,11 +2,14 @@ tex-common (0.18.1) UNRELEASED; urgency=low
 
   * cater for groups without a name when setting the groupname debconf
     variable (Closes: #354401) [preining]
+  * Use debconf for user interaction if the postinst script detects
+    incompatible settings, thanks to John Goerzen <jgoerzen@complete.org>
+    (closes: #353474) [frank]
   * Translations:
     - Update Swedish debconf translation, thanks to Daniel Nylander
-    <yeager@lidkoping.net> (closes: #354635) [frank]
+      <yeager@lidkoping.net> (closes: #354635) [frank]
 
- -- Frank Küster <frank@debian.org>  Wed,  1 Mar 2006 17:28:08 +0100
+ -- Frank Küster <frank@debian.org>  Wed,  1 Mar 2006 19:14:18 +0100
 
 tex-common (0.18) unstable; urgency=low
 

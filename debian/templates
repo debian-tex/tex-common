@@ -34,3 +34,26 @@ _Description: Change of name of files in /etc/texmf/texmf.d/
  .
  So if you had any private file in /etc/texmf/texmf.d/, then you should add
  '.cnf' to its name; for example, 22mymacro => 22mymacro.cnf
+
+Template: tex-common/check_texmf_missing
+Type: note
+_Description: Essential entry missing in ${filename}
+ An essential entry is missing in ${filename}:
+ No setting of ${variable}.
+ teTeX will not work without it, you need to fix your configuration
+ files.  The version of ${filename} that is provided by the package
+ should be available as ${filename}.dpkg-dist
+ .
+ Exiting.
+
+Template: tex-common/check_texmf_wrong
+Type: note
+_Description: Essential entry wrong in ${filename}
+ An essential entry is wrong in ${filename}:
+ ${variable} does not contain
+ ${pattern}
+ teTeX will not work without it, you need to fix your configuration
+ files.  The version of ${filename} that is provided by the package
+ should be available as ${filename}.dpkg-dist
+ .
+ Exiting.
