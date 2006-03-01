@@ -2,8 +2,11 @@ tex-common (0.18.1) UNRELEASED; urgency=low
 
   * cater for groups without a name when setting the groupname debconf
     variable (Closes: #354401) [preining]
+  * Translations:
+    - Update Swedish debconf translation, thanks to Daniel Nylander
+    <yeager@lidkoping.net> (closes: #354635) [frank]
 
- -- Norbert Preining <preining@logic.at>  Mon, 27 Feb 2006 02:58:53 +0100
+ -- Frank Küster <frank@debian.org>  Wed,  1 Mar 2006 17:28:08 +0100
 
 tex-common (0.18) unstable; urgency=low
 
