@@ -10,8 +10,10 @@ tex-common (0.18.1) UNRELEASED; urgency=low
       <yeager@lidkoping.net> (closes: #354635) [frank]
     - Update Danish debconf translation, thanks to Claus Hindsgaul
       <claus.hindsgaul@gmail.com> [frank]
-
- -- Frank Küster <frank@debian.org>  Thu,  2 Mar 2006 17:06:41 +0100
+    - Update German debconf translation, thanks to Helge Kreutzmann
+      <kreutzm@itp.uni-hannover.de> [frank]
+  
+ -- Frank Küster <frank@debian.org>  Thu,  2 Mar 2006 19:24:49 +0100
 
 tex-common (0.18) unstable; urgency=low
 
