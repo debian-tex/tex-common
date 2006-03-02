@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-02 15:23+0100\n"
-"PO-Revision-Date: 2006-02-23 23:03+0100\n"
+"PO-Revision-Date: 2006-03-02 16:04+0100\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
-"Language-Team: Danish\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,7 +38,6 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "If you accept, you can specify a group name and *all* directories under /var/"
 "cache/fonts will get ownership root:<groupname> and permission bits 3775 (i."
@@ -47,7 +46,7 @@ msgid ""
 msgstr ""
 "Hvis du accepterer, kan du angive et gruppenavn, hvorefter *alle* mapper "
 "under /var/cache/fonts vil få ejerskabet root:<gruppenavn> og rettigheden "
-"3755 (dvs. skrivbar for gruppen <grupenavn>, og flagene sticky og setgid "
+"3775 (dvs. skrivbar for gruppen <grupenavn>, og flagene sticky og setgid "
 "sat). Tilsvarende vil indeksfilen ls-R ejes af og være skrivbar for denne "
 "gruppe."
 
@@ -60,6 +59,10 @@ msgid ""
 "every other setup, like desktop machines or multi-user servers, accepting  "
 "this is strongly recommended!"
 msgstr ""
+"Som udgangspunkt håndteres rettighederne ikke af debconf, men der kun "
+"fordi dette kræver for at bygge andre Debianpakker. I næsten alle andre "
+"opsætninger, såsom skrivebordsmaskiner og flerbruger-servere, anbefales "
+"det kraftigt at lade debconf håndtere rettighederne!"
 
 #. Type: string
 #. Description
@@ -70,7 +73,6 @@ msgstr "Hvilken gruppe skal eje TeX-skrifttypemellemlageret."
 #. Type: string
 #. Description
 #: ../templates:23
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
@@ -78,7 +80,7 @@ msgid ""
 msgstr ""
 "Du kan vælge en bestemt gruppe, som både kommer til at eje TeX-"
 "skrifttypemellemlageret /var/cache/fonts og mapperne derunder. Disse mapper "
-"får rettighederne 3755. Vi anbefaler at vælge gruppen 'users'."
+"får rettighederne 3775. Vi anbefaler at vælge gruppen 'users'."
 
 #. Type: note
 #. Description
@@ -111,7 +113,7 @@ msgstr ""
 #. Description
 #: ../templates:40
 msgid "Essential entry missing in ${filename}"
-msgstr ""
+msgstr "Der mangler en essentiel linje i ${filename}"
 
 #. Type: note
 #. Description
@@ -122,12 +124,16 @@ msgid ""
 "The version of ${filename} that is provided by the package should be "
 "available as ${filename}.dpkg-dist"
 msgstr ""
+"Der mangler en essentiel linje i ${filename}: ${variable} bliver ikke sat. "
+"teTeX vil ikke fungere uden den, så du er nødt til at korrigere dine "
+"opsætningsfiler. Den udgave af ${filename}, som følger med pakken, skulle "
+"være tilgængelig som ${filename}.dpkg-dist"
 
 #. Type: note
 #. Description
 #: ../templates:51
 msgid "Essential entry wrong in ${filename}"
-msgstr ""
+msgstr "Fejlbehæftet essentiel linje i ${filename}"
 
 #. Type: note
 #. Description
@@ -138,12 +144,16 @@ msgid ""
 "configuration files.  The version of ${filename} that is provided by the "
 "package should be available as ${filename}.dpkg-dist"
 msgstr ""
+"Fejlbehæftet essentiel linje i ${filename}: ${variable} indeholder ikke "
+"${pattern}. teTeX vil ikke fungere uden den, så du er nødt til at korrigere "
+"dine opsætningsfiler. Den udgave af ${filename}, som følger med pakken, skulle "
+"være tilgængelig som ${filename}.dpkg-dist"
 
 #. Type: note
 #. Description
 #: ../templates:51
 msgid "Exiting."
-msgstr ""
+msgstr "Afslutter."
 
 #~ msgid ""
 #~ "Select the ls-R file which should be writable by their respective group."
@@ -517,3 +527,4 @@ msgstr ""
 #~ msgstr ""
 #~ "Bemærk at opsætningsfilen bliver håndteret af debconf, hvis du vælger "
 #~ "dette, men at du ellers er nødt til selv at rette filen."
+
