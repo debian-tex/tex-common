@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-common\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-23 18:54+0100\n"
+"POT-Creation-Date: 2006-03-02 15:23+0100\n"
 "PO-Revision-Date: 2005-12-04 12:02+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -43,7 +43,7 @@ msgstr ""
 #: ../templates:4
 msgid ""
 "If you accept, you can specify a group name and *all* directories under /var/"
-"cache/fonts will get ownership root:<groupname> and permission bits 3755 (i."
+"cache/fonts will get ownership root:<groupname> and permission bits 3775 (i."
 "e. writable for the group <groupname>, sticky and setgid bit set).  "
 "Accordingly, the ls-R index file will be owned and writable by that group."
 msgstr ""
@@ -55,7 +55,7 @@ msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
 "every other setup, like desktop machines or multi-user servers, accepting  "
-"this is stronlgy recommended!"
+"this is strongly recommended!"
 msgstr ""
 
 #. Type: string
@@ -71,7 +71,7 @@ msgstr "Která skupina uživatelů má vlastnit soubory ls-R?"
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
-"permission 3755. We suggest to select the group 'users' here."
+"permission 3775. We suggest to select the group 'users' here."
 msgstr ""
 
 #. Type: note
@@ -100,6 +100,44 @@ msgid ""
 msgstr ""
 "Pokud jste v /etc/texmf/texmf.d/ měli vlastní soubory, měli byste nyní k "
 "jejich názvu přidat '.cnf', tj. z 22mojemakro se stane 22mojemakro.cnf."
+
+#. Type: note
+#. Description
+#: ../templates:40
+msgid "Essential entry missing in ${filename}"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:40
+msgid ""
+"An essential entry is missing in ${filename}: No setting of ${variable}. "
+"teTeX will not work without it, you need to fix your configuration files.  "
+"The version of ${filename} that is provided by the package should be "
+"available as ${filename}.dpkg-dist"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:51
+msgid "Essential entry wrong in ${filename}"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:51
+msgid ""
+"An essential entry is wrong in ${filename}: ${variable} does not contain "
+"${pattern} teTeX will not work without it, you need to fix your "
+"configuration files.  The version of ${filename} that is provided by the "
+"package should be available as ${filename}.dpkg-dist"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:51
+msgid "Exiting."
+msgstr ""
 
 #~ msgid ""
 #~ "Select the ls-R file which should be writable by their respective group."

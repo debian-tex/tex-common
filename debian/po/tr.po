@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-23 18:54+0100\n"
+"POT-Creation-Date: 2006-03-02 15:23+0100\n"
 "PO-Revision-Date: 2004-09-12 20:29+0300\n"
 "Last-Translator: Osman Yüksel <yuxel@sonsuzdongu.com>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 #: ../templates:4
 msgid ""
 "If you accept, you can specify a group name and *all* directories under /var/"
-"cache/fonts will get ownership root:<groupname> and permission bits 3755 (i."
+"cache/fonts will get ownership root:<groupname> and permission bits 3775 (i."
 "e. writable for the group <groupname>, sticky and setgid bit set).  "
 "Accordingly, the ls-R index file will be owned and writable by that group."
 msgstr ""
@@ -48,7 +48,7 @@ msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
 "every other setup, like desktop machines or multi-user servers, accepting  "
-"this is stronlgy recommended!"
+"this is strongly recommended!"
 msgstr ""
 
 #. Type: string
@@ -64,7 +64,7 @@ msgstr "Hangi grup ls-R dosyalarının sahibi olsun?"
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
-"permission 3755. We suggest to select the group 'users' here."
+"permission 3775. We suggest to select the group 'users' here."
 msgstr ""
 
 #. Type: note
@@ -97,6 +97,44 @@ msgstr ""
 "Bu yüzden eğer /etc/texmf/texmf.d/ içinde özel bir dosyanız varsa, bunun "
 "ismine '.cnf' uzantısını ekleyin (ör. 22mymacro dosyası 22mymacro.cnf "
 "olmalı) ve update-texmf'i çalıştırın."
+
+#. Type: note
+#. Description
+#: ../templates:40
+msgid "Essential entry missing in ${filename}"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:40
+msgid ""
+"An essential entry is missing in ${filename}: No setting of ${variable}. "
+"teTeX will not work without it, you need to fix your configuration files.  "
+"The version of ${filename} that is provided by the package should be "
+"available as ${filename}.dpkg-dist"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:51
+msgid "Essential entry wrong in ${filename}"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:51
+msgid ""
+"An essential entry is wrong in ${filename}: ${variable} does not contain "
+"${pattern} teTeX will not work without it, you need to fix your "
+"configuration files.  The version of ${filename} that is provided by the "
+"package should be available as ${filename}.dpkg-dist"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:51
+msgid "Exiting."
+msgstr ""
 
 #, fuzzy
 #~ msgid ""
