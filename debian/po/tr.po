@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-02 19:02+0100\n"
-"PO-Revision-Date: 2006-03-03 02:44+0200\n"
+"PO-Revision-Date: 2006-03-03 13:15+0100\n"
 "Last-Translator: Osman Yüksel <yuxel@sonsuzdongu.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.11.1\n"
@@ -31,9 +31,9 @@ msgid ""
 "sources) on the fly. These files can be saved into the TeX font cache in /"
 "var/cache/fonts and later reused."
 msgstr ""
-"Bir TeX sistemi (benek verileri, ölçüler, kaynaklar gibi) yazýtipi verilerini "
-"anlýk oluþturabilmelidir. Bu dosyalar /var/cache/fonts altýndaki TeX yazýtipi "
-"önbelleðine kaydedilir ve daha sonra yeniden kullanýlýr."
+"Bir TeX sistemi (benek verileri, ölçüler, kaynaklar gibi) yazýtipi "
+"verilerini anlýk oluþturabilmelidir. Bu dosyalar /var/cache/fonts altýndaki "
+"TeX yazýtipi önbelleðine kaydedilir ve daha sonra yeniden kullanýlýr."
 
 #. Type: boolean
 #. Description
@@ -45,9 +45,9 @@ msgid ""
 "Accordingly, the ls-R index file will be owned and writable by that group."
 msgstr ""
 "Eðer kabul ederseniz /var/cache/fonts altýndaki tüm dizinlerin sahiplikleri "
-"belirlediðiniz bir grup adýna göre root:<grupadý> ve izinleri de 3775 "
-"(yani <grupadý> grubu tarafýndan yazýlabilir ve, yapýþkan [\"sticky\"] ve "
-"\"setgid\" bayraklarý etkinleþtirilmiþ) olacaktýr.  Buna göre, ls-R dosyasýnýn "
+"belirlediðiniz bir grup adýna göre root:<grupadý> ve izinleri de 3775 (yani "
+"<grupadý> grubu tarafýndan yazýlabilir ve, yapýþkan [\"sticky\"] ve \"setgid"
+"\" bayraklarý etkinleþtirilmiþ) olacaktýr.  Buna göre, ls-R dosyasýnýn "
 "sahibi bu grup olacak ve bu grup tarafýndan yazýlabilecektir."
 
 #. Type: boolean
@@ -59,9 +59,9 @@ msgid ""
 "every other setup, like desktop machines or multi-user servers, accepting  "
 "this is strongly recommended!"
 msgstr ""
-"Diðer Debian paketlerinin de oluþturulabilmesi için, öntanýmlý olarak izinler "
-"debconf ile yönetilmez.  Masaüstü bilgisayarlar veya çok kullanýcýlý sunucular "
-"gibi diðer tüm kurulumlarda bunu kabul etmeniz þiddetle önerilir!"
+"Diðer Debian paketlerinin de oluþturulabilmesi için, öntanýmlý olarak "
+"izinler debconf ile yönetilmez.  Masaüstü bilgisayarlar veya çok kullanýcýlý "
+"sunucular gibi diðer tüm kurulumlarda bunu kabul etmeniz þiddetle önerilir!"
 
 #. Type: string
 #. Description
@@ -77,9 +77,9 @@ msgid ""
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775. We suggest to select the group 'users' here."
 msgstr ""
-"TeX yazýtipi önbelleðini de içeren  /var/cache/fonts dizini sahipliði için belli "
-"bir grup belirleyebilirsiniz.  Bu dizinler 3775 izinlerini alacaktýr.  Burada "
-"'users' grubunu seçmenizi öneririz."
+"TeX yazýtipi önbelleðini de içeren  /var/cache/fonts dizini sahipliði için "
+"belli bir grup belirleyebilirsiniz.  Bu dizinler 3775 izinlerini alacaktýr.  "
+"Burada 'users' grubunu seçmenizi öneririz."
 
 #. Type: note
 #. Description
@@ -95,9 +95,9 @@ msgid ""
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
 "extension '.cnf'."
 msgstr ""
-"texmf.cnf, update-texmf komutu ile /etc/texmf/texmf.d/ içindeki tüm dosyalardan "
-"oluþturuldu. Þimdi update-texmf deðiþtirildi ve þu anda sadece '.cnf' uzantýlý "
-"dosyalarý okuyor."
+"texmf.cnf, update-texmf komutu ile /etc/texmf/texmf.d/ içindeki tüm "
+"dosyalardan oluþturuldu. Þimdi update-texmf deðiþtirildi ve þu anda sadece '."
+"cnf' uzantýlý dosyalarý okuyor."
 
 #. Type: note
 #. Description
@@ -106,8 +106,8 @@ msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
 "cnf' to its name; for example, 22mymacro => 22mymacro.cnf."
 msgstr ""
-"Eðer /etc/texmf/texmf.d/ içinde özel bir dosyanýz varsa, bunun "
-"ismine '.cnf' uzantýsýný ekleyin; örneðin,  22mymacro => 22mymacro.cnf ."
+"Eðer /etc/texmf/texmf.d/ içinde özel bir dosyanýz varsa, bunun ismine '.cnf' "
+"uzantýsýný ekleyin; örneðin,  22mymacro => 22mymacro.cnf ."
 
 #. Type: note
 #. Description
@@ -136,7 +136,8 @@ msgstr "${filename} dosyasýndaki gerekli bir girdi yanlýþ"
 #. Type: note
 #. Description
 #: ../templates:53
-msgid "An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgid ""
+"An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr "${filename} dosyasýnda gerekli bir girdi yanlýþ: ${variable} içermiyor"
 
 #. Type: note
@@ -153,9 +154,9 @@ msgid ""
 "version of ${filename} that is provided by the package should be available "
 "as ${filename}.dpkg-dist."
 msgstr ""
-"TeX bu olmadan çalýþamaz.  Yapýlandýrma dosyalarýnýzý düzeltmeniz gerekiyor.  "
-"Paket tarafýndan saðlanan ${filename} dosyasýna ${filename}.dpkg-dist adýyla "
-"ulaþabilirsiniz."
+"TeX bu olmadan çalýþamaz.  Yapýlandýrma dosyalarýnýzý düzeltmeniz "
+"gerekiyor.  Paket tarafýndan saðlanan ${filename} dosyasýna ${filename}.dpkg-"
+"dist adýyla ulaþabilirsiniz."
 
 #. Type: note
 #. Description
