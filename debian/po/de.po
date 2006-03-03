@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-02 19:02+0100\n"
-"PO-Revision-Date: 2006-03-02 19:05+0200\n"
+"PO-Revision-Date: 2006-03-03 13:17+0100\n"
 "Last-Translator: Helge Kreutzmann <kreutzm@itp.uni-hannover.de>\n"
 "Language-Team: Debian l10n german <debian-l10n-german@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr "Essentielle Einträge fehlen in ${filename}:"
 #. Description
 #: ../templates:40
 msgid "No setting of ${variable}."
-msgstr ""
+msgstr "${variable} ist nicht gesetzt."
 
 #. Type: note
 #. Description
