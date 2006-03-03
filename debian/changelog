@@ -13,11 +13,13 @@ tex-common (0.18.1) UNRELEASED; urgency=low
     - Update German debconf translation, thanks to Helge Kreutzmann
       <kreutzm@itp.uni-hannover.de> [frank]
     - Update Italian debconf translation, thanks to Luca Monducci
-      <luca.mo@tiscali.it> (closes: #355033)
+      <luca.mo@tiscali.it> (closes: #355033) [frank]
     - Update Turkish debconf translation, thanks to Osman Yüksel
-      <yuxel@sonsuzdongu.com> (closes: #355061)
+      <yuxel@sonsuzdongu.com> (closes: #355061) [frank]
+    - Update Japanese debconf translation, thanks to Kenshi Muto
+      <kmuto@debian.org> (closes: #355141) [frank]
   
- -- Frank Küster <frank@debian.org>  Fri,  3 Mar 2006 12:25:02 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  3 Mar 2006 16:34:56 +0100
 
 tex-common (0.18) unstable; urgency=low
 
