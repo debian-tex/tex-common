@@ -18,8 +18,10 @@ tex-common (0.18.1) UNRELEASED; urgency=low
       <yuxel@sonsuzdongu.com> (closes: #355061) [frank]
     - Update Japanese debconf translation, thanks to Kenshi Muto
       <kmuto@debian.org> (closes: #355141) [frank]
+    - Update Czech debconf translation, thanks to Miroslav Kure
+      <kurem@upcase.inf.upol.cz> [frank]
   
- -- Frank Küster <frank@debian.org>  Fri,  3 Mar 2006 16:34:56 +0100
+ -- Frank Küster <frank@debian.org>  Sat,  4 Mar 2006 20:37:40 +0100
 
 tex-common (0.18) unstable; urgency=low
 
