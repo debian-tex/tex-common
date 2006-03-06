@@ -77,6 +77,7 @@ Options:
                          $SYSWIDE_DEFAULT_OUTPUTFILE in system-wide-mode,
                          and depends on your Kpathsea settings in
                          user-specific mode)
+      --checks           perform sanity checks on the generated config file
       --quiet            don't write anything to the standard output during
                          normal operation
       --help             display this help message and exit
@@ -262,6 +263,86 @@ Error: '$badly_located_cfg_file' should not exist when using the
     fi
 }
 
+#
+# perform_content_check
+#
+# This function *TRIES* to check wether the installed files are correct in
+# the sense that every file occurring in it is present. This can help to
+# find typing errors
+perform_content_check ()
+{
+    #
+    # performing content checking only works when kpsewhich is present
+    # and configured, this can be done in one step:
+    if kpsewhich --version  >/dev/null 2>&1 ; then
+        if [ "$progname" = "update-language" ] ; then
+            perform_content_check_language "$1"
+        elif [ "$progname" = "update-updmap" ] ; then
+            perform_content_check_map "$1"
+        elif [ "$progname" = update-fmtutil" ] ; then
+            perform_content_check_format "$1"
+        fi
+    fi
+}
+
+perform_content_check_language ()
+{
+    fn="$1"
+    grep -v '^\W*\(%\|=\|$\)' "$fn" | while read lang hyph comm ; do
+        # now check the existence of the hyphenation file
+        if [ -z $(kpsewhich -format=tex $hyph) ] ; then
+           cat >&2 <<EOF
+The config file $fn references a file not in the kpathsea database:
+    $hyph
+This may be ok, but it could also be a typing error.
+EOF
+        fi
+    done
+}
+        
+perform_content_check_map ()
+{
+    fn="$1"
+    grep -i '^\W*\(Mixed\)\?Map' "$fn" | while read foo map ; do
+        # now check the existence of the hyphenation file
+        if [ -z $(kpsewhich -format=map $map) ] ; then
+           cat >&2 <<EOF
+The config file $fn references a file not in the kpathsea database:
+    $map
+Calling updmap(-sys) will break!
+This may be ok, but it could also be a typing error.
+EOF
+        fi
+    done
+}
+
+perform_content_check_format ()
+{
+    fn="$1"
+    grep -v '^\W*\(#\|$\)' "$fn" | while read format engine hyphenation args ; do
+        # this is stolen from fmtutil
+        set -- $args
+        pool=; tcx=
+        texargs="$@"
+        eval lastarg=\$$#
+        inifile=$(echo $lastarg | sed 's%^\*%%')
+        case "$engine" in
+            mpost)  kpsefmt=mpost;;
+            mf|mfw|mf-nowin) kpsefmt=mf;;
+            *)      kpsefmt=tex;;
+        esac
+        # now check the existence of the hyphenation file
+        if [ -z $(kpsewhich -progname=$format -format=$kpsefmt $inifile) ] ; then
+           cat >&2 <<EOF
+The config file $fn references a file not in the kpathsea database:
+    $inifile
+This may be ok, but it could also be a typing error.
+EOF
+        fi
+    done
+}
+
+
 # The list of signals to trap is taken from teTeX 3's updmap script, but they
 # have been converted to signal names because we can only rely on these on
 # POSIX systems.
@@ -270,7 +351,7 @@ trap 'cleanup' HUP INT QUIT BUS PIPE TERM
 
 # -v (verbose) is here for backward compatibility only.
 TEMP=$(getopt -o +vc:o: --longoptions \
-    conf-dir:,output-file:,quiet,help,version \
+    conf-dir:,output-file:,check,quiet,help,version \
     -n "$progname" -- "$@")
 
 case $? in
@@ -294,6 +375,7 @@ fi
 # *                                 Defaults                                 *
 # ****************************************************************************
 quiet=1
+dochecks=0
 if [ $syswide_mode = 1 ]; then
     output_file="$SYSWIDE_DEFAULT_OUTPUTFILE"
 else
@@ -338,6 +420,7 @@ while true; do
         -c|--conf-dir) conf_dir="$2"; shift 2 ;;
         -o|--output-file) output_file="$2"; shift 2 ;;
         --quiet) quiet=1; shift ;;
+        --check) dochecks=1; shift ;;
         -v) printf "\
 ${progname}'s -v option is deprecated. The default mode of operation will
 be verbose as soon as enough packages use the --quiet option. Please update
@@ -445,6 +528,12 @@ fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
 # This is atomic.
 mv "$tempfile" "$output_file"
 
+# check wether the new file is decent, it all necessary files are installed
+# etc
+if [ "$dochecks" = 1 ] ; then
+    perform_content_check "$output_file"
+fi
+
 if [ $quiet = 0 ]; then
     printf "done.\n\n"
     echo "$progname has updated '$output_file'. If you want to"
@@ -464,6 +553,4 @@ if [ $quiet = 0 ]; then
     fi
 fi
 
-#
-# Let vim know that we don't want tabs
 # vim:set expandtab: #
