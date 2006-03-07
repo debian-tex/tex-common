@@ -22,7 +22,6 @@ tex-common (0.18.1) UNRELEASED; urgency=low
       <kurem@upcase.inf.upol.cz> [frank]
     - Update Lithuanian debconf translation, thanks to Kęstutis Biliūnas
       <kebil@kaunas.init.lt> (closes: #355453) [frank]
-  * remove dh_installtexfonts, it is superseeded by dh_installtex [preining]
   * add --check option to update-fontlang and to the man pages, but
     state that it should not be used in maintainer scripts
     (Closes: #354517) [preining]
