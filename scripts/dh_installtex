@@ -239,7 +239,7 @@ sub extract_format {
 sub extract_map {
 	my ($line,$mapdoconfig) = @_;
 	if ($mapdoconfig == 0) { return ""; }
-	if ($_ =~ m/^[[:space:]]*([#[:space:]]*)[[:space:]]*(Mixed)?Map[[:space:]]*(.*\.map)[[:space:]]*(#.*)?$/) {
+	if ($line =~ m/^[[:space:]]*([#[:space:]]*)[[:space:]]*(Mixed)?Map[[:space:]]*(.*\.map)[[:space:]]*(#.*)?$/) {
 		my $comment = $1;
 		my $map = $3;
 		if (($comment eq "") || ($mapdoconfig == 2)) {

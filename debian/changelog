@@ -25,8 +25,10 @@ tex-common (0.18.1) UNRELEASED; urgency=low
   * add --check option to update-fontlang and to the man pages, but
     state that it should not be used in maintainer scripts
     (Closes: #354517) [preining]
+  * Fix copying error in dh_installtex that created dvips config files
+    with an additional comma [preining]
 
- -- Norbert Preining <preining@logic.at>  Mon,  6 Mar 2006 13:31:29 +0100
+ -- Norbert Preining <preining@logic.at>  Thu,  9 Mar 2006 06:44:55 +0100
 
 tex-common (0.18) unstable; urgency=low
 
