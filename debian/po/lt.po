@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #. Type: boolean
 #. Description
@@ -31,8 +31,8 @@ msgid ""
 "var/cache/fonts and later reused."
 msgstr ""
 "TeX sistemai gali tekti generuoti naujus šriftus (taškų duomenis, metrikas, "
-"šaltinius) jų prireikus. Šie failai gali būti saugomi talpykloje /var/cache/fonts "
-"ir vėliau naudojami."
+"šaltinius) jų prireikus. Šie failai gali būti saugomi talpykloje /var/cache/"
+"fonts ir vėliau naudojami."
 
 #. Type: boolean
 #. Description
@@ -43,11 +43,11 @@ msgid ""
 "e. writable for the group <groupname>, sticky and setgid bit set).  "
 "Accordingly, the ls-R index file will be owned and writable by that group."
 msgstr ""
-"Jei Jūs sutinkate, Jūs galite nurodyti grupės vardą ir *visi* katalogai žemiau "
-"/var/cache/fonts įgys savininką root:<groupname> ir teisių bitus 3775 (t.y. "
-"rašymo teises grupei <groupname>, nustatytus bitus 'sticky' ir·'setgid').  "
-"Atitinkamai, šios grupės nariai bus indeksų failo ls-R savininkai ir galės jį "
-"modifikuoti."
+"Jei Jūs sutinkate, Jūs galite nurodyti grupės vardą ir *visi* katalogai "
+"žemiau /var/cache/fonts įgys savininką root:<groupname> ir teisių bitus 3775 "
+"(t.y. rašymo teises grupei <groupname>, nustatytus bitus 'sticky' "
+"ir·'setgid').  Atitinkamai, šios grupės nariai bus indeksų failo ls-R "
+"savininkai ir galės jį modifikuoti."
 
 #. Type: boolean
 #. Description
@@ -58,10 +58,10 @@ msgid ""
 "every other setup, like desktop machines or multi-user servers, accepting  "
 "this is strongly recommended!"
 msgstr ""
-"Pagal nutylėjimą nenustatomas teisių tvarkymas debconf pagalba, bet taip "
-"yra tik todėl, kad to reika kitų Debian'o paketų kompiliavimui. Beveik visiems "
-"kitiems atvejams, kaip darbastalio kompiuteris ar daugelio naudotojų serveris, "
-"sutikimas su šiuo pasirinkimu yra griežtai rekomenduotinas!"
+"Pagal nutylėjimą nenustatomas teisių tvarkymas debconf pagalba, bet taip yra "
+"tik todėl, kad to reika kitų Debian'o paketų kompiliavimui. Beveik visiems "
+"kitiems atvejams, kaip darbastalio kompiuteris ar daugelio naudotojų "
+"serveris, sutikimas su šiuo pasirinkimu yra griežtai rekomenduotinas!"
 
 #. Type: string
 #. Description
@@ -77,9 +77,9 @@ msgid ""
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775. We suggest to select the group 'users' here."
 msgstr ""
-"Jūs galite pasirinkti specifinę grupę, kuri valdys TeX šriftų talpyklą "
-"/var/cache/fonts ir žemiau esančius katalogus. Šie katalogai įgys "
-"teises 3775. Mes siūlome čia pasirinkti grupę 'users'."
+"Jūs galite pasirinkti specifinę grupę, kuri valdys TeX šriftų talpyklą /var/"
+"cache/fonts ir žemiau esančius katalogus. Šie katalogai įgys teises 3775. "
+"Mes siūlome čia pasirinkti grupę 'users'."
 
 #. Type: note
 #. Description
@@ -107,8 +107,8 @@ msgid ""
 "cnf' to its name; for example, 22mymacro => 22mymacro.cnf."
 msgstr ""
 "Taigi, jei Jūs turite bet kokį nuosavą failą kataloge /etc/texmf/texmf.d/, "
-"Jūs turite pridėti išplėtimą'.cnf' prie jo vardo "
-"(pvz. 22mymacro taps 22mymacro.cnf)."
+"Jūs turite pridėti išplėtimą'.cnf' prie jo vardo (pvz. 22mymacro taps "
+"22mymacro.cnf)."
 
 #. Type: note
 #. Description
@@ -139,8 +139,7 @@ msgstr "Faile·${filename}·yra neteisingas esminis·elementas"
 #: ../templates:53
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgstr ""
-"Faile ${filename} neteisingas·esminis elementas: ${variable} neturi"
+msgstr "Faile ${filename} neteisingas·esminis elementas: ${variable} neturi"
 
 #. Type: note
 #. Description
