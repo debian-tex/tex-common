@@ -1,4 +1,4 @@
-tex-common (0.18.1) UNRELEASED; urgency=low
+tex-common (0.19) unstable; urgency=low
 
   * cater for groups without a name when setting the groupname debconf
     variable (Closes: #354401) [preining]
