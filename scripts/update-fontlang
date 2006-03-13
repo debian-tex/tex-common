@@ -3,7 +3,7 @@
 # update-fontlang --- Generate updmap.cfg and language.dat from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
 # Copyright (C) 2004, 2005 Florent Rougon
-# Copyright (C) 2005 Norbert Preining
+# Copyright (C) 2005, 2006 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -279,7 +279,7 @@ perform_content_check ()
             perform_content_check_language "$1"
         elif [ "$progname" = "update-updmap" ] ; then
             perform_content_check_map "$1"
-        elif [ "$progname" = update-fmtutil" ] ; then
+        elif [ "$progname" = "update-fmtutil" ] ; then
             perform_content_check_format "$1"
         fi
     fi
