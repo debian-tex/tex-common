@@ -1,3 +1,12 @@
+tex-common (0.19.1) UNRELEASED; urgency=low
+
+  * Translations:
+    #- Update french debconf translation, thanks to Steve
+    #<dlist@bluewin.ch> (closes: #356840) [frank]
+    # incomplete
+
+ -- Frank Küster <frank@debian.org>  Tue, 14 Mar 2006 14:19:20 +0100
+
 tex-common (0.19) unstable; urgency=low
 
   * cater for groups without a name when setting the groupname debconf

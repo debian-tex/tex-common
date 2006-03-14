@@ -1,37 +1,39 @@
 # translation of fr.po to French
-# 
+#
 #    Translators, if you are not familiar with the PO format, gettext
 #    documentation is worth reading, especially sections dedicated to
 #    this format, e.g. by running:
 #         info -n '(gettext)PO Files'
 #         info -n '(gettext)Header Entry'
-# 
+#
 #    Some information specific to po-debconf are available at
 #            /usr/share/doc/po-debconf/README-trans
 #         or http://www.debian.org/intl/l10n/po-debconf/README-trans
-# 
+#
 #    Developers do not need to manually edit POT or PO files.
 # Christian Perrier <bubulle@debian.org>, 2004.
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: tetex-bin 2.02-4\n"
+"Project-Id-Version: tex-common 0.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-02 19:02+0100\n"
-"PO-Revision-Date: 2005-11-16 19:51+0200\n"
-"Last-Translator: Clement Stenac <zorglub@diwi.org>\n"
+"PO-Revision-Date: 2006-03-02 15:45+0100\n"
+"Last-Translator: Steve Petruzzello <dlist@bluewin.ch>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
 
 #. Type: boolean
 #. Description
 #: ../templates:4
+#, fuzzy
 msgid "Manage the permissions of the TeX font cache with debconf?"
 msgstr ""
+"Faut-il gérer automatiquement les permissions du cache des polices de TeX ?"
 
 #. Type: boolean
 #. Description
@@ -41,6 +43,10 @@ msgid ""
 "sources) on the fly. These files can be saved into the TeX font cache in /"
 "var/cache/fonts and later reused."
 msgstr ""
+"Le système TeX aura peut-être besoin de générer à la volée des polices "
+"(données de pixels, métrique, sources). Ces fichiers peuvent être "
+"enregistrés dans le cache des polices Tex situé dans /var/cache/fonts pour "
+"être réutilisées plus tard."
 
 #. Type: boolean
 #. Description
@@ -51,6 +57,12 @@ msgid ""
 "e. writable for the group <groupname>, sticky and setgid bit set).  "
 "Accordingly, the ls-R index file will be owned and writable by that group."
 msgstr ""
+"En acceptant cette option, vous pourrez indiquer un nom de groupe ; tous les "
+"répertoires sous /var/cache/fonts appartiendront à root:<nom du groupe> et "
+"auront les permissions 3775 (c'est-à-dire : droit d'écriture pour <nom du "
+"groupe> avec le bit collant (« sticky bit ») ainsi que le bit setguid). En "
+"conséquence, le fichier index ls-R appartiendra à ce groupe et pourra être "
+"modifié par les membres de ce groupe."
 
 #. Type: boolean
 #. Description
@@ -61,13 +73,18 @@ msgid ""
 "every other setup, like desktop machines or multi-user servers, accepting  "
 "this is strongly recommended!"
 msgstr ""
+"Le comportement par défaut est de ne pas gérer automatiquement les "
+"permissions, mais uniquement parce que c'est nécessaire pour la construction "
+"d'autres paquets Debian. Dans presque toutes les autres configurations "
+"(machine de bureau, serveur multi-utilisateurs), il est fortement recommandé "
+"d'accepter cette option !"
 
 #. Type: string
 #. Description
 #: ../templates:23
 #, fuzzy
 msgid "Group that should own the TeX font cache"
-msgstr "Groupe propriétaire des fichiers ls-R :"
+msgstr "Nom du groupe propriétaire du cache des polices Tex :"
 
 #. Type: string
 #. Description
@@ -77,6 +94,10 @@ msgid ""
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775. We suggest to select the group 'users' here."
 msgstr ""
+"Vous pouvez choisir un groupe particulier qui possédera tous les répertoires "
+"sous le cache des polices de TeX situé sous /var/cache/fonts (ce répertoire "
+"inclus). Ces répertoires auront les permissions 3775. Il est recommandé de "
+"choisir le groupe « users »."
 
 #. Type: note
 #. Description
