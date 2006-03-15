@@ -1,11 +1,13 @@
 tex-common (0.19.1) UNRELEASED; urgency=low
 
+  * Install reportbug control script to report with tetex and texlive
+    packages [frank]
   * Translations:
     #- Update french debconf translation, thanks to Steve
     #<dlist@bluewin.ch> (closes: #356840) [frank]
     # incomplete
 
- -- Frank Küster <frank@debian.org>  Tue, 14 Mar 2006 14:19:20 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 15 Mar 2006 10:34:09 +0100
 
 tex-common (0.19) unstable; urgency=low
 
