@@ -6,8 +6,10 @@ tex-common (0.19.1) UNRELEASED; urgency=low
     #- Update french debconf translation, thanks to Steve
     #<dlist@bluewin.ch> (closes: #356840) [frank]
     # incomplete
+  * Add a remark in README.Debian that per default users are not member of
+    the "users" group, probably closes #356960
 
- -- Frank Küster <frank@debian.org>  Wed, 15 Mar 2006 10:34:09 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 15 Mar 2006 20:38:51 +0100
 
 tex-common (0.19) unstable; urgency=low
 

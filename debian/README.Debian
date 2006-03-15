@@ -5,9 +5,10 @@ Security information:
 By default and according to long-standing tradition, the TeX font
 cache directory /var/cache/fonts is world-writable.  We suggest that
 you at least restrict write permissions to a particular group,
-e.g. "users".  Since this still allows every group member to create
-arbitrary files on the /var partition, even this might be a security
-risk, depending on local requirements and policy.
+e.g. "users" (note, however, that the default Debian installation does
+not put users into that group!).  Since this still allows every group
+member to create arbitrary files on the /var partition, even this
+might be a security risk, depending on local requirements and policy.
 
 You can use "dpkg-reconfigure -plow tex-common" to restrict write
 access to some group.  Alternatively, you could put /var/cache/fonts
@@ -22,4 +23,4 @@ If you had version 0.16 installed and want to get back world-writable
 cache directories, please make this change manually.
 
 
- -- Frank Küster <frank@debian.org>, Thu Feb 23 18:02:37 2006
+ -- Frank Küster <frank@debian.org>, Wed Mar 15 20:38:13 2006
