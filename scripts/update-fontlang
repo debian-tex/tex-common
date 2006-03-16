@@ -231,9 +231,8 @@ merge_files()
 perform_sanity_checks()
 {
     if [ -L "$output_file" ]; then
-        if [ $quiet = 0 ]; then
-            echo "$progname: $output_file is a symbolic link; won't do anything"
-        fi
+        # This might cause errors, so do not skip this echo when quiet.
+        echo "$progname: $output_file is a symbolic link; won't do anything" >&2
         exit 0
     fi
 
