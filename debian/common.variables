@@ -38,7 +38,7 @@ while($VERSION=<CHANGELOG>){last if('' ne $VERSION=~s/$PACKAGE \((.*)\).*\n/$1/)
   {$SARGEVERSION = ''}
 else {
   $sarge_rev=$rev-1;
-  ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1${sarge_rev}sarge$rev$2/;
+  ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1${sarge_rev}bpo1/;
 #   ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$rev.0.sarge1/;
 }:>//
 <:$FIRST_BASE_VERSION_WITH_COMMON="3.0-4":>//
