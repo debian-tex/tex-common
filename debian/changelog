@@ -10,7 +10,9 @@ tex-common (0.19.1) UNRELEASED; urgency=low
     the "users" group, probably closes #356960 [frank]
   * update-fontlang: Change the note that is displayed when the output
     file is a symlink to an error message (displayed also in quiet mode)
-    (closes: #357289) [frank] 
+    (closes: #357289) [frank]
+  * Fix typos in update-updmap.1 and update-language.8, thanks to Nicolas
+    François (closes: #357763). [florent]
 
  -- Frank KÃ¼ster <frank@debian.org>  Thu, 16 Mar 2006 19:07:14 +0100
 
@@ -236,7 +238,7 @@ tex-common (0.9) unstable; urgency=low
   * install debhelper dh_installtexfonts script (closes: #320147) [preining]
   * A few changes to update-fontlang, most notably that it will now check,
     when invoked as update-updmap, whether /usr/share/texmf/web2c/updmap.cfg
-    exists and abort with an explanation in that case. [frn]
+    exists and abort with an explanation in that case. [florent]
   * Translations:
     - updated Danish debconf translation, thanks to Claus Hindsgaul
       <claus_h@image.dk> (closes: #332699) [frank]
