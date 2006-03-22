@@ -1,4 +1,4 @@
-tex-common (0.19.1) UNRELEASED; urgency=medium
+tex-common (0.20) unstable; urgency=medium
 
   * This version fixes a RC bug (#357983) - the version in testing was not
     affected.  But taken together, 0.20 fixes lots of important and
@@ -19,7 +19,7 @@ tex-common (0.19.1) UNRELEASED; urgency=medium
       <dlist@bluewin.ch> (does not closes bug #356840, since it is
       incomplete) [frank]
 
- -- Frank Küster <frank@debian.org>  Wed, 22 Mar 2006 11:29:52 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 22 Mar 2006 12:29:54 +0100
 
 tex-common (0.19) unstable; urgency=low
 
