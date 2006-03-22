@@ -1,20 +1,25 @@
-tex-common (0.19.1) UNRELEASED; urgency=low
+tex-common (0.19.1) UNRELEASED; urgency=medium
 
+  * This version fixes a RC bug (#357983) - the version in testing was not
+    affected.  But taken together, 0.20 fixes lots of important and
+    annoying bugs that also exist in testing that I'm increasing the
+    urgency. [frank]
+  * Change wording in debconf template and README.Debian to clearly
+    indicate that per default users are not member of the "users" group,
+    (closes: #356960, #357983) [frank]
   * Install reportbug control script to report with tetex and texlive
     packages [frank]
-  * Translations:
-    #- Update french debconf translation, thanks to Steve
-    #<dlist@bluewin.ch> (closes: #356840) [frank]
-    # incomplete
-  * Add a remark in README.Debian that per default users are not member of
-    the "users" group, probably closes #356960 [frank]
   * update-fontlang: Change the note that is displayed when the output
     file is a symlink to an error message (displayed also in quiet mode)
     (closes: #357289) [frank]
   * Fix typos in update-updmap.1 and update-language.8, thanks to Nicolas
-    Fran�ois (closes: #357763). [florent]
+    François (closes: #357763). [florent]
+  * Translations:
+    - Update french debconf translation, thanks to Steve
+      <dlist@bluewin.ch> (does not closes bug #356840, since it is
+      incomplete) [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 16 Mar 2006 19:07:14 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 22 Mar 2006 11:29:52 +0100
 
 tex-common (0.19) unstable; urgency=low
 
