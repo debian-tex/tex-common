@@ -570,6 +570,8 @@ teTeX3_md5sumlist="
  /etc/texmf/dvips/omega.cfg 20f3291d20f52a0af681cea63d491f22
  /etc/texmf/dvips/config.omega 20f3291d20f52a0af681cea63d491f22
  /etc/texmf/context/texexec.rme aca8d2729ceb83bc24852c0876cf884b
+
+ /etc/texmf/language.d/00tetex.cnf e057f645b860c3b4ac92a9b5a127c43e
 "
 
 get_sarge_md5sum_from_list(){
