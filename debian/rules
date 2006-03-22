@@ -119,7 +119,6 @@ binary-arch: build install
 #	dh_install
 #	dh_installinfo
 	dh_installman $(sbin_manpages) $(bin_manpages)
-	mkdir $(INSTDIR)/usr/share/bug/tex-common/
 	install debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
 	dh_link
 	dh_compress
