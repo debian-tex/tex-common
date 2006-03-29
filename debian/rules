@@ -21,13 +21,13 @@ eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.func
 
 # Eperl is simply great: thanks, Davide!
 % :: %.in $(eperl_sourcefiles) 
-	eperl -P -o $@ $<
+	eperl -k -P -o $@ $<
 
 # Override the general rule for eperl-generated files in order to avoid a
 # circular dependency (debian/common.functions is listed in
 # $(eperl_sourcefiles)).
 debian/common.functions: debian/common.functions.in debian/common.variables
-	eperl -P -o $@ $<
+	eperl -k -P -o $@ $<
 
 foo:
 	echo foo

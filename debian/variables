@@ -1,11 +1,16 @@
-<:# Copyright (C) 2004 by Frank Küster <frank@kuesterei.ch>.:>//
-<:# $Id$:>//
-<:use File::Basename:>//
-<:$PACKAGE="tex-common":>//
-<:$FONTCACHE_PERMS="3775":>//
+<:
+# Copyright (C) 2004 by Frank Küster <frank@kuesterei.ch>.
+# $Id$
+
+use File::Basename;
+
+$PACKAGE="tex-common";
+
+$FONTCACHE_PERMS="3775";
+:>//
 #include "common.variables"
 <:
 # Local variables:
-# mode: shell-script
+# mode: perl
 # end:
 :>//

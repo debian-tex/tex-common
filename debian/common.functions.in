@@ -2,12 +2,11 @@
 #################################################################
 ## Function definitions - included from file common.functions
 #################################################################
-# Copyright (C) 2004 by Frank Küster <frank@debian.org>.
+# Copyright (C) 2004, 05, 06 by Frank Küster <frank@debian.org>.
+# Copyright (C) 2006 by Julian Gilbey <jdg@debian.org>.
 # $Id$
 
 # internal variables for common.functions
-: ${MKTMPDIR:=$TMPDIR} # mktemp will create its files there
-: ${MKTMPDIR:=<:=$MKTMPDIR:>}
 SYMLINK_MOVE_EXT=<:=$SYMLINK_MOVE_EXT:>
 TEXMFSYSVARDIR=<:=$TEXMFSYSVARDIR:>
 
@@ -38,7 +37,7 @@ rename_catinfo(){
 
 create_tetex_formats(){
   options="$@"
-  tempfile=`mktemp -p $MKTMPDIR tetex.postinst.XXXXXXXX`
+  tempfile=`mktemp -t tetex.postinst.XXXXXXXX`
   echo "Running fmtutil-sys. This may take some time. ..."
   # for jadetex safety (see #352391 and friends), remove old latex formats
   if [ "$options" = "--all" ];
@@ -58,7 +57,7 @@ create_tetex_formats(){
 }
 
 create_fontmaps(){
-    tempfile=`mktemp -p $MKTMPDIR tetex.updmap.XXXXXXXX`
+    tempfile=`mktemp -t tetex.updmap.XXXXXXXX`
     echo -n "Running updmap-sys. This may take some time. ..."
     if updmap-sys 2> $tempfile; then
       rm -f $tempfile
