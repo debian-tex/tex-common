@@ -1,8 +1,11 @@
-tex-common (0.21) UNRELEASED; urgency=low
+tex-common (0.20.1) UNRELEASED; urgency=low
 
   * Improve readability of eperl scripts in debian/ as in tetex-bin [jdg]
+  * Translations:
+    - Update danish debconf translations, thanks to Claus Hindsgaul
+    <claus.hindsgaul@gmail.com> [frank]
 
- -- Julian Gilbey <jdg@debian.org>  Wed, 29 Mar 2006 15:40:07 +0100
+ -- Frank Küster <frank@debian.org>  Thu, 30 Mar 2006 13:22:47 +0200
 
 tex-common (0.20) unstable; urgency=medium
 
