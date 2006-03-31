@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-03-29 15:40+0100\n"
-"PO-Revision-Date: 2006-03-04 15:37+0100\n"
+"PO-Revision-Date: 2006-03-31 12:40+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,9 +39,9 @@ msgid ""
 "var/cache/fonts and later reused."
 msgstr ""
 "Systém TeX může za běhu vytvářet nová data týkající se fontů, jako jsou "
-"metriky nebo zdroje. Aby se tato data nemusela vytvářet pokaždé znovu, mohou "
-"být uložena do vyrovnávací paměti TeXu (/var/cache/fonts) pro pozdější "
-"použití."
+"pixelová data, metriky nebo zdroje. Aby se tato data nemusela vytvářet "
+"pokaždé znovu, mohou být uložena do vyrovnávací paměti TeXu (/var/cache/"
+"fonts) pro pozdější znovupoužití."
 
 #. Type: boolean
 #. Description
@@ -65,11 +65,13 @@ msgid ""
 "If you accept, font generation will only work for users that have been  "
 "added to the group you chose - this has to be done manually by you!"
 msgstr ""
+"Odpovíte-li kladně, bude vytváření fontů fungovat pouze pro uživatele, kteří "
+"jsou součástí skupiny, jež vyberete. (Přidání do skupiny budete muset "
+"provést ručně.)"
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
@@ -77,9 +79,9 @@ msgid ""
 "this (and adding users to the group) is strongly recommended!"
 msgstr ""
 "Výchozí možnost je nepoužívat debconf pro správu oprávnění, ale to je jen "
-"kvůli sestavování ostatních debianích balíků. V téměř všech ostatních "
+"kvůli vytváření ostatních debianích balíků. V téměř všech ostatních "
 "situacích (desktopové počítače, víceuživatelské servery) je doporučeno "
-"souhlasit."
+"souhlasit (a přidat uživatele do skupiny)."
 
 #. Type: string
 #. Description
@@ -90,7 +92,6 @@ msgstr "Skupina, která má vlastnit vyrovnávací paměť s TeXovými fonty"
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
@@ -98,8 +99,7 @@ msgid ""
 msgstr ""
 "Můžete si vybrat konkrétní skupinu, která bude vlastnit adresář s "
 "vyrovnávací pamětí pro TeXové fonty (/var/cache/fonts) a všechny jeho "
-"podadresáře. Adresáře budou mít přístupové oprávnění 3775. Doporučujeme "
-"vybrat skupinu 'users'."
+"podadresáře. Adresáře budou mít přístupové oprávnění 3775."
 
 #. Type: string
 #. Description
@@ -108,6 +108,8 @@ msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
 "default, they have to be added manually!"
 msgstr ""
+"Pamatujte, že ve výchozím Debianu nepatří do skupiny \"users\" žádný "
+"uživatel, musíte je přidat ručně!"
 
 #. Type: note
 #. Description

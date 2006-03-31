@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-03-22 11:32+0000\n"
+"POT-Creation-Date: 2006-03-29 15:40+0100\n"
 "PO-Revision-Date: 2006-03-30 10:43+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -157,8 +157,10 @@ msgstr "Fejlbehæftet essentiel linje i ${filename}"
 #. Type: note
 #. Description
 #: ../templates:59
-msgid "An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgstr "En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
+msgid ""
+"An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgstr ""
+"En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
 
 #. Type: note
 #. Description
@@ -567,4 +569,3 @@ msgstr "Afslutter."
 #~ msgstr ""
 #~ "Bemærk at opsætningsfilen bliver håndteret af debconf, hvis du vælger "
 #~ "dette, men at du ellers er nødt til selv at rette filen."
-

@@ -4,10 +4,12 @@ tex-common (0.20.1) UNRELEASED; urgency=low
   * Adjust priority of the groupname debconf question to be the same as
     the managecache question (closes: #360127) [frank]
   * Translations:
-    - Update danish debconf translations, thanks to Claus Hindsgaul
+    - Update danish debconf translation, thanks to Claus Hindsgaul
       <claus.hindsgaul@gmail.com> [frank]
-
- -- Frank Küster <frank@debian.org>  Fri, 31 Mar 2006 08:39:41 +0200
+    - Updated Czech debconf translation, thanks to Miroslav Kure
+    <kurem@upcase.inf.upol.cz> (closes: #360212) [frank]
+  
+ -- Frank Küster <frank@debian.org>  Fri, 31 Mar 2006 12:45:07 +0200
 
 tex-common (0.20) unstable; urgency=medium
 
