@@ -29,7 +29,7 @@ _Description: Group that should own the TeX font cache
  get permission 3775.
  .
  Note that on a Debian system, nobody is member of the "users" group by
- default, they have to be added manually!
+ default, so local users have to be added manually!
 
 Template: tex-common/cnf_name
 Type: note

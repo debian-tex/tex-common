@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.8\n"
-"Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-03-29 15:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-03-31 13:54+0200\n"
 "PO-Revision-Date: 2006-03-03 13:17+0100\n"
 "Last-Translator: Helge Kreutzmann <kreutzm@itp.uni-hannover.de>\n"
 "Language-Team: Debian l10n german <debian-l10n-german@lists.debian.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 #: ../templates:26
 msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
-"default, they have to be added manually!"
+"default, so local users have to be added manually!"
 msgstr ""
 
 #. Type: note

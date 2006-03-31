@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tex-common\n"
-"Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-03-29 15:40+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-03-31 13:54+0200\n"
 "PO-Revision-Date: 2006-03-31 12:40+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -104,9 +104,10 @@ msgstr ""
 #. Type: string
 #. Description
 #: ../templates:26
+#, fuzzy
 msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
-"default, they have to be added manually!"
+"default, so local users have to be added manually!"
 msgstr ""
 "Pamatujte, že ve výchozím Debianu nepatří do skupiny \"users\" žádný "
 "uživatel, musíte je přidat ručně!"

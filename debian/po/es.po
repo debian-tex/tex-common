@@ -35,9 +35,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-5.1\n"
-"Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-03-29 15:40+0100\n"
-"PO-Revision-Date: 2006-03-08 21:20+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-03-31 13:54+0200\n"
+"PO-Revision-Date: 2006-03-31 14:04+0200\n"
 "Last-Translator: Javier Fernandez-Sanguino Peña <jfs@computer.org>\n"
 "Language-Team: Debian l10n spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -88,11 +88,13 @@ msgid ""
 "If you accept, font generation will only work for users that have been  "
 "added to the group you chose - this has to be done manually by you!"
 msgstr ""
+"En caso de que acepte la generación de fuentes sólo funcionará para los "
+"usuarios que pertenezcan al grupo que haya elegido. Tenga en cuenta que vd. "
+"debe asignar manualmente los usuarios a dicho grupo."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
@@ -100,9 +102,10 @@ msgid ""
 "this (and adding users to the group) is strongly recommended!"
 msgstr ""
 "El valor por omisión es no gestionar los permisos con debconf, pero ésto "
-"sólo se hace porque no es necesario para construir otros paquetes Debian. Se "
-"recomienda que acepte ésto en la mayoría de los entornos, como pudieran ser "
-"equipos de escritorio o servidores multi-usuario."
+"sólo se hace porque es necesario para poder construir otros paquetes Debian. "
+"En la mayoría de los entornos (como pudieran ser equipos de escritorio o "
+"servidores multi-usuario) lo recomendable es que acepte esta opción (y añada "
+"los usuarios al grupo correspondiente)."
 
 #. Type: string
 #. Description
@@ -114,24 +117,25 @@ msgstr ""
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775."
 msgstr ""
 "Puede indicar un grupo concreto al que pertenecerán todos los directorios "
-"bajo la caché de fuentes tipográficas /var/cache/fonts, inclusive. Se "
-"utilizarán los permisos 3755 para estos directorios. Le recomendamos que "
-"seleccione el grupo «users» aquí."
+"bajo la caché de fuentes tipográficas «/var/cache/fonts», inclusive. Se "
+"utilizarán los permisos 3755 para estos directorios."
 
 #. Type: string
 #. Description
 #: ../templates:26
 msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
-"default, they have to be added manually!"
+"default, so local users have to be added manually!"
 msgstr ""
+"Tenga en cuenta que en un sistema Debian no hay ningún usuario que "
+"pertenezca al grupo «users» por omisión. Debe añadir a los usuarios a este "
+"grupo manualmente."
 
 #. Type: note
 #. Description
