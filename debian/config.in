@@ -98,7 +98,7 @@ if [ "$RET" != "true" ]; then
 
   db_get tex-common/managecache || true
   if [ "$RET" = true ]; then
-    db_input low tex-common/groupname || true
+    db_input medium tex-common/groupname || true
     db_go
   fi
 fi
