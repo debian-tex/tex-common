@@ -93,12 +93,13 @@ if [ "$RET" != "true" ]; then
       db_set tex-common/managecache false || true
     fi
   fi
-  db_input medium tex-common/managecache || true
+  cache_debconf_priority=medium
+  db_input $cache_debconf_priority tex-common/managecache || true
   db_go
 
   db_get tex-common/managecache || true
   if [ "$RET" = true ]; then
-    db_input medium tex-common/groupname || true
+    db_input $cache_debconf_priority tex-common/groupname || true
     db_go
   fi
 fi
