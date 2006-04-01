@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-31 13:54+0200\n"
-"PO-Revision-Date: 2006-03-30 10:43+0200\n"
+"PO-Revision-Date: 2006-03-31 15:10+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -95,13 +95,12 @@ msgstr ""
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
 "default, so local users have to be added manually!"
 msgstr ""
 "Bemærk, at ingen som udgangspunkt er medlem af gruppen \"users\" på et "
-"Debiansystem. De skal tilføjes manuelt!"
+"Debiansystem, så lokale brugere skal manuelt føjes til denne gruppe!"
 
 #. Type: note
 #. Description

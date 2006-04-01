@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-31 13:54+0200\n"
-"PO-Revision-Date: 2006-03-05 20:47+0200\n"
+"PO-Revision-Date: 2006-04-01 00:18+0300\n"
 "Last-Translator: Kęstutis Biliūnas <kebil@kaunas.init.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -56,11 +56,12 @@ msgid ""
 "If you accept, font generation will only work for users that have been  "
 "added to the group you chose - this has to be done manually by you!"
 msgstr ""
+"Jei Jūs sutiksite, šriftų generavimas dirbs tik naudotojams, priklausantiems "
+"Jūsų pasirinktai grupei - tai Jūs turite padaryti rankiniu būdu!"
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
@@ -68,9 +69,10 @@ msgid ""
 "this (and adding users to the group) is strongly recommended!"
 msgstr ""
 "Pagal nutylėjimą nenustatomas teisių tvarkymas debconf pagalba, bet taip yra "
-"tik todėl, kad to reika kitų Debian'o paketų kompiliavimui. Beveik visiems "
+"tik todėl, kad to reikia kitų Debian'o paketų kompiliavimui. Beveik visiems "
 "kitiems atvejams, kaip darbastalio kompiuteris ar daugelio naudotojų "
-"serveris, sutikimas su šiuo pasirinkimu yra griežtai rekomenduotinas!"
+"serveris, sutikimas su šiuo pasirinkimu (ir naudotojų priskyrimas grupei) "
+"yra griežtai rekomenduotinas!"
 
 #. Type: string
 #. Description
@@ -81,15 +83,14 @@ msgstr "Grupė, kuriai turi priklausyti Tex šriftų talpykla"
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775."
 msgstr ""
 "Jūs galite pasirinkti specifinę grupę, kuri valdys TeX šriftų talpyklą /var/"
-"cache/fonts ir žemiau esančius katalogus. Šie katalogai įgys teises 3775. "
-"Mes siūlome čia pasirinkti grupę 'users'."
+"cache/fonts ir visus žemiau esančius katalogus. Šie katalogai įgys teises "
+"3775."
 
 #. Type: string
 #. Description
@@ -98,6 +99,9 @@ msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
 "default, so local users have to be added manually!"
 msgstr ""
+"Atkreipkite dėmesį, kad Debian'o sistemoje niekas netampa grupes \"users\" "
+"nariu pagal  nutylėjimą, taigi vietiniai naudotojai turi būti prijungti "
+"rankiniu būdu!"
 
 #. Type: note
 #. Description

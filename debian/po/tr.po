@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-31 13:54+0200\n"
-"PO-Revision-Date: 2006-03-03 13:15+0100\n"
+"PO-Revision-Date: 2006-04-01 10:58+0300\n"
 "Last-Translator: Osman Yüksel <yuxel@sonsuzdongu.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -57,11 +57,12 @@ msgid ""
 "If you accept, font generation will only work for users that have been  "
 "added to the group you chose - this has to be done manually by you!"
 msgstr ""
+"E?er onaylarsan?z, yaz? tipi olu?turulmas?, sadece seçti?iniz gruptaki -bunu "
+"kendiniz elinizle yapmal?s?n?z - kullan?c?lar için çal??t?rlabilecektir."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
@@ -69,8 +70,10 @@ msgid ""
 "this (and adding users to the group) is strongly recommended!"
 msgstr ""
 "Diðer Debian paketlerinin de oluþturulabilmesi için, öntanýmlý olarak "
-"izinler debconf ile yönetilmez.  Masaüstü bilgisayarlar veya çok kullanýcýlý "
-"sunucular gibi diðer tüm kurulumlarda bunu kabul etmeniz þiddetle önerilir!"
+"izinler debconf ile yönetilmez, ancak bu sadece di?er Debian paketlerini olu?"
+"utrabilmek için böyle ayarlanm??t?r.  Masaüstü bilgisayarlar veya çok "
+"kullanýcýlý sunucular gibi diðer tüm kurulumlarda bunu kabul etmeniz (ve "
+"kullan?c?lar? gruba eklemeniz) þiddetle önerilir!"
 
 #. Type: string
 #. Description
@@ -81,15 +84,13 @@ msgstr "TeX önbelleðinin sahibi olan grup"
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775."
 msgstr ""
 "TeX yazýtipi önbelleðini de içeren  /var/cache/fonts dizini sahipliði için "
-"belli bir grup belirleyebilirsiniz.  Bu dizinler 3775 izinlerini alacaktýr.  "
-"Burada 'users' grubunu seçmenizi öneririz."
+"belli bir grup belirleyebilirsiniz.  Bu dizinler 3775 izinlerini alacaktýr."
 
 #. Type: string
 #. Description
@@ -98,6 +99,9 @@ msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
 "default, so local users have to be added manually!"
 msgstr ""
+"Debian'da nobody kullan?c?s?n?n öntan?ml? olarak, \"users\" grubuna dahil "
+"oldu?unu, bu yüzden yerel kullan?c?l?lar?n elle eklenmesi gerekti?ini "
+"unutmay?n."
 
 #. Type: note
 #. Description

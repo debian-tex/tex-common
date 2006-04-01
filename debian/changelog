@@ -10,8 +10,16 @@ tex-common (0.20.1) UNRELEASED; urgency=low
       <kurem@upcase.inf.upol.cz> (closes: #360212) [frank]
     - Updated spanish debconf translation, thanks to Javier
       Fernández-Sanguino Peña <jfs@computer.org> [frank]
+    - Updated Swedish debconf translation, thanks to Daniel Nylander
+      <po@danielnylander.se> [frank]
+    - Updated Turkish debconf translation, thanks to Osman Yuksel
+      <yuxel@sonsuzdongu.com> [frank]
+    - Updated Czech debconf translation, thanks to Miroslav Kure
+      <kurem@upcase.inf.upol.cz> (closes: #360212) [frank]
+    - Updated Lithuanian debconf translation, thanks to Kęstutis Biliūnas
+      <kebil@kaunas.init.lt> (closes: #360282) [frank]
   
- -- Frank Küster <frank@debian.org>  Fri, 31 Mar 2006 12:45:07 +0200
+ -- Frank Küster <frank@debian.org>  Sat,  1 Apr 2006 10:56:00 +0200
 
 tex-common (0.20) unstable; urgency=medium
 
