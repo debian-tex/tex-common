@@ -1,8 +1,9 @@
-#include variables
 #!/bin/sh -e
 # 
 # postinst maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id$
+
+#include variables
 <:=@COPYRIGHT:>//
 
 ## Define static variables we need
@@ -24,10 +25,10 @@ action=$1
 . <:=${CONFMODULE}:>
 db_version 2.0
 
-<:open(FUNCTIONS,'postinst.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
+<:open(FUNCTIONS,'debian/postinst.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 <:=@FUNCTIONS:>//
 
-# <:open(FUNCTIONS,'common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
+# <:open(FUNCTIONS,'debian/common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 # <:=@FUNCTIONS:>//
 
 #################################################################

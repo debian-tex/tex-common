@@ -1,10 +1,11 @@
-#include variables
 #!/bin/bash -e
 # 
 # preinst maintainer script for the Debian tex-common package.
 # $Id$
 # don't try to understand this generated script as installed with the package.
 # instead, look at the source files in the source package
+
+#include variables
 <:=@COPYRIGHT:>//
 
 ## Variables needed for upgrading
@@ -101,7 +102,7 @@ EOF
 
 }
 
-# <:open(FUNCTIONS,'common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
+# <:open(FUNCTIONS,'debian/common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 # <:=@FUNCTIONS:>//
 
 #################################################################

@@ -1,8 +1,9 @@
-#include variables
 #!/bin/sh -e
 # 
 # postrm maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id$
+
+#include variables
 <:=@COPYRIGHT:>//
 
 ## variables
@@ -13,7 +14,7 @@ TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
 # give commandline args a name
 action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade, disappear
 
-<:open(FUNCTIONS,'postrm.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
+<:open(FUNCTIONS,'debian/postrm.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 <:=@FUNCTIONS:>//
 
 ## do the things we have to do always

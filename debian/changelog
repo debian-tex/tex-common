@@ -18,8 +18,9 @@ tex-common (0.20.1) UNRELEASED; urgency=low
       <kurem@upcase.inf.upol.cz> (closes: #360212) [frank]
     - Updated Lithuanian debconf translation, thanks to Kęstutis Biliūnas
       <kebil@kaunas.init.lt> (closes: #360282) [frank]
-  
- -- Frank Küster <frank@debian.org>  Sat,  1 Apr 2006 10:56:00 +0200
+  * Fix eperl open commands in maintainer scripts to work with -k [jdg]
+
+ -- Julian Gilbey <jdg@debian.org>  Mon,  3 Apr 2006 19:59:45 +0100
 
 tex-common (0.20) unstable; urgency=medium
 
