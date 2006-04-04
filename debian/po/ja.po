@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: tetex-bin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-31 13:54+0200\n"
-"PO-Revision-Date: 2006-03-03 23:39+0900\n"
+"PO-Revision-Date: 2006-04-04 11:07+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -63,11 +63,12 @@ msgid ""
 "If you accept, font generation will only work for users that have been  "
 "added to the group you chose - this has to be done manually by you!"
 msgstr ""
+"「はい」と答えると、選択したグループに追加済みのユーザにのみ、フォント生成は"
+"働きます。これは手動で行っておかなければなりません!"
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
@@ -77,7 +78,7 @@ msgstr ""
 "デフォルトは「debconf でパーミッションを管理しない」ですが、これは単にこれが"
 "ほかの Debian パッケージの構築に必要だからです。その他のセットアップ、たとえ"
 "ばデスクトップマシンやマルチユーザサーバでは、ほとんどの場合、ここで「はい」"
-"と答えることを強くお勧めします!"
+"と答える (およびグループにユーザを追加する) ことを強くお勧めします!"
 
 #. Type: string
 #. Description
@@ -88,7 +89,6 @@ msgstr "TeX フォントキャッシュを所有するグループ"
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
@@ -96,7 +96,7 @@ msgid ""
 msgstr ""
 "TeX フォントキャッシュを含む /var/cache/fonts 以下のすべてのディレクトリを所"
 "有する特定のグループを選択できます。これらのディレクトリはパーミッション "
-"3775 になります。ここでは 'users' グループを選択することをお勧めします。"
+"3775 になります。"
 
 #. Type: string
 #. Description
@@ -105,6 +105,8 @@ msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
 "default, so local users have to be added manually!"
 msgstr ""
+"Debian システムでは、デフォルトで誰も \"users\" グループのメンバーではないの"
+"で、ローカルユーザを手動で追加しなければならないことに注意してください。"
 
 #. Type: note
 #. Description

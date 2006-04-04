@@ -3,25 +3,23 @@ tex-common (0.20.1) UNRELEASED; urgency=low
   * Improve readability of eperl scripts in debian/ as in tetex-bin [jdg]
   * Adjust priority of the groupname debconf question to be the same as
     the managecache question (closes: #360127) [frank]
-  * Translations:
-    - Update danish debconf translation, thanks to Claus Hindsgaul
-      <claus.hindsgaul@gmail.com> (closes: #360035) [frank]
-    - Updated Czech debconf translation, thanks to Miroslav Kure
-      <kurem@upcase.inf.upol.cz> (closes: #360212) [frank]
-    - Updated spanish debconf translation, thanks to Javier
-      Fernández-Sanguino Peña <jfs@computer.org> [frank]
-    - Updated Swedish debconf translation, thanks to Daniel Nylander
-      <po@danielnylander.se> [frank]
-    - Updated Turkish debconf translation, thanks to Osman Yuksel
-      <yuxel@sonsuzdongu.com> [frank]
-    - Updated Czech debconf translation, thanks to Miroslav Kure
-      <kurem@upcase.inf.upol.cz> (closes: #360212) [frank]
-    - Updated Lithuanian debconf translation, thanks to Kęstutis Biliūnas
-      <kebil@kaunas.init.lt> (closes: #360282) [frank]
   * Fix eperl open commands in maintainer scripts to work with -k [jdg]
   * Made preinst a /bin/sh script [jdg]
-
- -- Julian Gilbey <jdg@debian.org>  Tue,  4 Apr 2006 08:25:13 +0100
+  * Update debconf translations:
+    - Danish by Claus Hindsgaul <claus.hindsgaul@gmail.com> (closes:
+      #360035)
+    - Czech by Miroslav Kure <kurem@upcase.inf.upol.cz> (closes: #360212)
+    - Spanish by Javier Fernández-Sanguino Peña <jfs@computer.org>
+    - Swedish by Daniel Nylander <po@danielnylander.se> 
+    - Turkish by Osman Yuksel <yuxel@sonsuzdongu.com>
+    - Lithuanian by Kęstutis Biliūnas <kebil@kaunas.init.lt> (closes:
+      #360282)
+    - Italian by Luca Monducci <luca.mo@tiscali.it> (closes: #360645)
+    - Japanese by Kenshi Muto <kmuto@topstudio.co.jp> (closes: #360679)
+    - German by Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
+    Many thanks to all contributors! [frank]
+  
+ -- Frank Küster <frank@debian.org>  Tue,  4 Apr 2006 10:00:18 +0200
 
 tex-common (0.20) unstable; urgency=medium
 
