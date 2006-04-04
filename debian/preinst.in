@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 # 
 # preinst maintainer script for the Debian tex-common package.
 # $Id$

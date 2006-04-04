@@ -19,8 +19,9 @@ tex-common (0.20.1) UNRELEASED; urgency=low
     - Updated Lithuanian debconf translation, thanks to Kęstutis Biliūnas
       <kebil@kaunas.init.lt> (closes: #360282) [frank]
   * Fix eperl open commands in maintainer scripts to work with -k [jdg]
+  * Made preinst a /bin/sh script [jdg]
 
- -- Julian Gilbey <jdg@debian.org>  Mon,  3 Apr 2006 19:59:45 +0100
+ -- Julian Gilbey <jdg@debian.org>  Tue,  4 Apr 2006 08:25:13 +0100
 
 tex-common (0.20) unstable; urgency=medium
 
