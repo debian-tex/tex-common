@@ -1,0 +1,420 @@
+#!/usr/bin/perl -w
+#
+# tpm2licenses.pl
+# (c) 2005 Norbert Preining
+#
+# Lists for every filename.tpm the license as specified in the catalogue
+#
+# usage:
+# perl tpm2licenses.pl <options> [tpm file]
+# where <options> =
+# 	--catalogue
+#       --nocheckcatalogue
+#       --tpmdir
+#       --package
+# 	--master=Path	path to the Master
+# optional tpm file: check only that one
+#
+
+BEGIN {   # get our other local perl modules.
+  ($mydir = $0) =~ s,/[^/]*$,,;
+  if ($mydir eq $0) { $mydir = `pwd` ; chomp($mydir); }
+  if (!($mydir =~ m,/.*,,)) { $mmydir = `pwd`; chomp($mmydir); $mydir = "$mmydir/$mydir" ; }
+  unshift (@INC, $mydir);
+#  unshift (@INC, "$mydir/..");
+}
+
+use strict;
+use Data::Dumper;
+#use Getopt::Long;
+use File::Basename;
+use File::Copy;
+use File::Path;
+use File::Temp qw/ tempfile tempdir /;
+use AppConfig;
+#use XML::DOM;
+use Cwd;
+#use FileUtils qw(canon_dir cleandir make_link newpath member
+#		 normalize substitute_var_val dirname diff_list remove_list
+#		 rec_rmdir sync_dir walk_dir start_redirection stop_redirection);
+#use Tpm;
+
+
+# initialize AppConfig
+my $config = AppConfig->new("master=s", "catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s");
+
+# parse configurationfile, if present
+my @cfgDirs = (".","./debian","..","~");
+my $cfgName = ".tpm2license.cfg";
+
+for my $cfgDir (@cfgDirs) {
+    if ( -r "$cfgDir/$cfgName" ) {
+	print STDERR "Using configuration file $cfgDir/$cfgName\n";
+	$config->file("$cfgDir/$cfgName");
+      };
+  };
+# now parse commandline
+$config->getopt();
+
+# assign conffile, commandline or default values:
+my $Master = $config->master() ? $config->master() : "." ;
+my $Catalogue = $config->catalogue() ? $config->catalogue() : "/src/TeX/texcatalogue/" ;
+my $what = $config->what() ? $config->what() : "files";
+my $debian_package = $config->package() ? $config->package() : "tetex-base";
+my $tpmdir = $config->tpmdir() ? $config->tpmdir() : "./debian/tpm";
+my $nocatalogue = $config->nocheckcatalogue() ? $config->nocheckcatalogue() : '';
+
+# if (!($opt_master =~ m,/.*$,,)) {
+#     $Master = `pwd`;
+#     chomp($Master);
+#     $Master .= "/$opt_master";
+# } else {
+#     $Master = $opt_master;
+# }
+# $what = $opt_what;
+
+if ($debian_package) {
+  die "Unknown Debian package: $debian_package." unless
+      ( $debian_package =~ /^tetex-base$/    || 
+	$debian_package =~ /^tetex-src$/     ||
+	$debian_package =~ /^texlive-base$/  ||
+	$debian_package =~ /^texlive-extra$/ ||
+	$debian_package =~ /^texlive-lang$/  ||
+	$debian_package =~ /^texlive-doc$/   ||
+	$debian_package =~ /^texlive-bin$/     );
+};
+
+# my $TpmGlobalPath = $Master;
+# my $DataGlobalPath = $Master;
+
+# texlive
+# my $TpmDirGlob = $Master . "./texmf-dist/tpm/*.tpm";
+# teTeX
+my $TpmDirGlob = "$tpmdir/*.tpm";
+
+# only needed if we're in the sourcedir, so no need to bother
+my $sourceDir;
+chomp( $sourceDir = `pwd`); 
+$sourceDir .= "/";
+
+#
+# put Master/Tools/ into the include path to find TeX live perl modules
+#
+# unshift (@INC, "$Master/Tools");
+#
+# these we can only load now that we have correctly set the path to Master
+#
+# require Strict;
+require XML::DOM;
+require FileUtils;
+import FileUtils qw(canon_dir cleandir make_link newpath member
+		    normalize substitute_var_val diff_list remove_list
+		    rec_rmdir sync_dir walk_dir start_redirection stop_redirection);
+require Tpm;
+#
+# what the hell, how do I import this array from Tpm.pm ???
+#
+my %Tpm2Catalogue = (
+		     "ctib" => "ctib4tex",
+		     "CJK" => "cjk",
+		     "bayer" => "universa",
+		     "bigfoot" => "suffix",
+		     "cb" => "cbgreek",
+		     "cd-cover" => "cdcover",
+		     "cmex" => "cmextra",
+		     "cs" => "csfonts",
+		     "cyrplain" => "t2",
+		     "devanagr" => "devanagari",
+		     "eCards" => "ecards",
+		     "ESIEEcv" => "esieecv",
+		     "euclide" => "pst-eucl",
+		     "GuIT" => "guit",
+		     "HA-prosper" => "prosper",
+		     "ibycus" => "ibycus4",
+		     "ibygrk" => "ibycus4",
+		     "IEEEconf" => "ieeeconf",
+		     "IEEEtran" => "ieeetran",
+		     "iso" => "isostds",
+		     "iso10303" => "isostds",
+		     "jknapltx" => "jknappen",
+		     "kastrup" => "binhex",
+		     "le" => "frenchle",
+		     "mathtime" => "mathtime-ltx",
+		     "omega-devanagari" => "devanagari-omega",
+		     "pdftexdef" => "pdftex-def",
+		     "procIAGssymp" => "prociagssymp",
+		     "resume" => "res",
+		     "SIstyle" => "sistyle",
+		     "SIunits" => "siunits",
+		     "syntax" => "syntax2",
+		     "Tabbing" => "tabbing" );
+
+my $parser = new XML::DOM::Parser;
+my $startdir=getcwd();
+chdir($startdir);
+File::Basename::fileparse_set_fstype('unix');
+
+my @TpmList;
+
+if (@ARGV) {
+  # we have a (list of) packages on the command line
+  @TpmList = @ARGV;
+}
+else {
+  create_tpmlist();
+};
+
+list_licenses();
+
+1;
+
+my $LocalTPM;
+my $licline;
+my $bn;
+my $pkgcat;
+my $node;
+my $printfiles = '';
+
+sub create_tpmlist {
+
+  if 	( $debian_package =~ /^tetex-/ ) {
+    foreach (<$TpmDirGlob >) {push(@TpmList,$_)};
+  };
+
+  if 	( $debian_package =~ /^texlive-/ ) {
+    my $cfgfile = "../../" . $debian_package . ".tpm4licenses.cfg";
+    my @cfgLines;
+    open CFGFILE, $cfgfile or die "could not open $cfgfile";
+    while (<CFGFILE>) {
+      # this could go into one line (next if...) if only Emacs would grok it...
+      if (m/^#/) { 
+	  next ; 
+	}
+      chomp;
+      push(@cfgLines,$_);
+    };
+    for (@cfgLines) {
+      my $tpmFullname;
+      if ( -f "texmf/tpm/" . $_ ) {
+	$tpmFullname = "texmf/tpm/" . $_
+	  }
+      elsif ( -f "texmf-dist/tpm/" . $_ ) {
+	$tpmFullname = "texmf-dist/tpm/" . $_
+	  }
+      elsif ( -f "texmf-doc/tpm/" . $_ ) {
+	$tpmFullname = "texmf-doc/tpm/" . $_
+	  }
+      else {
+	print STDERR "Could not find $_\n";
+	exit 1;
+      };
+      push(@TpmList,$tpmFullname);
+    };
+  }; #end texlive
+};
+
+sub list_licenses {
+  foreach $LocalTPM (@TpmList) {
+    $licline = "";
+    $bn = &basename($LocalTPM,".tpm");
+    if (defined($Tpm2Catalogue{$bn})) {
+      $pkgcat = $Tpm2Catalogue{$bn};
+    } else {
+      $pkgcat = $bn;
+    }
+    $licline .= "$bn: ";
+    my $fletter = substr($pkgcat, 0, 1);
+    my $catname = "${Catalogue}/entries/$fletter/${pkgcat}.xml";
+    if (! -r $catname) {
+      $catname = "$tpmdir/${pkgcat}.xml";
+      if (! -r $catname) {
+	$licline .= "not-in-catalogue";
+	unless ($nocatalogue || $pkgcat =~ m/^individual.*/) {
+	  print "$licline\n";
+	  next;
+	};
+# 	  } else {
+# 	      print STDERR "found ${pkgcat}.xml in $tpmdir\n";
+      };
+    }
+    my $ltype;
+    unless ($nocatalogue  || $pkgcat =~ m/^individual.*/) { 
+      #don't try to parse the xml file if we don't have a catalogue
+      my $cat = $parser->parsefile($catname);
+      my ($version, $lversion, $lchecked, $luser, $lfile);
+      $node = $cat->getElementsByTagName("version")->item(0);
+      if ($node) {
+	$version = $node->getAttribute("number");
+      }
+      $node = $cat->getElementsByTagName("license")->item(0);
+      if ($node) {
+	# ok we have a license entry in there
+	$ltype = $node->getAttribute("type");
+	$lversion = $node->getAttribute("version");
+	$lchecked = $node->getAttribute("checked");
+	$luser = $node->getAttribute("username");
+	$lfile = $node->getAttribute("file");
+      }
+      if ("$lversion$lchecked$luser" eq "") {
+	if ("$ltype" eq "") {
+	  $licline .= "unknown";
+	} else {
+	  $licline .= "$ltype (unverified)";
+	  # we know the license, it makes sense to output the files
+	  $printfiles = '1';
+	}
+      } else {
+	$version ||= ''; # make sure we have no uninitialized string values
+	$lversion ||= '';
+	$licline .= "$ltype (verification data:$version:$lversion:$lchecked:$luser:$lfile)";
+	$printfiles = '1';
+      }
+    }
+    if ( $pkgcat =~ m/^individual.*/ ) {
+      $ltype = $pkgcat;
+      $ltype =~ s/individual_(.*)/$1/;
+      $licline = "$pkgcat $ltype (verification data:::::header)";
+      $printfiles = '1';
+    };
+    $what eq "license" && print "$licline\n";
+    # we know the license, it makes sense to output the files
+    $what eq "files" && ($printfiles || $nocatalogue) && printFiles($LocalTPM,$licline);
+  }
+
+
+  sub printFiles {
+    my ($LocalTPM,$licline)= @_;
+    my $pkg_header = "% " . $licline;
+    my $dom_parser = new XML::DOM::Parser;
+    my $doc = $dom_parser->parsefile($LocalTPM);
+    my %SourceFiles = Tpm::getListField($doc, "SourceFiles");
+    my %RunFiles = Tpm::getListField($doc, "RunFiles");
+    my %DocFiles = Tpm::getListField($doc, "DocFiles");
+
+    foreach ($RunFiles{"text"}, $DocFiles{"text"}, $SourceFiles{"text"}) { 
+      # this is already done in Tpm.pm, why isn't that sufficient?
+      $_ =~ s/^\n*// ;
+      # remove the texmf-dist/ we don't need
+      $_ =~ s@texmf-dist/@@g;
+      # make sure there's exactly one newline at the end
+      chomp;
+      $_ =~ s/$/\n/ ;
+    };
+
+    # we don't want the tpm file which isn't installed
+    $RunFiles{"text"} =~ s/\n.*\.tpm$//m;
+
+    my @SourceFiles = split(/\n/m,$SourceFiles{"text"});
+    my @RunFiles = split(/\n/m,$RunFiles{"text"});
+    my @DocFiles = split(/\n/m,$DocFiles{"text"});
+    foreach (@SourceFiles) { 
+      s/^\s//;
+      s@^[\s\n]*(.*)[\s\n]*$@$1@so;
+      s@\n\s*@\n@gm;
+    };
+    foreach (@RunFiles) { 
+      s/\s//;
+      s@^[\s\n]*(.*)[\s\n]*$@$1@so;
+      s@\n\s*@\n@gm;
+    };
+    foreach (@DocFiles) { 
+      s/\s//;
+      s@^[\s\n]*(.*)[\s\n]*$@$1@so;
+      s@\n\s*@\n@gm;
+    };
+    @DocFiles = grep(!/^$/,@DocFiles);
+    @RunFiles = grep(!/^$/,@RunFiles);
+    @SourceFiles = grep(!/^$/,@SourceFiles);
+
+    for ($debian_package) {
+      my @texmfPath;
+      if ( /^texlive/ ) { 
+	@texmfPath = ("texmf","texmf-dist","texmf-doc");
+	foreach (@RunFiles) {CheckFileExistence($_,\@texmfPath)};
+	foreach (@DocFiles) {CheckFileExistence($_,\@texmfPath)};
+	foreach (@SourceFiles) {CheckFileExistence($_,\@texmfPath)};
+	MergeDirectories(\@RunFiles,\@texmfPath);
+	MergeDirectories(\@DocFiles,\@texmfPath) if (@DocFiles);
+	MergeDirectories(\@SourceFiles,\@texmfPath) if (@SourceFiles);
+	print "\n" . $pkg_header . "\n";
+	print @RunFiles;
+	print @DocFiles;
+	print @SourceFiles;
+      };
+      if ( /^tetex-base$/ ) {
+	@texmfPath = (".");
+	foreach (@RunFiles) {CheckFileExistence($_,\@texmfPath)};
+	foreach (@DocFiles) {CheckFileExistence($_,\@texmfPath)};
+
+	MergeDirectories(\@RunFiles,\@texmfPath);
+	MergeDirectories(\@DocFiles,\@texmfPath) if (@DocFiles);
+	print "\n" . $pkg_header . "\n";
+	print @RunFiles;
+	print @DocFiles;
+      };
+      if ( /^tetex-src$/ ) {
+	foreach (@SourceFiles) {CheckFileExistence($_,\@texmfPath)};
+	MergeDirectories(\@SourceFiles,\@texmfPath);
+	unless (! @SourceFiles) {
+	  print "\n" . $pkg_header . "\n";
+	  print @SourceFiles;
+	}
+      };
+    };
+  }
+
+  sub CheckFileExistence {
+    my ($file,@texmfPath) = ($_[0],@{$_[1]});
+    my $found = 0;
+    foreach my $texmfDir (@texmfPath) {
+      -f $texmfDir . "/" . $file && ($found =1);
+    };
+    print STDERR "$file: Does not exist!\n" if ! $found;
+  }
+
+  sub MergeDirectories {
+    my ($filelist,@texmfPath) = ($_[0],@{$_[1]}); # $filelist is actually a pointer
+    # create a list of dirnames, and remove duplicates
+    my @dirnames = map {dirname($_) } @{$filelist};
+    my %UniqueHash = map { $_ , 1 } @dirnames;
+    @dirnames = keys %UniqueHash;
+
+    # For searching, we create a hash that contains the filenames as keys:
+    my %SearchHash;
+    %SearchHash = map { $_, 1 } @{$filelist} ;
+
+    my %DirComplete = map { $_, 1 } @dirnames;
+    for (@dirnames) {
+      my $dirname = $_;
+      my $fullDir;
+      my $rootDir;
+      for (@texmfPath) {
+	if ( -d ( $_ . "/" . $dirname )) { 
+	  $rootDir = $_;
+	  $fullDir =  ( $_ . "/" . $dirname );
+	};
+      };
+      $fullDir or die "This should not happen: no directory $dirname, nowhere.";
+      my  @InstalledFiles = `find $fullDir -maxdepth 1 -type f 2>/dev/null | grep -v tetex` 
+	  or die "Calling find for $dirname, expanded to $fullDir, failed.";
+      for (@InstalledFiles) {
+	chomp;
+	s@^$rootDir/@@;
+	$DirComplete{$dirname} = 0 unless $SearchHash{$_};
+      };
+      if ( $DirComplete{$dirname} ) {
+	for (@{$filelist} ) {
+	  # replace the file by its directory name
+	  s@$dirname/.*@$dirname/*@;
+	};
+      };
+# 	print STDERR "Directory $_ is $DirComplete{$dirname}\n";
+    };
+
+    # now the complete directories occur multiple times, remove duplicates again
+    %UniqueHash = map { ("$_\n" , 1) } @{$filelist} ;
+    @{$filelist} = keys %UniqueHash;
+  }
+
+}
+
