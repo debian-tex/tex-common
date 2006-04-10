@@ -5,6 +5,8 @@ tex-common (0.20.1) UNRELEASED; urgency=low
     the managecache question (closes: #360127) [frank]
   * Fix eperl open commands in maintainer scripts to work with -k [jdg]
   * Made preinst a /bin/sh script [jdg]
+  * Install the tpm2licenses Perl script into /usr/share/tex-common for
+    more convenient use [frank].
   * Update debconf translations:
     - Danish by Claus Hindsgaul <claus.hindsgaul@gmail.com> (closes:
       #360035)
@@ -18,8 +20,8 @@ tex-common (0.20.1) UNRELEASED; urgency=low
     - Japanese by Kenshi Muto <kmuto@topstudio.co.jp> (closes: #360679)
     - German by Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
     Many thanks to all contributors! [frank]
-  
- -- Frank Küster <frank@debian.org>  Tue,  4 Apr 2006 10:00:18 +0200
+
+ -- Frank Küster <frank@debian.org>  Mon, 10 Apr 2006 14:29:19 +0200
 
 tex-common (0.20) unstable; urgency=medium
 
