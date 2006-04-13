@@ -31,7 +31,7 @@ check_texmf(){
   checkfailed=false
   removepattern='( |=)'
   line=""
-  line=`egrep "^$variable" $file`
+  line=`egrep "^$variable" $file` || true
   if [ -z "$line" ]; then
     variable=${variable%$removepattern}
     db_subst tex-common/check_texmf_missing filename $file
