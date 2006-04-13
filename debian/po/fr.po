@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: tex-common 0.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-31 13:54+0200\n"
-"PO-Revision-Date: 2006-03-15 08:39+0100\n"
+"PO-Revision-Date: 2006-03-31 15:34+0100\n"
 "Last-Translator: Steve Petruzzello <dlist@bluewin.ch>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,11 +70,13 @@ msgid ""
 "If you accept, font generation will only work for users that have been  "
 "added to the group you chose - this has to be done manually by you!"
 msgstr ""
+"En acceptant cette option, la génération des polices ne fonctionnera que "
+"pour les utilisateurs appartenant au groupe que vous avez choisi ; cette "
+"opération doit être effectuée manuellement par vous !"
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for building other Debian packages.  In almost "
@@ -85,7 +87,7 @@ msgstr ""
 "permissions, mais uniquement parce que c'est nécessaire pour la construction "
 "d'autres paquets Debian. Dans presque toutes les autres configurations "
 "(machine de bureau, serveur multi-utilisateurs), il est fortement recommandé "
-"d'accepter cette option !"
+"d'accepter cette option (et d'ajouter les utilisateurs au groupe) !"
 
 #. Type: string
 #. Description
@@ -96,7 +98,6 @@ msgstr "Nom du groupe propriétaire du cache des polices Tex :"
 #. Type: string
 #. Description
 #: ../templates:26
-#, fuzzy
 msgid ""
 "You can choose a specific group which will own all directories under and "
 "including the TeX font cache /var/cache/fonts. These directories will  get "
@@ -104,8 +105,7 @@ msgid ""
 msgstr ""
 "Vous pouvez choisir un groupe particulier qui possédera tous les répertoires "
 "sous le cache des polices TeX situé sous /var/cache/fonts (ce répertoire "
-"inclus). Ces répertoires auront les permissions 3775. Il est recommandé de "
-"choisir le groupe « users »."
+"inclus). Ces répertoires auront les permissions 3775."
 
 #. Type: string
 #. Description
@@ -114,6 +114,9 @@ msgid ""
 "Note that on a Debian system, nobody is member of the \"users\" group by "
 "default, so local users have to be added manually!"
 msgstr ""
+"Veuillez noter que sur le système Debian, l'utilisateur « nobody » "
+"appartient par défaut au groupe « users », ce qui fait que les utilisateurs "
+"locaux doivent être ajoutés manuellement !"
 
 #. Type: note
 #. Description
