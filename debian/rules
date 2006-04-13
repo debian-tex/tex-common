@@ -15,6 +15,8 @@ sbin_manpages=$(foreach script,$(sbin_scripts), scripts/$(script).8) scripts/upd
 bin_installfiles=$(foreach script,$(bin_scripts), scripts/$(script))
 bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1) scripts/update-updmap.1
 
+nonbin_installfiles=$(foreach script,$(nonbin_scripts), scripts/$(script))
+
 # create maintainer scripts etc.
 EPERL_FILES := debian/common.functions debian/postinst debian/postrm debian/config debian/preinst
 eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.functions \
@@ -81,7 +83,7 @@ install: build
 	cp -a debian/md5sums/* $(INSTDIR)/usr/share/tex-common/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
-	cp $(nonbin_scripts) $(INSTDIR)/usr/share/tex-common/
+	cp $(nonbin_installfiles) $(INSTDIR)/usr/share/tex-common/
 	ln -s update-fontlang $(INSTDIR)/usr/sbin/update-language
 	ln -s update-fontlang $(INSTDIR)/usr/sbin/update-fmtutil
 	ln -s ../sbin/update-fontlang $(INSTDIR)/usr/bin/update-updmap
