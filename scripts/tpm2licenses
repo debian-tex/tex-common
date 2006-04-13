@@ -12,7 +12,6 @@
 #       --nocheckcatalogue
 #       --tpmdir
 #       --package
-# 	--master=Path	path to the Master
 # optional tpm file: check only that one
 #
 
@@ -41,7 +40,7 @@ use Cwd;
 
 
 # initialize AppConfig
-my $config = AppConfig->new("master=s", "catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s");
+my $config = AppConfig->new("catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s");
 
 # parse configurationfile, if present
 my @cfgDirs = (".","./debian","..","~");
@@ -57,21 +56,11 @@ for my $cfgDir (@cfgDirs) {
 $config->getopt();
 
 # assign conffile, commandline or default values:
-my $Master = $config->master() ? $config->master() : "." ;
 my $Catalogue = $config->catalogue() ? $config->catalogue() : "/src/TeX/texcatalogue/" ;
 my $what = $config->what() ? $config->what() : "files";
 my $debian_package = $config->package() ? $config->package() : "tetex-base";
 my $tpmdir = $config->tpmdir() ? $config->tpmdir() : "./debian/tpm";
 my $nocatalogue = $config->nocheckcatalogue() ? $config->nocheckcatalogue() : '';
-
-# if (!($opt_master =~ m,/.*$,,)) {
-#     $Master = `pwd`;
-#     chomp($Master);
-#     $Master .= "/$opt_master";
-# } else {
-#     $Master = $opt_master;
-# }
-# $what = $opt_what;
 
 if ($debian_package) {
   die "Unknown Debian package: $debian_package." unless
@@ -84,9 +73,6 @@ if ($debian_package) {
 	$debian_package =~ /^texlive-bin$/     );
 };
 
-# my $TpmGlobalPath = $Master;
-# my $DataGlobalPath = $Master;
-
 # texlive
 # my $TpmDirGlob = $Master . "./texmf-dist/tpm/*.tpm";
 # teTeX
@@ -97,13 +83,6 @@ my $sourceDir;
 chomp( $sourceDir = `pwd`); 
 $sourceDir .= "/";
 
-#
-# put Master/Tools/ into the include path to find TeX live perl modules
-#
-# unshift (@INC, "$Master/Tools");
-#
-# these we can only load now that we have correctly set the path to Master
-#
 # require Strict;
 require XML::DOM;
 require FileUtils;
@@ -353,6 +332,7 @@ sub list_licenses {
 	print @DocFiles;
       };
       if ( /^tetex-src$/ ) {
+	@texmfPath = (".");
 	foreach (@SourceFiles) {CheckFileExistence($_,\@texmfPath)};
 	MergeDirectories(\@SourceFiles,\@texmfPath);
 	unless (! @SourceFiles) {
