@@ -340,8 +340,6 @@ sarge_md5sum_list="
  /etc/texmf/platex/hyphen.cfg 1199fd3dbe752e8eedaca7a5a6df9258
  /etc/texmf/platex/language.dat 8e3525fe40ae72bb08f673b30eca1236
  /etc/texmf/platex/platex.ini c865212575be3a09cbadb694a803ca55
- /etc/texmf/updmap.d/00updmap.cfg 82884281d955998e22141cf67b45209d 
- /etc/texdoctk/texdocrc 9957008bc9073607c1090f4ce55cc3c0 
 
  /etc/texmf/dvips/config.ams df69e80e8157afde30550f21317bbd6d 
  /etc/texmf/dvips/config.cm 363c5ef43576af28b14330ae78ed5de8 
