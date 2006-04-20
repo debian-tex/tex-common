@@ -23,6 +23,12 @@ _Description: Manage the permissions of the TeX font cache with debconf?
 Template: tex-common/groupname
 Type: string
 Default: users
+#flag:comment:3
+#    In this paragraph, the wording is ambiguous (it could be read as,
+#    but does *not* mean: 'the account "nobody" is member of
+#    "users"').  This should be changed the next time that we have to
+#    change the english templates, anyway. Meanwhile, translators
+#    should take care to take the correct meaning.
 _Description: Group that should own the TeX font cache
  You can choose a specific group which will own all directories under and
  including the TeX font cache /var/cache/fonts. These directories will 
