@@ -9,6 +9,8 @@ tex-common (0.20.1) UNRELEASED; urgency=low
   * Made preinst a /bin/sh script [jdg]
   * Install the tpm2licenses Perl script and the Tpm.pm module into
     /usr/share/tex-common for more convenient use [frank].
+  * Add to the source package a ChangeLog file to keep track of the
+    copyright/licensing verification work I'm doing [frank]
   * Update debconf translations:
     - Danish by Claus Hindsgaul <claus.hindsgaul@gmail.com> (closes:
       #360035)
@@ -23,8 +25,6 @@ tex-common (0.20.1) UNRELEASED; urgency=low
     - German by Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
     - French by steve <dlist@bluewin.ch> (closes: #362426)
     Many thanks to all contributors! [frank]
-  * Add to the source package a ChangeLog file to keep track of the
-    copyright/licensing verification work I'm doing [frank]
 
  -- Frank Küster <frank@debian.org>  Thu, 13 Apr 2006 15:07:15 +0200
 

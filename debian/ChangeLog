@@ -1,0 +1,20 @@
+2006-04-11    <frank@kuesterei.ch>
+
+	* ltxmisc.tpm is added, but the individual files have not been checked
+
+	* Wrote an e-mail to Axel Kielhorn (the address he uses in usenet,
+  	Axel.NoSpam@gmx.de, since the one in adrconv's files bounces
+
+	* Fixed the tetex-src part of the script
+
+	* Wrote an other mail to Lars Engebretsen, regarding ae fonts
+
+2006-04-10    <frank@kuesterei.ch>
+
+	* tpm2licenses can now be installed and called with perl
+	/usr/share/tex-common/tpm2licenses (or simply use
+	dpkg-statoverride to make it executable...)
+
+	* This file is actually a Change Log only for my copyright/license
+	verification work
+
