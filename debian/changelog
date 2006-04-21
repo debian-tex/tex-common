@@ -1,4 +1,4 @@
-tex-common (0.20.1) UNRELEASED; urgency=low
+tex-common (0.21) unstable; urgency=low
 
   * Syntax error: postinst script silently failed when it should have
     displayed a debconf warning [frank]
@@ -26,7 +26,7 @@ tex-common (0.20.1) UNRELEASED; urgency=low
     - French by steve <dlist@bluewin.ch> (closes: #362426)
     Many thanks to all contributors! [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 13 Apr 2006 15:07:15 +0200
+ -- Frank Küster <frank@debian.org>  Fri, 21 Apr 2006 09:49:06 +0200
 
 tex-common (0.20) unstable; urgency=medium
 
