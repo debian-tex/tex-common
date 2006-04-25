@@ -1,3 +1,9 @@
+tex-common (0.21.1) UNRELEASED; urgency=low
+
+  * Also install FileUtils.pm which is needed by tpm2licenses [frank]
+
+ -- Frank Küster <frank@debian.org>  Tue, 25 Apr 2006 15:15:37 +0200
+
 tex-common (0.21) unstable; urgency=low
 
   * Syntax error: postinst script silently failed when it should have
