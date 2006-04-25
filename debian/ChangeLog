@@ -1,3 +1,17 @@
+2006-04-25    <frank@kuesterei.ch>
+
+	* Added tpm files for latex-beamer, pgf and xcolor, marked xcolor
+	as verified in the Catalogue.  To beamer.tpm, I added
+	beamerexample-seminar.tex - whether this is free depends on the
+	outcome of investigating seminar.
+
+	* Filed bug against pgf (wrong copyright file), but it's still
+	free, except maybe for some images.
+
+	* File #364127 against latex-beamer, because I found out that
+	beamer has files with unclear copyright.  Let others care for
+	other's business.
+
 2006-04-11    <frank@kuesterei.ch>
 
 	* ltxmisc.tpm is added, but the individual files have not been checked
