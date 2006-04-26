@@ -14,6 +14,7 @@
 #       --tpmdir
 #       --package
 #       --listallfiles
+#       --nocoverage
 # optional tpm file: check only that one
 #
 
@@ -42,7 +43,7 @@ use Cwd;
 
 
 # initialize AppConfig
-my $config = AppConfig->new("catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s", "listallfiles", "texmfPath=s");
+my $config = AppConfig->new("catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s", "listallfiles", "texmfPath=s", "nocoverage");
 
 # parse configurationfile, if present
 my @cfgDirs = (".","./debian","..","~");
@@ -66,6 +67,7 @@ my $nocatalogue = $config->nocheckcatalogue() ? $config->nocheckcatalogue() : ''
 my $listallfiles = $config->listallfiles() ? 1 : 0;
 my $texmfPathString = $config->texmfPath() ? $config->texmfPath() : ".";
 my @texmfPath = split ' ', $texmfPathString;
+my $nocoverage = $config->nocoverage() ? $config->nocoverage() : '';
 
 if ($debian_package) {
   die "Unknown Debian package: $debian_package." unless
@@ -238,7 +240,7 @@ sub list_licenses {
       printFiles($LocalTPM,$licline);
     }
   }
-  $what eq "files" && CheckCoverage();
+  $what eq "files" && ! $nocoverage && CheckCoverage();
 
 
   sub printFiles {
@@ -403,6 +405,7 @@ sub list_licenses {
 	if ( -d ( $_ . "/" . $dirname )) { 
 	  $rootDir = $_;
 	  $fullDir =  ( $_ . "/" . $dirname );
+	  last;
 	};
       };
       if (!$fullDir) {
