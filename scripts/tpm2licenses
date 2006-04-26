@@ -241,197 +241,196 @@ sub list_licenses {
     }
   }
   $what eq "files" && ! $nocoverage && CheckCoverage();
-
-
-  sub printFiles {
-    my ($LocalTPM,$licline)= @_;
-    my $pkg_header = "";
-    my $dom_parser = new XML::DOM::Parser;
-    my $doc = $dom_parser->parsefile($LocalTPM);
-    my %SourceFiles = Tpm::getListField($doc, "SourceFiles");
-    my %RunFiles = Tpm::getListField($doc, "RunFiles");
-    my %DocFiles = Tpm::getListField($doc, "DocFiles");
-
-    #
-    # NORBERT
-    # getListField returns a hash, and s{text} SHOULD be an array reference
-    # why isn't it like this???
-    # If it would be an array reference one could easily check whether
-    # sourcefile(text) is empty or not!!!
-    # Trick: If it was emtpy there is not size key!
-    #
-    if (!defined($SourceFiles{"size"})) { 
-	$SourceFiles{"text"} = ""; 
-    }
-    if (!defined($DocFiles{"size"})) { 
-	$DocFiles{"text"} = ""; 
-    }
-    if (!defined($RunFiles{"size"})) { 
-	$RunFiles{"text"} = ""; 
-    }
-     
-    foreach ($RunFiles{"text"}, $DocFiles{"text"}, $SourceFiles{"text"}) { 
-      # this is already done in Tpm.pm, why isn't that sufficient?
-      $_ =~ s/^\n*// ;
-      # remove the texmf-dist/ we don't need
-      $_ =~ s@texmf-dist/@@g;
-      # make sure there's exactly one newline at the end
-      chomp;
-      $_ =~ s/$/\n/ ;
-    };
-
-    # we don't want the tpm file which isn't installed
-    $RunFiles{"text"} =~ s/\n.*\.tpm$//m;
-
-    my @SourceFiles = split(/\n/m,$SourceFiles{"text"});
-    my @RunFiles = split(/\n/m,$RunFiles{"text"});
-    my @DocFiles = split(/\n/m,$DocFiles{"text"});
-    foreach (@SourceFiles) { 
-      s/^\s//;
-      s@^[\s\n]*(.*)[\s\n]*$@$1@so;
-      s@\n\s*@\n@gm;
-    };
-    foreach (@RunFiles) { 
-      s/\s//;
-      s@^[\s\n]*(.*)[\s\n]*$@$1@so;
-      s@\n\s*@\n@gm;
-    };
-    foreach (@DocFiles) { 
-      s/\s//;
-      s@^[\s\n]*(.*)[\s\n]*$@$1@so;
-      s@\n\s*@\n@gm;
-    };
-    @DocFiles = grep(!/^$/,@DocFiles);
-    @RunFiles = grep(!/^$/,@RunFiles);
-    @SourceFiles = grep(!/^$/,@SourceFiles);
-
-    for ($debian_package) {
-      #my @texmfPath;
-      if ( /^texlive/ ) { 
-	#@texmfPath = ("texmf","texmf-dist","texmf-doc");
-	#
-	# DocFiles are installed into /u/s/d/pkg/...
-	# do we have to strip the first doc/ part
-	@DocFiles = map { $_ =~ s,^doc/,, ; $_; } @DocFiles ;
-	foreach (@RunFiles) {CheckFileExistence($_)};
-	foreach (@DocFiles) {CheckFileExistence($_)};
-	foreach (@SourceFiles) {CheckFileExistence($_)};
-	MergeDirectories(\@RunFiles);
-	MergeDirectories(\@DocFiles) if (@DocFiles);
-	MergeDirectories(\@SourceFiles) if (@SourceFiles);
-	print @RunFiles;
-	print @DocFiles;
-	print @SourceFiles;
-      };
-      if ( /^tetex-base$/ ) {
-	#@texmfPath = (".");
-	foreach (@RunFiles) {CheckFileExistence($_)};
-	foreach (@DocFiles) {CheckFileExistence($_)};
-
-	MergeDirectories(\@RunFiles);
-	MergeDirectories(\@DocFiles) if (@DocFiles);
-	print @RunFiles;
-	print @DocFiles;
-      };
-      if ( /^tetex-src$/ ) {
-	#@texmfPath = (".");
-	foreach (@SourceFiles) {CheckFileExistence($_)};
-	MergeDirectories(\@SourceFiles);
-	unless (! @SourceFiles) {
-	  print @SourceFiles;
-	}
-      };
-    };
-  }
-
-  sub CheckCoverage {
-    my @allfilesinpackage;
-    my @notcoveredfiles;
-    foreach my $tmf (@texmfPath) {
-      push @allfilesinpackage, `find $tmf -type f`;
-    }
-    chomp @allfilesinpackage;
-    foreach (@allfilesinpackage) {
-      next if (m/\.tpm$/);
-      if (!(in_list($_,@coveredfiles))) {
-        push @notcoveredfiles, $_;
-      }
-    }
-    print "\n\nCOVERAGE CHECK:";
-    if ($#notcoveredfiles < 0) {
-      print "OK\n";
-    } else {
-      print "NOT COVERED FILES:\n";
-      foreach (@notcoveredfiles) {
-        print $_,"\n";
-      }
-    }
-  }
-
-  sub in_list {
-    my ($what, @list) = @_;
-    foreach (@list) { 
-      if ($what eq $_) { return 1; }
-    }
-    return 0;
-  }
-
-  sub CheckFileExistence {
-    my ($file) = @_;
-    my $found = 0;
-    foreach my $texmfDir (@texmfPath) {
-      -f $texmfDir . "/" . $file && ($found =1) && push @coveredfiles , "$texmfDir/$file" ;
-    };
-    print STDERR "$file: Does not exist!\n" if ! $found;
-  }
-
-  sub MergeDirectories {
-    my ($filelist) = @_; # filelist is actually a pointer
-    # create a list of dirnames, and remove duplicates
-    my @dirnames = map {dirname($_) } @{$filelist};
-    my %UniqueHash = map { $_ , 1 } @dirnames;
-    @dirnames = keys %UniqueHash;
-
-    # For searching, we create a hash that contains the filenames as keys:
-    my %SearchHash;
-    %SearchHash = map { $_, 1 } @{$filelist} ;
-
-    my %DirComplete = map { $_, 1 } @dirnames;
-    for (@dirnames) {
-      my $dirname = $_;
-      my $fullDir;
-      my $rootDir;
-      for (@texmfPath) {
-	if ( -d ( $_ . "/" . $dirname )) { 
-	  $rootDir = $_;
-	  $fullDir =  ( $_ . "/" . $dirname );
-	  last;
-	};
-      };
-      if (!$fullDir) {
-        printf STDERR "This should not happen: no directory $dirname, nowhere.\n";
-	next;
-      }
-      my  @InstalledFiles = `find $fullDir -maxdepth 1 -type f 2>/dev/null | grep -v tetex` 
-	  or die "Calling find for $dirname, expanded to $fullDir, failed.";
-      for (@InstalledFiles) {
-	chomp;
-	s@^$rootDir/@@;
-	$DirComplete{$dirname} = 0 unless $SearchHash{$_};
-      };
-      if ( $DirComplete{$dirname} ) {
-	for (@{$filelist} ) {
-	  # replace the file by its directory name
-	  s@$dirname/.*@$dirname/*@;
-	};
-      };
-# 	print STDERR "Directory $_ is $DirComplete{$dirname}\n";
-    };
-
-    # now the complete directories occur multiple times, remove duplicates again
-    %UniqueHash = map { ("$_\n" , 1) } @{$filelist} ;
-    @{$filelist} = keys %UniqueHash;
-  }
-
 }
+
+sub printFiles {
+  my ($LocalTPM,$licline)= @_;
+  my $pkg_header = "";
+  my $dom_parser = new XML::DOM::Parser;
+  my $doc = $dom_parser->parsefile($LocalTPM);
+  my %SourceFiles = Tpm::getListField($doc, "SourceFiles");
+  my %RunFiles = Tpm::getListField($doc, "RunFiles");
+  my %DocFiles = Tpm::getListField($doc, "DocFiles");
+
+  #
+  # NORBERT
+  # getListField returns a hash, and s{text} SHOULD be an array reference
+  # why isn't it like this???
+  # If it would be an array reference one could easily check whether
+  # sourcefile(text) is empty or not!!!
+  # Trick: If it was emtpy there is not size key!
+  #
+  if (!defined($SourceFiles{"size"})) { 
+    $SourceFiles{"text"} = ""; 
+  }
+  if (!defined($DocFiles{"size"})) { 
+    $DocFiles{"text"} = ""; 
+  }
+  if (!defined($RunFiles{"size"})) { 
+    $RunFiles{"text"} = ""; 
+  }
+  
+  foreach ($RunFiles{"text"}, $DocFiles{"text"}, $SourceFiles{"text"}) { 
+    # this is already done in Tpm.pm, why isn't that sufficient?
+    $_ =~ s/^\n*// ;
+    # remove the texmf-dist/ we don't need
+    $_ =~ s@texmf-dist/@@g;
+    # make sure there's exactly one newline at the end
+    chomp;
+    $_ =~ s/$/\n/ ;
+  };
+
+  # we don't want the tpm file which isn't installed
+  $RunFiles{"text"} =~ s/\n.*\.tpm$//m;
+
+  my @SourceFiles = split(/\n/m,$SourceFiles{"text"});
+  my @RunFiles = split(/\n/m,$RunFiles{"text"});
+  my @DocFiles = split(/\n/m,$DocFiles{"text"});
+  foreach (@SourceFiles) { 
+    s/^\s//;
+    s@^[\s\n]*(.*)[\s\n]*$@$1@so;
+    s@\n\s*@\n@gm;
+  };
+  foreach (@RunFiles) { 
+    s/\s//;
+    s@^[\s\n]*(.*)[\s\n]*$@$1@so;
+    s@\n\s*@\n@gm;
+  };
+  foreach (@DocFiles) { 
+    s/\s//;
+    s@^[\s\n]*(.*)[\s\n]*$@$1@so;
+    s@\n\s*@\n@gm;
+  };
+  @DocFiles = grep(!/^$/,@DocFiles);
+  @RunFiles = grep(!/^$/,@RunFiles);
+  @SourceFiles = grep(!/^$/,@SourceFiles);
+
+  for ($debian_package) {
+    #my @texmfPath;
+    if ( /^texlive/ ) { 
+      #@texmfPath = ("texmf","texmf-dist","texmf-doc");
+      #
+      # DocFiles are installed into /u/s/d/pkg/...
+      # do we have to strip the first doc/ part
+      @DocFiles = map { $_ =~ s,^doc/,, ; $_; } @DocFiles ;
+      foreach (@RunFiles) {CheckFileExistence($_)};
+      foreach (@DocFiles) {CheckFileExistence($_)};
+      foreach (@SourceFiles) {CheckFileExistence($_)};
+      MergeDirectories(\@RunFiles);
+      MergeDirectories(\@DocFiles) if (@DocFiles);
+      MergeDirectories(\@SourceFiles) if (@SourceFiles);
+      print @RunFiles;
+      print @DocFiles;
+      print @SourceFiles;
+    };
+    if ( /^tetex-base$/ ) {
+      #@texmfPath = (".");
+      foreach (@RunFiles) {CheckFileExistence($_)};
+      foreach (@DocFiles) {CheckFileExistence($_)};
+
+      MergeDirectories(\@RunFiles);
+      MergeDirectories(\@DocFiles) if (@DocFiles);
+      print @RunFiles;
+      print @DocFiles;
+    };
+    if ( /^tetex-src$/ ) {
+      #@texmfPath = (".");
+      foreach (@SourceFiles) {CheckFileExistence($_)};
+      MergeDirectories(\@SourceFiles);
+      unless (! @SourceFiles) {
+	print @SourceFiles;
+      }
+    };
+  };
+}
+
+sub CheckCoverage {
+  my @allfilesinpackage;
+  my @notcoveredfiles;
+  foreach my $tmf (@texmfPath) {
+    push @allfilesinpackage, `find $tmf -type f`;
+  }
+  chomp @allfilesinpackage;
+  foreach (@allfilesinpackage) {
+    next if (m/\.tpm$/);
+    if (!(in_list($_,@coveredfiles))) {
+      push @notcoveredfiles, $_;
+    }
+  }
+  print "\n\nCOVERAGE CHECK:";
+  if ($#notcoveredfiles < 0) {
+    print "OK\n";
+  } else {
+    print "NOT COVERED FILES:\n";
+    foreach (@notcoveredfiles) {
+      print $_,"\n";
+    }
+  }
+}
+
+sub in_list {
+  my ($what, @list) = @_;
+  foreach (@list) { 
+    if ($what eq $_) { return 1; }
+  }
+  return 0;
+}
+
+sub CheckFileExistence {
+  my ($file) = @_;
+  my $found = 0;
+  foreach my $texmfDir (@texmfPath) {
+    -f $texmfDir . "/" . $file && ($found =1) && push @coveredfiles , "$texmfDir/$file" ;
+  };
+  print STDERR "$file: Does not exist!\n" if ! $found;
+}
+
+sub MergeDirectories {
+  my ($filelist) = @_; # filelist is actually a pointer
+  # create a list of dirnames, and remove duplicates
+  my @dirnames = map {dirname($_) } @{$filelist};
+  my %UniqueHash = map { $_ , 1 } @dirnames;
+  @dirnames = keys %UniqueHash;
+
+  # For searching, we create a hash that contains the filenames as keys:
+  my %SearchHash;
+  %SearchHash = map { $_, 1 } @{$filelist} ;
+
+  my %DirComplete = map { $_, 1 } @dirnames;
+  for (@dirnames) {
+    my $dirname = $_;
+    my $fullDir;
+    my $rootDir;
+    for (@texmfPath) {
+      if ( -d ( $_ . "/" . $dirname )) { 
+	$rootDir = $_;
+	$fullDir =  ( $_ . "/" . $dirname );
+	last;
+      };
+    };
+    if (!$fullDir) {
+      printf STDERR "This should not happen: no directory $dirname, nowhere.\n";
+      next;
+    }
+    my  @InstalledFiles = `find $fullDir -maxdepth 1 -type f 2>/dev/null | grep -v tetex` 
+	or die "Calling find for $dirname, expanded to $fullDir, failed.";
+    for (@InstalledFiles) {
+      chomp;
+      s@^$rootDir/@@;
+      $DirComplete{$dirname} = 0 unless $SearchHash{$_};
+    };
+    if ( $DirComplete{$dirname} ) {
+      for (@{$filelist} ) {
+	# replace the file by its directory name
+	s@$dirname/.*@$dirname/*@;
+      };
+    };
+# 	print STDERR "Directory $_ is $DirComplete{$dirname}\n";
+  };
+
+  # now the complete directories occur multiple times, remove duplicates again
+  %UniqueHash = map { ("$_\n" , 1) } @{$filelist} ;
+  @{$filelist} = keys %UniqueHash;
+}
+
 
