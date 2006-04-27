@@ -1,4 +1,12 @@
+2006-04-27    <frank@kuesterei.ch>
+
+	* Wrote e-mail to amslatex upstream to clarify their license. 
+
 2006-04-25    <frank@kuesterei.ch>
+
+	* texinfo's README allows distribution "without royalty" - is this
+	"no-sell"?  It's probably just ambiguous wording, "in any medium"
+	should be moved away from "without royalty".
 
 	* Added tpm files for latex-beamer, pgf and xcolor, marked xcolor
 	as verified in the Catalogue.  To beamer.tpm, I added
