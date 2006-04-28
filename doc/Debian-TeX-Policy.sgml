@@ -372,7 +372,11 @@
 	<prgn>texdoc</prgn>.  This can be done be either installing
 	the files below <file>/usr/share/doc/texmf</file>, or by
 	providing symlinks from subdirectories of that location to the
-	actual documentation files.
+	actual documentation files.  To allow partial parallel
+	installation of different basic TeX packages, these always
+	install their documentation files into
+	<file>/usr/share/doc/<var>packagename</var></file> and put
+	symlinks into their respective <var>TEXMFSITE</var>.
 	</p>
 	
 	<p>

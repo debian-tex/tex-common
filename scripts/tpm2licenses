@@ -305,6 +305,7 @@ sub printFiles {
   @RunFiles = grep(!/^$/,@RunFiles);
   @SourceFiles = grep(!/^$/,@SourceFiles);
 
+  # fake case statement
   for ($debian_package) {
     #my @texmfPath;
     if ( /^texlive/ ) { 
