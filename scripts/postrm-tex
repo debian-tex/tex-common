@@ -27,9 +27,16 @@ dhit_libkpathsea_configured ()
 
 dhit_check_run_without_errors ()
 {
+    silent=0
+    if [ "$1" = "-silent" ] ; then
+        silent=1
+	shift
+    fi
     if which "$1" >/dev/null; then
         tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
-        printf "Running $*. This may take some time..."
+        if [ $silent = 0 ] ; then
+	    printf "Running $*. This may take some time..."
+	fi
         set +e
         if "$@" > $tempfile 2>&1 ; then
             rm -f $tempfile
@@ -84,9 +91,9 @@ dhit_build_hyphen_format_if_format_exists ()
 case "$1" in
     remove|disappear)
         # It doesn't hurt to call all of them.
-        dhit_check_run_without_errors update-updmap --quiet
-        dhit_check_run_without_errors update-language
-        dhit_check_run_without_errors update-fmtutil
+        dhit_check_run_without_errors -silent update-updmap --quiet
+        dhit_check_run_without_errors -silent update-language
+        dhit_check_run_without_errors -silent update-fmtutil
         # The mktexlsr call needs an installed and configured basic TeX
         # system, so check this.
         if dhit_libkpathsea_configured; then

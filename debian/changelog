@@ -1,8 +1,10 @@
 tex-common (0.21.1) UNRELEASED; urgency=low
 
   * Also install FileUtils.pm which is needed by tpm2licenses [frank]
+  * Make running of update-* commands silent in the debhelper postrm
+    helper scripts (Closes: #365070) [preining]
 
- -- Frank Küster <frank@debian.org>  Tue, 25 Apr 2006 15:15:37 +0200
+ -- Norbert Preining <preining@logic.at>  Sat, 29 Apr 2006 14:19:22 +0200
 
 tex-common (0.21) unstable; urgency=low
 
