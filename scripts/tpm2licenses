@@ -134,7 +134,18 @@ my %Tpm2Catalogue = (
 		     "SIstyle" => "sistyle",
 		     "SIunits" => "siunits",
 		     "syntax" => "syntax2",
-		     "Tabbing" => "tabbing" );
+		     "Tabbing" => "tabbing",
+# the following were added in tpm2licenses
+		     "avantgar" => "urw-base35",
+		     "bookman" => "urw-base35",
+		     "courier" => "urw-base35",
+		     "helvetic" => "urw-base35",
+		     "palatino" => "urw-base35",
+		     "symbol" => "urw-base35",
+		     "times" => "urw-base35",
+		     "zapfchan" => "urw-base35",
+		     "zapfding" => "urw-base35"
+		     );
 
 my $parser = new XML::DOM::Parser;
 my $startdir=getcwd();
