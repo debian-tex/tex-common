@@ -431,7 +431,7 @@ sub MergeDirectories {
 
   # now the complete directories occur multiple times, remove duplicates again
   %UniqueHash = map { ("$_\n" , 1) } @{$filelist} ;
-  @{$filelist} = keys %UniqueHash;
+  @{$filelist} = sort keys %UniqueHash;
 }
 
 
