@@ -6,8 +6,16 @@ tex-common (0.21.1) UNRELEASED; urgency=low
   * Debconf translations:
     - updated wording of swedish template, thanks to Daniel Nylander
       <yeager@lidkoping.net> (closes: #365992) [frank]
+  * Change the configuration scheme again a little: Before accepting a
+    group name typed by the user, test whether it really exists.
+    Furthermore, if there is only one user in the "normal user" range in
+    /etc/passwd, suggest their group as the owner of the font cache.  And
+    finally, make the wording clearer everywhere.  Many thanks to Anthony
+    DeRobertis <anthony@derobert.net>, James R. Van Zandt"
+    <jrvz@comcast.net> and Helge Hafting <helge.hafting@aitel.hist.no>
+    (closes: #366107, #366095, #365513) [frank]
 
- -- Frank Küster <frank@debian.org>  Thu,  4 May 2006 15:43:36 +0200
+ -- Frank Küster <frank@debian.org>  Sat,  6 May 2006 18:41:47 +0200
 
 tex-common (0.21) unstable; urgency=low
 

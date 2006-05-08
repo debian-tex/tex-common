@@ -1,5 +1,5 @@
 <::>//
-#!/bin/sh -e
+#!/bin/sh -ex
 # 
 # postinst maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id$
@@ -126,7 +126,12 @@ EOF
     # do the config stuff
     db_get tex-common/managecache || true
     if [ $RET = true ] ; then
-      db_get tex-common/groupname || true
+      db_get tex-common/singleuser || true
+      if [ "$RET" = true ]; then
+	db_get tex-common/groupname_single || true
+      else
+	db_get tex-common/groupname_multi || true
+      fi
       GROUP="$RET"
       if [ -n "$GROUP" ] ; then
 	echo -n "Adjusting permissions of TeX font cache... "

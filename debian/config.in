@@ -1,5 +1,5 @@
 #include variables
-#!/bin/sh -e
+#!/bin/sh -ex
 # 
 # config maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id: config.in 114 2005-08-04 15:04:01Z frn $
@@ -43,7 +43,7 @@ db_unregister tex-common/managedlsr || true
 
 # we set the groupname seen flag to false in any case since now it has
 # a completely new meaning
-db_fset tex-common/groupname seen false || true
+# db_fset tex-common/groupname seen false || true
 
 # this script may be run twice: Once by dpkg-preconfigure, once again by
 # debconf when it is sourced in the postinst script.  We must do the
@@ -72,7 +72,8 @@ if [ "$RET" != "true" ]; then
     # if the permissions are still <:=$FONTCACHE_PERMS:> we set managecache to true
     if [ $PERMS = $FONTCACHE_PERMS ] ; then
       db_set tex-common/managecache true || true
-      db_set tex-common/groupname "$GROUP" || true
+      db_set tex-common/groupname_single "$GROUP" || true
+      db_set tex-common/groupname_multi "$GROUP" || true
     else
       db_set tex-common/managecache false || true
     fi
@@ -92,6 +93,28 @@ if [ "$RET" != "true" ]; then
     else
       db_set tex-common/managecache false || true
     fi
+    # now check whether this machine has only one normal user account (outside the system range)
+    usercount=0
+    userid=""
+    for uid in `cut -d ':' -f 3 /etc/passwd`; do
+      if [ $uid -ge 1000 ] && [ $uid -le 29999 ]; then
+	userid=$uid
+	: $((usercount++))
+      fi
+    done
+    if [ $usercount -eq 1 ]; then
+      db_set tex-common/singleuser true
+      # exactly one user account, number in $userid: suggest its group
+      # this might break with other authentication setups than /etc/passwd,
+      # but it's only a suggestion
+      groupID=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid:/ \
+        { s@^[^:]\{1,\}:[^:]\{1,\}:$userid:\([[:digit:]]\{1,\}\):.*@\1@; p }" \
+	/etc/passwd`
+      GROUP=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid/ \
+        {s@^\([^:]\{1,\}\):[^:]\{1,\}:$userid:.*@\1@; p}" \
+        /etc/group`
+      db_set tex-common/groupname_single "$GROUP" || true
+    fi
   fi
   cache_debconf_priority=medium
   db_input $cache_debconf_priority tex-common/managecache || true
@@ -99,8 +122,30 @@ if [ "$RET" != "true" ]; then
 
   db_get tex-common/managecache || true
   if [ "$RET" = true ]; then
-    db_input $cache_debconf_priority tex-common/groupname || true
-    db_go
+    groupname_variant=multi
+    if [ $usercount -eq 1 ]; then
+      groupname_variant=single
+    fi
+    while true; do
+      db_input $cache_debconf_priority tex-common/groupname_$groupname_variant || true
+      db_go || true
+      db_get tex-common/groupname_$groupname_variant || true
+      GROUP="$RET"
+      # now check whether the returned group name exists.  This time, we can't rely on
+      # /etc/group, since we would never get out of this loop if the group information
+      # comes from somewhere else.
+      # Instead, we try to chown a file to that group
+      dobreak=true # means: execute /bin/true, do not break out of the loop
+      tempfile=`mktemp`
+      if [ -n "$GROUP" ] && chown :$GROUP $tempfile; then # no redirecting of stderr!
+	dobreak=break
+      fi
+      $dobreak
+      # still there?  invalid group
+      db_subst tex-common/invalid_groupname badgroup $GROUP || true
+      db_input $cache_debconf_priority tex-common/invalid_groupname || true
+      db_go
+    done
   fi
 fi
 
