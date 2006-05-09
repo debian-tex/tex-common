@@ -1,5 +1,5 @@
 #include variables
-#!/bin/sh -ex
+#!/bin/sh -e
 # 
 # config maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id: config.in 114 2005-08-04 15:04:01Z frn $
@@ -93,29 +93,31 @@ if [ "$RET" != "true" ]; then
     else
       db_set tex-common/managecache false || true
     fi
-    # now check whether this machine has only one normal user account (outside the system range)
-    usercount=0
-    userid=""
-    for uid in `cut -d ':' -f 3 /etc/passwd`; do
-      if [ $uid -ge 1000 ] && [ $uid -le 29999 ]; then
-	userid=$uid
-	: $((usercount++))
-      fi
-    done
-    if [ $usercount -eq 1 ]; then
-      db_set tex-common/singleuser true
-      # exactly one user account, number in $userid: suggest its group
-      # this might break with other authentication setups than /etc/passwd,
-      # but it's only a suggestion
-      groupID=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid:/ \
+  fi
+
+  # now check whether this machine has only one normal user account (outside the system range)
+  usercount=0
+  userid=""
+  for uid in `cut -d ':' -f 3 /etc/passwd`; do
+    if [ $uid -ge 1000 ] && [ $uid -le 29999 ]; then
+      userid=$uid
+      : $((usercount++))
+    fi
+  done
+  if [ $usercount -eq 1 ]; then
+    db_set tex-common/singleuser true
+    # exactly one user account, number in $userid: suggest its group
+    # this might break with other authentication setups than /etc/passwd,
+    # but it's only a suggestion
+    groupID=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid:/ \
         { s@^[^:]\{1,\}:[^:]\{1,\}:$userid:\([[:digit:]]\{1,\}\):.*@\1@; p }" \
 	/etc/passwd`
-      GROUP=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid/ \
+    GROUP=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid/ \
         {s@^\([^:]\{1,\}\):[^:]\{1,\}:$userid:.*@\1@; p}" \
         /etc/group`
-      db_set tex-common/groupname_single "$GROUP" || true
-    fi
+    db_set tex-common/groupname_single "$GROUP" || true
   fi
+
   cache_debconf_priority=medium
   db_input $cache_debconf_priority tex-common/managecache || true
   db_go

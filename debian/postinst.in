@@ -1,5 +1,5 @@
 <::>//
-#!/bin/sh -ex
+#!/bin/sh -e
 # 
 # postinst maintainer script for the Debian <:=${PACKAGE}:> package.
 # $Id$

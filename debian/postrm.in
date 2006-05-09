@@ -15,6 +15,9 @@ TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
 # give commandline args a name
 action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade, disappear
 
+. <:=${CONFMODULE}:>
+db_version 2.0
+
 <:open(FUNCTIONS,'debian/postrm.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 <:=@FUNCTIONS:>//
 
