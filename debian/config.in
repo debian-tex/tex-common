@@ -56,11 +56,11 @@ if [ "$RET" != "true" ]; then
 
   # check wether the directory /var/cache/fonts is group writeable and
   # for which group
-  PERMS=$(stat --format="%a" /var/cache/fonts 2>/dev/null)
-  GROUP=$(stat --format="%G" /var/cache/fonts 2>/dev/null)
+  PERMS=$(stat --format="%a" /var/cache/fonts 2>/dev/null) || true
+  GROUP=$(stat --format="%G" /var/cache/fonts 2>/dev/null) || true
 
   if [ "$GROUP" = "UNKNOWN" ] ; then
-    GROUP=$(stat --format="%g" /var/cache/fonts 2>/dev/null)
+    GROUP=$(stat --format="%g" /var/cache/fonts 2>/dev/null) || true
   fi
 
   # see wether we already have asked this question once
@@ -98,7 +98,7 @@ if [ "$RET" != "true" ]; then
   # now check whether this machine has only one normal user account (outside the system range)
   usercount=0
   userid=""
-  for uid in `cut -d ':' -f 3 /etc/passwd`; do
+  for uid in `getent passwd | cut -d ':' -f 3`; do
     if [ $uid -ge 1000 ] && [ $uid -le 29999 ]; then
       userid=$uid
       : $((usercount++))
@@ -107,14 +107,8 @@ if [ "$RET" != "true" ]; then
   if [ $usercount -eq 1 ]; then
     db_set tex-common/singleuser true
     # exactly one user account, number in $userid: suggest its group
-    # this might break with other authentication setups than /etc/passwd,
-    # but it's only a suggestion
-    groupID=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid:/ \
-        { s@^[^:]\{1,\}:[^:]\{1,\}:$userid:\([[:digit:]]\{1,\}\):.*@\1@; p }" \
-	/etc/passwd`
-    GROUP=`sed -n -e "/^[^:]\{1,\}:[^:]\{1,\}:$userid/ \
-        {s@^\([^:]\{1,\}\):[^:]\{1,\}:$userid:.*@\1@; p}" \
-        /etc/group`
+    groupID=`getent passwd | egrep "^[^:]+:[^:]+:$userid:" | cut -d ':' -f 4`
+    GROUP=`getent group | egrep "^[^:]+:[^:]+:$groupID:" | cut -d ':' -f 1`
     db_set tex-common/groupname_single "$GROUP" || true
   fi
 
