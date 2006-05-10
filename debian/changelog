@@ -14,8 +14,14 @@ tex-common (0.21.1) UNRELEASED; urgency=low
     DeRobertis <anthony@derobert.net>, James R. Van Zandt"
     <jrvz@comcast.net> and Helge Hafting <helge.hafting@aitel.hist.no>
     (closes: #366107, #366095, #365513) [frank]
+  * Fix lintian warnings and errors: 
+    - Move eperl to Build-Depends-Indep
+    - Fix my name in update-language(8)
+    - Add overrides for the font cache permissions and our debconf note if
+      the postinst script fails.
+  * Bump standards version (no changes needed)
 
- -- Frank Küster <frank@debian.org>  Sat,  6 May 2006 18:41:47 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 10 May 2006 13:19:52 +0200
 
 tex-common (0.21) unstable; urgency=low
 
