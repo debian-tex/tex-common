@@ -108,8 +108,8 @@ install: build
 	ln -s ../doc/texmf $(INSTDIR)/usr/share/texmf/doc
 
 	# Debian-specific stuff
-	cp debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
-	cp debian/lintian-overrides $(INSTDIR)/usr/share/lintian/overrides/tex-common
+	install -m 644 debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
+	install -m 644 debian/lintian-overrides $(INSTDIR)/usr/share/lintian/overrides/tex-common
 
 
 # Build architecture-independent files here.
