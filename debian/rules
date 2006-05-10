@@ -109,7 +109,7 @@ install: build
 
 	# Debian-specific stuff
 	cp debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
-	cp debian/lintian-override $(INSTDIR)/usr/share/lintian/overrides/tex-common
+	cp debian/lintian-overrides $(INSTDIR)/usr/share/lintian/overrides/tex-common
 
 
 # Build architecture-independent files here.

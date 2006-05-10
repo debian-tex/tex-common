@@ -5,6 +5,7 @@ usr/share/tex-common
 usr/share/texmf/web2c
 usr/share/doc/texmf
 usr/share/bug/tex-common
+usr/share/lintian/overrides
 etc/texmf/fmt.d
 etc/texmf/language.d
 etc/texmf/texmf.d
