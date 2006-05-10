@@ -1,4 +1,4 @@
-tex-common (0.21.1) UNRELEASED; urgency=low
+tex-common (0.22) unstable; urgency=low
 
   * Also install FileUtils.pm which is needed by tpm2licenses [frank]
   * Make running of update-* commands silent in the debhelper postrm
@@ -14,12 +14,12 @@ tex-common (0.21.1) UNRELEASED; urgency=low
     DeRobertis <anthony@derobert.net>, James R. Van Zandt"
     <jrvz@comcast.net> and Helge Hafting <helge.hafting@aitel.hist.no>
     (closes: #366107, #366095, #365513) [frank]
-  * Fix lintian warnings and errors: 
+  * Fix lintian warnings and errors: [frank]
     - Move eperl to Build-Depends-Indep
     - Fix my name in update-language(8)
     - Add overrides for the font cache permissions and our debconf note if
-      the postinst script fails.
-  * Bump standards version (no changes needed)
+      the postinst script fails. 
+  * Bump standards version (no changes needed) [frank]
 
  -- Frank Küster <frank@debian.org>  Wed, 10 May 2006 13:19:52 +0200
 
