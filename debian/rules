@@ -107,6 +107,11 @@ install: build
 	# Create a symlink in TEXMFMAIN for docs
 	ln -s ../doc/texmf $(INSTDIR)/usr/share/texmf/doc
 
+	# Debian-specific stuff
+	cp debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
+	cp debian/lintian-override $(INSTDIR)/usr/share/lintian/overrides/tex-common
+
+
 # Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.
@@ -120,10 +125,7 @@ binary-arch: build install
 	dh_installchangelogs 
 	dh_installdocs
 	dh_installexamples
-#	dh_install
-#	dh_installinfo
 	dh_installman $(sbin_manpages) $(bin_manpages)
-	install debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
 	dh_link
 	dh_compress
 	dh_fixperms --exclude=var/cache/fonts
