@@ -6,15 +6,10 @@ _Description: Manage the permissions of the TeX font cache with debconf?
  sources) on the fly. These files can be saved into the TeX font cache
  in /var/cache/fonts and later reused.
  .
- If you do not accept, the font cache directory will be
- world-writeable, which is a security risk - everybody is able to fill
- up the /var partition.
- .
- If you accept, you can specify a group name and all directories under
- /var/cache/fonts will get ownership root:<groupname> and permission
- bits 3775 (i.e. writable for the group <groupname>, sticky and setgid
- bit set). Accordingly, the ls-R index file will be owned and writable
- by that group.
+ If you do not accept, the font cache directory will be world-writable
+ which is a security risk.  If you accept, you can specify a group
+ name and all directories under /var/cache/fonts will get ownership
+ root:<groupname> and permission bits 3775.
  .
  If you accept, font generation on multi-user machines will only work
  for users that have been added to the group you chose - this has to
@@ -24,15 +19,15 @@ _Description: Manage the permissions of the TeX font cache with debconf?
  The default is not to manage permissions with debconf, but this is just
  because this is required for automatic installs on Debian package
  building machines (buildds).  In almost every other setup, like
- desktop machines or multi-user servers, accepting
- this is strongly recommended!
+ desktop machines or multi-user servers, accepting this is strongly
+ recommended!
 
 Template: tex-common/singleuser
 Type: boolean
 Default: false
-Description: internal item
- Internal item which tells postinst whether we think only one user
- works on this system
+Description: internal item, question mark for lintian?
+ Internal item which tells postinst whether config thinks only one
+ user works on this system
 
 Template: tex-common/groupname_multi
 Type: string
@@ -40,7 +35,7 @@ Default: users
 #flag:comment:3
 # Don't translate "users" in quotation marks, it is the name of the
 # default group as found in /etc/groups.
-_Description: Group that should own the TeX font cache
+_Description: Group that should own the TeX font cache:
  You can choose a specific group which will own all directories under and
  including the TeX font cache /var/cache/fonts. These directories will 
  get permission 3775.
@@ -54,7 +49,7 @@ Default: users
 #flag:comment:4
 # Don't translate "users" in quotation marks, it is the name of the
 # default group as found in /etc/groups.
-_Description: Group that should own the TeX font cache
+_Description: Group that should own the TeX font cache:
  You can choose a specific group which will own all directories under and
  including the TeX font cache /var/cache/fonts. These directories will 
  get permission 3775.
