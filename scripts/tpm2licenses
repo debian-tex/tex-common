@@ -284,8 +284,10 @@ sub printFiles {
   foreach ($RunFiles{"text"}, $DocFiles{"text"}, $SourceFiles{"text"}) { 
     # this is already done in Tpm.pm, why isn't that sufficient?
     $_ =~ s/^\n*// ;
-    # remove the texmf-dist/ we don't need
+    # remove the texmf-dist/ etc we don't need
     $_ =~ s@texmf-dist/@@g;
+    $_ =~ s@texmf-doc/@@g;
+    $_ =~ s@texmf/@@g;
     # make sure there's exactly one newline at the end
     chomp;
     $_ =~ s/$/\n/ ;
