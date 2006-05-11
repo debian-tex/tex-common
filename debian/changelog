@@ -1,3 +1,12 @@
+tex-common (0.22.1) UNRELEASED; urgency=low
+
+  * After the groupname question has been renamed, make sure that the new
+    questions are not shown again when the old one has already been seen,
+    and unregister the old question (closes: #366812) [frank]
+  * Fix bashism in config (closes: #366789) [frank]
+
+ -- Frank Küster <frank@debian.org>  Thu, 11 May 2006 13:19:12 +0200
+
 tex-common (0.22) unstable; urgency=low
 
   * Also install FileUtils.pm which is needed by tpm2licenses [frank]

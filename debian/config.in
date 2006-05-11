@@ -41,9 +41,14 @@ db_unregister tex-common/groupperm || true
 db_unregister tex-common/userperm || true
 db_unregister tex-common/managedlsr || true
 
-# we set the groupname seen flag to false in any case since now it has
-# a completely new meaning
-# db_fset tex-common/groupname seen false || true
+# The groupname question has been split up, but it need not be shown again
+db_fget tex-common/groupname seen || true
+if [ "$RET" = true ]; then
+ db_fset tex-common/groupname_single seen true || true
+ db_fset tex-common/groupname_multi seen true || true
+fi
+db_unregister tex-common/groupname
+
 
 # this script may be run twice: Once by dpkg-preconfigure, once again by
 # debconf when it is sourced in the postinst script.  We must do the
@@ -101,7 +106,7 @@ if [ "$RET" != "true" ]; then
   for uid in `getent passwd | cut -d ':' -f 3`; do
     if [ $uid -ge 1000 ] && [ $uid -le 29999 ]; then
       userid=$uid
-      : $((usercount++))
+      : $(($usercount+1))
     fi
   done
   if [ $usercount -eq 1 ]; then
