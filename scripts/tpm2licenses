@@ -426,6 +426,8 @@ sub MergeDirectories {
       printf STDERR "This should not happen: no directory $dirname, nowhere.\n";
       next;
     }
+    my @AllInstalledFiles = `find $fullDir -maxdepth 1 -type f 2>/dev/null`;
+    if ($#AllInstalledFiles == -1) { next; }
     my  @InstalledFiles = `find $fullDir -maxdepth 1 -type f 2>/dev/null | grep -v tetex` 
 	or die "Calling find for $dirname, expanded to $fullDir, failed.";
     for (@InstalledFiles) {
