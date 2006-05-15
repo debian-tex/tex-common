@@ -191,6 +191,7 @@ sub list_licenses {
     }
     $licline .= "$bn: ";
     if ($Catalogue =~ m/file:(.*)$/) {
+      # use the precompiled list of liclines extracted from the Catalogue
       $licline = `grep ^${bn}: $1`;
       chomp $licline;
       if ($licline eq "") { $licline = "tpm $bn not found in $1, strange"; }
