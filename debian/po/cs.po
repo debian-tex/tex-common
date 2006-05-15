@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-05-10 13:38+0200\n"
-"PO-Revision-Date: 2006-03-31 16:55+0200\n"
+"PO-Revision-Date: 2006-05-14 09:25+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,16 +33,15 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "A TeX system needs  to generate new font data (pixel data, metric, sources) "
 "on the fly. These files can be saved into the TeX font cache in /var/cache/"
 "fonts and later reused."
 msgstr ""
-"Systém TeX může za běhu vytvářet nová data týkající se fontů, jako jsou "
-"pixelová data, metriky nebo zdroje. Aby se tato data nemusela vytvářet "
-"pokaždé znovu, mohou být uložena do vyrovnávací paměti TeXu (/var/cache/"
-"fonts) pro pozdější znovupoužití."
+"Systém TeX musí za běhu vytvářet nová data týkající se fontů (pixelová data, "
+"metriky, zdroje). Aby se tato data nemusela vytvářet pokaždé znovu, mohou "
+"být uložena do vyrovnávací paměti TeXu (/var/cache/fonts) pro pozdější "
+"znovupoužití."
 
 #. Type: boolean
 #. Description
@@ -53,25 +52,29 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
+"Odpovíte-li záporně, do adresáře s vyrovnávací pamětí fontů budou moci "
+"zapisovat všichni uživatelé, což je bezpečnostní riziko. Odpovíte-li kladně, "
+"budete moci zadat jméno skupiny a všechny adresáře pod /var/cache/fonts pak "
+"budou mít vlastníka root:<jménoskupiny> s právy 3775."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "If you accept, font generation on multi-user machines will only work for "
 "users that have been added to the group you chose - this has to be done "
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"Odpovíte-li kladně, bude vytváření fontů fungovat pouze pro uživatele, kteří "
-"jsou součástí skupiny, jež vyberete. (Přidání do skupiny budete muset "
-"provést ručně.)"
+"Při kladné odpovědi to znamená, že na víceuživatelských stojích bude "
+"vytváření fontů fungovat pouze pro uživatele, kteří budou součástí skupiny, "
+"jež vyberete. (Uživatele musíte do do skupiny přidat ručně!) Na "
+"jednouživatelských počítačích se systém pokusí odhadnout vhodnou skupinu "
+"automaticky."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for automatic installs on Debian package building "
@@ -79,29 +82,27 @@ msgid ""
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
 "Výchozí možnost je nepoužívat debconf pro správu oprávnění, ale to je jen "
-"kvůli vytváření ostatních debianích balíků. V téměř všech ostatních "
-"situacích (desktopové počítače, víceuživatelské servery) je doporučeno "
-"souhlasit (a přidat uživatele do skupiny)."
+"kvůli automatickým instalacím na počítačích projektu Debian, které slouží k "
+"sestavování balíků (farmy buildd). V téměř všech ostatních situacích "
+"(desktopové počítače, víceuživatelské servery) je doporučeno souhlasit."
 
 #. Type: string
 #. Description
 #. Don't translate "users" in quotation marks, it is the name of the
 #. default group as found in /etc/groups.
 #: ../templates:38
-#, fuzzy
 msgid ""
 "The default is \"users\",  Note that on a Debian system, no local user is "
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
-"Pamatujte, že ve standardním Debianu nepatří do skupiny \"users\" žádný "
-"uživatel, musíte je tedy přidat ručně!"
+"Výchozí možnost je \"users\", ovšem připomeňme, že ve standardním Debianu "
+"nepatří do této skupiny žádný uživatel, musíte je tedy přidat ručně!"
 
 #. Type: string
 #. Description
 #: ../templates:52
-#, fuzzy
 msgid "Group that should own the TeX font cache:"
-msgstr "Skupina, která má vlastnit vyrovnávací paměť s TeXovými fonty"
+msgstr "Skupina, která má vlastnit vyrovnávací paměť s TeXovými fonty:"
 
 #. Type: string
 #. Description
@@ -123,6 +124,9 @@ msgid ""
 "correct, the best choice is to choose this user's private group  with the "
 "same name as the user name."
 msgstr ""
+"Balík rozpoznal na tomto systému pouze jediného aktivního uživatele. Pokud "
+"je to správně, je nejlepší zvolit soukromou skupinu tohoto uživatele. "
+"Soukromá skupina je stejná jako uživatelovo přihlašovací jméno."
 
 #. Type: string
 #. Description
@@ -134,6 +138,9 @@ msgid ""
 "if daemons running as system users will use TeX, it is suggested to choose "
 "an existing group, like \"users\", and add the required users manually."
 msgstr ""
+"Jestliže tomu tak není a TeX by na tomto počítači mělo používat více "
+"uživatelů nebo systémových daemonů, měli byste zvolit stávající skupinu "
+"(např. \"users\") a následně do ní ručně přidat příslušné uživatele."
 
 #. Type: note
 #. Description
@@ -217,17 +224,3 @@ msgstr ""
 #: ../templates:102
 msgid "Exiting."
 msgstr "Končím."
-
-#, fuzzy
-#~ msgid ""
-#~ "If you accept, you can specify a group name and all directories under /"
-#~ "var/cache/fonts will get ownership root:<groupname> and permission bits "
-#~ "3775 (i.e. writable for the group <groupname>, sticky and setgid bit "
-#~ "set). Accordingly, the ls-R index file will be owned and writable by that "
-#~ "group."
-#~ msgstr ""
-#~ "Budete-li souhlasit, můžete zadat jméno skupiny, která se použije pro "
-#~ "všechny adresáře pod /var/cache/fonts. Vlastníkem tedy bude root:"
-#~ "<jménoskupiny> s právy 3775 (tj. skupina má práva zápisu a je nastavený "
-#~ "setgid a sticky bit). Indexový soubor ls-R bude taktéž vlastněn danou "
-#~ "skupinou."

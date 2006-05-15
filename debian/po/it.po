@@ -1,14 +1,14 @@
-# tex-common po-debconf translation to italian
+# Italian (it) translation of debconf templates for tex-common
 # Copyright (C) 2006 Software in the Public Interest
 # This file is distributed under the same license as the tex-common package.
-# Luca Monducci <luca.mo@tiscali.it>, 2004 - 2006.
+# Luca Monducci <luca.mo@tiscali.it>, 2004-2006.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: tex-common italian debconf templates\n"
+"Project-Id-Version: tex-common 0.22 italian debconf templates\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-05-10 13:38+0200\n"
-"PO-Revision-Date: 2006-04-03 21:08+0200\n"
+"PO-Revision-Date: 2006-05-14 10:37+0200\n"
 "Last-Translator: Luca Monducci <luca.mo@tiscali.it>\n"
 "Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,15 +24,15 @@ msgstr "Gestire i permessi sulla cache dei font TeX con debconf?"
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "A TeX system needs  to generate new font data (pixel data, metric, sources) "
 "on the fly. These files can be saved into the TeX font cache in /var/cache/"
 "fonts and later reused."
 msgstr ""
-"Un sistema TeX può creare dei dati (informazioni su pixel, metrica e "
-"sorgenti) al volo. Queste informazioni possono essere salvate nella cache "
-"dei font TeX in /var/cache/fonts e riusati in seguito."
+"Un sistema TeX ha bisogno di creare dei dati sui font (informazioni su "
+"pixel, metrica e sorgenti) al volo. Queste informazioni possono essere "
+"salvate nella cache dei font TeX in /var/cache/fonts per essere riusate in "
+"seguito."
 
 #. Type: boolean
 #. Description
@@ -43,25 +43,29 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
+"Se non si accetta tutti hanno il permesso di scrittura nella directory "
+"cache dei font e questo è pericoloso per la sicurezza. Se si accetta è "
+"possibile specificare il nome di un gruppo e tutte le directory sotto /var"
+"/cache/fonts assumono come proprietario root:<nomegruppo> e permessi 3775."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "If you accept, font generation on multi-user machines will only work for "
 "users that have been added to the group you chose - this has to be done "
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"Se si accetta la creazione dei font funziona solo per gli utenti membri del "
-"gruppo prescelto. L'aggiunta degli utenti al gruppo deve essere fatta "
-"manualmente."
+"Se si accetta in un sistema multi-utente la creazione dei font funziona "
+"solo per gli utenti che sono stati inseriti nel gruppo prescelto (questa "
+"operazione deve essere effettuata manualmente). Sulle macchine usate da un "
+"solo utente, la procedura di configurazione cerca di determinare "
+"automaticamente un gruppo adatto."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for automatic installs on Debian package building "
@@ -69,31 +73,30 @@ msgid ""
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
 "La configurazione predefinita non prevede la gestione dei permessi con "
-"debconf, ma questo solo perché è un requisito per la compilazione di altri "
-"pacchetti Debian. Nella maggior parte dei casi, come per le macchine desktop "
-"o per i server multi-utente, si raccomanda la sua attivazione (oltre a "
-"aggiungere gli utenti al gruppo)."
+"debconf, ma questo solo perché è un requisito per l'installazione "
+"automatica del pacchetto sulle macchine di compilazione Debian (buildd). "
+"Nella maggior parte dei casi, come per le macchine desktop o per i server "
+"multi-utente, si raccomanda la sua attivazione."
 
 #. Type: string
 #. Description
 #. Don't translate "users" in quotation marks, it is the name of the
 #. default group as found in /etc/groups.
 #: ../templates:38
-#, fuzzy
 msgid ""
 "The default is \"users\",  Note that on a Debian system, no local user is "
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
-"Notare che su un sistema Debian nessuno è membro del gruppo «users», gli "
-"utenti locali devono essere aggiunti al gruppo manualmente."
+"Il gruppo predefinito è «users». Notare che normalmente su un sistema "
+"Debian nessun utente locale è membro del gruppo «users», gli utenti "
+"devono essere aggiunti al gruppo manualmente."
 
 # ../templates:52
 #. Type: string
 #. Description
 #: ../templates:52
-#, fuzzy
 msgid "Group that should own the TeX font cache:"
-msgstr "Gruppo a cui deve appartenere la cache dei font TeX"
+msgstr "Gruppo a cui deve appartenere la cache dei font TeX:"
 
 #. Type: string
 #. Description
@@ -103,8 +106,8 @@ msgid ""
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775."
 msgstr ""
-"Si può specificare il gruppo a cui apparterranno tutte le directory sotto /"
-"var/cache/fonts, compresa la cache dei font TeX. Queste directory avranno "
+"Si può specificare il gruppo a cui apparterranno tutte le directory sotto "
+"/var/cache/fonts, compresa la cache dei font TeX. Queste directory avranno "
 "permessi 3775."
 
 #. Type: string
@@ -115,6 +118,10 @@ msgid ""
 "correct, the best choice is to choose this user's private group  with the "
 "same name as the user name."
 msgstr ""
+"La procedura di configurazione ha rilevato che questo sistema è usato da "
+"un solo utente. Se questa ipotesi è corretta allora la soluzione migliore "
+"è scegliere il gruppo privato di questo utente, cioè quello con lo stesso "
+"nome dell'utente."
 
 #. Type: string
 #. Description
@@ -126,6 +133,10 @@ msgid ""
 "if daemons running as system users will use TeX, it is suggested to choose "
 "an existing group, like \"users\", and add the required users manually."
 msgstr ""
+"Se questa ipotesi non è corretta e si suppone che su questo sistema "
+"lavoreranno più utenti oppure se alcuni dei demoni eseguiti come utente di "
+"sistema usano TeX, si consiglia di scegliere un gruppo esistente, per "
+"esempio «users», e di aggiungervi manualmente gli utenti."
 
 #. Type: note
 #. Description
@@ -142,9 +153,9 @@ msgid ""
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
 "extension '.cnf'."
 msgstr ""
-"texmf.cnf è stato creato precedentemente da update-texmf usando tutti i file "
-"in /etc/texmf/texmf.d/. Adesso update-texmf legge solo i file con estensione "
-"«.cnf»."
+"texmf.cnf è stato creato precedentemente da update-texmf usando tutti i "
+"file in /etc/texmf/texmf.d/. Adesso update-texmf legge solo i file con "
+"estensione «.cnf»."
 
 # ../templates:75
 #. Type: note
@@ -214,17 +225,3 @@ msgstr ""
 #: ../templates:102
 msgid "Exiting."
 msgstr "Uscita."
-
-#, fuzzy
-#~ msgid ""
-#~ "If you accept, you can specify a group name and all directories under /"
-#~ "var/cache/fonts will get ownership root:<groupname> and permission bits "
-#~ "3775 (i.e. writable for the group <groupname>, sticky and setgid bit "
-#~ "set). Accordingly, the ls-R index file will be owned and writable by that "
-#~ "group."
-#~ msgstr ""
-#~ "Se si accetta è possibile specificare il nome di un gruppo e *tutte* le "
-#~ "directory sotto /var/cache/fonts assumono come proprietario root:"
-#~ "<nomegruppo> e permessi 3775 (cioè il gruppo <nomegruppo> ha il permesso "
-#~ "di scrittura e sono attivi i bit sticky e setgid). Come conseguenza il "
-#~ "gruppo possiede e ha il permesso di scrittura sul file ls-R."

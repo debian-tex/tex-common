@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-05-10 13:38+0200\n"
-"PO-Revision-Date: 2006-03-31 15:10+0200\n"
+"PO-Revision-Date: 2006-05-14 11:31+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
-"Language-Team: Danish <dansk@klid.dk>\n"
+"Language-Team: Danish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,6 @@ msgstr "Håndtér TeX's skrifttypemellemlagers rettigheder med debconf?"
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "A TeX system needs  to generate new font data (pixel data, metric, sources) "
 "on the fly. These files can be saved into the TeX font cache in /var/cache/"
@@ -34,7 +33,7 @@ msgid ""
 msgstr ""
 "TeX-systemer skal nogen gange generere nye skrifttypedata (piksel-data, mål "
 "og kilder) undervejs. Disse filer kan gemmes i et TeX-skrifttypemellemlager "
-"i /var/cache/fonts for senere genbrug."
+"i /var/cache/fonts, så de kan bruges igen senere."
 
 #. Type: boolean
 #. Description
@@ -45,24 +44,28 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
+"Hvis du ikke accepterer, vil mappen med skrifttypemellemlagret være skrivbart "
+"for alle, hvilket udgør en sikkerhedsrisiko. Hvis du accepterer, kan du angive "
+"et gruppenavn, så alle mapperne under /var/cache/fonts får ejerskabet "
+"root:<gruppenavn>, og rettighederne 3775."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "If you accept, font generation on multi-user machines will only work for "
 "users that have been added to the group you chose - this has to be done "
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"Hvis du accepterer, vil generering af skrifttyper kun virke for brugere, der "
-"er blevet føjet til den gruppe, du vælger - dette må du selv sørge for!"
+"Hvis du accepterer, vil generering på flerbrugermaskiner kun virke for brugere, "
+"der er tilføjet den valgte gruppe - dette skal gøres manuelt af dig! På maskiner, "
+"der kun benyttes af en enkelt bruger, vil opsætningen forsøge automatisk at "
+"finde en passende gruppe."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for automatic installs on Debian package building "
@@ -70,29 +73,29 @@ msgid ""
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
 "Som udgangspunkt håndteres rettighederne ikke af debconf, men der kun fordi "
-"dette er nødvendigt for at bygge andre Debianpakker. I næsten alle andre "
-"opsætninger, såsom skrivebordsmaskiner og flerbruger-servere, anbefales det "
-"kraftigt at acceptere dette (og tilføje brugere til gruppen)!"
+"dette er nødvendigt for automatiske installationer på Debians pakkeopbygningsmaskiner "
+"(buildds). I næsten alle andre opsætninger, såsom skrivebordsmaskiner og "
+"flerbruger-servere, anbefales det kraftigt at acceptere dette (og tilføje brugere til "
+"gruppen)!"
 
 #. Type: string
 #. Description
 #. Don't translate "users" in quotation marks, it is the name of the
 #. default group as found in /etc/groups.
 #: ../templates:38
-#, fuzzy
 msgid ""
 "The default is \"users\",  Note that on a Debian system, no local user is "
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
-"Bemærk, at ingen som udgangspunkt er medlem af gruppen \"users\" på et "
-"Debiansystem, så lokale brugere skal manuelt føjes til denne gruppe!"
+"Standardvalget er \"users\". Bemærk, at ingen som udgangspunkt er medlem af "
+"gruppen \"users\" på et Debiansystem, så lokale brugere skal manuelt føjes til denne "
+"gruppe!"
 
 #. Type: string
 #. Description
 #: ../templates:52
-#, fuzzy
 msgid "Group that should own the TeX font cache:"
-msgstr "Gruppe, der skal eje TeX-skrifttypemellemlageret"
+msgstr "Gruppe, der skal eje TeX-skrifttypemellemlageret:"
 
 #. Type: string
 #. Description
@@ -114,6 +117,9 @@ msgid ""
 "correct, the best choice is to choose this user's private group  with the "
 "same name as the user name."
 msgstr ""
+"Opsætningen har kun fundet en enkelt bruger på dette system. Hvis det er "
+"korrekt, vil det bedste valg være at vælge denne brugers private gruppe med "
+"samme navn som brugernavnet."
 
 #. Type: string
 #. Description
@@ -125,6 +131,10 @@ msgid ""
 "if daemons running as system users will use TeX, it is suggested to choose "
 "an existing group, like \"users\", and add the required users manually."
 msgstr ""
+"Hvis det er forkert, og flere brugere skal kunne arbejde på denne maskine, "
+"eller der er dæmoner på systemet, der benytter TeX, foreslås det at vælge "
+"en eksisterende gruppe, såsom \"users\", og tilføje de nødvendige brugere "
+"manuelt."
 
 #. Type: note
 #. Description
@@ -181,10 +191,8 @@ msgstr "Fejlbehæftet essentiel linje i ${filename}"
 #. Type: note
 #. Description
 #: ../templates:102
-msgid ""
-"An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgstr ""
-"En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
+msgid "An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgstr "En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
 
 #. Type: note
 #. Description
@@ -607,3 +615,4 @@ msgstr "Afslutter."
 #~ msgstr ""
 #~ "Bemærk at opsætningsfilen bliver håndteret af debconf, hvis du vælger "
 #~ "dette, men at du ellers er nødt til selv at rette filen."
+
