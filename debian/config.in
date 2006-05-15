@@ -72,10 +72,10 @@ if [ "$RET" != "true" ]; then
   db_fget tex-common/managecache seen || true
   SEEN="$RET"
 
-  if [ $SEEN = true ] ; then
+  if [ "$SEEN" = true ] ; then
     # this question was already shown
     # if the permissions are still <:=$FONTCACHE_PERMS:> we set managecache to true
-    if [ $PERMS = $FONTCACHE_PERMS ] ; then
+    if [ "$PERMS" = $FONTCACHE_PERMS ] ; then
       db_set tex-common/managecache true || true
       db_set tex-common/groupname_single "$GROUP" || true
       db_set tex-common/groupname_multi "$GROUP" || true
@@ -84,16 +84,16 @@ if [ "$RET" != "true" ]; then
     fi
   else
     # this question has not been seen, so if the permissions are 
-    # - either empty, because the file is not yet present
-    # - or the new permissions <:=$FONTCACHE_PERMS:> as we want to ship them
+    # - either the new permissions <:=$FONTCACHE_PERMS:> as we'd like to set them
     # - or the permissions as shipped by old tetex versions
     # then set the managecache to true, otherwise to false
     # we will later change it to <:=$FONTCACHE_PERMS:> in the true case
     #
-    # If the permissions are as shipped in the deb, don't set to true
-    # (after noninteractive install in pbuilder etc., dir needs to be world-writable).
+    # If the permissions are empty (preconfigure phase) or as shipped
+    # in the deb, don't set to true (after noninteractive install in
+    # pbuilder etc., dir needs to be world-writable).
 
-    if [ -z "$PERMS" ] || [ "$PERMS" = $FONTCACHE_PERMS ] || [ "$PERMS" = 1777 ]; then
+    if [ "$PERMS" = $FONTCACHE_PERMS ] || [ "$PERMS" = 1777 ]; then
       db_set tex-common/managecache true || true
     else
       db_set tex-common/managecache false || true

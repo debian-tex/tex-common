@@ -4,8 +4,13 @@ tex-common (0.22.1) UNRELEASED; urgency=low
     questions are not shown again when the old one has already been seen,
     and unregister the old question (closes: #366812) [frank]
   * Fix bashism in config (closes: #366789) [frank]
+  * Fix our check for a working configuration in texmf.d (closes:
+    #366907), thanks Ralf [frank]
+  * Make sure the font cache directory is always world-writeable - we
+    previously missed the case where apt-utils are installed in a buildd
+    chroot (again closes: #354113) [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 11 May 2006 13:19:12 +0200
+ -- Frank Küster <frank@debian.org>  Mon, 15 May 2006 15:05:38 +0200
 
 tex-common (0.22) unstable; urgency=low
 
