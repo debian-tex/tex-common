@@ -209,7 +209,6 @@
           <item><file>/usr/share/texmf/</file>, referenced as <var>TEXMFMAIN</var></item>
           <item><file>/var/lib/texmf/</file>, referenced as <var>TEXMFSYSVAR</var></item>
           <item><file>/etc/texmf/</file>, referenced as <var>TEXMFSYSCONFIG</var></item>
-          <item><file>/usr/share/texmf-site/</file>, referenced as <var>TEXMFSITE</var></item>
           <item><file>/usr/local/share/texmf/</file>, referenced as <var>TEXMFLOCAL</var></item>
           <item> Any directories listed in the <var>TEXMFHOME</var> configuration
                  variable in <file>texmf.cnf</file> or as an environment
@@ -376,7 +375,7 @@
 	installation of different basic TeX packages, these always
 	install their documentation files into
 	<file>/usr/share/doc/<var>packagename</var></file> and put
-	symlinks into their respective <var>TEXMFSITE</var>.
+	symlinks into their respective <var>TEXMFDIST</var>.
 	</p>
 	
 	<p>

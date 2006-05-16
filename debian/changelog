@@ -4,8 +4,9 @@ tex-common (0.22.1) UNRELEASED; urgency=low
     questions are not shown again when the old one has already been seen,
     and unregister the old question (closes: #366812) [frank]
   * Fix bashism in config (closes: #366789) [frank]
-  * Fix our check for a working configuration in texmf.d (closes:
-    #366907), thanks Ralf [frank]
+  * Fix our check for a working configuration in texmf.d, and write short
+    information messages to stderr for the noninteractive frontend or for
+    people who don't have a pencil (closes: #366907), thanks Ralf [frank]
   * Make sure the font cache directory is always world-writeable - we
     previously missed the case where apt-utils are installed in a buildd
     chroot (again closes: #354113) [frank]
@@ -14,8 +15,10 @@ tex-common (0.22.1) UNRELEASED; urgency=low
     - Danish by Claus Hindsgaul <claus.hindsgaul@gmail.com> (closes:
       #367180) 
     - Italian by Luca Monducci <luca.mo@tiscali.it> (closes: #367183)
+  * Debian TeX Policy:
+    Remove last occurrences of obsolete TEXMFSITE.
 
- -- Frank Küster <frank@debian.org>  Mon, 15 May 2006 15:15:15 +0200
+ -- Frank Küster <frank@debian.org>  Tue, 16 May 2006 19:57:48 +0200
 
 tex-common (0.22) unstable; urgency=low
 
