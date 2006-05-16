@@ -64,7 +64,7 @@ _Description: Group that should own the TeX font cache:
  required users manually.
 
 Template: tex-common/invalid_groupname
-Type: note
+Type: error
 Description: The group name you entered, ${badgroup}, does not exist
  The setup has tried to change ownership of a test file to the group
  you entered in the previous dialog box, 
@@ -85,7 +85,7 @@ _Description: Change of name of files in /etc/texmf/texmf.d/
  '.cnf' to its name; for example, 22mymacro => 22mymacro.cnf.
 
 Template: tex-common/check_texmf_missing
-Type: note
+Type: error
 _Description: Essential entry missing in ${filename}
  An essential entry is missing in ${filename}:
  .
@@ -98,7 +98,7 @@ _Description: Essential entry missing in ${filename}
  Exiting.
 
 Template: tex-common/check_texmf_wrong
-Type: note
+Type: error
 _Description: Essential entry wrong in ${filename}
  An essential entry is wrong in ${filename}:
  ${variable} does not contain
