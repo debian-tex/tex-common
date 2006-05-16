@@ -38,6 +38,7 @@ check_texmf(){
     db_fset tex-common/check_texmf_missing seen false || true
     db_input critical tex-common/check_texmf_missing || true
     db_go || true
+    echo "Error in $file: $variable not defined." >&2
     checkfailed=true
   else
     if ! echo "$line" | egrep -q "$pattern"; then
@@ -48,6 +49,7 @@ check_texmf(){
       db_fset tex-common/check_texmf_wrong seen false || true
       db_input critical  tex-common/check_texmf_wrong || true
       db_go || true
+      echo "Error in $file: $variable incorrectly defined." >&2
       checkfailed=true
     fi
     if [ "$variable" = TEXFONTMAPS ]; then
@@ -60,6 +62,7 @@ check_texmf(){
 	db_subst tex-common/check_texmf_wrong pattern "/dvips//"
 	db_fset tex-common/check_texmf_wrong seen false || true
 	db_input critical tex-common/check_texmf_wrong || true
+	echo "Error in $file: $variable incorrectly defined." >&2
 	db_go || true
 	checkfailed=true
       fi

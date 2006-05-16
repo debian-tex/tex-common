@@ -111,6 +111,13 @@ EOF
     check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFDIST
 
     if [ $checkfailed = true ]; then
+      echo "Unrecoverable errors in your configuration have been detected" >&2
+      echo "in configuration files in /etc/texmf/." >&2
+      echo "If you've not seen debconf error messages,  see your mail for details" >&2
+      echo "or use an interactive debconf frontend." >&2
+      echo >&2
+      echo "Exiting" >&2
+
       exit 1
     fi
 
