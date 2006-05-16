@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-05-14 11:31+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
 "Language-Team: Danish\n"
@@ -44,10 +44,10 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
-"Hvis du ikke accepterer, vil mappen med skrifttypemellemlagret være skrivbart "
-"for alle, hvilket udgør en sikkerhedsrisiko. Hvis du accepterer, kan du angive "
-"et gruppenavn, så alle mapperne under /var/cache/fonts får ejerskabet "
-"root:<gruppenavn>, og rettighederne 3775."
+"Hvis du ikke accepterer, vil mappen med skrifttypemellemlagret være "
+"skrivbart for alle, hvilket udgør en sikkerhedsrisiko. Hvis du accepterer, "
+"kan du angive et gruppenavn, så alle mapperne under /var/cache/fonts får "
+"ejerskabet root:<gruppenavn>, og rettighederne 3775."
 
 #. Type: boolean
 #. Description
@@ -58,10 +58,10 @@ msgid ""
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"Hvis du accepterer, vil generering på flerbrugermaskiner kun virke for brugere, "
-"der er tilføjet den valgte gruppe - dette skal gøres manuelt af dig! På maskiner, "
-"der kun benyttes af en enkelt bruger, vil opsætningen forsøge automatisk at "
-"finde en passende gruppe."
+"Hvis du accepterer, vil generering på flerbrugermaskiner kun virke for "
+"brugere, der er tilføjet den valgte gruppe - dette skal gøres manuelt af "
+"dig! På maskiner, der kun benyttes af en enkelt bruger, vil opsætningen "
+"forsøge automatisk at finde en passende gruppe."
 
 #. Type: boolean
 #. Description
@@ -73,10 +73,10 @@ msgid ""
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
 "Som udgangspunkt håndteres rettighederne ikke af debconf, men der kun fordi "
-"dette er nødvendigt for automatiske installationer på Debians pakkeopbygningsmaskiner "
-"(buildds). I næsten alle andre opsætninger, såsom skrivebordsmaskiner og "
-"flerbruger-servere, anbefales det kraftigt at acceptere dette (og tilføje brugere til "
-"gruppen)!"
+"dette er nødvendigt for automatiske installationer på Debians "
+"pakkeopbygningsmaskiner (buildds). I næsten alle andre opsætninger, såsom "
+"skrivebordsmaskiner og flerbruger-servere, anbefales det kraftigt at "
+"acceptere dette (og tilføje brugere til gruppen)!"
 
 #. Type: string
 #. Description
@@ -88,8 +88,8 @@ msgid ""
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
 "Standardvalget er \"users\". Bemærk, at ingen som udgangspunkt er medlem af "
-"gruppen \"users\" på et Debiansystem, så lokale brugere skal manuelt føjes til denne "
-"gruppe!"
+"gruppen \"users\" på et Debiansystem, så lokale brugere skal manuelt føjes "
+"til denne gruppe!"
 
 #. Type: string
 #. Description
@@ -132,8 +132,8 @@ msgid ""
 "an existing group, like \"users\", and add the required users manually."
 msgstr ""
 "Hvis det er forkert, og flere brugere skal kunne arbejde på denne maskine, "
-"eller der er dæmoner på systemet, der benytter TeX, foreslås det at vælge "
-"en eksisterende gruppe, såsom \"users\", og tilføje de nødvendige brugere "
+"eller der er dæmoner på systemet, der benytter TeX, foreslås det at vælge en "
+"eksisterende gruppe, såsom \"users\", og tilføje de nødvendige brugere "
 "manuelt."
 
 #. Type: note
@@ -164,43 +164,45 @@ msgstr ""
 "Så hvis du tidligere havde filer i /etc/texmf/texmf.d/, skal du føje '.cnf' "
 "til deres navne. F.eks. 22minmakro => 22minmakro.cnf."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Der mangler en essentiel linje i ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Der mangler en essentiel linje i ${filename}:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "${variable} er ikke sat."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Fejlbehæftet essentiel linje i ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
-msgid "An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgstr "En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
+msgid ""
+"An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgstr ""
+"En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -212,7 +214,7 @@ msgstr ""
 "opsætningsfiler. Den udgave af ${filename}, som følger med pakken, skulle "
 "være tilgængelig som ${filename}.dpkg-dist."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."
@@ -615,4 +617,3 @@ msgstr "Afslutter."
 #~ msgstr ""
 #~ "Bemærk at opsætningsfilen bliver håndteret af debconf, hvis du vælger "
 #~ "dette, men at du ellers er nødt til selv at rette filen."
-

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-21\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2004-09-16 19:02+0200\n"
 "Last-Translator: Josep Monés i Teixidor <jmones@puntbarra.com>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
@@ -141,44 +141,44 @@ msgstr ""
 "cnf' al seu nom (per exemple, s'hauria de canviar el nom de 22mymacro a "
 "22mymacro.cnf) i posteriorment executar update-texmf."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -187,7 +187,7 @@ msgid ""
 "as ${filename}.dpkg-dist."
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

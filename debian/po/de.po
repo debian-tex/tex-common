@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.8\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-04-02 16:50+0100\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: Debian l10n german <debian-l10n-german@lists.debian.org>\n"
@@ -158,31 +158,31 @@ msgstr ""
 "sollten Sie ».cnf« an deren Namen anhängen; beispielsweise 22mymacro => "
 "22mymacro.cnf."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Essentielle Einträge fehlen in ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Essentielle Einträge fehlen in ${filename}:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "${variable} ist nicht gesetzt."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Essentieller Eintrag in ${filename} fehlerhaft"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -190,13 +190,13 @@ msgid ""
 msgstr ""
 "Essentieller Eintrag in ${filename} fehlerhaft: ${variable} enthält nicht"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -208,7 +208,7 @@ msgstr ""
 "Dateien korrigieren. Die Version von ${filename}, die vom Paket "
 "bereitgestellt wird, sollte als ${filename}.dpkg-dist verfügbar sein."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

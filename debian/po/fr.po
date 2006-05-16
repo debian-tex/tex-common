@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 0.18\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-03-31 15:34+0100\n"
 "Last-Translator: Steve Petruzzello <dlist@bluewin.ch>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -170,31 +170,31 @@ msgstr ""
 "est donc nécessaire d'ajouter « .cnf » à son nom (par exemple, 22mamacro "
 "devient 22mamacro.cnf)."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Donnée essentielle absente du fichier ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Une entrée essentielle manque dans le fichier ${filename} :"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "Pas d'affectation pour la variable ${variable}."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Entrée essentielle erronée dans le fichier ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -203,13 +203,13 @@ msgstr ""
 "Une entrée essentielle est erronée dans le fichier ${filename} : la variable "
 "${variable} ne contient pas"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -221,7 +221,7 @@ msgstr ""
 "configuration. La version du fichier ${filename} fournie par le paquet "
 "devrait être disponible sous le nom ${filename}.dpkg-dist."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

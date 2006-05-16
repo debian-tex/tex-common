@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 0.18\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-05-04 10:35+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -161,31 +161,31 @@ msgstr ""
 "Om du haft några privata filer i /etc/texmf/texmf.d/ bör du lägga till \".cnf"
 "\" till dess namn, till exempel 22mymacro => 22mymacro.cnf."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Nödvändig post saknas i ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "En nödvändig post saknas i ${filename}."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "Ingen inställning för ${variable}."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Nödvändig post felaktig i ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -193,13 +193,13 @@ msgid ""
 msgstr ""
 "En nödvändig post är felaktig i ${filename}: ${variable} innehåller inte"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -211,7 +211,7 @@ msgstr ""
 "konfigurationsfiler.  Versionen av ${filename} som ges av paketet bör finnas "
 "tillgänglig som ${filename}.dpkg-dist."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

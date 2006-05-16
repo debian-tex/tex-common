@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-04-01 10:58+0300\n"
 "Last-Translator: Osman Yüksel <yuxel@sonsuzdongu.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -155,44 +155,44 @@ msgstr ""
 "Eðer /etc/texmf/texmf.d/ içinde özel bir dosyanýz varsa, bunun ismine '.cnf' "
 "uzantýsýný ekleyin; örneðin,  22mymacro => 22mymacro.cnf ."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "${filename} dosyasýnda gerekli bir girdi eksik"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "${filename} dosyasýnda gerekli bir girdi eksik:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "${variable} için ayar yok."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "${filename} dosyasýndaki gerekli bir girdi yanlýþ"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr "${filename} dosyasýnda gerekli bir girdi yanlýþ: ${variable} içermiyor"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -204,7 +204,7 @@ msgstr ""
 "gerekiyor.  Paket tarafýndan saðlanan ${filename} dosyasýna ${filename}.dpkg-"
 "dist adýyla ulaþabilirsiniz."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

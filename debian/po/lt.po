@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-04-01 00:18+0300\n"
 "Last-Translator: Kęstutis Biliūnas <kebil@kaunas.init.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -156,44 +156,44 @@ msgstr ""
 "Jūs turite pridėti išplėtimą'.cnf' prie jo vardo (pvz. 22mymacro taps "
 "22mymacro.cnf)."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Faile ${filename} trūksta esminio elemento"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Faile·${filename}·trūksta·esminio·elemento:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "Kintamasis ${variable} nenustatomas."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Faile·${filename}·yra neteisingas esminis·elementas"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr "Faile ${filename} neteisingas·esminis elementas: ${variable} neturi"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -205,7 +205,7 @@ msgstr ""
 "${filename} versija pateikiama kartu su paketu turi būti prieinama kaip "
 "${filename}.dpkg-dist."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

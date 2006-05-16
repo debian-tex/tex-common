@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 0.22 italian debconf templates\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-05-14 10:37+0200\n"
 "Last-Translator: Luca Monducci <luca.mo@tiscali.it>\n"
 "Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
@@ -43,10 +43,10 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
-"Se non si accetta tutti hanno il permesso di scrittura nella directory "
-"cache dei font e questo è pericoloso per la sicurezza. Se si accetta è "
-"possibile specificare il nome di un gruppo e tutte le directory sotto /var"
-"/cache/fonts assumono come proprietario root:<nomegruppo> e permessi 3775."
+"Se non si accetta tutti hanno il permesso di scrittura nella directory cache "
+"dei font e questo è pericoloso per la sicurezza. Se si accetta è possibile "
+"specificare il nome di un gruppo e tutte le directory sotto /var/cache/fonts "
+"assumono come proprietario root:<nomegruppo> e permessi 3775."
 
 #. Type: boolean
 #. Description
@@ -57,8 +57,8 @@ msgid ""
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"Se si accetta in un sistema multi-utente la creazione dei font funziona "
-"solo per gli utenti che sono stati inseriti nel gruppo prescelto (questa "
+"Se si accetta in un sistema multi-utente la creazione dei font funziona solo "
+"per gli utenti che sono stati inseriti nel gruppo prescelto (questa "
 "operazione deve essere effettuata manualmente). Sulle macchine usate da un "
 "solo utente, la procedura di configurazione cerca di determinare "
 "automaticamente un gruppo adatto."
@@ -73,10 +73,10 @@ msgid ""
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
 "La configurazione predefinita non prevede la gestione dei permessi con "
-"debconf, ma questo solo perché è un requisito per l'installazione "
-"automatica del pacchetto sulle macchine di compilazione Debian (buildd). "
-"Nella maggior parte dei casi, come per le macchine desktop o per i server "
-"multi-utente, si raccomanda la sua attivazione."
+"debconf, ma questo solo perché è un requisito per l'installazione automatica "
+"del pacchetto sulle macchine di compilazione Debian (buildd). Nella maggior "
+"parte dei casi, come per le macchine desktop o per i server multi-utente, si "
+"raccomanda la sua attivazione."
 
 #. Type: string
 #. Description
@@ -87,9 +87,9 @@ msgid ""
 "The default is \"users\",  Note that on a Debian system, no local user is "
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
-"Il gruppo predefinito è «users». Notare che normalmente su un sistema "
-"Debian nessun utente locale è membro del gruppo «users», gli utenti "
-"devono essere aggiunti al gruppo manualmente."
+"Il gruppo predefinito è «users». Notare che normalmente su un sistema Debian "
+"nessun utente locale è membro del gruppo «users», gli utenti devono essere "
+"aggiunti al gruppo manualmente."
 
 # ../templates:52
 #. Type: string
@@ -106,8 +106,8 @@ msgid ""
 "including the TeX font cache /var/cache/fonts. These directories will  get "
 "permission 3775."
 msgstr ""
-"Si può specificare il gruppo a cui apparterranno tutte le directory sotto "
-"/var/cache/fonts, compresa la cache dei font TeX. Queste directory avranno "
+"Si può specificare il gruppo a cui apparterranno tutte le directory sotto /"
+"var/cache/fonts, compresa la cache dei font TeX. Queste directory avranno "
 "permessi 3775."
 
 #. Type: string
@@ -118,10 +118,10 @@ msgid ""
 "correct, the best choice is to choose this user's private group  with the "
 "same name as the user name."
 msgstr ""
-"La procedura di configurazione ha rilevato che questo sistema è usato da "
-"un solo utente. Se questa ipotesi è corretta allora la soluzione migliore "
-"è scegliere il gruppo privato di questo utente, cioè quello con lo stesso "
-"nome dell'utente."
+"La procedura di configurazione ha rilevato che questo sistema è usato da un "
+"solo utente. Se questa ipotesi è corretta allora la soluzione migliore è "
+"scegliere il gruppo privato di questo utente, cioè quello con lo stesso nome "
+"dell'utente."
 
 #. Type: string
 #. Description
@@ -153,9 +153,9 @@ msgid ""
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
 "extension '.cnf'."
 msgstr ""
-"texmf.cnf è stato creato precedentemente da update-texmf usando tutti i "
-"file in /etc/texmf/texmf.d/. Adesso update-texmf legge solo i file con "
-"estensione «.cnf»."
+"texmf.cnf è stato creato precedentemente da update-texmf usando tutti i file "
+"in /etc/texmf/texmf.d/. Adesso update-texmf legge solo i file con estensione "
+"«.cnf»."
 
 # ../templates:75
 #. Type: note
@@ -169,31 +169,31 @@ msgstr ""
 "dovrebbe aggiungere «.cnf» al loro nome (per esempio 22miamacro diventa "
 "22miamacro.cnf)."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Impostazione essenziale mancante in ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Una delle impostazioni essenziali in ${filename} è mancante:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "${variable} non è impostata."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Impostazione essenziale sbagliata in ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -202,13 +202,13 @@ msgstr ""
 "Una delle impostazioni essenziali in ${filename} è sbagliata: ${variable} "
 "non contiene"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -220,7 +220,7 @@ msgstr ""
 "configurazione. La versione di ${filename} fornita nel pacchetto dovrebbe "
 "essere disponibile come ${filename}.dpkg-dist"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

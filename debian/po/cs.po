@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-05-14 09:25+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -170,44 +170,44 @@ msgstr ""
 "Pokud jste v /etc/texmf/texmf.d/ měli vlastní soubory, měli byste nyní k "
 "jejich názvu přidat '.cnf', tj. z 22mojemakro se stane 22mojemakro.cnf."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Chybějící nezbytný záznam v ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "V ${filename} chybí nezbytný záznam:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "Proměnná ${variable} není nastavena."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "Chybný nezbytný záznam v ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr "V ${filename} je chybný nezbytný záznam: ${variable} neobsahuje"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -219,7 +219,7 @@ msgstr ""
 "Verze ${filename} poskytovaná balíkem by měla být k dispozici jako "
 "${filename}.dpkg-dist."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."

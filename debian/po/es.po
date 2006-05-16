@@ -36,7 +36,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-5.1\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-10 13:38+0200\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
 "PO-Revision-Date: 2006-03-31 14:04+0200\n"
 "Last-Translator: Javier Fernandez-Sanguino Peña <jfs@computer.org>\n"
 "Language-Team: Debian l10n spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -188,31 +188,31 @@ msgstr ""
 "Si tenía algún fichero privado en /etc/texmf/texmf.d/, añádale la extensión "
 "«.cnf» (por ejemplo, 22mymacro pasaría a ser 22mymacro.cnf)."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
 msgstr "Falta una entrada esencial en ${filename}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Falta una entrada esencial en ${filename}:"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:89
 msgid "No setting of ${variable}."
 msgstr "No está establecida ${variable}."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Essential entry wrong in ${filename}"
 msgstr "La entrada esencial en ${filename} no es correcta"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -221,13 +221,13 @@ msgstr ""
 "Hay una entrada esencial en ${filename} que no es correcta: ${variable} no "
 "contiene"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "${pattern}"
 msgstr "${pattern}"
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid ""
@@ -239,7 +239,7 @@ msgstr ""
 "ésta. La versión que el paquete ofrece de ${filename} debería estar "
 "disponible en «${filename}.dpkg-dist»."
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../templates:102
 msgid "Exiting."
