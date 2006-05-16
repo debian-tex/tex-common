@@ -47,7 +47,7 @@ if [ "$RET" = true ]; then
  db_fset tex-common/groupname_single seen true || true
  db_fset tex-common/groupname_multi seen true || true
 fi
-db_unregister tex-common/groupname
+db_unregister tex-common/groupname || true
 
 
 # this script may be run twice: Once by dpkg-preconfigure, once again by
@@ -57,7 +57,7 @@ db_fget tex-common/managecache firstrundone || true
 
 if [ "$RET" != "true" ]; then
   # we are in the first pass, set the flag and do the things
-  db_fset tex-common/managecache firstrundone true
+  db_fset tex-common/managecache firstrundone true || true
 
   # check wether the directory /var/cache/fonts is group writeable and
   # for which group
@@ -110,7 +110,7 @@ if [ "$RET" != "true" ]; then
     fi
   done
   if [ $usercount -eq 1 ]; then
-    db_set tex-common/singleuser true
+    db_set tex-common/singleuser true || true
     # exactly one user account, number in $userid: suggest its group
     groupID=`getent passwd | egrep "^[^:]+:[^:]+:$userid:" | cut -d ':' -f 4`
     GROUP=`getent group | egrep "^[^:]+:[^:]+:$groupID:" | cut -d ':' -f 1`
@@ -119,7 +119,7 @@ if [ "$RET" != "true" ]; then
 
   cache_debconf_priority=medium
   db_input $cache_debconf_priority tex-common/managecache || true
-  db_go
+  db_go || true
 
   db_get tex-common/managecache || true
   if [ "$RET" = true ]; then
@@ -145,7 +145,7 @@ if [ "$RET" != "true" ]; then
       # still there?  invalid group
       db_subst tex-common/invalid_groupname badgroup $GROUP || true
       db_input $cache_debconf_priority tex-common/invalid_groupname || true
-      db_go
+      db_go || true
     done
   fi
 fi

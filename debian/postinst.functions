@@ -33,8 +33,8 @@ check_texmf(){
   line=`egrep "^$variable" $file` || true
   if [ -z "$line" ]; then
     variable=${variable%$removepattern}
-    db_subst tex-common/check_texmf_missing filename $file
-    db_subst tex-common/check_texmf_missing variable $variable
+    db_subst tex-common/check_texmf_missing filename $file || true
+    db_subst tex-common/check_texmf_missing variable $variable || true
     db_fset tex-common/check_texmf_missing seen false || true
     db_input critical tex-common/check_texmf_missing || true
     db_go || true
@@ -43,9 +43,9 @@ check_texmf(){
   else
     if ! echo "$line" | egrep -q "$pattern"; then
       variable=${variable%$removepattern}
-      db_subst tex-common/check_texmf_wrong filename $file
-      db_subst tex-common/check_texmf_wrong variable $variable
-      db_subst tex-common/check_texmf_wrong pattern $pattern
+      db_subst tex-common/check_texmf_wrong filename $file || true
+      db_subst tex-common/check_texmf_wrong variable $variable || true
+      db_subst tex-common/check_texmf_wrong pattern $pattern || true
       db_fset tex-common/check_texmf_wrong seen false || true
       db_input critical  tex-common/check_texmf_wrong || true
       db_go || true
@@ -57,9 +57,9 @@ check_texmf(){
     # font packages follow TDS 1.1
       if ! echo "$line" | grep -q '/dvips//'; then
 	variable=${variable%$removepattern}
-	db_subst tex-common/check_texmf_wrong filename $file
-	db_subst tex-common/check_texmf_wrong variable $variable
-	db_subst tex-common/check_texmf_wrong pattern "/dvips//"
+	db_subst tex-common/check_texmf_wrong filename $file || true
+	db_subst tex-common/check_texmf_wrong variable $variable || true
+	db_subst tex-common/check_texmf_wrong pattern "/dvips//" || true
 	db_fset tex-common/check_texmf_wrong seen false || true
 	db_input critical tex-common/check_texmf_wrong || true
 	echo "Error in $file: $variable incorrectly defined." >&2
