@@ -155,7 +155,8 @@ this sequence is repeated multiple times, separately for each tpm file.
 
 We suggest that everybody follows the procedure outlined below.
 
-a) coordinate on debian-tetex-maint which parts you are going to
+a) coordinate on debian-tetex-maint and/or in the Wiki at
+   http://wiki.debian.org/LicenseAuditing which parts you are going to
    check, to prevent duplicate work.
 
 b) copy a tpm file from texlive to tetex-base's debian/tpm/ directory.
@@ -285,10 +286,43 @@ doc/latex/acronym/*
    If you are unsure, just ignore them, they will be found in the end
    by the coverage check.
 
-f) Reporting errors
+f) Reporting success and problems
 
+   If all is well, just submit the following information to
+   debian-tetex-maint@lists.debian.org:
+
+   - the working tpm file
+
+   - the license text, or a name if it is LPPL or in
+     /usr/share/common-licenses 
+
+   - The name of the file where the license information is given, the
+     version in teTeX and, if you also checked that, versions in
+     TeXlive and on CTAN.
+
+   If you found incomplete license information, or non-free license
+   texts, please report as much info as you have to the mailing list
+   and to the Wiki at http://wiki.debian.org/LicenseAuditing.  Steps
+   to perform now can include:
+
+   - Check whether problematic files exist elsewhere on CTAN (some
+     files are only in zip or tar.gz archives!) and have other,
+     hopefully newer license information
+ 
+   - Check whether any license discussion is archived by Google or
+     other search engines
+
+   - Find out the responsible upstream author and contact them.
+
+     When contacting upstream, please be careful.  Remind yourself
+     that most of the time, upstream authors want their work to be
+     free and think they have already done enough.  Explain in some
+     detail and with polite words what should be done and why.  If
+     upstream has been inactive in the TeX community, it might make
+     sense to offer that you do an upload on behalf of them.  Maybe
+     not in the initial mail, but later in the conversation.
    
-   
+ 
 
 
 [1] Eventually, tetex-bin will have to be checked, too, but currently
