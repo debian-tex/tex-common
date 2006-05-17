@@ -9,7 +9,7 @@ tex-common (0.22.1) UNRELEASED; urgency=low
     people who don't have a pencil (closes: #366907), thanks Ralf [frank]
   * Make sure the font cache directory is always world-writeable - we
     previously missed the case where apt-utils are installed in a buildd
-    chroot (again closes: #354113) [frank]
+    chroot (again closes: #354113, #366858) [frank]
   * Updated debconf translations: [frank]
     - Czech by Miroslav Kure <kurem@upcase.inf.upol.cz> (closes: #367162) 
     - Danish by Claus Hindsgaul <claus.hindsgaul@gmail.com> (closes:
