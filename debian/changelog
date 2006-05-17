@@ -1,4 +1,4 @@
-tex-common (0.22.1) UNRELEASED; urgency=low
+tex-common (0.23) unstable; urgency=low
 
   * After the groupname question has been renamed, make sure that the new
     questions are not shown again when the old one has already been seen,
@@ -18,7 +18,7 @@ tex-common (0.22.1) UNRELEASED; urgency=low
   * Debian TeX Policy:
     Remove last occurrences of obsolete TEXMFSITE.
 
- -- Frank Küster <frank@debian.org>  Tue, 16 May 2006 19:57:48 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 17 May 2006 18:56:32 +0200
 
 tex-common (0.22) unstable; urgency=low
 
