@@ -141,6 +141,7 @@ if [ "$RET" != "true" ]; then
       if [ -n "$GROUP" ] && chown :$GROUP $tempfile; then # no redirecting of stderr!
 	dobreak=break
       fi
+      rm $tempfile
       $dobreak
       # still there?  invalid group
       db_subst tex-common/invalid_groupname badgroup $GROUP || true
