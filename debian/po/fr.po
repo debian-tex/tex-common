@@ -15,10 +15,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tex-common 0.18\n"
+"Project-Id-Version: tex-common 0.22\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-05-16 20:28+0200\n"
-"PO-Revision-Date: 2006-03-31 15:34+0100\n"
+"PO-Revision-Date: 2006-05-12 11:32+0100\n"
 "Last-Translator: Steve Petruzzello <dlist@bluewin.ch>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,16 +37,14 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "A TeX system needs  to generate new font data (pixel data, metric, sources) "
 "on the fly. These files can be saved into the TeX font cache in /var/cache/"
 "fonts and later reused."
 msgstr ""
-"Le système TeX aura peut-être besoin de générer à la volée des polices "
-"(données de pixels, métrique, sources). Ces fichiers peuvent être "
-"enregistrés dans le cache des polices Tex situé dans /var/cache/fonts pour "
-"être réutilisés plus tard."
+"Le système TeX abesoin de générer à la volée des polices (données de pixels, "
+"métrique, sources). Ces fichiers peuvent être enregistrés dans le cache des "
+"polices Tex situé dans /var/cache/fonts pour être réutilisés plus tard."
 
 #. Type: boolean
 #. Description
@@ -57,25 +55,30 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
+"Si vous refusez, le répertoire cache des polices possédera les droits "
+"d'écriture pour tous, ce qui est un risque pour la sécurité. Si vous "
+"acceptez, vous pourrez indiquer un nom de groupe et tous les répertoires "
+"sous /var/cache/fonts seront à root:<nom du groupe> et auront les "
+"permissions 3775."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "If you accept, font generation on multi-user machines will only work for "
 "users that have been added to the group you chose - this has to be done "
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"En acceptant cette option, la génération des polices ne fonctionnera que "
-"pour les utilisateurs appartenant au groupe que vous avez choisi ; cette "
-"opération doit être effectuée manuellement par vous !"
+"En acceptant cette option, la génération des polices sur un système "
+"multiutilisateurs ne fonctionnera que pour les utilisateurs appartenant au "
+"groupe que vous avez choisi ; vous devez faire cette opération  vous-même. "
+"Sur les machines utilisées par un seul utilisateur, la configuration "
+"automatique essaiera de détecter un utilisateur adéquat."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for automatic installs on Debian package building "
@@ -83,29 +86,27 @@ msgid ""
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
 "Le comportement par défaut est de ne pas gérer automatiquement les "
-"permissions, mais uniquement parce que c'est nécessaire pour la construction "
-"d'autres paquets Debian. Dans presque toutes les autres configurations "
-"(machine de bureau, serveur multi-utilisateurs), il est fortement recommandé "
-"d'accepter cette option (et d'ajouter les utilisateurs au groupe) !"
+"permissions, mais uniquement parce que c'est nécessaire pour l'installation "
+"automatique sur les machines Debian de construction de paquets (buildds). "
+"Dans presque toutes les autres configurations (machine de bureau, serveur "
+"multiutilisateurs), il est fortement recommandé d'accepter cette option."
 
 #. Type: string
 #. Description
 #. Don't translate "users" in quotation marks, it is the name of the
 #. default group as found in /etc/groups.
 #: ../templates:38
-#, fuzzy
 msgid ""
 "The default is \"users\",  Note that on a Debian system, no local user is "
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
-"Veuillez noter que sur le système Debian, l'utilisateur « nobody » "
-"appartient par défaut au groupe « users », ce qui fait que les utilisateurs "
-"locaux doivent être ajoutés manuellement !"
+"Le groupe par défaut est « users ». Veuillez noter que sur un système "
+"Debian, aucun utilisateur local n'est par défaut membre de ce groupe, ce qui "
+"fait que vous devez les ajouter vous-même."
 
 #. Type: string
 #. Description
 #: ../templates:52
-#, fuzzy
 msgid "Group that should own the TeX font cache:"
 msgstr "Nom du groupe propriétaire du cache des polices Tex :"
 
@@ -129,6 +130,9 @@ msgid ""
 "correct, the best choice is to choose this user's private group  with the "
 "same name as the user name."
 msgstr ""
+"L'installateur a détecté qu'un seul utilisateur travaille sur ce système. Si "
+"cela est le cas, le meilleur choix est de choisir le nom de cet utilisateur "
+"comme nom de groupe."
 
 #. Type: string
 #. Description
@@ -140,12 +144,16 @@ msgid ""
 "if daemons running as system users will use TeX, it is suggested to choose "
 "an existing group, like \"users\", and add the required users manually."
 msgstr ""
+"Si ce n'est pas le cas, et que plusieurs utilisateurs travaillent sur cette "
+"machine, ou si des démons actifs sous des identifiants système utilisent "
+"TeX, il est suggéré de choisir un groupe existant tel que « users » et "
+"d'ajouter les utilisateurs requis vous-même."
 
 #. Type: note
 #. Description
 #: ../templates:79
 msgid "Change of name of files in /etc/texmf/texmf.d/"
-msgstr "Changement du nom des fichiers dans /etc/texmf/texmf.d/"
+msgstr "Changement du nom des fichiers dans le répertoire /etc/texmf/texmf.d"
 
 #. Type: note
 #. Description
@@ -174,7 +182,7 @@ msgstr ""
 #. Description
 #: ../templates:89
 msgid "Essential entry missing in ${filename}"
-msgstr "Donnée essentielle absente du fichier ${filename}"
+msgstr "Entrée essentielle absente du fichier ${filename}"
 
 #. Type: error
 #. Description
