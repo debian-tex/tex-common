@@ -32,16 +32,13 @@ eperl_sourcefiles=debian/variables debian/COPYRIGHT.scripts debian/postinst.func
 debian/common.functions: debian/common.functions.in debian/common.variables
 	eperl -k -P -o $@ $<
 
-foo:
-	echo foo
-
 build: build-stamp
 
 build-stamp: $(EPERL_FILES) debian/po/templates.pot
 	dh_testdir
 	$(check-svn)
 
-	# Add here commands to compile the package.
+        # Add here commands to compile the package.
 	cd doc; $(MAKE)
 	cd scripts; pod2man dh_installtex > dh_installtex.1
 
@@ -59,7 +56,7 @@ clean:
 	dh_testroot
 	rm -f build-stamp
 
-	# Add here commands to clean up after the build process.
+        # Add here commands to clean up after the build process.
 	cd doc; $(MAKE) clean
 	-rm $(EPERL_FILES)
 	debconf-updatepo
@@ -72,11 +69,11 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 
-	# Add here commands to install the package into debian/tex-common.
+        # Add here commands to install the package into debian/tex-common.
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
 	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
 	cp conf/language.d/00tex.cnf $(INSTDIR)/etc/texmf/language.d/
-	# ucf files
+        # ucf files
 	cp conf/texmf.d/*cnf $(INSTDIR)/usr/share/tex-common/
 	ln -s /etc/texmf/texmf.cnf $(INSTDIR)/usr/share/texmf/web2c/texmf.cnf
 	cp conf/updmap.d/00updmap.cfg $(INSTDIR)/usr/share/tex-common/
@@ -88,26 +85,26 @@ install: build
 	ln -s update-fontlang $(INSTDIR)/usr/sbin/update-fmtutil
 	ln -s ../sbin/update-fontlang $(INSTDIR)/usr/bin/update-updmap
 
-	# debhelper stuff
-	# dh_installtex(.1) is already installed via the bin_scripts
+        # debhelper stuff
+        # dh_installtex(.1) is already installed via the bin_scripts
 	grep -v '^[ \t]*#' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
 	grep -v '^[ \t]*#' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
 
-	# ship /var/cache/fonts with proper permissions
+        # ship /var/cache/fonts with proper permissions
 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/pk
 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/tfm
 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/source
 
-	# Remove the out-of-date ls-R file from /usr/share/texmf and create a
-	# link to one in /var/lib/texmf that we can update without violating
-	# the FHS.
+        # Remove the out-of-date ls-R file from /usr/share/texmf and create a
+        # link to one in /var/lib/texmf that we can update without violating
+        # the FHS.
 	rm -f debian/$package/usr/share/texmf/ls-R
 	ln -s /var/lib/texmf/ls-R-TEXMFMAIN $(INSTDIR)/usr/share/texmf/ls-R
 
-	# Create a symlink in TEXMFMAIN for docs
+        # Create a symlink in TEXMFMAIN for docs
 	ln -s ../doc/texmf $(INSTDIR)/usr/share/texmf/doc
 
-	# Debian-specific stuff
+        # Debian-specific stuff
 	install -m 644 debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
 	install -m 644 debian/lintian-overrides $(INSTDIR)/usr/share/lintian/overrides/tex-common
 
@@ -139,8 +136,8 @@ binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
 
 define check-svn
-	if test -d debian/.svn; then \
-		echo "please clean subversion directories"; \
+	@if test -d debian/.svn; then \
+		echo "Please clean subversion directories."; \
 		exit 1; \
 	fi
 endef
