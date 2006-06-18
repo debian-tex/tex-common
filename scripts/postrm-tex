@@ -40,12 +40,13 @@ dhit_check_run_without_errors ()
         set +e
         if "$@" > $tempfile 2>&1 ; then
             rm -f $tempfile
-            echo " done."
+            [ $silent = 0 ] && echo " done."
         else
             echo
             echo "$* failed. Output has been stored in"
             echo "$tempfile"
-            echo "If tex-common is not configured you can ignore this error message!"
+            echo "If tex-common is not configured you can ignore this error" \
+                 "message!"
             echo "Otherwise, please include this file if you report a bug."
             echo
         fi
