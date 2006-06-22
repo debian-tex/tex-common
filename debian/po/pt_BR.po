@@ -16,12 +16,14 @@ msgstr ""
 "Project-Id-Version: tetex-bin\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-05-16 20:28+0200\n"
-"PO-Revision-Date: 2006-05-20 17:40-0300\n"
-"Last-Translator: André Luís Lopes <andrelop@debian.org>\n"
-"Language-Team: Debian-BR Project <debian-l10n-portuguese@lists.debian.org>\n"
+"PO-Revision-Date: 2006-05-30 23:37-0300\n"
+"Last-Translator: Felipe Augusto van de Wiel (faw) <felipe@cathedrallabs."
+"org>\n"
+"Language-Team: l10n portuguese <debian-l10n-portuguese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"pt_BR UTF-8\n"
 
 #. Type: boolean
 #. Description
@@ -32,7 +34,6 @@ msgstr "Gerenciar as permissões do cache de fontes TeX com o debconf ?"
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "A TeX system needs  to generate new font data (pixel data, metric, sources) "
 "on the fly. These files can be saved into the TeX font cache in /var/cache/"
@@ -51,55 +52,59 @@ msgid ""
 "directories under /var/cache/fonts will get ownership root:<groupname> and "
 "permission bits 3775."
 msgstr ""
+"Caso você não aceite, o diretório de cache de fontes terá permissões de "
+"escrita para todo mundo (\"world-writable\"), o que é um risco de segurança. "
+"Se você aceitar, você pode especificar um nome de grupo e todos os "
+"diretórios sob /var/cache/fonts vão ser definidos como root:<groupname> com "
+"os bits de permissão 3775."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "If you accept, font generation on multi-user machines will only work for "
 "users that have been added to the group you chose - this has to be done "
 "manually by you!  On machines used only by a single user, the setup will try "
 "to automatically detect a suitable group."
 msgstr ""
-"Caso você aceite, a geração de fontes funcionará somente para usuários que "
-"tenham sido adicionados ao grupo que você escolher - isto precisa ser feito "
-"manualmente por você !"
+"Caso você aceite, a geração de fontes em máquinas multi-usuário só "
+"funcionará para usuários tenham sido adicionados ao grupo que você escolher "
+"- isto precisa ser feito manualmente por você! Em máquinas usadas por um "
+"único usuário, a configuração tentará detectar automaticamente qual o grupo "
+"a ser utilizado."
 
 #. Type: boolean
 #. Description
 #: ../templates:4
-#, fuzzy
 msgid ""
 "The default is not to manage permissions with debconf, but this is just "
 "because this is required for automatic installs on Debian package building "
 "machines (buildds).  In almost every other setup, like desktop machines or "
 "multi-user servers, accepting this is strongly recommended!"
 msgstr ""
-"O padrão é não gerenciar permissões com o debconf, mas isto é somente porque "
-"isto é necessário para construir os pacotes Debian. Em quase todas as outras "
-"situações, como máquinas desktop ou servidor para múltiplos usuários, "
-"aceitar isto (e adicionar os usuários ao grupo) é fortemente recomendado."
+"O padrão é não gerenciar permissões com o debconf, mas isto é assim somente "
+"porque é necessário para instalações automáticas nas máquinas que constroem "
+"os pacotes Debian (buildds). Em quase todas as outras situações, como "
+"máquinas desktop ou servidor para múltiplos usuários, aceitar isto é "
+"fortemente recomendado."
 
 #. Type: string
 #. Description
 #. Don't translate "users" in quotation marks, it is the name of the
 #. default group as found in /etc/groups.
 #: ../templates:38
-#, fuzzy
 msgid ""
 "The default is \"users\",  Note that on a Debian system, no local user is "
 "member of the \"users\" group by default, so you have to add them manually!"
 msgstr ""
-"Note que em um sistema Debian, ninguém é membro do grupo \"users\" por "
-"padrão, portanto usuários locais precisam ser adicionados manualmente !"
+"O padrão é \"users\". Note que em um sistema Debian, ninguém é membro do "
+"grupo \"users\" por padrão, portanto você precisa adicioná-los manualmente!"
 
 #. Type: string
 #. Description
 #: ../templates:52
-#, fuzzy
 msgid "Group that should own the TeX font cache:"
-msgstr "Grupo que deve ser proprietário do cache de fontes TeX"
+msgstr "Grupo que deve ser proprietário do cache de fontes TeX:"
 
 #. Type: string
 #. Description
@@ -121,6 +126,9 @@ msgid ""
 "correct, the best choice is to choose this user's private group  with the "
 "same name as the user name."
 msgstr ""
+"A configuração detectou que somente um usuário trabalha neste sistema. Se "
+"isto estiver correto, a melhor opção é escolher o grupo privado deste "
+"usuário com o mesmo nome que o nome do usuário."
 
 #. Type: string
 #. Description
@@ -132,6 +140,10 @@ msgid ""
 "if daemons running as system users will use TeX, it is suggested to choose "
 "an existing group, like \"users\", and add the required users manually."
 msgstr ""
+"Caso isto esteja incorreto e mais usuários trabalham nesta máquina, ou se "
+"serviços (\"daemons\") sendo executados como usuários de sistema usam o TeX, "
+"é sugerido que você escolhe um grupo existente, como \"users\", e então "
+"adicione os usuários manualmente."
 
 #. Type: note
 #. Description
