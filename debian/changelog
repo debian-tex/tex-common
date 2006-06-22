@@ -1,4 +1,4 @@
-tex-common (0.23.1) UNRELEASED; urgency=low
+tex-common (0.24) unstable; urgency=low
 
   * Updated debconf translations:
     - French, thanks to Steve <dlist@bluewin.ch> (closes: #369360)
@@ -7,7 +7,7 @@ tex-common (0.23.1) UNRELEASED; urgency=low
     even if called with -silent (outputing 3 ugly lines starting with a space
     followed by "done."). This is now fixed. [florent]
 
- -- Frank Küster <frank@debian.org>  Mon, 29 May 2006 13:35:04 +0200
+ -- Florent Rougon <frn@debian.org>  Sun, 18 Jun 2006 23:14:27 +0200
 
 tex-common (0.23) unstable; urgency=low
 
