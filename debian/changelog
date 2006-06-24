@@ -7,12 +7,20 @@ tex-common (0.24.1) UNRELEASED; urgency=low
       Luis Lopes <andrelop@debian.org> and Felipe Augusto van de Wiel
       <felipe@cathedrallabs.org> [frank]
 
- -- Frank Küster <frank@debian.org>  Thu, 22 Jun 2006 13:26:55 +0200
+  * scripts/update-fontlang:
+      - don't include ${conffile} in the generated file if
+        ${conffile}.dpkg-new exists ($conffile may not be up-to-date in this
+        case);
+        see http://lists.debian.org/debian-tetex-maint/2006/06/msg00260.html
+        for a discussion of this subject.
+      - cosmetic fixes. [florent]
+
+ -- Florent Rougon <frn@debian.org>  Sat, 24 Jun 2006 13:40:30 +0200
 
 tex-common (0.24) unstable; urgency=low
 
   * Updated debconf translations:
-    - French, thanks to Steve <dlist@bluewin.ch> (closes: #369360)
+    - French, thanks to Steve <dlist@bluewin.ch> (closes: #369360) [frank]
 
   * dhit_check_run_without_errors() in postrm-tex was not completely silent
     even if called with -silent (outputing 3 ugly lines starting with a space

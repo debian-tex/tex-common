@@ -2,7 +2,7 @@
 #
 # update-fontlang --- Generate updmap.cfg and language.dat from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
-# Copyright (C) 2004, 2005 Florent Rougon
+# Copyright (C) 2004, 2005, 2006 Florent Rougon
 # Copyright (C) 2005, 2006 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 # Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301 USA.
 
-version="0.8"
+version="0.9"
 progname=$(basename "$0")
 
 if [ "$progname" = "update-language" ] ; then
     CNFDIR=language.d
-  # System-wide configuration directory
+    # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
     CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
     EXT="cnf"
@@ -32,13 +32,13 @@ if [ "$progname" = "update-language" ] ; then
     SYSWIDE_VARD=/var/lib/texmf/tex/generic/config
     DEFAULT_OUTPUTFILE_BASENAME=language.dat
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-    CC="%"		# for COMMENTCHAR
+    CC="%"                      # for COMMENTCHAR
     # in printf, %% is one %
-    PCC="%%"            
+    PCC="%%"                    # for printfCOMMENTCHAR
     SHORT_DESC="Generate language.dat, the hyphenation configuration file for LaTeX"
 elif [ "$progname" = "update-updmap" ] ; then
     CNFDIR=updmap.d
-  # System-wide configuration directory
+    # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
     CHECKFILE="$SYSWIDE_CONFDIR/00updmap.cfg"
     EXT="cfg"
@@ -47,11 +47,11 @@ elif [ "$progname" = "update-updmap" ] ; then
     DEFAULT_OUTPUTFILE_BASENAME=updmap.cfg
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="#"
-    PCC="#"            # for printfCOMMENTCHAR
+    PCC="#"                     # for printfCOMMENTCHAR
     SHORT_DESC="Generate an updmap configuration file"
 elif [ "$progname" = "update-fmtutil" ] ; then
     CNFDIR=fmt.d
-  # System-wide configuration directory
+    # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
     CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
     EXT="cnf"
@@ -60,7 +60,7 @@ elif [ "$progname" = "update-fmtutil" ] ; then
     DEFAULT_OUTPUTFILE_BASENAME=fmtutil.cnf
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="#"
-    PCC="#"            # for printfCOMMENTCHAR
+    PCC="#"                     # for printfCOMMENTCHAR
     SHORT_DESC="Generate an fmtutil configuration file"
 else
     echo "Please call me either as update-updmap, update-language, or update-fmtutil!"
@@ -111,11 +111,12 @@ do_not_include_file()
 {
     cat >>"$tempfile" <<EOF
 
-${CC}${CC}
-${CC}${CC}${CC} $file not included because the
-${CC}${CC}${CC} corresponding package seems to be removed.
-${CC}${CC}
-
+$CC$CC
+$CC$CC$CC $file not included because either it wasn't
+$CC$CC$CC up-to-date (conffile update pending) or the package shipping it was
+$CC$CC$CC apparently removed (no corresponding .list file in
+$CC$CC$CC $MEMORY_DIR/).
+$CC$CC
 EOF
 }
 
@@ -135,7 +136,7 @@ swap_basename_and_dirname()
 
 # handle_file <file path>
 #
-# <file path> must point to an update-updmap configuration file (such as
+# <file path> must point to an update-fontlang configuration file (such as
 # /etc/texmf/updmap.d/05tetex-extra.cfg). The function decides whether the file
 # should be included in $output_file and outputs the corresponding snippet if
 # yes, or a comment explaining why if no.
@@ -149,7 +150,8 @@ handle_file()
         if [ -d "$MEMORY_DIR" ] \
             && find "$MEMORY_DIR" -type f -name '*.list' -print0 \
             | xargs -0r cat \
-            | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null; then
+            | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null \
+            && [ ! -f "${file}.dpkg-new" ]; then
             include_file "$file"
         else
             do_not_include_file "$file"
@@ -263,28 +265,28 @@ Error: '$badly_located_cfg_file' should not exist when using the
 }
 
 #
-# perform_content_check
+# perform_contents_check
 #
 # This function *TRIES* to check wether the installed files are correct in
 # the sense that every file occurring in it is present. This can help to
 # find typing errors
-perform_content_check ()
+perform_contents_check ()
 {
     #
-    # performing content checking only works when kpsewhich is present
+    # performing contents checking only works when kpsewhich is present
     # and configured, this can be done in one step:
     if kpsewhich --version  >/dev/null 2>&1 ; then
         if [ "$progname" = "update-language" ] ; then
-            perform_content_check_language "$1"
+            perform_contents_check_language "$1"
         elif [ "$progname" = "update-updmap" ] ; then
-            perform_content_check_map "$1"
+            perform_contents_check_map "$1"
         elif [ "$progname" = "update-fmtutil" ] ; then
-            perform_content_check_format "$1"
+            perform_contents_check_format "$1"
         fi
     fi
 }
 
-perform_content_check_language ()
+perform_contents_check_language ()
 {
     fn="$1"
     grep -v '^\W*\(%\|=\|$\)' "$fn" | while read lang hyph comm ; do
@@ -299,7 +301,7 @@ EOF
     done
 }
         
-perform_content_check_map ()
+perform_contents_check_map ()
 {
     fn="$1"
     grep -i '^\W*\(Mixed\)\?Map' "$fn" | while read foo map ; do
@@ -315,7 +317,7 @@ EOF
     done
 }
 
-perform_content_check_format ()
+perform_contents_check_format ()
 {
     fn="$1"
     grep -v '^\W*\(#\|$\)' "$fn" | while read format engine hyphenation args ; do
@@ -527,10 +529,10 @@ fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
 # This is atomic.
 mv "$tempfile" "$output_file"
 
-# check wether the new file is decent, it all necessary files are installed
-# etc
+# Check wether the generated file is decent, if all necessary files are
+# installed, etc.
 if [ "$dochecks" = 1 ] ; then
-    perform_content_check "$output_file"
+    perform_contents_check "$output_file"
 fi
 
 if [ $quiet = 0 ]; then
