@@ -1,9 +1,5 @@
 tex-common (0.24.1) UNRELEASED; urgency=low
 
-  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  XXX Debian-TeX-Policy.pdf has to be updated before the package is built XXX
-  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  
   * Translations:
     - Fix typos in french debconf translation, thanks to Florentin Duneau
       <f.baced@wanadoo.fr> (closes: #374632) [frank]
@@ -22,7 +18,7 @@ tex-common (0.24.1) UNRELEASED; urgency=low
   * Update scripts/update-updmap.1 and doc/Debian-TeX-Policy.sgml
     accordingly. [florent]
 
- -- Florent Rougon <frn@debian.org>  Sat, 24 Jun 2006 13:40:30 +0200
+ -- Florent Rougon <frn@debian.org>  Mon, 26 Jun 2006 10:37:04 +0200
 
 tex-common (0.24) unstable; urgency=low
 
