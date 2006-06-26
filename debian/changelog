@@ -1,4 +1,4 @@
-tex-common (0.24.1) UNRELEASED; urgency=low
+tex-common (0.25) unstable; urgency=low
 
   * Translations:
     - Fix typos in french debconf translation, thanks to Florentin Duneau
