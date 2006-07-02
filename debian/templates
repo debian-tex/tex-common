@@ -1,26 +1,28 @@
 Template: tex-common/managecache
 Type: boolean
 Default: false
-_Description: Manage the permissions of the TeX font cache with debconf?
+_Description: Handle permissions of the TeX font cache by post-installation script?
  A TeX system needs  to generate new font data (pixel data, metric,
  sources) on the fly. These files can be saved into the TeX font cache
  in /var/cache/fonts and later reused.
  .
- If you do not accept, the font cache directory will be world-writable
- which is a security risk.  If you accept, you can specify a group
- name and all directories under /var/cache/fonts will get ownership
- root:<groupname> and permission bits 3775.
+ If you choose to handle the permissions manually, the font cache
+ directory will be world-writable, which is a security risk.  If you
+ choose to handle permissions with the post-installation script, you
+ can specify a group name and all directories under /var/cache/fonts
+ will get ownership root:<groupname> and permission bits 3775.
  .
- If you accept, font generation on multi-user machines will only work
- for users that have been added to the group you chose - this has to
- be done manually by you!  On machines used only by a single user, the
- setup will try to automatically detect a suitable group.
+ If you choose to let the post-installation script manage permission,
+ font generation on multi-user machines will only work for users that
+ have been added to the group you chose - this has to be done manually
+ by you!  On machines used only by a single user, the setup will try
+ to automatically detect a suitable group.
  .
- The default is not to manage permissions with debconf, but this is just
- because this is required for automatic installs on Debian package
- building machines (buildds).  In almost every other setup, like
- desktop machines or multi-user servers, accepting this is strongly
- recommended!
+ The default is not to manage permissions by the post-installation
+ script, but this is just because this is required for automatic
+ installs on Debian package building machines (buildds).  In almost
+ every other setup, like desktop machines or multi-user servers,
+ handling by the postinst script is strongly recommended!
 
 Template: tex-common/singleuser
 Type: boolean
