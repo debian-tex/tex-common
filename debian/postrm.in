@@ -27,7 +27,7 @@ case $action in
     # remove TEXMFSYSVARDIR: All files and dirs are created either by
     # us, or by packages depending on us.
     rm -rf $TEXMFSYSVARDIR
-    # same with /var/cache/fonts
+    # same with obsolete /var/cache/fonts
     rm -rf /var/cache/fonts
     ;;
   purge)

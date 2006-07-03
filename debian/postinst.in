@@ -131,31 +131,31 @@ EOF
 
     #
     # do the config stuff
-    db_get tex-common/managecache || true
-    if [ $RET = true ] ; then
-      db_get tex-common/singleuser || true
-      if [ "$RET" = true ]; then
-	db_get tex-common/groupname_single || true
-      else
-	db_get tex-common/groupname_multi || true
-      fi
-      GROUP="$RET"
-      if [ -n "$GROUP" ] ; then
-	echo -n "Adjusting permissions of TeX font cache... "
-        find /var/cache/fonts -type d -print0 | xargs -0r chmod $FONTCACHE_PERMS
-	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
-	if [ -f /var/cache/fonts/ls-R ]; then
-	  chmod 664 /var/cache/fonts/ls-R
-	  chown "root:$GROUP" /var/cache/fonts/ls-R
-	fi
-	echo "done."
-      fi
-    fi
+#     db_get tex-common/managecache || true
+#     if [ $RET = true ] ; then
+#       db_get tex-common/singleuser || true
+#       if [ "$RET" = true ]; then
+# 	db_get tex-common/groupname_single || true
+#       else
+# 	db_get tex-common/groupname_multi || true
+#       fi
+#       GROUP="$RET"
+#       if [ -n "$GROUP" ] ; then
+# 	echo -n "Adjusting permissions of TeX font cache... "
+#         find /var/cache/fonts -type d -print0 | xargs -0r chmod $FONTCACHE_PERMS
+# 	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
+# 	if [ -f /var/cache/fonts/ls-R ]; then
+# 	  chmod 664 /var/cache/fonts/ls-R
+# 	  chown "root:$GROUP" /var/cache/fonts/ls-R
+# 	fi
+# 	echo "done."
+#       fi
+#     fi
 
     # the config script may be run twice: Once by dpkg-preconfigure, once
     # again by debconf when it is sourced in the postinst script.  On the
     # first pass, it sets a special flag, which must now be reset.
-    db_fset tex-common/managecache firstrundone false || true
+#     db_fset tex-common/managecache firstrundone false || true
 
     ;;
   *)

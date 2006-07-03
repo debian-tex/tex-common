@@ -276,11 +276,19 @@
 	<heading>Generated files</heading>
 
 	<p>
-	Generated font files must be put in subdirectories of
-	<file>/var/cache/fonts</file>, all other generated files
-	should be below <file>/var/lib/texmf</file> (or the
-	user-specific variable directories), with the subdirectory
-	structure conforming to the TDS.<!--   If necessary, symbolic links -->
+	Generated files should be created
+	below <var>TEXMFSYSVAR</var> (or the user-specific
+	variable directories, <var>TEXMFVAR</var>), with the
+	subdirectory structure conforming to the TDS.  Generated font
+	files will either be created in each
+	user's <var>TEXMFVAR</var> tree, or in
+	the <var>VARTEXFONTS</var> tree<footnote>Per default, this
+	tree is located in the world-writeable
+	directory <file>/tmp/texfonts/</file>, in order to allow
+	automatic package builds to work without user directories.  On
+	multi user systems, the admin might want to change this to a
+	persistent directory and set up proper
+	permissions</footnote> <!-- If necessary, symbolic links -->
 <!-- 	can point from static <var>TEXMF</var> trees to files -->
 <!-- 	below <file>/var/</file>. -->
 	</p>

@@ -1,3 +1,12 @@
+tex-common (0.25.1) unreleased; urgency=low
+
+  * Font data are now cached separately for each user, or in /tmp/texfonts
+    when there is no writable home directory.  Thus we could get rid of
+    the complicated debconf questions related to that issue (there's still
+    one note left).  Many thanks to Ralf Stubner for his "braindump".
+
+ -- Frank Küster <frank@debian.org>  Mon,  3 Jul 2006 15:27:22 +0200
+
 tex-common (0.25) unstable; urgency=low
 
   * Translations:

@@ -1,0 +1,26 @@
+tex-common (0.26) unstable; urgency=low
+  
+  * New font cache handling
+  
+    The font cache handling has been reworked completely.  By default, a
+    separate font cache is kept for each user.  If you want to re-enable
+    site-wide caching, see the instructions in README.Debian.  On systems
+    where $HOME is not writable, fonts will be temporarily cached in
+    /tmp/texfonts. 
+  
+  * mktex.cnf change
+  
+    The change described above has been implemented by installing
+    /usr/share/texmf/web2c/mktex.cnf.  If you have a mktex.cnf in
+    TEXMFSYSCONFIG or TEXMFCONFIG with local additions, it would shadow
+    the new file, and font caching may not work until you transfer the
+    setting of MT_FEATURES to your configuration file.
+  
+  * Breakage with TeXLive
+  
+    The texlive packages do not yet automatically create a user's TEXMFVAR
+    directory for font caching.  This might break document processing in
+    some configurations.  Simply create the directory $HOME/.texmf-var
+    manually to fix this.
+  
+ -- Frank Küster <frank@debian.org>  Mon,  3 Jul 2006 15:25:26 +0200

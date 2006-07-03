@@ -90,10 +90,12 @@ install: build
 	grep -v '^[ \t]*#' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
 	grep -v '^[ \t]*#' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
 
-        # ship /var/cache/fonts with proper permissions
-	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/pk
-	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/tfm
-	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/source
+        # fontcache stuff with proper permissions
+	install -d $(INSTDIR)/usr/share/texmf/web2c/
+	install -m 644 texmf/web2c/mktex.cnf $(INSTDIR)/usr/share/texmf/web2c/
+# 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/pk
+# 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/tfm
+# 	mkdir --mode=1777 $(INSTDIR)/var/cache/fonts/source
 
         # Remove the out-of-date ls-R file from /usr/share/texmf and create a
         # link to one in /var/lib/texmf that we can update without violating
