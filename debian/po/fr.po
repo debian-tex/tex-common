@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 0.22\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-16 20:28+0200\n"
+"POT-Creation-Date: 2006-07-03 17:28+0200\n"
 "PO-Revision-Date: 2006-06-20 12:28+0200\n"
 "Last-Translator: Steve Petruzzello <dlist@bluewin.ch>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -27,137 +27,34 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
 
-#. Type: boolean
+#. Type: note
 #. Description
-#: ../templates:4
-msgid "Manage the permissions of the TeX font cache with debconf?"
-msgstr ""
-"Faut-il gérer automatiquement les permissions du cache des polices TeX ?"
-
-#. Type: boolean
-#. Description
-#: ../templates:4
+#: ../templates:5
 msgid ""
-"A TeX system needs  to generate new font data (pixel data, metric, sources) "
-"on the fly. These files can be saved into the TeX font cache in /var/cache/"
-"fonts and later reused."
+"mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
 msgstr ""
-"Le système TeX a besoin de générer à la volée des polices (données de pixels, "
-"métrique, sources). Ces fichiers peuvent être enregistrés dans le cache des "
-"polices Tex situé dans /var/cache/fonts pour être réutilisés plus tard."
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-msgid ""
-"If you do not accept, the font cache directory will be world-writable which "
-"is a security risk.  If you accept, you can specify a group name and all "
-"directories under /var/cache/fonts will get ownership root:<groupname> and "
-"permission bits 3775."
-msgstr ""
-"Si vous refusez, le répertoire cache des polices possédera les droits "
-"d'écriture pour tous, ce qui est un risque pour la sécurité. Si vous "
-"acceptez, vous pourrez indiquer un nom de groupe et tous les répertoires "
-"sous /var/cache/fonts seront à root:<nom du groupe> et auront les "
-"permissions 3775."
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-msgid ""
-"If you accept, font generation on multi-user machines will only work for "
-"users that have been added to the group you chose - this has to be done "
-"manually by you!  On machines used only by a single user, the setup will try "
-"to automatically detect a suitable group."
-msgstr ""
-"En acceptant cette option, la génération des polices sur un système "
-"multiutilisateurs ne fonctionnera que pour les utilisateurs appartenant au "
-"groupe que vous avez choisi ; vous devez faire cette opération vous-même. "
-"Sur les machines utilisées par un seul utilisateur, la configuration "
-"automatique essaiera de détecter un utilisateur adéquat."
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-msgid ""
-"The default is not to manage permissions with debconf, but this is just "
-"because this is required for automatic installs on Debian package building "
-"machines (buildds).  In almost every other setup, like desktop machines or "
-"multi-user servers, accepting this is strongly recommended!"
-msgstr ""
-"Le comportement par défaut est de ne pas gérer automatiquement les "
-"permissions, mais uniquement parce que c'est nécessaire pour l'installation "
-"automatique sur les machines Debian de construction de paquets (buildds). "
-"Dans presque toutes les autres configurations (machine de bureau, serveur "
-"multiutilisateurs), il est fortement recommandé d'accepter cette option."
-
-#. Type: string
-#. Description
-#. Don't translate "users" in quotation marks, it is the name of the
-#. default group as found in /etc/groups.
-#: ../templates:38
-msgid ""
-"The default is \"users\",  Note that on a Debian system, no local user is "
-"member of the \"users\" group by default, so you have to add them manually!"
-msgstr ""
-"Le groupe par défaut est « users ». Veuillez noter que sur un système "
-"Debian, aucun utilisateur local n'est par défaut membre de ce groupe, ce qui "
-"fait que vous devez les ajouter vous-même."
-
-#. Type: string
-#. Description
-#: ../templates:52
-msgid "Group that should own the TeX font cache:"
-msgstr "Nom du groupe propriétaire du cache des polices Tex :"
-
-#. Type: string
-#. Description
-#: ../templates:52
-msgid ""
-"You can choose a specific group which will own all directories under and "
-"including the TeX font cache /var/cache/fonts. These directories will  get "
-"permission 3775."
-msgstr ""
-"Vous pouvez choisir un groupe particulier qui possédera tous les répertoires "
-"sous le cache des polices TeX situé sous /var/cache/fonts (ce répertoire "
-"inclus). Ces répertoires auront les permissions 3775."
-
-#. Type: string
-#. Description
-#: ../templates:52
-msgid ""
-"The setup detected only a single user who works on this system.  If this is "
-"correct, the best choice is to choose this user's private group  with the "
-"same name as the user name."
-msgstr ""
-"L'installateur a détecté qu'un seul utilisateur travaille sur ce système. Si "
-"cela est le cas, le meilleur choix est de choisir le nom de cet utilisateur "
-"comme nom de groupe."
-
-#. Type: string
-#. Description
-#. Don't translate "users" in quotation marks, it is the name of the
-#. default group as found in /etc/groups.
-#: ../templates:52
-msgid ""
-"If it is incorrect and more users are supposed to work on this machine, or "
-"if daemons running as system users will use TeX, it is suggested to choose "
-"an existing group, like \"users\", and add the required users manually."
-msgstr ""
-"Si ce n'est pas le cas, et que plusieurs utilisateurs travaillent sur cette "
-"machine, ou si des démons actifs sous des identifiants système utilisent "
-"TeX, il est suggéré de choisir un groupe existant tel que « users » et "
-"d'ajouter les utilisateurs requis vous-même."
 
 #. Type: note
 #. Description
-#: ../templates:79
+#. Please do not translate FEATURES!
+#: ../templates:5
+msgid ""
+"The mechanism of TeX font caching has changed, requiring the installation "
+"of /usr/share/texmf/web2c/mktex.cnf.  On your system, /etc/texmf/web2c/mktex."
+"cnf exists with possible local changes, and makes the new file invisible to "
+"TeX.  Font caching might not work until the setting of MT_FEATURES has been "
+"transferred to your configuration file."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:15
 msgid "Change of name of files in /etc/texmf/texmf.d/"
 msgstr "Changement du nom des fichiers dans le répertoire /etc/texmf/texmf.d"
 
 #. Type: note
 #. Description
-#: ../templates:79
+#: ../templates:15
 msgid ""
 "texmf.cnf has previously been generated by update-texmf from all files in /"
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
@@ -169,7 +66,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../templates:79
+#: ../templates:15
 msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
 "cnf' to its name; for example, 22mymacro => 22mymacro.cnf."
@@ -180,31 +77,31 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:89
+#: ../templates:25
 msgid "Essential entry missing in ${filename}"
 msgstr "Entrée essentielle absente du fichier ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:89
+#: ../templates:25
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Une entrée essentielle manque dans le fichier ${filename} :"
 
 #. Type: error
 #. Description
-#: ../templates:89
+#: ../templates:25
 msgid "No setting of ${variable}."
 msgstr "Pas d'affectation pour la variable ${variable}."
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid "Essential entry wrong in ${filename}"
 msgstr "Entrée essentielle erronée dans le fichier ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr ""
@@ -213,13 +110,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid "${pattern}"
 msgstr "${pattern}"
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid ""
 "TeX will not work without it, you need to fix your configuration files.  The "
 "version of ${filename} that is provided by the package should be available "
@@ -231,9 +128,101 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid "Exiting."
 msgstr "Le programme de configuration va se terminer."
+
+#~ msgid "Manage the permissions of the TeX font cache with debconf?"
+#~ msgstr ""
+#~ "Faut-il gérer automatiquement les permissions du cache des polices TeX ?"
+
+#~ msgid ""
+#~ "A TeX system needs  to generate new font data (pixel data, metric, "
+#~ "sources) on the fly. These files can be saved into the TeX font cache in /"
+#~ "var/cache/fonts and later reused."
+#~ msgstr ""
+#~ "Le système TeX a besoin de générer à la volée des polices (données de "
+#~ "pixels, métrique, sources). Ces fichiers peuvent être enregistrés dans le "
+#~ "cache des polices Tex situé dans /var/cache/fonts pour être réutilisés "
+#~ "plus tard."
+
+#~ msgid ""
+#~ "If you do not accept, the font cache directory will be world-writable "
+#~ "which is a security risk.  If you accept, you can specify a group name "
+#~ "and all directories under /var/cache/fonts will get ownership root:"
+#~ "<groupname> and permission bits 3775."
+#~ msgstr ""
+#~ "Si vous refusez, le répertoire cache des polices possédera les droits "
+#~ "d'écriture pour tous, ce qui est un risque pour la sécurité. Si vous "
+#~ "acceptez, vous pourrez indiquer un nom de groupe et tous les répertoires "
+#~ "sous /var/cache/fonts seront à root:<nom du groupe> et auront les "
+#~ "permissions 3775."
+
+#~ msgid ""
+#~ "If you accept, font generation on multi-user machines will only work for "
+#~ "users that have been added to the group you chose - this has to be done "
+#~ "manually by you!  On machines used only by a single user, the setup will "
+#~ "try to automatically detect a suitable group."
+#~ msgstr ""
+#~ "En acceptant cette option, la génération des polices sur un système "
+#~ "multiutilisateurs ne fonctionnera que pour les utilisateurs appartenant "
+#~ "au groupe que vous avez choisi ; vous devez faire cette opération vous-"
+#~ "même. Sur les machines utilisées par un seul utilisateur, la "
+#~ "configuration automatique essaiera de détecter un utilisateur adéquat."
+
+#~ msgid ""
+#~ "The default is not to manage permissions with debconf, but this is just "
+#~ "because this is required for automatic installs on Debian package "
+#~ "building machines (buildds).  In almost every other setup, like desktop "
+#~ "machines or multi-user servers, accepting this is strongly recommended!"
+#~ msgstr ""
+#~ "Le comportement par défaut est de ne pas gérer automatiquement les "
+#~ "permissions, mais uniquement parce que c'est nécessaire pour "
+#~ "l'installation automatique sur les machines Debian de construction de "
+#~ "paquets (buildds). Dans presque toutes les autres configurations (machine "
+#~ "de bureau, serveur multiutilisateurs), il est fortement recommandé "
+#~ "d'accepter cette option."
+
+#~ msgid ""
+#~ "The default is \"users\",  Note that on a Debian system, no local user is "
+#~ "member of the \"users\" group by default, so you have to add them "
+#~ "manually!"
+#~ msgstr ""
+#~ "Le groupe par défaut est « users ». Veuillez noter que sur un système "
+#~ "Debian, aucun utilisateur local n'est par défaut membre de ce groupe, ce "
+#~ "qui fait que vous devez les ajouter vous-même."
+
+#~ msgid "Group that should own the TeX font cache:"
+#~ msgstr "Nom du groupe propriétaire du cache des polices Tex :"
+
+#~ msgid ""
+#~ "You can choose a specific group which will own all directories under and "
+#~ "including the TeX font cache /var/cache/fonts. These directories will  "
+#~ "get permission 3775."
+#~ msgstr ""
+#~ "Vous pouvez choisir un groupe particulier qui possédera tous les "
+#~ "répertoires sous le cache des polices TeX situé sous /var/cache/fonts (ce "
+#~ "répertoire inclus). Ces répertoires auront les permissions 3775."
+
+#~ msgid ""
+#~ "The setup detected only a single user who works on this system.  If this "
+#~ "is correct, the best choice is to choose this user's private group  with "
+#~ "the same name as the user name."
+#~ msgstr ""
+#~ "L'installateur a détecté qu'un seul utilisateur travaille sur ce système. "
+#~ "Si cela est le cas, le meilleur choix est de choisir le nom de cet "
+#~ "utilisateur comme nom de groupe."
+
+#~ msgid ""
+#~ "If it is incorrect and more users are supposed to work on this machine, "
+#~ "or if daemons running as system users will use TeX, it is suggested to "
+#~ "choose an existing group, like \"users\", and add the required users "
+#~ "manually."
+#~ msgstr ""
+#~ "Si ce n'est pas le cas, et que plusieurs utilisateurs travaillent sur "
+#~ "cette machine, ou si des démons actifs sous des identifiants système "
+#~ "utilisent TeX, il est suggéré de choisir un groupe existant tel que "
+#~ "« users » et d'ajouter les utilisateurs requis vous-même."
 
 #, fuzzy
 #~ msgid ""

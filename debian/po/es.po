@@ -36,7 +36,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-5.1\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-05-16 20:28+0200\n"
+"POT-Creation-Date: 2006-07-03 17:28+0200\n"
 "PO-Revision-Date: 2006-03-31 14:04+0200\n"
 "Last-Translator: Javier Fernandez-Sanguino Peña <jfs@computer.org>\n"
 "Language-Team: Debian l10n spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -44,131 +44,34 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: boolean
+#. Type: note
 #. Description
-#: ../templates:4
-msgid "Manage the permissions of the TeX font cache with debconf?"
-msgstr ""
-"¿Desea gestionar los permisos de la caché de fuentes tipográficas con "
-"debconf?"
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-#, fuzzy
+#: ../templates:5
 msgid ""
-"A TeX system needs  to generate new font data (pixel data, metric, sources) "
-"on the fly. These files can be saved into the TeX font cache in /var/cache/"
-"fonts and later reused."
-msgstr ""
-"Un sistema TeX habitualmente tiene que generar datos de fuentes tipográficas "
-"(número de pixels, métricas y fuentes) sobre la marcha. Estos ficheros se "
-"pueden guardar en la caché de fuentes tipográficas en /var/cache/fonts para "
-"poder reutilizarlos más adelante."
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-msgid ""
-"If you do not accept, the font cache directory will be world-writable which "
-"is a security risk.  If you accept, you can specify a group name and all "
-"directories under /var/cache/fonts will get ownership root:<groupname> and "
-"permission bits 3775."
-msgstr ""
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-#, fuzzy
-msgid ""
-"If you accept, font generation on multi-user machines will only work for "
-"users that have been added to the group you chose - this has to be done "
-"manually by you!  On machines used only by a single user, the setup will try "
-"to automatically detect a suitable group."
-msgstr ""
-"En caso de que acepte la generación de fuentes sólo funcionará para los "
-"usuarios que pertenezcan al grupo que haya elegido. Tenga en cuenta que vd. "
-"debe asignar manualmente los usuarios a dicho grupo."
-
-#. Type: boolean
-#. Description
-#: ../templates:4
-#, fuzzy
-msgid ""
-"The default is not to manage permissions with debconf, but this is just "
-"because this is required for automatic installs on Debian package building "
-"machines (buildds).  In almost every other setup, like desktop machines or "
-"multi-user servers, accepting this is strongly recommended!"
-msgstr ""
-"El valor por omisión es no gestionar los permisos con debconf, pero ésto "
-"sólo se hace porque es necesario para poder construir otros paquetes Debian. "
-"En la mayoría de los entornos (como pudieran ser equipos de escritorio o "
-"servidores multi-usuario) lo recomendable es que acepte esta opción (y añada "
-"los usuarios al grupo correspondiente)."
-
-#. Type: string
-#. Description
-#. Don't translate "users" in quotation marks, it is the name of the
-#. default group as found in /etc/groups.
-#: ../templates:38
-#, fuzzy
-msgid ""
-"The default is \"users\",  Note that on a Debian system, no local user is "
-"member of the \"users\" group by default, so you have to add them manually!"
-msgstr ""
-"Tenga en cuenta que en un sistema Debian no hay ningún usuario que "
-"pertenezca al grupo «users» por omisión. Debe añadir a los usuarios a este "
-"grupo manualmente."
-
-#. Type: string
-#. Description
-#: ../templates:52
-#, fuzzy
-msgid "Group that should own the TeX font cache:"
-msgstr ""
-"¿A qué grupo debería pertenecer la caché de fuentes tipográficas de TeX?"
-
-#. Type: string
-#. Description
-#: ../templates:52
-msgid ""
-"You can choose a specific group which will own all directories under and "
-"including the TeX font cache /var/cache/fonts. These directories will  get "
-"permission 3775."
-msgstr ""
-"Puede indicar un grupo concreto al que pertenecerán todos los directorios "
-"bajo la caché de fuentes tipográficas «/var/cache/fonts», inclusive. Se "
-"utilizarán los permisos 3755 para estos directorios."
-
-#. Type: string
-#. Description
-#: ../templates:52
-msgid ""
-"The setup detected only a single user who works on this system.  If this is "
-"correct, the best choice is to choose this user's private group  with the "
-"same name as the user name."
-msgstr ""
-
-#. Type: string
-#. Description
-#. Don't translate "users" in quotation marks, it is the name of the
-#. default group as found in /etc/groups.
-#: ../templates:52
-msgid ""
-"If it is incorrect and more users are supposed to work on this machine, or "
-"if daemons running as system users will use TeX, it is suggested to choose "
-"an existing group, like \"users\", and add the required users manually."
+"mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
 msgstr ""
 
 #. Type: note
 #. Description
-#: ../templates:79
+#. Please do not translate FEATURES!
+#: ../templates:5
+msgid ""
+"The mechanism of TeX font caching has changed, requiring the installation "
+"of /usr/share/texmf/web2c/mktex.cnf.  On your system, /etc/texmf/web2c/mktex."
+"cnf exists with possible local changes, and makes the new file invisible to "
+"TeX.  Font caching might not work until the setting of MT_FEATURES has been "
+"transferred to your configuration file."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../templates:15
 msgid "Change of name of files in /etc/texmf/texmf.d/"
 msgstr "Cambio de nombre de los ficheros en /etc/texmf/texmf.d/"
 
 #. Type: note
 #. Description
-#: ../templates:79
+#: ../templates:15
 msgid ""
 "texmf.cnf has previously been generated by update-texmf from all files in /"
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
@@ -180,7 +83,7 @@ msgstr ""
 
 #. Type: note
 #. Description
-#: ../templates:79
+#: ../templates:15
 msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
 "cnf' to its name; for example, 22mymacro => 22mymacro.cnf."
@@ -190,31 +93,31 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:89
+#: ../templates:25
 msgid "Essential entry missing in ${filename}"
 msgstr "Falta una entrada esencial en ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:89
+#: ../templates:25
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Falta una entrada esencial en ${filename}:"
 
 #. Type: error
 #. Description
-#: ../templates:89
+#: ../templates:25
 msgid "No setting of ${variable}."
 msgstr "No está establecida ${variable}."
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid "Essential entry wrong in ${filename}"
 msgstr "La entrada esencial en ${filename} no es correcta"
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr ""
@@ -223,13 +126,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid "${pattern}"
 msgstr "${pattern}"
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid ""
 "TeX will not work without it, you need to fix your configuration files.  The "
 "version of ${filename} that is provided by the package should be available "
@@ -241,9 +144,73 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:102
+#: ../templates:38
 msgid "Exiting."
 msgstr "Saliendo."
+
+#~ msgid "Manage the permissions of the TeX font cache with debconf?"
+#~ msgstr ""
+#~ "¿Desea gestionar los permisos de la caché de fuentes tipográficas con "
+#~ "debconf?"
+
+#, fuzzy
+#~ msgid ""
+#~ "A TeX system needs  to generate new font data (pixel data, metric, "
+#~ "sources) on the fly. These files can be saved into the TeX font cache in /"
+#~ "var/cache/fonts and later reused."
+#~ msgstr ""
+#~ "Un sistema TeX habitualmente tiene que generar datos de fuentes "
+#~ "tipográficas (número de pixels, métricas y fuentes) sobre la marcha. "
+#~ "Estos ficheros se pueden guardar en la caché de fuentes tipográficas en /"
+#~ "var/cache/fonts para poder reutilizarlos más adelante."
+
+#, fuzzy
+#~ msgid ""
+#~ "If you accept, font generation on multi-user machines will only work for "
+#~ "users that have been added to the group you chose - this has to be done "
+#~ "manually by you!  On machines used only by a single user, the setup will "
+#~ "try to automatically detect a suitable group."
+#~ msgstr ""
+#~ "En caso de que acepte la generación de fuentes sólo funcionará para los "
+#~ "usuarios que pertenezcan al grupo que haya elegido. Tenga en cuenta que "
+#~ "vd. debe asignar manualmente los usuarios a dicho grupo."
+
+#, fuzzy
+#~ msgid ""
+#~ "The default is not to manage permissions with debconf, but this is just "
+#~ "because this is required for automatic installs on Debian package "
+#~ "building machines (buildds).  In almost every other setup, like desktop "
+#~ "machines or multi-user servers, accepting this is strongly recommended!"
+#~ msgstr ""
+#~ "El valor por omisión es no gestionar los permisos con debconf, pero ésto "
+#~ "sólo se hace porque es necesario para poder construir otros paquetes "
+#~ "Debian. En la mayoría de los entornos (como pudieran ser equipos de "
+#~ "escritorio o servidores multi-usuario) lo recomendable es que acepte esta "
+#~ "opción (y añada los usuarios al grupo correspondiente)."
+
+#, fuzzy
+#~ msgid ""
+#~ "The default is \"users\",  Note that on a Debian system, no local user is "
+#~ "member of the \"users\" group by default, so you have to add them "
+#~ "manually!"
+#~ msgstr ""
+#~ "Tenga en cuenta que en un sistema Debian no hay ningún usuario que "
+#~ "pertenezca al grupo «users» por omisión. Debe añadir a los usuarios a "
+#~ "este grupo manualmente."
+
+#, fuzzy
+#~ msgid "Group that should own the TeX font cache:"
+#~ msgstr ""
+#~ "¿A qué grupo debería pertenecer la caché de fuentes tipográficas de TeX?"
+
+#~ msgid ""
+#~ "You can choose a specific group which will own all directories under and "
+#~ "including the TeX font cache /var/cache/fonts. These directories will  "
+#~ "get permission 3775."
+#~ msgstr ""
+#~ "Puede indicar un grupo concreto al que pertenecerán todos los directorios "
+#~ "bajo la caché de fuentes tipográficas «/var/cache/fonts», inclusive. Se "
+#~ "utilizarán los permisos 3755 para estos directorios."
 
 #, fuzzy
 #~ msgid ""
