@@ -1,3 +1,6 @@
+# global font cache, also change VARTEXFONTS in 05TeXMF.cnf
+#: ${MT_FEATURES=appendonlydir:varfonts}
+# per user font cache 
 : ${MT_FEATURES=appendonlydir:texmfvar}
 #: ${MODE=ljfour}
 #: ${BDPI=600}
