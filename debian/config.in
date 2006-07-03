@@ -51,9 +51,7 @@ db_unregister tex-common/invalid_groupname || true
 # test whether mktex.cnf exists in TEXMFSYSCONFIG and warn the user
 # mktex.cnf in TEXMFCONFIG will have the same effect, but all we can provide
 # in this case is the message in NEWS.Debian
-sysconfig=`kpsewhich --var-value='TEXMFSYSCONFIG'`
-if kpsewhich --format='web2c files' mktex.cnf | grep $sysconfig; then
-  db_subst tex-common/warn_mktexcnf sysconfig "$sysconfig" || true
+if [ -f /etc/texmf/web2c/mktex.cnf ]; then
   db_input medium tex-common/warn_mktexcnf || true
   db_go
 fi
