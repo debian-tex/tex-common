@@ -18,9 +18,9 @@ tex-common (0.26) unstable; urgency=low
   
   * Breakage with TeXLive
   
-    The texlive packages do not yet automatically create a user's TEXMFVAR
-    directory for font caching.  This might break document processing in
-    some configurations.  Simply create the directory $HOME/.texmf-var
-    manually to fix this.
+    The texlive packages as of version 2005-2 do not automatically create
+    a user's TEXMFVAR directory for font caching. This might break
+    document processing in some configurations. Simply create the
+    directory $HOME/.texmf-var manually to fix this.
   
  -- Frank Küster <frank@debian.org>  Mon,  3 Jul 2006 15:25:26 +0200

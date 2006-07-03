@@ -11,11 +11,16 @@ Font caching mechanisms:
  instead, but this directory is cleaned up regularly.
 
  On multi-user machines, it might be advisable that the local
- administrator set VARTEXFONTS to a persistent directory,
- e.g. /var/cache/fonts.  The variable is set in in
- /etc/texmf/texmf.d/05TeXMF.cnf, do not forget to run update-texmf
- after making the change.  Care should be taken to specifiy
- appropriate permissions for that directory.  Either the local admin
+ administrator enables a site-wide font cache and sets VARTEXFONTS to
+ a persistent directory, e.g. /var/cache/fonts.  The variable is set in
+ /etc/texmf/texmf.d/05TeXMF.cnf and can either be changed there or 
+ overwritten in a file that sorts before 05TeXMF.cnf, e.g.  
+ /etc/texmf/texmf.d/04VARTEXFONTS.cnf.  Do not forget to run
+ update-texmf after making the change.  To enable a side-wide font
+ caching the admin should copy /usr/share/texmf/web2c/mktex.cnf to
+ /etc/texmf/web2c/mktex.cnf and use 'varfonts' instead of 'texmfvar' in
+ MT_FEATURES.  Care should be taken to specifiy appropriate permissions
+ for the directory containing the font cache.  Either the local admin
  should create all available font data and not allow write access, or
  else write access should be limited to trusted users.  Yet an other
  alternative is to bind-mount /var/cache/fonts from a separate
