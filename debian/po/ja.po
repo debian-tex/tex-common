@@ -13,10 +13,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tetex-bin\n"
+"Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-07-03 17:28+0200\n"
-"PO-Revision-Date: 2006-04-04 11:07+0900\n"
+"PO-Revision-Date: 2006-07-04 09:05+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 #: ../templates:5
 msgid ""
 "mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
-msgstr ""
+msgstr "/etc/texmf/ にある mktex.cnf は 変更された /usr/share/texmf/web2c/mktex.cnf を遮ります"
 
 #. Type: note
 #. Description
@@ -40,7 +40,7 @@ msgid ""
 "cnf exists with possible local changes, and makes the new file invisible to "
 "TeX.  Font caching might not work until the setting of MT_FEATURES has been "
 "transferred to your configuration file."
-msgstr ""
+msgstr "TeX フォントキャッシュの機構が、/usr/share/texmf/web2c/mktex.cnf のインストールを必須とするように変更されました。あなたのシステムにはローカルでの変更が加えられた可能性のある /etc/texmf/web2c/mktex.cnf があり、新しいファイルを TeX から見えなくしています。フォントキャッシュは、あなたの設定ファイルに MT_FEATURES の設定が移行されるまで動作しません。"
 
 #. Type: note
 #. Description
@@ -125,75 +125,3 @@ msgstr ""
 #: ../templates:38
 msgid "Exiting."
 msgstr "終了しています。"
-
-#~ msgid "Manage the permissions of the TeX font cache with debconf?"
-#~ msgstr "TeX フォントキャッシュのパーミッションを debconf で管理しますか?"
-
-#, fuzzy
-#~ msgid ""
-#~ "A TeX system needs  to generate new font data (pixel data, metric, "
-#~ "sources) on the fly. These files can be saved into the TeX font cache in /"
-#~ "var/cache/fonts and later reused."
-#~ msgstr ""
-#~ "TeX システムは新しいフォントデータ (ピクセルデータ、メトリック、ソース) を"
-#~ "必要に応じて生成します。これらのファイルは /var/cache/fonts の TeX フォン"
-#~ "トキャッシュに保存し、あとで再利用できます。"
-
-#, fuzzy
-#~ msgid ""
-#~ "If you accept, font generation on multi-user machines will only work for "
-#~ "users that have been added to the group you chose - this has to be done "
-#~ "manually by you!  On machines used only by a single user, the setup will "
-#~ "try to automatically detect a suitable group."
-#~ msgstr ""
-#~ "「はい」と答えると、選択したグループに追加済みのユーザにのみ、フォント生成"
-#~ "は働きます。これは手動で行っておかなければなりません!"
-
-#, fuzzy
-#~ msgid ""
-#~ "The default is not to manage permissions with debconf, but this is just "
-#~ "because this is required for automatic installs on Debian package "
-#~ "building machines (buildds).  In almost every other setup, like desktop "
-#~ "machines or multi-user servers, accepting this is strongly recommended!"
-#~ msgstr ""
-#~ "デフォルトは「debconf でパーミッションを管理しない」ですが、これは単にこれ"
-#~ "がほかの Debian パッケージの構築に必要だからです。その他のセットアップ、た"
-#~ "とえばデスクトップマシンやマルチユーザサーバでは、ほとんどの場合、ここで"
-#~ "「はい」と答える (およびグループにユーザを追加する) ことを強くお勧めしま"
-#~ "す!"
-
-#, fuzzy
-#~ msgid ""
-#~ "The default is \"users\",  Note that on a Debian system, no local user is "
-#~ "member of the \"users\" group by default, so you have to add them "
-#~ "manually!"
-#~ msgstr ""
-#~ "Debian システムでは、デフォルトで誰も \"users\" グループのメンバーではない"
-#~ "ので、ローカルユーザを手動で追加しなければならないことに注意してください。"
-
-#, fuzzy
-#~ msgid "Group that should own the TeX font cache:"
-#~ msgstr "TeX フォントキャッシュを所有するグループ"
-
-#~ msgid ""
-#~ "You can choose a specific group which will own all directories under and "
-#~ "including the TeX font cache /var/cache/fonts. These directories will  "
-#~ "get permission 3775."
-#~ msgstr ""
-#~ "TeX フォントキャッシュを含む /var/cache/fonts 以下のすべてのディレクトリを"
-#~ "所有する特定のグループを選択できます。これらのディレクトリはパーミッショ"
-#~ "ン 3775 になります。"
-
-#, fuzzy
-#~ msgid ""
-#~ "If you accept, you can specify a group name and all directories under /"
-#~ "var/cache/fonts will get ownership root:<groupname> and permission bits "
-#~ "3775 (i.e. writable for the group <groupname>, sticky and setgid bit "
-#~ "set). Accordingly, the ls-R index file will be owned and writable by that "
-#~ "group."
-#~ msgstr ""
-#~ "「はい」と答えると、グループ名を指定します。/var/cache/fonts 下の「すべて"
-#~ "の」ディレクトリは、root:<グループ名> の所有権を持ち、パーミッションビッ"
-#~ "ト 3775 (グループ <グループ名> が書き込み可能、スティッキーおよび setgid "
-#~ "ビットをセット) に設定されます。これに応じて、ls-R インデックスファイルは"
-#~ "このグループに所有され書き込み可能に設定されます。"

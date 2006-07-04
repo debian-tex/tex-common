@@ -7,9 +7,15 @@ tex-common (0.25.1) unreleased; urgency=low
     Ralf Stubner for his "braindump".
   * Debconf Translations:
     - Updated Czech translation, thanks to Miroslav Kure
-    <kurem@upcase.inf.upol.cz> 
+      <kurem@upcase.inf.upol.cz> 
+    - Updated Japanese translation, thank to Kenshi Muto
+      <kmuto@debian.org> (closes: #376632)
+    - Updated brazilian Portuguese translation, thanks to Felipe Augusto
+      van de Wiel (faw) <felipe@cathedrallabs.org> 
+    - Updated Danish translation, thanks to Claus Hindsgaul
+      <claus.hindsgaul@gmail.com> (closes: #376703)
 
- -- Frank Küster <frank@debian.org>  Mon,  3 Jul 2006 21:27:04 +0200
+ -- Frank Küster <frank@debian.org>  Tue,  4 Jul 2006 18:58:50 +0200
 
 tex-common (0.25) unstable; urgency=low
 

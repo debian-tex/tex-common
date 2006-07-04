@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-07-03 17:28+0200\n"
-"PO-Revision-Date: 2006-05-14 11:31+0200\n"
+"PO-Revision-Date: 2006-07-04 12:38+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
 "Language-Team: Danish\n"
 "MIME-Version: 1.0\n"
@@ -20,9 +20,8 @@ msgstr ""
 #. Type: note
 #. Description
 #: ../templates:5
-msgid ""
-"mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
-msgstr ""
+msgid "mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
+msgstr "mktex.cnf i /etc/texmf/-skygger ændrede /usr/share/texmf/web2c/mktex.cnf"
 
 #. Type: note
 #. Description
@@ -35,6 +34,11 @@ msgid ""
 "TeX.  Font caching might not work until the setting of MT_FEATURES has been "
 "transferred to your configuration file."
 msgstr ""
+"Måden TeX mellemlagrer skrifttyper er ændret, og kræver installation "
+"af /usr/share/texmf/web2c/mktex.cnf. På dit system eksisterer "
+"/etc/texmf/web2c/mktex.cnf allerede, evt. med lokale ændringer, og gør "
+"den nye fil usynlig for TeX. Skrifttypemellemlagring virker muligvis ikke før "
+"indstilingen MT_FEATURES er blevet overført til din opsætningsfil."
 
 #. Type: note
 #. Description
@@ -91,10 +95,8 @@ msgstr "Fejlbehæftet essentiel linje i ${filename}"
 #. Type: error
 #. Description
 #: ../templates:38
-msgid ""
-"An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgstr ""
-"En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
+msgid "An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgstr "En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
 
 #. Type: error
 #. Description
@@ -604,3 +606,4 @@ msgstr "Afslutter."
 #~ msgstr ""
 #~ "Bemærk at opsætningsfilen bliver håndteret af debconf, hvis du vælger "
 #~ "dette, men at du ellers er nødt til selv at rette filen."
+
