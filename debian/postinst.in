@@ -133,7 +133,7 @@ EOF
 # prior to 0.26, which is the first to install a file in a TEXMF tree
 
     if [ -x "`which mktexlsr`" ]; then
-      mktexlsr
+      mktexlsr /usr/share/texmf/
     fi
     #
     # do the config stuff
