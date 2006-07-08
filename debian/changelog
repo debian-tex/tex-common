@@ -5,6 +5,9 @@ tex-common (0.25.1) unreleased; urgency=low
     the complicated debconf questions related to that issue (there's still
     one note left) (closes: #376050, #366805, #368411).  Many thanks to
     Ralf Stubner for his "braindump".
+  
+    This change requires installation of a file in a TEXMF tree; we
+    therefore run mktexlsr if it is available.
   * Debconf Translations:
     - Updated Czech translation, thanks to Miroslav Kure
       <kurem@upcase.inf.upol.cz> 

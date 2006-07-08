@@ -129,6 +129,12 @@ EOF
     update-updmap
     update-language
 
+# if available, run mktexlsr - this is needed for upgrades from versions
+# prior to 0.26, which is the first to install a file in a TEXMF tree
+
+    if [ -x "`which mktexlsr`" ]; then
+      mktexlsr
+    fi
     #
     # do the config stuff
 #     db_get tex-common/managecache || true
