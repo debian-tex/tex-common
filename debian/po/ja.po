@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-07-03 17:28+0200\n"
+"POT-Creation-Date: 2006-07-10 10:22+0200\n"
 "PO-Revision-Date: 2006-07-04 09:05+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -26,9 +26,11 @@ msgstr ""
 #. Type: note
 #. Description
 #: ../templates:5
-msgid ""
-"mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
-msgstr "/etc/texmf/ にある mktex.cnf は 変更された /usr/share/texmf/web2c/mktex.cnf を遮ります"
+#, fuzzy
+msgid "mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf"
+msgstr ""
+"/etc/texmf/ にある mktex.cnf は 変更された /usr/share/texmf/web2c/mktex.cnf "
+"を遮ります"
 
 #. Type: note
 #. Description
@@ -40,7 +42,12 @@ msgid ""
 "cnf exists with possible local changes, and makes the new file invisible to "
 "TeX.  Font caching might not work until the setting of MT_FEATURES has been "
 "transferred to your configuration file."
-msgstr "TeX フォントキャッシュの機構が、/usr/share/texmf/web2c/mktex.cnf のインストールを必須とするように変更されました。あなたのシステムにはローカルでの変更が加えられた可能性のある /etc/texmf/web2c/mktex.cnf があり、新しいファイルを TeX から見えなくしています。フォントキャッシュは、あなたの設定ファイルに MT_FEATURES の設定が移行されるまで動作しません。"
+msgstr ""
+"TeX フォントキャッシュの機構が、/usr/share/texmf/web2c/mktex.cnf のインストー"
+"ルを必須とするように変更されました。あなたのシステムにはローカルでの変更が加"
+"えられた可能性のある /etc/texmf/web2c/mktex.cnf があり、新しいファイルを TeX "
+"から見えなくしています。フォントキャッシュは、あなたの設定ファイルに "
+"MT_FEATURES の設定が移行されるまで動作しません。"
 
 #. Type: note
 #. Description

@@ -2,7 +2,7 @@ Template: tex-common/warn_mktexcnf
 Type: note
 #flag:comment:2
 # Please do not translate FEATURES!
-_Description: mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf
+_Description: mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf
  The mechanism of TeX font caching has changed, requiring the
  installation of /usr/share/texmf/web2c/mktex.cnf.  On your system,
  /etc/texmf/web2c/mktex.cnf exists with possible local changes, and

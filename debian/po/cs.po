@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-07-03 17:28+0200\n"
+"POT-Creation-Date: 2006-07-10 10:22+0200\n"
 "PO-Revision-Date: 2006-07-03 19:51+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -26,8 +26,8 @@ msgstr ""
 #. Type: note
 #. Description
 #: ../templates:5
-msgid ""
-"mktex.cnf in /etc/texmf/ shadows changed /usr/share/texmf/web2c/mktex.cnf"
+#, fuzzy
+msgid "mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf"
 msgstr ""
 "mktex.cnf v /etc/texmf/ zastiňuje změněný /usr/share/texmf/web2c/mktex.cnf"
 
@@ -42,11 +42,11 @@ msgid ""
 "TeX.  Font caching might not work until the setting of MT_FEATURES has been "
 "transferred to your configuration file."
 msgstr ""
-"Způsob cachování TeXových fontů se změnil a nyní vyžaduje soubor "
-"/usr/share/texmf/web2c/mktex.cnf. Na vašem systému však již existuje "
-"/etc/texmf/web2c/mktex.cnf s potenciálními lokálními úpravami, který "
-"tento nový soubor před TeXem skrývá. Cachování fontů nemusí fungovat "
-"dokud do svého konfiguračního souboru nepřenesete nastavení MT_FEATURES."
+"Způsob cachování TeXových fontů se změnil a nyní vyžaduje soubor /usr/share/"
+"texmf/web2c/mktex.cnf. Na vašem systému však již existuje /etc/texmf/web2c/"
+"mktex.cnf s potenciálními lokálními úpravami, který tento nový soubor před "
+"TeXem skrývá. Cachování fontů nemusí fungovat dokud do svého konfiguračního "
+"souboru nepřenesete nastavení MT_FEATURES."
 
 #. Type: note
 #. Description
