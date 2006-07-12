@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-07-10 10:22+0200\n"
-"PO-Revision-Date: 2006-04-01 00:18+0300\n"
+"PO-Revision-Date: 2006-07-11 06:38+0300\n"
 "Last-Translator: Kęstutis Biliūnas <kebil@kaunas.init.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,8 @@ msgstr ""
 #: ../templates:5
 msgid "mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf"
 msgstr ""
+"Failas mktex.cnf·kataloge·/etc/texmf/·uždengia naująjį failą /usr/share/"
+"texmf/web2c/mktex.cnf"
 
 #. Type: note
 #. Description
@@ -33,6 +35,11 @@ msgid ""
 "TeX.  Font caching might not work until the setting of MT_FEATURES has been "
 "transferred to your configuration file."
 msgstr ""
+"TeX šriftų talpinimo mechanizmas pakeistas ir reikia įdiegti failą /usr/"
+"share/texmf/web2c/mktex.cnf.  Jūsų sistemoje šis failas egzistuoja su "
+"galimais lokaliais pakeitimais ir tai padaro naująjį failą nematomu TeX "
+"sistemai.  Šriftų talpinimas spartinančioje atmintinėje gali neveikti kol "
+"parametro MT_FEATURES nustatymas nebus perkeltas į Jūsų konfigūracijos failą."
 
 #. Type: note
 #. Description
@@ -117,77 +124,3 @@ msgstr ""
 #: ../templates:38
 msgid "Exiting."
 msgstr "Išėjimas"
-
-#~ msgid "Manage the permissions of the TeX font cache with debconf?"
-#~ msgstr "Ar tvarkyti TeX šriftų talpyklos teises debconf pagalba?"
-
-#, fuzzy
-#~ msgid ""
-#~ "A TeX system needs  to generate new font data (pixel data, metric, "
-#~ "sources) on the fly. These files can be saved into the TeX font cache in /"
-#~ "var/cache/fonts and later reused."
-#~ msgstr ""
-#~ "TeX sistemai gali tekti generuoti naujus šriftus (taškų duomenis, "
-#~ "metrikas, šaltinius) jų prireikus. Šie failai gali būti saugomi "
-#~ "talpykloje /var/cache/fonts ir vėliau naudojami."
-
-#, fuzzy
-#~ msgid ""
-#~ "If you accept, font generation on multi-user machines will only work for "
-#~ "users that have been added to the group you chose - this has to be done "
-#~ "manually by you!  On machines used only by a single user, the setup will "
-#~ "try to automatically detect a suitable group."
-#~ msgstr ""
-#~ "Jei Jūs sutiksite, šriftų generavimas dirbs tik naudotojams, "
-#~ "priklausantiems Jūsų pasirinktai grupei - tai Jūs turite padaryti "
-#~ "rankiniu būdu!"
-
-#, fuzzy
-#~ msgid ""
-#~ "The default is not to manage permissions with debconf, but this is just "
-#~ "because this is required for automatic installs on Debian package "
-#~ "building machines (buildds).  In almost every other setup, like desktop "
-#~ "machines or multi-user servers, accepting this is strongly recommended!"
-#~ msgstr ""
-#~ "Pagal nutylėjimą nenustatomas teisių tvarkymas debconf pagalba, bet taip "
-#~ "yra tik todėl, kad to reikia kitų Debian'o paketų kompiliavimui. Beveik "
-#~ "visiems kitiems atvejams, kaip darbastalio kompiuteris ar daugelio "
-#~ "naudotojų serveris, sutikimas su šiuo pasirinkimu (ir naudotojų "
-#~ "priskyrimas grupei) yra griežtai rekomenduotinas!"
-
-#, fuzzy
-#~ msgid ""
-#~ "The default is \"users\",  Note that on a Debian system, no local user is "
-#~ "member of the \"users\" group by default, so you have to add them "
-#~ "manually!"
-#~ msgstr ""
-#~ "Atkreipkite dėmesį, kad Debian'o sistemoje niekas netampa grupes \"users"
-#~ "\" nariu pagal  nutylėjimą, taigi vietiniai naudotojai turi būti "
-#~ "prijungti rankiniu būdu!"
-
-#, fuzzy
-#~ msgid "Group that should own the TeX font cache:"
-#~ msgstr "Grupė, kuriai turi priklausyti Tex šriftų talpykla"
-
-#~ msgid ""
-#~ "You can choose a specific group which will own all directories under and "
-#~ "including the TeX font cache /var/cache/fonts. These directories will  "
-#~ "get permission 3775."
-#~ msgstr ""
-#~ "Jūs galite pasirinkti specifinę grupę, kuri valdys TeX šriftų talpyklą /"
-#~ "var/cache/fonts ir visus žemiau esančius katalogus. Šie katalogai įgys "
-#~ "teises 3775."
-
-#, fuzzy
-#~ msgid ""
-#~ "If you accept, you can specify a group name and all directories under /"
-#~ "var/cache/fonts will get ownership root:<groupname> and permission bits "
-#~ "3775 (i.e. writable for the group <groupname>, sticky and setgid bit "
-#~ "set). Accordingly, the ls-R index file will be owned and writable by that "
-#~ "group."
-#~ msgstr ""
-#~ "Jei Jūs sutinkate, Jūs galite nurodyti grupės vardą ir *visi* katalogai "
-#~ "žemiau /var/cache/fonts įgys savininką root:<groupname> ir teisių bitus "
-#~ "3775 (t.y. rašymo teises grupei <groupname>, nustatytus bitus 'sticky' "
-#~ "ir·'setgid').  Atitinkamai, šios grupės nariai bus indeksų failo ls-R "
-#~ "savininkai ir galės jį modifikuoti."

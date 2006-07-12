@@ -12,19 +12,23 @@ tex-common (0.25.1) unreleased; urgency=low
     - Updated Czech translation, thanks to Miroslav Kure
       <kurem@upcase.inf.upol.cz> 
     - Updated Japanese translation, thank to Kenshi Muto
-      <kmuto@debian.org> (closes: #376632)
+      <kmuto@debian.org> (closes: #376632, #377945)
     - Updated brazilian Portuguese translation, thanks to Felipe Augusto
       van de Wiel (faw) <felipe@cathedrallabs.org> 
     - Updated Danish translation, thanks to Claus Hindsgaul
-      <claus.hindsgaul@gmail.com> (closes: #376703)
+      <claus.hindsgaul@gmail.com> (closes: #377664)
     - Updated German translation, thanks to Helge Kreutzmann
       <debian@helgefjell.de> 
     - Updated italian translation, thanks to Luca Monducci
       <luca.mo@tiscali.it> (closes: #377378).
     - Updated french translation, thanks to Jean-Baka Domelevo-Entfellner
       <domelevo@gmail.com> (closes: #377388)
+    - Updated Swedish translation, thanks to Daniel Nylander
+      <po@danielnylander.se> 
+    - Updated Lithuanian translation, thanks to Kęstutis Biliūnas
+      <kebil@kaunas.init.lt> 
 
- -- Frank Küster <frank@debian.org>  Mon, 10 Jul 2006 10:28:35 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 12 Jul 2006 11:06:24 +0200
 
 tex-common (0.25) unstable; urgency=low
 
