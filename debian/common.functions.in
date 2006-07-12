@@ -37,35 +37,42 @@ rename_catinfo(){
 
 create_tetex_formats(){
   options="$@"
-  tempfile=`mktemp -t tetex.postinst.XXXXXXXX`
-  echo "Running fmtutil-sys. This may take some time. ..."
+  printf "Running fmtutil-sys. This may take some time... "
   # for jadetex safety (see #352391 and friends), remove old latex formats
   if [ "$options" = "--all" ];
     then for file in latex.fmt latex.efmt latex.log pdflatex.fmt pdflatex.efmt pdflatex.log; do
       rm -f $TEXMFSYSVARDIR/web2c/$file
     done
   fi
-  if fmtutil-sys $options > $tempfile; then
-    rm -f $tempfile
+
+  # Working in a temporary directory avoids bad suprises caused by TeX first
+  # looking for input files in the current directory (see bug #377581).
+  tempdir=$(mktemp -d -t tetex.format_creation.XXXXXXXX) || exit 1
+  curdir="$PWD"; cd "$tempdir"
+
+  if fmtutil-sys $options >fmtutil-sys.log; then
+    cd "$curdir"
+    rm -r "$tempdir"
+    echo "done."
   else
     echo
-    echo "fmtutil failed. Output has been stored in"
-    echo "$tempfile"
+    echo "fmtutil-sys failed. Output has been stored in:"
+    echo "  $tempdir/fmtutil-sys.log"
     echo "Please include this file if you report a bug."
     exit 1
   fi
 }
 
 create_fontmaps(){
-    tempfile=`mktemp -t tetex.updmap.XXXXXXXX`
-    echo -n "Running updmap-sys. This may take some time. ..."
+    tempfile=$(mktemp -t tetex.updmap.XXXXXXXX)
+    printf "Running updmap-sys. This may take some time... "
     if updmap-sys 2> $tempfile; then
       rm -f $tempfile
-      echo " done."
+      echo "done."
     else
       echo
-      echo "updmap failed. Output has been stored in"
-      echo "$tempfile"
+      echo "updmap-sys failed. Output has been stored in:"
+      echo "  $tempfile"
       echo "Please include this file if you report a bug."
       exit 1
     fi
@@ -88,9 +95,9 @@ handle_stateof_configfile(){
   CONFSTATEDIR=<:=$confstatedir:>
   NO_CONFIG_PREFIX=<:=$no_config_prefix:>
   PCONFSTATEDIR=$CONFSTATEDIR/$PACKAGE
-  SAVED_CONFIG_FILE=$PCONFSTATEDIR/`basename $CONFIG_FILE`
-  NO_CONFIG_FILE=$PCONFSTATEDIR/$NO_CONFIG_PREFIX.`basename $CONFIG_FILE`
-  TEMP_CONFIG_FILE="$PCONFSTATEDIR/`basename $CONFIG_FILE`.tmp"
+  SAVED_CONFIG_FILE=$PCONFSTATEDIR/$(basename $CONFIG_FILE)
+  NO_CONFIG_FILE=$PCONFSTATEDIR/$NO_CONFIG_PREFIX.$(basename $CONFIG_FILE)
+  TEMP_CONFIG_FILE="$PCONFSTATEDIR/$(basename $CONFIG_FILE).tmp"
 
   case $1 in
     --preinst)
@@ -262,7 +269,7 @@ get_newfilename(){
 
 dpkg_md5sum(){
   file=$1
-  md5sum=`grep "$file[[:space:]]"  /var/lib/dpkg/status | cut -f 3 -d ' '`
+  md5sum=$(grep "$file[[:space:]]"  /var/lib/dpkg/status | cut -f 3 -d ' ')
   if [ -z "$md5sum" ]; then
     get_sarge_md5sum_from_list $file
   fi
@@ -271,7 +278,7 @@ dpkg_md5sum(){
 
 ucf_md5sum(){
   file=$1
-  md5sum=`grep "$file$"  /var/lib/ucf/hashfile | cut -f 1 -d ' '`
+  md5sum=$(grep "$file$"  /var/lib/ucf/hashfile | cut -f 1 -d ' ')
   if [ -z "$md5sum" ]; then
     get_sarge_md5sum_from_list $file
   fi
@@ -588,28 +595,28 @@ get_sarge_md5sum_from_list(){
 
 preinst_remove_or_move(){
   file=/etc/texmf/$1
-  newname=`get_newfilename $1`
+  newname=$(get_newfilename $1)
   debug $file
   test -f "$file" || return 0
   debug "handled\n"
-  oldmd5sum=`dpkg_md5sum $file`
-  currmd5sum=`md5sum $file | cut -d ' ' -f 1`
+  oldmd5sum=$(dpkg_md5sum $file)
+  currmd5sum=$(md5sum $file | cut -d ' ' -f 1)
   if [ "$oldmd5sum" != "$currmd5sum" ]; then
-    mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
+    mv $file $oldstuff_dir/$(basename $file).$PREINST_MOVE_EXT
   else
     rm $file
   fi
 }
 preinst_remove_or_move_ucf(){
   file=/etc/texmf/$1
-  newname=`get_newfilename $1`
+  newname=$(get_newfilename $1)
   debug $file
   test -f "$file" || return 0
   debug "handled\n"
-  oldmd5sum=`ucf_md5sum $file`
-  currmd5sum=`md5sum $file | cut -d ' ' -f 1`
+  oldmd5sum=$(ucf_md5sum $file)
+  currmd5sum=$(md5sum $file | cut -d ' ' -f 1)
   if [ "$oldmd5sum" != "$currmd5sum" ]; then
-    mv $file $oldstuff_dir/`basename $file`.$PREINST_MOVE_EXT
+    mv $file $oldstuff_dir/$(basename $file).$PREINST_MOVE_EXT
   else
     rm $file
     if [ -x /usr/bin/ucf ]; then ucf --purge $file; fi

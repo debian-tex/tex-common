@@ -7,26 +7,36 @@ tex-common (0.25.1) unreleased; urgency=low
     Ralf Stubner for his "braindump".
   
     This change requires installation of a file in a TEXMF tree; we
-    therefore run mktexlsr if it is available.
+    therefore run mktexlsr if it is available. [frank]
+
   * Debconf Translations: [frank]
     - Updated Czech translation, thanks to Miroslav Kure
-      <kurem@upcase.inf.upol.cz> 
+      <kurem@upcase.inf.upol.cz>
     - Updated Japanese translation, thank to Kenshi Muto
       <kmuto@debian.org> (closes: #376632, #377945)
     - Updated brazilian Portuguese translation, thanks to Felipe Augusto
-      van de Wiel (faw) <felipe@cathedrallabs.org> 
+      van de Wiel (faw) <felipe@cathedrallabs.org>
     - Updated Danish translation, thanks to Claus Hindsgaul
       <claus.hindsgaul@gmail.com> (closes: #377664)
     - Updated German translation, thanks to Helge Kreutzmann
-      <debian@helgefjell.de> 
+      <debian@helgefjell.de>
     - Updated italian translation, thanks to Luca Monducci
       <luca.mo@tiscali.it> (closes: #377378).
     - Updated french translation, thanks to Jean-Baka Domelevo-Entfellner
       <domelevo@gmail.com> (closes: #377388)
     - Updated Swedish translation, thanks to Daniel Nylander
-      <po@danielnylander.se> 
+      <po@danielnylander.se>
     - Updated Lithuanian translation, thanks to Kęstutis Biliūnas
-      <kebil@kaunas.init.lt> 
+      <kebil@kaunas.init.lt>
+  
+  * common.functions.in: [florent]
+      + change create_tetex_formats() so that fmtutil-sys is run in a
+        temporary directory; otherwise, it may use files lying in the
+        current directory, which can cause bad surprises. This will close
+        #377581 when propagated to the various packages using this function
+        in their maintainer scripts.
+      + replace `command args ...` with $(command args ...) everywhere in
+        the file.
 
  -- Frank Küster <frank@debian.org>  Wed, 12 Jul 2006 11:06:24 +0200
 
