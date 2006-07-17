@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: tex-common\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-07-10 10:22+0200\n"
-"PO-Revision-Date: 2006-07-03 19:51+0200\n"
+"PO-Revision-Date: 2006-07-12 10:25+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,10 +26,8 @@ msgstr ""
 #. Type: note
 #. Description
 #: ../templates:5
-#, fuzzy
 msgid "mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf"
-msgstr ""
-"mktex.cnf v /etc/texmf/ zastiňuje změněný /usr/share/texmf/web2c/mktex.cnf"
+msgstr "mktex.cnf v /etc/texmf/ zastiňuje nový /usr/share/texmf/web2c/mktex.cnf"
 
 #. Type: note
 #. Description
