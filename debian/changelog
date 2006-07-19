@@ -1,4 +1,4 @@
-tex-common (0.25.1) unreleased; urgency=low
+tex-common (0.26) unstable; urgency=low
 
   * Font data are now cached separately for each user, or in /tmp/texfonts
     when there is no writable home directory.  Thus we could get rid of
@@ -40,7 +40,7 @@ tex-common (0.25.1) unreleased; urgency=low
 
   * Updated Maintainer field to use new mailing list [jdg]
 
- -- Julian Gilbey <jdg@debian.org>  Sun, 16 Jul 2006 21:35:59 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 19 Jul 2006 16:05:47 +0200
 
 tex-common (0.25) unstable; urgency=low
 
