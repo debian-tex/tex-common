@@ -1,394 +1,222 @@
-# 
-#    Translators, if you are not familiar with the PO format, gettext
-#    documentation is worth reading, especially sections dedicated to
-#    this format, e.g. by running:
-#         info -n '(gettext)PO Files'
-#         info -n '(gettext)Header Entry'
-# 
-#    Some information specific to po-debconf are available at
-#            /usr/share/doc/po-debconf/README-trans
-#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
-# 
-#    Developers do not need to manually edit POT or PO files.
-# 
+# Debian tex-common po-debconf translation,
+# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the tex-common package.
+# Luk Claes <luk.claes@ugent.be>, 2004.
+# Vincent Zweije <zweije@xs4all.nl>, 2006.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: tetex-bin 2.0.2-10\n"
+"Project-Id-Version: tex-common 0.25.1\n"
 "Report-Msgid-Bugs-To: debian-tetex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-07-10 10:22+0200\n"
-"PO-Revision-Date: 2004-09-17 12:49+0100\n"
-"Last-Translator: Luk Claes <luk.claes@ugent.be>\n"
-"Language-Team: Debian-Dutch <debian-i10n-dutch@lists.debian.org>\n"
+"POT-Creation-Date: 2006-05-16 20:28+0200\n"
+"PO-Revision-Date: 2006-07-14 20:55+0000\n"
+"Last-Translator: Vincent Zweije <zweije@xs4all.nl>\n"
+"Language-Team: Debian-Dutch <debian-l10n-dutch@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: note
+#. Type: boolean
 #. Description
-#: ../templates:5
-msgid "mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf"
-msgstr ""
+#: ../templates:4
+msgid "Manage the permissions of the TeX font cache with debconf?"
+msgstr "De rechten van de TeX-fontcache beheren met debconf?"
 
-#. Type: note
+#. Type: boolean
 #. Description
-#. Please do not translate FEATURES!
-#: ../templates:5
+#: ../templates:4
 msgid ""
-"The mechanism of TeX font caching has changed, requiring the installation "
-"of /usr/share/texmf/web2c/mktex.cnf.  On your system, /etc/texmf/web2c/mktex."
-"cnf exists with possible local changes, and makes the new file invisible to "
-"TeX.  Font caching might not work until the setting of MT_FEATURES has been "
-"transferred to your configuration file."
+"A TeX system needs  to generate new font data (pixel data, metric, sources) "
+"on the fly. These files can be saved into the TeX font cache in /var/cache/"
+"fonts and later reused."
 msgstr ""
+"Een TeX-systeem genereert fontgegevens (pixelgegevens, afmetingen, bronnen) "
+"tijdens het uitvoeren. Deze bestanden kunnen worden bewaard in de TeX-"
+"fontcache in /var/cache/fonts en later worden herbruikt."
+
+#. Type: boolean
+#. Description
+#: ../templates:4
+msgid ""
+"If you do not accept, the font cache directory will be world-writable which "
+"is a security risk.  If you accept, you can specify a group name and all "
+"directories under /var/cache/fonts will get ownership root:<groupname> and "
+"permission bits 3775."
+msgstr ""
+"Indien u weigert, zal de font cache voor iedereen schrijfbaar zijn; dit is "
+"een veiligheidsrisico. Indien u accepteert, kunt u een groepnaam aangeven; "
+"alle mappen onder /var/cache/fonts worden dan eigendom van root:<groepnaam> "
+"en krijgen permissie 3775."
+
+#. Type: boolean
+#. Description
+#: ../templates:4
+msgid ""
+"If you accept, font generation on multi-user machines will only work for "
+"users that have been added to the group you chose - this has to be done "
+"manually by you!  On machines used only by a single user, the setup will try "
+"to automatically detect a suitable group."
+msgstr ""
+"Indien u accepteert zal font generatie, op systemen met meerdere gebruikers, "
+"alleen werken voor gebruikers die waren toegevoegd aan de door u gekozen "
+"groep - dit dient u handmatig te doen! Op machines die slechts door één "
+"gebruiker worden gebruikt zal de instelling proberen automatisch een "
+"geschikte groep te vinden."
+
+#. Type: boolean
+#. Description
+#: ../templates:4
+msgid ""
+"The default is not to manage permissions with debconf, but this is just "
+"because this is required for automatic installs on Debian package building "
+"machines (buildds).  In almost every other setup, like desktop machines or "
+"multi-user servers, accepting this is strongly recommended!"
+msgstr ""
+"De standaard is om permissies niet met debconf te beheren. Dit is echter "
+"alleen vereist voor automatische installaties op machines die "
+"Debian-pakketten bouwen (buildds). In vrijwel iedere andere situatie, zoals "
+"desktopmachines of servers met meerdere gebruikers, wordt met klem "
+"aangeraden deze keuze te accepteren!"
+
+#. Type: string
+#. Description
+#. Don't translate "users" in quotation marks, it is the name of the
+#. default group as found in /etc/groups.
+#: ../templates:38
+msgid ""
+"The default is \"users\",  Note that on a Debian system, no local user is "
+"member of the \"users\" group by default, so you have to add them manually!"
+msgstr ""
+"De standaard is \"users\". Merk op dat, op een Debian systeem, locale "
+"gebruikers standaard geen lid zijn van groep \"users\": u dient ze handmatig "
+"toe te voegen!"
+
+#. Type: string
+#. Description
+#: ../templates:52
+msgid "Group that should own the TeX font cache:"
+msgstr "Groep die eigenaar van de TeX-fontcache moet zijn:"
+
+#. Type: string
+#. Description
+#: ../templates:52
+msgid ""
+"You can choose a specific group which will own all directories under and "
+"including the TeX font cache /var/cache/fonts. These directories will  get "
+"permission 3775."
+msgstr ""
+"U kunt een specifieke groep kiezen die eigenaar zal zijn van de "
+"TeX-fontcache /var/cache/fonts en alle mappen daaronder. Deze mappen zullen "
+"permissie 3775 krijgen."
+
+#. Type: string
+#. Description
+#: ../templates:52
+msgid ""
+"The setup detected only a single user who works on this system.  If this is "
+"correct, the best choice is to choose this user's private group  with the "
+"same name as the user name."
+msgstr ""
+"De instelling vond slechts een enkele gebruiker die met dit systeem werkt. "
+"Indien dit juist is, dan is de eigen groep van deze gebruiker (met dezelfde "
+"naam als deze gebruiker) de beste keuze."
+
+#. Type: string
+#. Description
+#. Don't translate "users" in quotation marks, it is the name of the
+#. default group as found in /etc/groups.
+#: ../templates:52
+msgid ""
+"If it is incorrect and more users are supposed to work on this machine, or "
+"if daemons running as system users will use TeX, it is suggested to choose "
+"an existing group, like \"users\", and add the required users manually."
+msgstr ""
+"Indien dit onjuist is, en meerdere gebruikers op deze computer kunnen "
+"werken, of als achtergronddiensten als reguliere gebruikers het TeX-systeem "
+"gebruiken, dan is het waarschijnlijk beter om een bestaande groep, zoals "
+"\"users\", te kiezen, en de gewenste gebruikers daar handmatig aan toe te "
+"voegen."
 
 #. Type: note
 #. Description
-#: ../templates:15
+#: ../templates:79
 msgid "Change of name of files in /etc/texmf/texmf.d/"
-msgstr ""
+msgstr "Naamswijziging van bestanden in /etc/texmf/texmf.d/"
 
-# ../templates:88
 #. Type: note
 #. Description
-#: ../templates:15
-#, fuzzy
+#: ../templates:79
 msgid ""
 "texmf.cnf has previously been generated by update-texmf from all files in /"
 "etc/texmf/texmf.d/. Now update-texmf is changed and only reads files with "
 "extension '.cnf'."
 msgstr ""
 "texmf.cnf is in het verleden aangemaakt door update-texmf met alle bestanden "
-"in /etc/texmf/texmf.d/. Nu leest update-texmf alleen nog bestanden met de '."
-"cnf'-extensie."
+"in /etc/texmf/texmf.d/. Nu leest update-texmf alleen nog bestanden met de "
+"'.cnf'-extensie."
 
-# ../templates:88
 #. Type: note
 #. Description
-#: ../templates:15
-#, fuzzy
+#: ../templates:79
 msgid ""
 "So if you had any private file in /etc/texmf/texmf.d/, then you should add '."
 "cnf' to its name; for example, 22mymacro => 22mymacro.cnf."
 msgstr ""
-"Als u private bestanden in /etc/texmf/texmf.d/ heeft toegevoegd, moet u '."
-"cnf' aan de bestandsnamen toevoegen (v.b. 22mijnmacro => 22mijnmacro.cnf) en "
-"update-texmf uitvoeren."
+"Als u zelf bestanden in /etc/texmf/texmf.d/ heeft toegevoegd, moet u "
+"'.cnf' aan de bestandsnamen toevoegen (v.b. 22mijnmacro => 22mijnmacro.cnf)."
 
 #. Type: error
 #. Description
-#: ../templates:25
+#: ../templates:89
 msgid "Essential entry missing in ${filename}"
-msgstr ""
+msgstr "Essentieel element ontbreekt in ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:25
+#: ../templates:89
 msgid "An essential entry is missing in ${filename}:"
-msgstr ""
+msgstr "Een essentieel element ontbreekt in ${filename}:"
 
 #. Type: error
 #. Description
-#: ../templates:25
+#: ../templates:89
 msgid "No setting of ${variable}."
-msgstr ""
+msgstr "Geen instelling van ${variable}"
 
 #. Type: error
 #. Description
-#: ../templates:38
+#: ../templates:102
 msgid "Essential entry wrong in ${filename}"
-msgstr ""
+msgstr "Essentieel element onjuist in ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:38
+#: ../templates:102
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr ""
+"Een essentieel element is onjuist in ${filename}: ${variable} bevat niet"
 
 #. Type: error
 #. Description
-#: ../templates:38
+#: ../templates:102
 msgid "${pattern}"
-msgstr ""
+msgstr "${pattern}"
 
 #. Type: error
 #. Description
-#: ../templates:38
+#: ../templates:102
 msgid ""
 "TeX will not work without it, you need to fix your configuration files.  The "
 "version of ${filename} that is provided by the package should be available "
 "as ${filename}.dpkg-dist."
 msgstr ""
+"TeX werkt niet zonder: u dient uw configuratiebestanden te repareren. Het "
+"pakket zou een versie van ${filename} aanleveren onder de naam "
+"${filename}.dpkg-dist."
 
 #. Type: error
 #. Description
-#: ../templates:38
+#: ../templates:102
 msgid "Exiting."
-msgstr ""
-
-# ../templates:65
-#, fuzzy
-#~ msgid "Group that should own the TeX font cache:"
-#~ msgstr "Welke groep moet de eigenaar van de ls-R bestanden zijn?"
-
-#, fuzzy
-#~ msgid ""
-#~ "A lot of font files have to be generated before they can be used by xdvi, "
-#~ "dvips etc. These files are stored in /var/cache/fonts, so that they do "
-#~ "not need to be regenerated every time.  Usually, these files are created "
-#~ "on-the-fly  when needed.  Since the directory is group-writable, the ls-R "
-#~ "file should be the same"
-#~ msgstr ""
-#~ "Veel lettertypebestanden moeten aangemaakt worden alvorens ze gebruikt "
-#~ "kunnen worden door het scherm en de printprogramma's (xdvi, dvips enz.) "
-#~ "van teTeX. Deze bestanden worden bewaard in /var/cache/fonts zodat ze "
-#~ "niet telkens opnieuw aangemaakt moeten worden. 'ls-R'-bestanden vertellen "
-#~ "het systeem welke bestanden worden bewaard en waar."
-
-# ../templates:53
-#, fuzzy
-#~ msgid ""
-#~ "Accepting this option will allow you to easily manage the permissions of "
-#~ "those ls-R files using debconf. Otherwise you will have to manually "
-#~ "ensure that they get useful but safe permissions."
-#~ msgstr ""
-#~ "Aanvaarden van deze optie stelt u in staat om de rechten op 'ls-R'-"
-#~ "bestanden eenvoudig te beheren met debconf. Zonder aanvaarden van deze "
-#~ "optie zult u zich er handmatig van moeten verzekeren dat ze nuttige, maar "
-#~ "veilige rechten hebben."
-
-# ../templates:65
-#, fuzzy
-#~ msgid ""
-#~ "Modification of ls-R files can be restricted to the members of one group "
-#~ "which owns them.  To take advantage of this, add the users to the group "
-#~ "of your choice, and enter that group name here.  The default group, "
-#~ "'users', is appropriate for most systems."
-#~ msgstr ""
-#~ "De mogelijkheid tot bewerken van 'ls-R'-bestanden kan beperkt worden tot "
-#~ "de leden van de groep, die eigenaar is van deze bestanden. Om hier uw "
-#~ "voordeel mee te doen, moet u hier een groep opgeven en gebruikers die u "
-#~ "die rechten wil toekennen toevoegen aan deze groep. De standaardwaarde "
-#~ "'users' is voor de meeste systemen geschikt."
-
-# ../templates:74
-#~ msgid "Allow group members to modify ls-R files?"
-#~ msgstr "Mogen leden van de groep ls-R bestanden bewerken?"
-
-# ../templates:74
-#, fuzzy
-#~ msgid ""
-#~ "Accepting this option will allow members of the owning group to modify "
-#~ "the ls-R files."
-#~ msgstr ""
-#~ "Aanvaarden van deze optie zal leden van de groep, die eigenaar is van de "
-#~ "'ls-R'-bestanden, in staat stellen deze te bewerken. Bijna iedereen zou "
-#~ "deze optie moeten aanvaarden!"
-
-# ../templates:81
-#~ msgid "Allow all users to modify ls-R files?"
-#~ msgstr "Mogen alle gebruikers 'ls-R'-bestanden bewerken?"
-
-# ../templates:81
-#~ msgid ""
-#~ "Accepting this option will allow all users to modify ls-R files.  This is "
-#~ "generally not a good idea for security reasons; you should instead "
-#~ "restrict such access to members of one group."
-#~ msgstr ""
-#~ "Aanvaarden van deze optie geeft aan alle gebruikers de mogelijkheid tot "
-#~ "het bewerken van 'ls-R'-bestanden. Dit is in het algemeen, om "
-#~ "beveiligingsredenen, geen goed idee. Het beste is om de toegang te "
-#~ "beperken tot de leden van één bepaalde groep."
-
-# ../templates:53
-#~ msgid "Use debconf to manage permissions of ls-R files?"
-#~ msgstr "Debconf gebruiken om de rechten van de 'ls-R'-bestanden te beheren?"
-
-# ../templates:21
-#~ msgid "Use update-fmtutil to automatically generate fmtutil.cnf?"
-#~ msgstr "update-fmtutil gebruiken om automatisch fmtutil.cnf aan te maken?"
-
-# ../templates:21
-#~ msgid ""
-#~ "The file fmtutil.cnf is the central configuration file for TeX engines. "
-#~ "Automatic generation is recommended to make the setup work with other TeX-"
-#~ "related packages."
-#~ msgstr ""
-#~ "Het bestand fmtutil.cnf is het centrale configuratiebestand voor TeX-"
-#~ "machines. Het automatisch aanmaken van dit bestand wordt aanbevolen om de "
-#~ "setup te laten werken met andere TeX-gerelateerde pakketten."
-
-# ../templates:21
-#~ msgid ""
-#~ "After accepting this option, you should not edit fmtutil.cnf directly but "
-#~ "instead modify the files in /etc/texmf/fmt.d/ and run update-fmtutil.  "
-#~ "The generated fmtutil.cnf will then be placed under /var/lib/texmf/web2c/."
-#~ msgstr ""
-#~ "Na het aanvaarden van deze optie dient u fmtutil.cnf niet direct aan te "
-#~ "passen, maar de bestanden in /etc/texmf/fmt.d/. Het aangemaakte fmtutil."
-#~ "cnf wordt dan geplaatst onder /var/lib/texmf/web2c."
-
-# ../templates:21
-#~ msgid ""
-#~ "If you need to keep using an existing fmtutil.cnf then you may refuse "
-#~ "this option and maintain /etc/texmf/fmtutil.cnf manually.  However, "
-#~ "installation of some TeX-related packages will fail unless you accept "
-#~ "this option."
-#~ msgstr ""
-#~ "Als u een bestaande fmtutil.cnf wilt bewaren, dan kunt u deze optie "
-#~ "weigeren en /etc/texmf/fmtutil.cnf handmatig beheren. Echter, installatie "
-#~ "van enkele TeX-gerelateerde pakketten zal falen, tenzij u deze optie "
-#~ "aanvaardt."
-
-# ../templates:37
-#~ msgid "Use update-updmap to automatically generate updmap.cfg?"
-#~ msgstr "update-updmap gebruiken om automatisch updmap.cfg aan te maken?"
-
-# ../templates:37
-#~ msgid ""
-#~ "The file updmap.cfg is the central configuration file for the font system "
-#~ "of TeX.  Automatic generation is recommended to make the setup work with "
-#~ "TeX font packages."
-#~ msgstr ""
-#~ "Het bestand updmap.cfg is het centrale configuratiebestand voor het "
-#~ "lettertypesysteem van TeX. Het automatisch aanmaken wordt aanbevolen om "
-#~ "de setup te laten werken met andere TeX-lettertypepakketten."
-
-# ../templates:37
-#~ msgid ""
-#~ "After accepting this option, you should not edit updmap.cfg directly but "
-#~ "instead modify the files in /etc/texmf/updmap.d/ and run update-updmap. "
-#~ "The generated updmap.cfg will be placed under /var/lib/texmf/web2c."
-#~ msgstr ""
-#~ "Na het aanvaarden van deze optie moet u updmap.cfg niet rechtstreeks "
-#~ "bewerken; wijzig in plaats daarvan de bestanden in /etc/texmf/updmap.d/ "
-#~ "en voer update-updmap uit. Het aangemaakte updmap.cfg zal geplaatst "
-#~ "worden onder /var/lib/texmf/web2c."
-
-# ../templates:37
-#~ msgid ""
-#~ "If you need to keep an existing updmap.cfg then you may refuse this "
-#~ "option and maintain /etc/texmf/updmap.cfg manually.  However, "
-#~ "installation of TeX fonts will fail unless you accept this option."
-#~ msgstr ""
-#~ "Als u een bestaande updmap.cfg wilt behouden dan kunt u deze optie "
-#~ "weigeren en /etc/texmf/updmap.cfg handmatig beheren. Echter, installatie "
-#~ "van TeX-lettertypes zal falen tenzij u deze optie aanvaardt."
-
-#~ msgid "Files in /etc/texmf/texmf.d/ must be renamed."
-#~ msgstr "Bestanden in /etc/texmf/texmf.d/ moeten hernoemd worden."
-
-# ../templates:99
-#~ msgid "Remove old (and harmful) file /etc/X11/Xresources/tetex-base?"
-#~ msgstr ""
-#~ "Oud (en schadelijk) bestand, /etc/X11/Xresources/tetex-base, verwijderen?"
-
-# ../templates:99
-#~ msgid ""
-#~ "An old version of tetex-bin installed /etc/X11/Xresources/tetex-base, but "
-#~ "it is now unused and it is even harmful for it to exist.  It is strongly "
-#~ "recommended to let the installation script remove this file right now!"
-#~ msgstr ""
-#~ "Een oude versie van tetex-bin installeerde /etc/X11/Xresources/tetex-"
-#~ "base, maar het wordt nu niet meer gebruikt en het is zelfs schadelijk als "
-#~ "het bestaat. Het wordt dus sterk aangeraden om dit bestand onmiddellijk "
-#~ "te verwijderen!"
-
-# ../templates:99
-#~ msgid "Remove this file?"
-#~ msgstr "Dit bestand verwijderen?"
-
-# ../templates:109
-#~ msgid "Manage language.dat with debconf?"
-#~ msgstr "language.dat met debconf beheren?"
-
-# ../templates:109
-#~ msgid ""
-#~ "The language.dat file, which determines which hyphenation patterns are "
-#~ "enabled, can be handled by debconf."
-#~ msgstr ""
-#~ "Het bestand language.dat, dat bepaalt welke woordafbreekpatronen "
-#~ "ingeschakeld worden, kan door debconf beheerd worden."
-
-#~ msgid ""
-#~ "If you do not choose this, one pattern set for each supported language "
-#~ "will be enabled (two for german, with old and new orthography).  You can "
-#~ "choose debconf management if you want to exclude some patterns and get "
-#~ "smaller (La)TeX format files.  Manual editing is still possible, and your "
-#~ "changes will be preserved."
-#~ msgstr ""
-#~ "Als u dit niet aanvaardt, dan zal één patroonverzameling voor elke "
-#~ "ondersteunde taal worden ingeschakeld (twee voor Duits, met oude en "
-#~ "nieuwe spelling). U kunt debconf-beheer kiezen als u enkele patronen wilt "
-#~ "uitsluiten en kleinere (La)Tex-formaatbestanden verkrijgen. Handmatig "
-#~ "bewerken is nog mogelijk en uw wijzigingen zullen bewaard worden."
-
-# ../templates:120
-#~ msgid "Which hyphenation patterns should be loaded?"
-#~ msgstr "Welke woordafbreekpatronen moeten geladen worden?"
-
-# ../templates:120
-#~ msgid ""
-#~ "If you want to load extra hyphenation pattern(s) please select them from "
-#~ "the list."
-#~ msgstr ""
-#~ "Als u extra woordafbreekpatronen wilt laden, selecteer ze dan in deze "
-#~ "lijst."
-
-# ../templates:120
-#~ msgid ""
-#~ "If you want to change hyphenation pattern(s) afterwards, you may do so "
-#~ "with \"dpkg-reconfigure tetex-bin\". Manual editing is still possible, "
-#~ "and your changes will be preserved."
-#~ msgstr ""
-#~ "Als u later de lijst van te laden woordafbreekpatronen wilt wijzigen, "
-#~ "kunt u dat doen met \"dpkg-reconfigure tetex-bin\". Handmatige bewerking "
-#~ "is nog mogelijk en uw wijzigingen zullen bewaard blijven."
-
-#~ msgid "TeX format generation failed."
-#~ msgstr "Aanmaak TeX-formaat faalde."
-
-#~ msgid ""
-#~ "The generation of some of the format files needed to run TeX, LaTeX etc. "
-#~ "has failed. You will not be able to run these programs until this is "
-#~ "fixed."
-#~ msgstr ""
-#~ "De aanmaak van enkele formaatbestanden die nodig zijn om TeX, LaTeX enz. "
-#~ "uit te voeren, heeft gefaald. U zult deze programma's niet kunnen "
-#~ "uitvoeren totdat dit hersteld is."
-
-#~ msgid ""
-#~ "The most frequent cause for such a failure is that a new version of tetex-"
-#~ "bin changed configuration files, but you did not accept the maintainers' "
-#~ "version of a file you manually changed."
-#~ msgstr ""
-#~ "De meest voorkomende oorzaak van een dergelijke faling is dat een nieuwe "
-#~ "versie van tetex-bin de configuratiebestanden wijzigde, maar dat u de "
-#~ "beheerdersversie van een bestand dat u handmatig wijzigde niet heeft "
-#~ "aanvaard."
-
-#~ msgid ""
-#~ "If you report this as a bug, please include the output of fmtutil, stored "
-#~ "in ${fmtutil_tempfile}"
-#~ msgstr ""
-#~ "Als u dit als een bug rapporteert, voeg er dan de uitvoer van fmtutil, "
-#~ "bewaard in ${fmtutil_tempfile} bij."
-
-#~ msgid "Generation of TeX font information failed."
-#~ msgstr "De aanmaak van TeX-lettertype-informatie faalde."
-
-#~ msgid ""
-#~ "The generation of the font map files by the updmap script failed.  "
-#~ "Therefore, TeX, LaTeX etc. will have problems finding the font files they "
-#~ "need."
-#~ msgstr ""
-#~ "De aanmaak van de lettertypemappen door het updmap-script faalde. Daarom "
-#~ "zullen TeX, LaTeX enz. moeilijkheden hebben bij het vinden van de "
-#~ "lettertypebestanden die ze nodig hebben."
-
-#~ msgid ""
-#~ "If you report this as a bug, please include the output of updmap, stored "
-#~ "in ${updmap_tempfile}"
-#~ msgstr ""
-#~ "Als u dit als een bug rapporteert, voeg er dan de uitvoer van updmap, "
-#~ "bewaard in ${updmap_tempfile} bij"
+msgstr "Afgesloten."

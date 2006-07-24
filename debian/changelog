@@ -1,3 +1,13 @@
+tex-common (0.26.1) unstable; urgency=low
+
+  * Really install NEWS.Debian about the font cache changes in the last
+    upload [frank]
+  * Debconf Translations:
+    - Update Dutch translation, thanks to Vincent Zweije
+      <zweije@xs4all.nl> (closes: #379234)
+
+ -- Frank Küster <frank@debian.org>  Mon, 24 Jul 2006 13:39:50 +0200
+
 tex-common (0.26) unstable; urgency=low
 
   * Font data are now cached separately for each user, or in /tmp/texfonts
