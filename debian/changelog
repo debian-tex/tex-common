@@ -2,6 +2,7 @@ tex-common (0.26.1) unstable; urgency=low
 
   * Really install NEWS.Debian about the font cache changes in the last
     upload [frank]
+  * Update changelog for 0.16. We forgot to close two bugs. [hilmar-guest]
   * Debconf Translations:
     - Update Dutch translation, thanks to Vincent Zweije
       <zweije@xs4all.nl> (closes: #379234)
@@ -267,7 +268,7 @@ tex-common (0.16) unstable; urgency=low
     - Also add some forgotten md5sums for tetex-base, and make sure scripts
       really stop if the md5sum is unknown (closes: #352688) [frank]
     - remove LaTeX and pdfLaTeX format files before trying to recreate all
-      format (closes: #352391) [frank]
+      format (closes: #352391, #346135, #352569) [frank]
     - use different variable names for /var/lib/texmf as a texmf.cnf
       variable and as a maintainer script variable [frank]
   * rework debconf usage (Closes: #352394) [preining,frank]
