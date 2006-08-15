@@ -263,11 +263,12 @@
 
         <p>
         Debian packages generally install files in
-        <var>TEXMFMAIN</var> exclusively, and may ship or create empty
-        directories in the other trees, in accordance with Debian
-        Policy.  Configuration file handling is described below in
-        <ref id="configurationfiles">.  Packages should take care to
-        ignore <var>TEXMFHOME</var> in their maintainer scripts.
+        <var>TEXMFMAIN</var>, and may ship or create empty directories
+        in the other trees, in accordance with Debian Policy.
+        Configuration file handling in <var>TEXMFSYSCONFIG</var> is
+        described below in <ref id="configurationfiles">.  Packages
+        should take care to ignore <var>TEXMFHOME</var> in their
+        maintainer scripts.
         </p>
 
       </sect>
@@ -412,17 +413,22 @@
       <sect id="configurationfiles">
         <heading>Configuration files</heading>
 	<p>
-	In a TeX system, in principle every TeX input file can be
-	changed to change the behavior of the system, and thus be
-	regarded as a configuration file.  To prevent inflation of
-	configuration files, packages should not install any TeX input
-	files as conffiles or configuration files.  Instead, they
-	should create an empty directory below
-	<file>/etc/texmf/tex</file> and advice users which files are
-	likely places for configuration.  It is up to the local admin
-	or individual user to place changed copies in
-	<var>TEXMFSYSCONFIG</var> or <var>TEXMFCONFIG</var>,
-	respectively. 
+	Files that are used to modify the behavior of executables must
+	be treated as any other configuration file in a Debian
+	package.  However, files that are used to control the typeset
+	output - the appearance of documents - need not be treated as
+	configuration files.  It is up to the maintainer of the
+	package to decide which files make sense to be used for
+	site-wide (as opposed to per-project or per-document)
+	customization.
+	</p>
+	<p>
+	A typical case for a site-wide configuration file is a file
+	that must be changed if a style file should use additional
+	modules (installed, for example, into TEXMFLOCAL).  Options
+	that only control document output are rather used for a
+	particular document or documentation project and should
+	usually not be installed as a configuration file.
 	</p>
 	<p>
 	Note that <file>/etc/texmf/</file> is a usual TDS tree.  Files
