@@ -1,15 +1,3 @@
-Template: tex-common/warn_mktexcnf
-Type: note
-#flag:comment:2
-# Please do not translate FEATURES!
-_Description: mktex.cnf in /etc/texmf/ shadows new /usr/share/texmf/web2c/mktex.cnf
- The mechanism of TeX font caching has changed, requiring the
- installation of /usr/share/texmf/web2c/mktex.cnf.  On your system,
- /etc/texmf/web2c/mktex.cnf exists with possible local changes, and
- makes the new file invisible to TeX.  Font caching might not work
- until the setting of MT_FEATURES has been transferred to your
- configuration file.
-
 Template: tex-common/cnf_name
 Type: note
 _Description: Change of name of files in /etc/texmf/texmf.d/
