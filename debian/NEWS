@@ -8,14 +8,6 @@ tex-common (0.26) unstable; urgency=low
     where $HOME is not writable, fonts will be temporarily cached in
     /tmp/texfonts. 
   
-  * mktex.cnf change
-  
-    The change described above has been implemented by installing
-    /usr/share/texmf/web2c/mktex.cnf.  If you have a mktex.cnf in
-    TEXMFSYSCONFIG or TEXMFCONFIG with local additions, it would shadow
-    the new file, and font caching may not work until you transfer the
-    setting of MT_FEATURES to your configuration file.
-  
   * Breakage with TeXLive
   
     The texlive packages as of version 2005-2 do not automatically create

@@ -12,20 +12,19 @@ Font caching mechanisms:
 
  On multi-user machines, it might be advisable that the local
  administrator enables a site-wide font cache and sets VARTEXFONTS to
- a persistent directory, e.g. /var/cache/fonts.  The variable is set in
- /etc/texmf/texmf.d/05TeXMF.cnf and can either be changed there or 
- overwritten in a file that sorts before 05TeXMF.cnf, e.g.  
+ a persistent directory, e.g. /var/cache/fonts.  The variable is set
+ in /etc/texmf/texmf.d/05TeXMF.cnf and can either be changed there or
+ preferrably overwritten in a file that sorts before 05TeXMF.cnf, e.g.
  /etc/texmf/texmf.d/04VARTEXFONTS.cnf.  Do not forget to run
  update-texmf after making the change.  To enable a side-wide font
- caching the admin should copy /usr/share/texmf/web2c/mktex.cnf to
- /etc/texmf/web2c/mktex.cnf and use 'varfonts' instead of 'texmfvar' in
- MT_FEATURES.  Care should be taken to specifiy appropriate permissions
- for the directory containing the font cache.  Either the local admin
- should create all available font data and not allow write access, or
- else write access should be limited to trusted users.  Yet an other
- alternative is to bind-mount /var/cache/fonts from a separate
- partition, so that users are not able to fill up the /var partition
- with font data.
+ caching the admin should edit /etc/texmf/web2c/mktex.cnf and use
+ 'varfonts' instead of 'texmfvar' in MT_FEATURES.  Care should be
+ taken to specifiy appropriate permissions for the directory
+ containing the font cache.  Either the local admin should create all
+ available font data and not allow write access, or else write access
+ should be limited to trusted users.  Yet an other alternative is to
+ bind-mount /var/cache/fonts from a separate partition, so that users
+ are not able to fill up the /var partition with font data.
 
 
- -- Frank Küster <frank@debian.org>, Mon,  3 Jul 2006 14:54:46 +0200
+ -- Frank Küster <frank@debian.org>, Tue, 15 Aug 2006 13:31:59 +0200
