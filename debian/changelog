@@ -1,4 +1,4 @@
-tex-common (0.26.1) UNRELEASED; urgency=medim
+tex-common (0.27) unstable; urgency=medim
 
   * Policy Change:  Treat configuration files properly as Debian Policy
     mandates.  The only TeX-specific addition is that we remind
@@ -16,7 +16,7 @@ tex-common (0.26.1) UNRELEASED; urgency=medim
     - Update Spanish translation, thanks to Javier Fernández-Sanguino Peña
       <jfs@computer.org> (closes: #382967)
 
- -- Frank Küster <frank@debian.org>  Tue, 15 Aug 2006 13:57:17 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 16 Aug 2006 16:58:01 +0200
 
 tex-common (0.26) unstable; urgency=low
 
