@@ -949,6 +949,64 @@ fi
 	programs) 
 	</p>
 	<p>
+	If an add-on package generates a format upon installation that
+	needs a base format (e.g. latex.fmt), it must not load the
+	existing base format
+<footnote>
+The reason is that, in order to avoid other
+problems, <prgn>update-fmtutil</prgn> ignores files
+in <file>/etc/texmf/fmt.d</file> that have a
+corresponding <file>.dpkg-new</file> file, and that it is necessary to
+recreate all formats when basic input files, pool files or engines are
+updated.  Thus, all Basic TeX packages call <tt>fmtutil --all</tt> in
+their postinst scripts.  When <package>tetex-base</package>
+and <package>tetex-bin</package> are upgraded together while a package
+that loads <file>latex.fmt</file> is installed and configured - the
+same can happen with corresponding TeXLive packages -,
+then <package>tetex-base</package>'s postinst will
+call <prgn>update-fmtutil</prgn> and <prgn>fmtutil</prgn>
+while <package>tetex-bin</package> is still unconfigured and has
+a <file>.dpkg-new</file> file.  Consequently, no format information
+for LaTeX is available, and the generation of the format that wants to
+load <file>latex.fmt</file> would fail.  However, since all files
+needed to create <file>latex.fmt</file> are available, the depending
+format can <tt>\input</tt> <file>latex.ini</file> and create its own
+format without problems.
+</footnote>.
+Instead the <file>fmtutil.cnf</file>
+	snippet and the <file><var>format</var>.ini</file> file must
+	be changed so that the process of format creation is repeated.
+	For example, if upstream creates their format by loading
+	latex:
+<example>
+latex           pdfetex         language.dat    -translate-file=cp227.tcx *latex.ini
+jadetex         etex            language.dat    &amp;latex jadetex.ini
+</example>
+and the following <file>jadetex.ini</file> file:
+<example>
+\input jadetex.ltx
+\dump
+</example>
+        then the Debian package maintainer must
+        load <file>latex.ini</file> instead of <file>latex.fmt</file>,
+        making sure that <tt>\dump</tt> in <file>latex.ltx</file> has
+        no effect, and create the following
+        new <file>jadetex.ini</file>:
+<example>
+\let\savedump\dump
+\let\dump\relax
+\input latex.ini
+\let\dump\savedump
+
+\input jadetex.ltx
+\dump
+</example>
+        and the following snippet for <file>fmtutil.cnf</file>:
+<example>
+jadetex         etex    language.dat    -translate-file=cp227.tcx *jadetex.ini
+</example>
+	</p>
+	<p>
 	Local administrators can override settings from
 	<file>texmf.cnf</file> with environment variables; this has
 	sometimes lead to errors in <file>postinst</file> scripts.  It

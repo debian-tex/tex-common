@@ -1,9 +1,11 @@
 tex-common (0.27.1) unreleased; urgency=low
 
   * Fix spelling of "medium" in the last upload
-  * Remove jadetex settings from texmf.d (closes: #384333)
+  * Remove jadetex settings from texmf.d (closes: #384333) [frank]
+  * Add a paragraph to the Policy how to handle format creation when
+    latex.fmt or other basic formats are needed [frank]
 
- -- Frank Küster <frank@debian.org>  Wed, 23 Aug 2006 18:02:46 +0200
+ -- Frank Küster <frank@debian.org>  Wed, 23 Aug 2006 22:09:37 +0200
 
 tex-common (0.27) unstable; urgency=medium
 
