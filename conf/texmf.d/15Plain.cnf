@@ -18,7 +18,6 @@ TEXINPUTS.amstex = .;$TEXMF/tex/{amstex,plain,generic,}//
 TEXINPUTS.csplain = .;$TEXMF/tex/{csplain,plain,generic,}//
 TEXINPUTS.eplain  = .;$TEXMF/tex/{eplain,plain,generic,}//
 TEXINPUTS.ftex = .;$TEXMF/tex/{formate,plain,generic,}//
-TEXINPUTS.jadetex = .;$TEXMF/tex/{jadetex,plain,generic,}//
 TEXINPUTS.mex = .;$TEXMF/tex/{mex,plain,generic,}//
 TEXINPUTS.texinfo = .;$TEXMF/tex/{texinfo,plain,generic,}//
 

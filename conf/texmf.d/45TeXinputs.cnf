@@ -26,7 +26,6 @@ TEXINPUTS.etex     = .;$TEXMF/tex/{plain,generic,}//
 % variant of TDS is assumed here, unaffected by the build variables.
 TEXINPUTS.pdfcslatex = .;$TEXMF/tex/{cslatex,csplain,latex,generic,}//
 TEXINPUTS.pdfcsplain = .;$TEXMF/tex/{csplain,plain,generic,}//
-TEXINPUTS.pdfjadetex = .;$TEXMF/tex/{jadetex,plain,generic,}//
 TEXINPUTS.pdflatex = .;$TEXMF/tex/{latex,generic,}//
 TEXINPUTS.pdfmex   = .;$TEXMF/tex/{mex,plain,generic,}//
 TEXINPUTS.utf8mex   = .;$TEXMF/tex/{mex,plain,generic,}//

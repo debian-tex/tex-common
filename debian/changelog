@@ -1,4 +1,11 @@
-tex-common (0.27) unstable; urgency=medim
+tex-common (0.27.1) unreleased; urgency=low
+
+  * Fix spelling of "medium" in the last upload
+  * Remove jadetex settings from texmf.d (closes: #384333)
+
+ -- Frank Küster <frank@debian.org>  Wed, 23 Aug 2006 18:02:46 +0200
+
+tex-common (0.27) unstable; urgency=medium
 
   * Policy Change:  Treat configuration files properly as Debian Policy
     mandates.  The only TeX-specific addition is that we remind
