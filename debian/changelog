@@ -1,4 +1,4 @@
-tex-common (0.27.1) unreleased; urgency=low
+tex-common (0.28) unstable; urgency=low
 
   * Fix spelling of "medium" in the last upload
   * Remove jadetex settings from texmf.d (closes: #384333) [frank]
