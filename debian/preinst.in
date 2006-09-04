@@ -12,9 +12,6 @@
 ## Variables needed for upgrading
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 
-## misc variables
-MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
-
 #################################################################
 # Functions
 #################################################################
@@ -83,7 +80,7 @@ EOF
 
     # compare with current settings, and create a new file
     SETTING_CHANGED=false
-    tempdir=`mktemp -d -p $MKTMPDIR`
+    tempdir=`mktemp -d`
     tempfile1=`mktemp -p $tempdir`
     trap 'cleanup' HUP INT QUIT BUS PIPE TERM
     cp -p $dfltfile $tempfile1

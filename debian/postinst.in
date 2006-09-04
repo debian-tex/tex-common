@@ -8,7 +8,6 @@
 <:=@COPYRIGHT:>//
 
 ## Define static variables we need
-MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
 TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
 UCF="ucf --debconf-ok"
