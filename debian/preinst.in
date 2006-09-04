@@ -12,6 +12,9 @@
 ## Variables needed for upgrading
 FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 
+## misc variables
+MKTMPDIR=<:=$MKTMPDIR:> # mktemp will create its files there
+
 #################################################################
 # Functions
 #################################################################
