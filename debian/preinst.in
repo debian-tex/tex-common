@@ -16,10 +16,26 @@ FIRST_VERSION_WITH_UPGRADE_PATH=0.3
 # Functions
 #################################################################
 
+###############################################################################
+# cfgval(variable)
+#   read variable ($1) from config file, first match wins
+#   this is a copy of a function in postinst.functions
+###############################################################################
+# from tetex-bin's updmap
+cfgval()
+{
+  cnfFile="$1"
+  opt="$2"
+  cat "$cnfFile" | sed -n 's/^'"$opt"'[	 =][	 =]*//p' | sed q
+}
+
+###############################################################################
+# updmap_extract ()
+#   we extract the settings from an existing 00updmap.cfg that belonged to
+#   tetex-base.  If the settings are unchanged from tetex-base's defaults 
+#   (2.0.2), ucf will know the md5sum and make the changes 2.0.2->3.0
+###############################################################################
 updmap_extract(){
-  # we extract the settings from an existing 00updmap.cfg that belonged to
-  # tetex-base.  If the settings are unchanged from tetex-base's defaults 
-  # (2.0.2), ucf will know the md5sum and make the changes 2.0.2->3.0
   # 
   # The file itself is stored, so that tetex-base can also extract its settings.
   conffile=/etc/texmf/updmap.d/00updmap.cfg

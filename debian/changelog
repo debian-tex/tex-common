@@ -1,3 +1,9 @@
+tex-common (0.29~0.1) UNRELEASED; urgency=low
+
+  * Add missing function to preinst (closes: #385532) [frank]
+
+ -- Frank Küster <frank@debian.org>  Mon,  4 Sep 2006 15:30:28 +0200
+
 tex-common (0.28) unstable; urgency=low
 
   * Fix spelling of "medium" in the last upload
