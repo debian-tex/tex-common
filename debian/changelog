@@ -1,4 +1,4 @@
-tex-common (0.29~0.1) UNRELEASED; urgency=medium
+tex-common (0.29) unstable; urgency=medium
 
   * Add missing function and variable declarations to preinst, thanks to
     Hilmar (closes: #385532) [frank]
