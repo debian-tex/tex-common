@@ -1,9 +1,11 @@
-tex-common (0.29~0.1) UNRELEASED; urgency=low
+tex-common (0.29~0.1) UNRELEASED; urgency=medium
 
   * Add missing function and variable declarations to preinst, thanks to
     Hilmar (closes: #385532) [frank]
+  * Do not load debconf manually in postrm, it isn't needed at all, thanks
+    to Bill Allombert <ballombe@debian.org> (closes: #388156) [frank]
 
- -- Frank Küster <frank@debian.org>  Mon,  4 Sep 2006 18:13:44 +0200
+ -- Frank Küster <frank@debian.org>  Tue, 19 Sep 2006 09:17:13 +0200
 
 tex-common (0.28) unstable; urgency=low
 
