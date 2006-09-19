@@ -44,8 +44,7 @@ if ($rev == 0) {
   # if the debian revision is 0 or 0.x, don't make a backport
     $SARGEVERSION = '';
 } else {
-    $sarge_rev = $rev-1;
-    ($SARGEVERSION=$VERSION) =~ s/^(.*-)$rev([^\-]*)$/$1${sarge_rev}${2}bpo1/;
+    ($SARGEVERSION=$VERSION) =~ s/^(.*)$/$1~bpo.1/;
 #   ($SARGEVERSION=$VERSION)=~s/(.*-)$rev(.*)/$1$rev.0.sarge1/;
 }
 $FIRST_BASE_VERSION_WITH_COMMON="3.0-4";
