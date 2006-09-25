@@ -23,16 +23,6 @@ db_version 2.0
 ## do the things we have to do for upgraders from old versions
 # it does not harm to do the checks also when $action is reconfigure.
 
-# suggest a user to rename old cnf files (copyright Atsuhito?)
-# (upgrade from woody, keep for etch?)
-if [ -d /etc/texmf/texmf.d ]; then
-    if ls /etc/texmf/texmf.d 2> /dev/null | egrep -vq '(\.cnf|\.dpkg-.*|~)$'; then
-	db_input medium tex-common/cnf_name || true
-	db_go || true
-    fi
-fi
-
-
 # we also unregister the tetex-bin/lsr-perms
 db_unregister tetex-bin/lsr-perms || true
 
@@ -40,6 +30,7 @@ db_unregister tetex-bin/lsr-perms || true
 db_unregister tex-common/groupperm || true
 db_unregister tex-common/userperm || true
 db_unregister tex-common/managedlsr || true
+db_unregister tex-common/cnf_name || true
 
 # now we can also unregister the managecache questions
 db_unregister tex-common/groupname || true
