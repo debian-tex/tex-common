@@ -144,20 +144,25 @@ handle_file()
 {
     file="$1"
 
-    # Does the file have the magic comment?
-    if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
+    # Does the file have a dpkg-new sister?
+    if [ -f "${file}.dpkg-new" ]; then
+      do_not_include_file "$file"
+    else
+      # Does the file have the magic comment?
+      if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
         # Is the package "$file" comes from still installed?
         if [ -d "$MEMORY_DIR" ] \
             && find "$MEMORY_DIR" -type f -name '*.list' -print0 \
             | xargs -0r cat \
-            | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null \
-            && [ ! -f "${file}.dpkg-new" ]; then
+            | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null;
+	then
             include_file "$file"
         else
             do_not_include_file "$file"
         fi
-    else
+      else
         include_file "$file"
+      fi
     fi
 }
 
