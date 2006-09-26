@@ -1,16 +1,16 @@
-tex-common (0.30~1) unstable; urgency=high
+tex-common (0.30) unstable; urgency=high
 
   * update-fontlang:  If a conffile has a corresponding dpkg-new file,
     that is, it is from a yet-unconfigured package, drop it any case.
     Previously, the check was only done when the file had a magic comment,
     but conffiles in sarge generally do not have this magic.  Therefore,
     upgrades from sarge would have failed if the conffile change is needed for
-    proper configuration (closes: ???) [frank] 
+    proper configuration (closes: #389550) [frank] 
   * Remove the medium-priority debconf note without replacement; anybody
     who really runs into the problem will be able to find the information
     in tetex-bin's README.Debian (closes: #388973) [frank]
 
- -- Frank Küster <frank@debian.org>  Tue, 26 Sep 2006 13:50:20 +0200
+ -- Frank Küster <frank@debian.org>  Tue, 26 Sep 2006 17:14:45 +0200
 
 tex-common (0.29) unstable; urgency=medium
 
