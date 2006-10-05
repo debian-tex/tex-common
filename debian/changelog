@@ -1,3 +1,10 @@
+tex-common (0.31~1) unstable; urgency=low
+
+  * Document in policy that font cache data have to be cleaned by packages
+    that Build-Depend on TeX, and how to do that [frank]
+
+ -- Frank Küster <frank@debian.org>  Thu,  5 Oct 2006 18:48:12 +0200
+
 tex-common (0.30) unstable; urgency=high
 
   * update-fontlang:  If a conffile has a corresponding dpkg-new file,
