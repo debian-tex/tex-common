@@ -915,18 +915,18 @@ fi
 	<tt>build-depend</tt> on the TeX system</heading>
 	<sect1><heading>Configuration</heading>
 	  <p>
-	If packages that build-depend on the TeX system need a changed
-	configuration, they should not try to provide it statically.
-	If settings in any other configuration file are inappropriate
-	for a package to build, this is (usually) a bug in the package
-	that provides the file.  It should be fixed in this package,
-	not circumvented by a workaround in the build process.  Such
-	workarounds have proven to be problematic, because they might
-	stop working after changes in the depended-on package, and
-	such failure cannot be foreseen by its maintainers.  If a
-	change is still necessary, the package should use the
-	configuration update programs with the <tt>--outputdir</tt>
-	and <tt>--add-file</tt> options.
+	    If packages that build-depend on the TeX system need a changed
+	    configuration, they should not try to provide it statically.
+	    If settings in any other configuration file are inappropriate
+	    for a package to build, this is (usually) a bug in the package
+	    that provides the file.  It should be fixed in this package,
+	    not circumvented by a workaround in the build process.  Such
+	    workarounds have proven to be problematic, because they might
+	    stop working after changes in the depended-on package, and
+	    such failure cannot be foreseen by its maintainers.  If a
+	    change is still necessary, the package should use the
+	    configuration update programs with the <tt>--outputdir</tt>
+	    and <tt>--add-file</tt> options.
 	  </p>
 	</sect1>
 	<sect1><heading>Font cache data</heading>
