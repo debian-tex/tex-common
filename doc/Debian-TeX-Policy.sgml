@@ -912,8 +912,9 @@ fi
 
       <sect>
 	<heading>Best practices for packages that
-	<tt>build-depend</tt> on the TeX system:</heading>
-	<p>
+	<tt>build-depend</tt> on the TeX system</heading>
+	<sect1><heading>Configuration</heading>
+	  <p>
 	If packages that build-depend on the TeX system need a changed
 	configuration, they should not try to provide it statically.
 	If settings in any other configuration file are inappropriate
@@ -926,7 +927,25 @@ fi
 	change is still necessary, the package should use the
 	configuration update programs with the <tt>--outputdir</tt>
 	and <tt>--add-file</tt> options.
-	</p>
+	  </p>
+	</sect1>
+	<sect1><heading>Font cache data</heading>
+	  <p>
+	    Font cache data are created each time a font in MetaFont
+	    format is used, and placed by default
+	    in <var>TEXMFVAR</var>.  During package build, this has to
+	    be avoided.  In order to be able to clean up the generated
+	    files (and only those), the font cache should instead be
+	    put below the build directory.  This can be achieved by
+	    setting <var>TEXMFVAR</var> to a subdirectory of the
+	    current directory,
+	    e.g. <file><var>$(CURDIR)</var>/.texmf-var</file>, using
+	    Make's built-in variable.  Packages which do not
+	    change <var>TEXMFVAR</var> <em>must</em> not create
+	    documentation that uses MetaFont fonts in
+	    the <tt>binary</tt> target.
+	  </p>
+	</sect1>
       </sect>
       <sect>
         <heading>Command execution and format files</heading>
