@@ -1,0 +1,40 @@
+#!/bin/sh
+
+fmtdir=/etc/texmf/fmt.d/
+ucf_sourcedir=/usr/share/tex-common/
+#UCF="ucf --verbose -d --debconf-ok"
+UCF="ucf --debconf-ok"
+
+# oldfile=00tetex.cnf
+# newfile=01tetex.cnf
+
+called_from="$1"
+
+case $called_from in
+  preinst)
+    # rename 00tetex.cnf to 01tetex.cnf
+    if [ -f $fmtdir/00tetex.cnf ]; then 
+      if [ ! -f $fmtdir/01tetex.cnf ]; then
+	# not yet transitioned
+	mv $fmtdir/00tetex.cnf $fmtdir/01tetex.cnf
+      else
+	# some older experimental version has installed the new file, but not 
+	# transitioned the old one.
+	# Note: also texlive might have done that, however,
+	# successfully only if texlive-omega was already unpacked
+	current_md5sum=`md5sum $fmtdir/00tetex.cnf | cut -d ' ' -f 1`
+	if [ "$current_md5sum" = "55811af3562faf342261dbc3b5e060a2" ]; then
+	  rm $fmtdir/00tetex.cnf
+	else
+	  # we do nothing; experimental users should be able to solve this
+	  :
+	fi
+      fi
+    fi
+    ;;
+  postinst)
+    # upgrade from sarge:  fmtutil snippet renamed
+      $UCF $ucf_sourcedir/01tetex.cnf $fmtdir/01tetex.cnf
+    done
+    ;;
+esac
