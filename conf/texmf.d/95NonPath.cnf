@@ -69,7 +69,9 @@ MPXCOMMAND = makempx
 % variant, the usual dot notation works, e.g.,
 % main_memory.hugetex = 20000000
 % 
-% If a change here appears to be ignored, try redumping the format file.
+% If a change here appears to be ignored, try redumping the format file
+% with fmtutil-sys
+
 
 % Memory. Must be less than 8,000,000 total.
 % 

@@ -1,13 +1,16 @@
-tex-common (0.31~1) unstable; urgency=medium
+tex-common (0.31) unstable; urgency=medium
 
   * Document in policy that font cache data have to be cleaned by packages
     that Build-Depend on TeX, and how to do that (closes: #388399) [frank]
   * On systems upgraded from woody to sarge, tetex-bin generated a bogus
     local configuration file with entries that were erroneously detected
     as locally changed.  These entries are now harmful and break texlive,
-    and the file is therefore renamed if it meets our expectations [frank]
+    and the file is therefore renamed if it meets our expectations
+    (closes: #391355) [frank]
+  * In 95NonPath.cnf, add a comment about how to redump the format file
+    (closes: #380323) [frank]
 
- -- Frank Küster <frank@debian.org>  Fri,  6 Oct 2006 12:19:30 +0200
+ -- Frank Küster <frank@debian.org>  Fri,  6 Oct 2006 17:40:19 +0200
 
 tex-common (0.30) unstable; urgency=high
 
