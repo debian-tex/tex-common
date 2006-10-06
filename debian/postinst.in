@@ -89,6 +89,38 @@ EOF
       done
     fi
 
+# if the machine was originally upgraded from woody to sarge, and now
+# to etch, it will have a bogus generated configuration file.  This
+# will break with TeXlive, therefore we remove it
+    bogusfile=/etc/texmf/fmt.d/99postinst.cnf
+    if [ -f $bogusfile ]; then
+      tmpfile=`mktemp`
+      egrep -v \
+	"mf[[:space:]]*mf[[:space:]]*-[[:space:]]*mf.ini|\
+mfw[[:space:]]*mfw[[:space:]]*-[[:space:]]*mf.ini|\
+pdftex[[:space:]]*pdftex[[:space:]]*language.dat[[:space:]]*pdftex.ini|\
+omega[[:space:]]*omega[[:space:]]*language.dat*[[:space:]]*omega.ini" \
+	$bogusfile > $tmpfile
+      if !  egrep -v '^#|^[[:space:]]*$' $DESTFILE >/dev/null; then
+	# only comments in tmpfile
+	cat >> $bogusfile.bak <<EOF
+
+This file has been renamed by the post-installation script of
+tex-common.  It is unused and contains only lines that were
+erroneously detected as being a local configuration file change.
+
+
+EOF
+	cat $bogusfile >> $bogusfile.bak
+	chmod 664 $bogusfile.bak
+	chown root:root $bogusfile.bak
+	rm $bogusfile
+      fi
+      rm $tmpfile
+    fi
+
+
+
     update-texmf
 # Now we check for some essential settings
     checkfailed=false
