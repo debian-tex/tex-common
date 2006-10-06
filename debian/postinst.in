@@ -101,7 +101,7 @@ mfw[[:space:]]*mfw[[:space:]]*-[[:space:]]*mf.ini|\
 pdftex[[:space:]]*pdftex[[:space:]]*language.dat[[:space:]]*pdftex.ini|\
 omega[[:space:]]*omega[[:space:]]*language.dat*[[:space:]]*omega.ini" \
 	$bogusfile > $tmpfile
-      if !  egrep -v '^#|^[[:space:]]*$' $DESTFILE >/dev/null; then
+      if !  egrep -v '^#|^[[:space:]]*$' $tmpfile >/dev/null; then
 	# only comments in tmpfile
 	cat >> $bogusfile.bak <<EOF
 
