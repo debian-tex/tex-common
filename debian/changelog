@@ -1,3 +1,10 @@
+tex-common (0.32) unstable; urgency=low
+
+  * adapted sanity check in update-fontlang to TEXMFSYSCONFIG = /etc/texmf 
+    (closes: #391348) [ralf]
+
+ -- Ralf Stubner <ralf.stubner@web.de>  Sat,  7 Oct 2006 12:40:10 +0200
+
 tex-common (0.31) unstable; urgency=medium
 
   * Document in policy that font cache data have to be cleaned by packages
