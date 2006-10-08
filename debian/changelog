@@ -1,13 +1,14 @@
 tex-common (0.32~1) UNRELEASED; urgency=medium
 
-  * adapted sanity check in update-fontlang to TEXMFSYSCONFIG = /etc/texmf 
+  * adapted sanity check in update-fontlang to TEXMFSYSCONFIG = /etc/texmf
     (closes: #391348) [ralf]
   * Provide a tetex-bin-update script.  This allows also texlive to
     properly rename an old tetex-bin conffile, and add the magic comment,
     and is therefore needed for a transition from teTeX to TeXlive without
     upgrading teTeX to the etch version first.
+  * Install debianize-updmap into the scripts dir [frank]
 
- -- Frank Küster <frank@debian.org>  Sun,  8 Oct 2006 11:59:46 +0200
+ -- Norbert Preining <preining@debian.org>  Mon,  9 Oct 2006 00:07:52 +0200
 
 tex-common (0.31) unstable; urgency=medium
 
