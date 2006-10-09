@@ -1,3 +1,10 @@
+tex-common (0.33~1) unreleased; urgency=medium
+
+  * Fix syntax error in debianize-updmap (closes: #391976).  Also, the
+    logic in the script has been fixed, so that it actually works [frank] 
+
+ -- Frank Küster <frank@debian.org>  Mon,  9 Oct 2006 20:40:45 +0200
+
 tex-common (0.32) unstable; urgency=medium
 
   * adapted sanity check in update-fontlang to TEXMFSYSCONFIG = /etc/texmf
