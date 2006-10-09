@@ -272,6 +272,30 @@ Error: '$badly_located_cfg_file' should not exist when using the
             exit 1
         fi
     fi
+
+    # it could be that there is a DEFAULT_OUTPUTFILE_BASENAME file 
+    # in TEXMFCONFIG, which would be found instead of the
+    # output_file. So we check for this and give a warning in case
+    # the created file would be shadowed.
+    if [ $syswide_mode = 0 ] && [ $output_file_specified = 0 ]; then
+        OLDIFS="$IFS"
+        IFS=:
+        for d in "$texmfconfig"; do
+            if [ ! "$d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME" = "$output_file" ] && [ -f "$d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME" ] ; then
+                printf "\
+You are about to generate the file 
+        $output_file
+but at the same time you have a file
+        $d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME
+which will shadow the former. We'll continue generating the first
+file, but to allow TeX and friends to find it, you'll have to remove the
+second one.\n"
+                # don't break out as we want to warn the user for *every*
+                # shadowing file!
+            fi
+        done
+        IFS="$OLDIFS"
+    fi
 }
 
 #
@@ -387,6 +411,8 @@ fi
 # ****************************************************************************
 quiet=1
 dochecks=0
+output_file_specified=0
+
 if [ $syswide_mode = 1 ]; then
     output_file="$SYSWIDE_DEFAULT_OUTPUTFILE"
 else
@@ -429,7 +455,10 @@ fi
 while true; do
     case "$1" in
         -c|--conf-dir) conf_dir="$2"; shift 2 ;;
-        -o|--output-file) output_file="$2"; shift 2 ;;
+        -o|--output-file) 
+            output_file="$2"
+            output_file_specified=1
+            shift 2 ;;
         --quiet) quiet=1; shift ;;
         --check) dochecks=1; shift ;;
         -v) printf "\
@@ -477,31 +506,6 @@ EOF
 fi
 
 perform_sanity_checks
-
-
-# it could be that there is a DEFAULT_OUTPUTFILE_BASENAME file 
-# in TEXMFCONFIG, which would be found instead of the
-# output_file. So we check for this and give a warning in case
-# the created file would be shadowed.
-if [ $syswide_mode = 0 ]; then
-    OLDIFS="$IFS"
-    IFS=:
-    for d in "$texmfconfig"; do
-        if [ ! "$d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME" = "$output_file" ] && [ -r "$d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME" ] ; then
-            printf "\
-You are about to generate the file 
-        $output_file
-but at the same time you have a file
-        $d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME
-which will shadow the former one. We'll continue generating the first
-file, but to allow TeX and friends to find it, you'll have to remove the
-second one.\n"
-            # don't break out as we want to warn the user for *every*
-            # shadowing file!
-        fi
-    done
-    IFS="$OLDIFS"
-fi
 
 # Make sure the output directory exists (creating it if not) when running
 # in user-specific mode.
