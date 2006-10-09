@@ -63,7 +63,7 @@ TEXMFMAIN = /usr/share/texmf
 % TEXMFDIST is used for tetex and texlive. If both are installed,
 % the first in the list wins; files only present in the second directory
 % are also found.
-TEXMFDIST = /usr/share/texmf-{tetex,texlive}
+TEXMFDIST = /usr/share/texmf-{texlive,tetex}
 
 
 % A place for local additions to a "standard" texmf tree.

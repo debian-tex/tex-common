@@ -5,10 +5,16 @@ tex-common (0.32~1) UNRELEASED; urgency=medium
   * Provide a tetex-bin-update script.  This allows also texlive to
     properly rename an old tetex-bin conffile, and add the magic comment,
     and is therefore needed for a transition from teTeX to TeXlive without
-    upgrading teTeX to the etch version first.
+    upgrading teTeX to the etch version first [frank]
   * Install debianize-updmap into the scripts dir [frank]
+  * Provide the debianize-updmap functions in /usr/share/tex-common, for
+    usage by all TeX systems in Debian [frank]
+  * Changed the order of trees in TEXMFDIST.  If TeXlive and teTeX
+    packages are installed together, files from TeXlive now take
+    precedence.  This makes sense because those files are usually
+    newer. [frank] 
 
- -- Norbert Preining <preining@debian.org>  Mon,  9 Oct 2006 00:07:52 +0200
+ -- Frank Küster <frank@debian.org>  Mon,  9 Oct 2006 07:46:31 +0200
 
 tex-common (0.31) unstable; urgency=medium
 
