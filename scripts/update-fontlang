@@ -29,7 +29,9 @@ if [ "$progname" = "update-language" ] ; then
     CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
     EXT="cnf"
     MEMORY_DIR=/var/lib/tex-common/language-cnf
-    SYSWIDE_VARD=/var/lib/texmf/tex/generic/config
+    SYSPATH_BASE=/var/lib/texmf
+    PATH_COMPONENT=tex/generic/config
+    SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=language.dat
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="%"                      # for COMMENTCHAR
@@ -43,7 +45,9 @@ elif [ "$progname" = "update-updmap" ] ; then
     CHECKFILE="$SYSWIDE_CONFDIR/00updmap.cfg"
     EXT="cfg"
     MEMORY_DIR=/var/lib/tex-common/fontmap-cfg
-    SYSWIDE_VARD=/var/lib/texmf/web2c
+    SYSPATH_BASE=/var/lib/texmf
+    PATH_COMPONENT=web2c
+    SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=updmap.cfg
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="#"
@@ -56,7 +60,9 @@ elif [ "$progname" = "update-fmtutil" ] ; then
     CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
     EXT="cnf"
     MEMORY_DIR=/var/lib/tex-common/fmtutil-cnf
-    SYSWIDE_VARD=/var/lib/texmf/web2c
+    SYSPATH_BASE=/var/lib/texmf
+    PATH_COMPONENT=web2c
+    SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=fmtutil.cnf
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
     CC="#"
@@ -409,7 +415,26 @@ else
     # Does $TEXMFVAR expand to a single directory?
     texmfvar=$(kpsewhich --expand-path '$TEXMFVAR')
     if ! echo "$texmfvar" | grep -e ':'; then
-        output_file="$texmfvar/web2c/$DEFAULT_OUTPUTFILE_BASENAME"
+        output_file="$texmfvar/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME"
+        # it could be that there is a DEFAULT_OUTPUTFILE_BASENAME file 
+        # in TEXMFCONFIG, which would be found instead of the
+        # output_file. So we check for this and give a warning in case
+        # the created file would be shadowed.
+        OLDIFS="$IFS"
+        IFS=:
+        for d in "$texmfconfig"; do
+            if [ -r "$d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME" ]; then
+                printf "\
+You are about to generate the file 
+        $output_file
+but at the same time you have a file
+        $d/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME
+which will shadow the former one. We will continue generating the first
+file, but to make TeX and friends find it, you have to remove the later one.\n"
+                break
+            fi
+        done
+        IFS="$OLDIFS"
     else
         # We don't know what to do in this case, therefore: do nothing unless
         # the output file is specified with the correponding option.
