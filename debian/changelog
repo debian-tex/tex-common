@@ -1,4 +1,4 @@
-tex-common (0.32~1) UNRELEASED; urgency=medium
+tex-common (0.32) unstable; urgency=medium
 
   * adapted sanity check in update-fontlang to TEXMFSYSCONFIG = /etc/texmf
     (closes: #391348) [ralf]
