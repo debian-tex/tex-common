@@ -972,25 +972,22 @@ fi
 	needs a base format (e.g. latex.fmt), it must not load the
 	existing base format
 <footnote>
-The reason is that, in order to avoid other
-problems, <prgn>update-fmtutil</prgn> ignores files
-in <file>/etc/texmf/fmt.d</file> that have a
-corresponding <file>.dpkg-new</file> file, and that it is necessary to
-recreate all formats when basic input files, pool files or engines are
-updated.  Thus, all Basic TeX packages call <tt>fmtutil --all</tt> in
-their postinst scripts.  When <package>tetex-base</package>
-and <package>tetex-bin</package> are upgraded together while a package
-that loads <file>latex.fmt</file> is installed and configured - the
-same can happen with corresponding TeXLive packages -,
-then <package>tetex-base</package>'s postinst will
-call <prgn>update-fmtutil</prgn> and <prgn>fmtutil</prgn>
-while <package>tetex-bin</package> is still unconfigured and has
-a <file>.dpkg-new</file> file.  Consequently, no format information
-for LaTeX is available, and the generation of the format that wants to
-load <file>latex.fmt</file> would fail.  However, since all files
-needed to create <file>latex.fmt</file> are available, the depending
-format can <tt>\input</tt> <file>latex.ini</file> and create its own
-format without problems.
+The reason is that, in order to avoid other problems,
+<prgn>update-fmtutil</prgn> ignores files in 
+<file>/etc/texmf/fmt.d</file> that have a corresponding
+<file>.dpkg-new</file> file, and that it is necessary to recreate all
+formats when pool files or engines are updated.  Thus, some Basic TeX
+packages call <tt>fmtutil --all</tt> in their postinst scripts.  When
+Basic TeX packages are upgraded together while a package that
+loads <file>latex.fmt</file> is installed and configured, then one of
+the Basic TeX packages' postinst will call <prgn>update-fmtutil</prgn>
+and <tt>fmtutil --all</tt> while others are is still unconfigured and
+have <file>.dpkg-new</file> files.  Consequently, no format
+information for e.g. LaTeX is available, and the generation of the
+format that wants to load it would fail.  However, since all files
+needed to create e.g. <file>latex.fmt</file> are available, the
+depending format can <tt>\input</tt> <file>latex.ini</file> and create
+its own format without problems.
 </footnote>.
 Instead the <file>fmtutil.cnf</file>
 	snippet and the <file><var>format</var>.ini</file> file must
