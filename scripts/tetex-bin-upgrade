@@ -26,4 +26,10 @@ if [ -f $fmtdir/$oldfile ]; then
   fi
 fi
 
+# an older version of tetex-bin ucf-registered the file with double
+# slashes, this breaks ucf
+if grep -q "/etc/texmf/fmt.d//01tetex.cnf" /var/lib/ucf/hashfile; then
+  $UCF --purge "/etc/texmf/fmt.d//01tetex.cnf"
+fi
+
 $UCF $ucf_sourcedir/$newfile $fmtdir/$newfile
