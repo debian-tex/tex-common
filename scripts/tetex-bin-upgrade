@@ -1,7 +1,7 @@
 #!/bin/sh
 
-fmtdir=/etc/texmf/fmt.d/
-ucf_sourcedir=/usr/share/tex-common/
+fmtdir=/etc/texmf/fmt.d
+ucf_sourcedir=/usr/share/tex-common
 #UCF="ucf --verbose -d --debconf-ok"
 UCF="ucf --debconf-ok"
 
@@ -26,4 +26,4 @@ if [ -f $fmtdir/$oldfile ]; then
   fi
 fi
 
-$UCF $ucf_sourcedir/01tetex.cnf $fmtdir/01tetex.cnf
+$UCF $ucf_sourcedir/$newfile $fmtdir/$newfile
