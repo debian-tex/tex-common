@@ -485,14 +485,12 @@ setOption()
 }
 
 ###############################################################################
-# syncWithTreesInner(cnfFile)
+# syncWithTreesInner()
 #   update the config file: uncomment all lines which refer to map files that
 #   are unavailabe in the texmf trees
 ###############################################################################
 syncWithTreesInner()
 {
-  cnfFile="$1"
-
   for i in `egrep '^(Mixed)?Map' "$cnfFile" | sed 's@.* @@'`; do
     kpsewhich --format=map "$i" >/dev/null || echo "$i"
   done > $tmp1
@@ -503,21 +501,32 @@ syncWithTreesInner()
   sed -f $tmp2 "$cnfFile" > $tmp3 && cat $tmp3 > "$cnfFile"
 }
 
+
+
 ###############################################################################
 # syncWithTrees()
-#   update the config file: uncomment all lines which refer to map files that
-#   are unavailabe in the texmf trees
-#   Do it the Debian way.
+#   Print a big fat warning.
 ###############################################################################
 syncWithTrees(){
-  DebianConffilelist=`createDebianConffilelist`
-  
-  for cnfFile in $DebianConffilelist; do
-    syncWithTreesInner $cnfFile
-  done
-  
-  runUpdate
-  reExecSelf
+  echo "Warning!"
+  echo ""
+  echo "In Debian, updmap.cfg, the font configuration file, is a generated file."
+  echo "Therefore, using --syncwithtrees will not work, since changes will be"
+  echo "overwritten."
+  echo ""
+  echo "If you know what you are doing, you can proceed, e.g. in order to compare"
+  echo "the synchronized file with the old generated one."
+  echo ""
+  echo "If you want to proceed, type 'Yes, I know what I am doing!'"
+
+  read line
+  if [ "$line" = "Yes, I know what I am doing!" ]; then
+    syncWithTreesInner
+  else
+    echo ""
+    echo "Exiting."
+    exit 1
+  fi
 }
 
 ###############################################################################
@@ -533,6 +542,6 @@ debianEditWarnAndShow(){
   echo ""
   echo "Instead of editing, you will now be shown updmap.cfg in a pager."
   
-  sensible-pager $cnfFile;;
+  sensible-pager $cnfFile
 
 }
