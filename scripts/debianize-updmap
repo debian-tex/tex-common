@@ -515,6 +515,9 @@ syncWithTrees(){
   for cnfFile in $DebianConffilelist; do
     syncWithTreesInner $cnfFile
   done
+  
+  runUpdate
+  reExecSelf
 }
 
 ###############################################################################
