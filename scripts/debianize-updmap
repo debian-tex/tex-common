@@ -72,6 +72,7 @@ FindDebianUserdir(){
 createDebianConffilelist(){
 #  verboseMsg "entering createDebianConffilelist"
 
+  userFiles=""
   local DebianConffilelist=""
   syswideFiles=`find /etc/texmf/updmap.d -maxdepth 1 -type f -name '*.cfg'`
   if ! DebianSyswideMode; then
@@ -82,9 +83,8 @@ createDebianConffilelist(){
   fi
   if [ -n "$userFiles" ]; then
     for sysfile in $syswideFiles; do
-      local copyInUserdir=false
       for userfile in $userFiles; do
-	if [ ! "$userfile" = "$sysfile" ]; then
+	if [ ! "`basename $userfile`" = "`basename $sysfile`" ]; then
 	  DebianConffilelist="$DebianConffilelist $sysfile"
 	fi
       done
@@ -484,3 +484,52 @@ setOption()
   reExecSelf
 }
 
+###############################################################################
+# syncWithTreesInner(cnfFile)
+#   update the config file: uncomment all lines which refer to map files that
+#   are unavailabe in the texmf trees
+###############################################################################
+syncWithTreesInner()
+{
+  cnfFile="$1"
+
+  for i in `egrep '^(Mixed)?Map' "$cnfFile" | sed 's@.* @@'`; do
+    kpsewhich --format=map "$i" >/dev/null || echo "$i"
+  done > $tmp1
+  {
+    sed 's@/@\\/@g; s@^@/^MixedMap[ 	]*@; s@$@$/s/^/#! /@' <$tmp1
+    sed 's@/@\\/@g; s@^@/^Map[ 	]*@; s@$@$/s/^/#! /@' <$tmp1
+  } > $tmp2
+  sed -f $tmp2 "$cnfFile" > $tmp3 && cat $tmp3 > "$cnfFile"
+}
+
+###############################################################################
+# syncWithTrees()
+#   update the config file: uncomment all lines which refer to map files that
+#   are unavailabe in the texmf trees
+#   Do it the Debian way.
+###############################################################################
+syncWithTrees(){
+  DebianConffilelist=`createDebianConffilelist`
+  
+  for cnfFile in $DebianConffilelist; do
+    syncWithTreesInner $cnfFile
+  done
+}
+
+###############################################################################
+# debianEditWarnAndShow()
+#   warn that this won't work
+###############################################################################
+debianEditWarnAndShow(){
+  echo "Warning!"
+  echo ""
+  echo "In Debian, updmap.cfg, the font configuration file, is a generated file."
+  echo "The actual configuration files are in /etc/texmf/updmap.d."
+  echo "Please read the updmap(1) manpage and edit those files."
+  echo ""
+  echo "Instead of editing, you will now be shown updmap.cfg in a pager."
+  
+  sensible-pager $cnfFile;;
+
+}
