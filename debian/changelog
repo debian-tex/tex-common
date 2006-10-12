@@ -1,3 +1,10 @@
+tex-common (0.34~1) unreleased; urgency=medium
+
+  * Handle non-writable /usr/local gracefully upon removal, thanks to Sam
+    Hocevar <sam@zoy.org> (closes: #392518) [frank]
+
+ -- Frank Küster <frank@debian.org>  Thu, 12 Oct 2006 12:57:45 +0200
+
 tex-common (0.33) unstable; urgency=medium
 
   * Fix syntax error in debianize-updmap (closes: #391976).  Also, the

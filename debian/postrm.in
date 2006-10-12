@@ -36,7 +36,7 @@ case $action in
     purge_ucf_file  /etc/texmf/texmf.cnf
 
     # remove the symlink in TEXMFLOCAL
-    rm -f /usr/local/share/texmf/ls-R
+    rm -f /usr/local/share/texmf/ls-R 2>/dev/null || true
     ;;
   *)
     ;;
