@@ -3,8 +3,8 @@ tex-common (0.34~1) unreleased; urgency=medium
   * Handle non-writable /usr/local gracefully upon removal, thanks to Sam
     Hocevar <sam@zoy.org> (closes: #392518) [frank]
   * Change debianize-updmap so that the --syncwithtrees and --edit options
-    do something sensible, and won't break the system (closes: #392573)
-    [frank] 
+    do something sensible, and won't break the system (closes: #392573,
+    #334747) [frank] 
 
  -- Frank Küster <frank@debian.org>  Thu, 12 Oct 2006 17:49:29 +0200
 
