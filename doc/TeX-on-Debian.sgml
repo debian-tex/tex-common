@@ -8,7 +8,7 @@
         <name>The Debian TeX mailing List</name>
         <email>debian-tex-maint@lists.debian.org</email>
       </author>
-      <version>generated from $Id: README.Debian.sgml 1804 2006-10-12 18:19:32Z frank $</version>
+      <version>generated from $Id:$</version>
 
       <abstract>
        This document covers Debian-specific information for <em>users</em> of
