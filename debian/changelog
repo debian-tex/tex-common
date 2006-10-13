@@ -5,7 +5,6 @@ tex-common (0.34~1) unreleased; urgency=medium
   * Change debianize-updmap so that the --syncwithtrees and --edit options
     do something sensible, and won't break the system (closes: #392573,
     #334747) [frank] 
-  * Dummy change to do some emacs-snapshot debugging
 
  -- Frank Küster <frank@debian.org>  Fri, 13 Oct 2006 21:00:07 +0200
 
