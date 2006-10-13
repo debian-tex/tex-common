@@ -1,0 +1,1022 @@
+<!doctype debiandoc system>
+<debiandoc>
+
+  <book>
+    <titlepag>
+      <title>Debian-specific information about TeX packages</title>
+      <author>
+        <name>The Debian TeX mailing List</name>
+        <email>debian-tex-maint@lists.debian.org</email>
+      </author>
+      <version>generated from $Id: README.Debian.sgml 1804 2006-10-12 18:19:32Z frank $</version>
+
+      <abstract>
+       This document covers Debian-specific information for <em>users</em> of
+       the Debian teTeX packages (<package>tetex-bin</package>,
+       <package>tetex-base</package>, <package>tetex-extra</package>,
+       <package>tetex-doc</package>, <package>tetex-doc-nonfree</package> and
+       <package>tetex-src</package>) and Debian TeX live packages (all
+       packages named <package>texlive-something</package>). 
+       Further Information, especially for
+       <em>developers</em>, can be found in the Debian TeX Policy draft in
+       <file>/usr/share/doc/tex-common/</file>. Information for people
+       upgrading from teTeX 2.0.2 in sarge is in the <file>NEWS.Debian</file>
+       file.
+      </abstract>
+
+      <copyright>
+        <copyrightsummary>
+          Copyright &copy; 2004-2006 Frank Küster, Florent Rougon,
+        Norbert Preining
+        </copyrightsummary>
+        <p>
+          This document is free software; you may redistribute it and/or
+          modify it under the terms of the GNU General Public License
+          as published by the Free Software Foundation; either version
+          2, or (at your option) any later version.
+        </p>
+        <p>
+          This document is distributed in the hope that it will be useful, but
+          <em>without any warranty</em>; without even the implied warranty of
+          merchantability or fitness for a particular purpose. See the GNU
+          General Public License for more details.
+        </p>
+        <p>
+          A copy of the GNU General Public License is available as
+          <url id="file:///usr/share/common-licenses/GPL"
+          name="/usr/share/common-licenses/GPL"> in the Debian
+<!--      <file><url id="file:///usr/share/common-licenses/GPL" -->
+<!--      name="/usr/share/common-licenses/GPL"></file> in the Debian -->
+          distribution or on the World Wide Web at 
+          <url id="http://www.gnu.org/copyleft/gpl.html"
+          name="The GNU General Public Licence">.  You can also obtain it by
+          writing to the
+          Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+          Boston, MA 02110-1301, USA.
+        </p>
+      </copyright>
+    </titlepag>
+
+    <toc>
+    <chapt>
+      <heading>Overview of the packages</heading>
+
+      <p>
+        The Debian teTeX packages are comprised of:
+        <taglist>
+          <tag><package>tetex-bin</package></tag>
+          <item>
+            provides the binary files
+          </item>
+
+          <tag><package>tetex-base</package></tag>
+          <item>
+            provides the most basic TeX and LaTeX input files, and will be
+            sufficient for some simple documents, e.g. to build the
+            documentation of other Debian packages (hopefully)
+          </item>
+
+          <tag><package>tetex-extra</package></tag
+          <item>
+            contains lots of fonts and add-on packages for LaTeX and TeX
+            development. If you want to use LaTeX to write and format your own
+            documents, you will probably need many of these.
+          </item>
+
+          <tag><package>tetex-doc</package></tag>
+          <item>
+            the free part (according to the Debian Free Software Guidelines)
+            of the documentation for <package>tetex-bin</package>,
+            <package>tetex-base</package> and <package>tetex-extra</package>.
+            It is not needed to build existing documents, but as an author,
+            you will for sure want to install it.
+          </item>
+
+          <tag><package>tetex-doc-nonfree</package></tag>
+          <item>
+            the non-free part (according to the Debian Free Software
+            Guidelines) of the documentation for <package>tetex-bin</package>,
+            <package>tetex-base</package> and <package>tetex-extra</package>
+          </item>
+
+          <tag><package>tetex-src</package></tag>
+          <item>
+            the sources (i.e., <file>.dtx</file> files) of all the TeX/LaTeX
+            files in <package>tetex-base</package> and
+            <package>tetex-extra</package>, and of the documentation in
+            <package>tetex-doc</package>. This package will only be needed by
+            (La)TeX developers, or if you want to look up licensing
+            information.
+          </item>
+        </taglist>
+      </p>
+
+      <p>
+        The Debian TeX live packages are comprised of in total
+        (currently) 76 packages. The most important are:
+        <taglist>
+          <tag><package>texlive-base-bin</package></tag>
+          <item>
+            provides the basic binaries and basic TeX input files.
+          </item>
+
+          <tag><package>texlive-latex-base</package></tag>
+          <item>
+            provides the most basic LaTeX input files, and will be
+            sufficient for some simple documents.
+          </item>
+
+          <tag><package>texlive-latex-recommended</package></tag>
+          <item>
+	    A recommended set of latex packages which are sufficient
+            for most typesetting purposes if you don't have any
+            special requirements.
+          </item>
+
+          <tag><package>texlive-fonts-recommended</package></tag>
+          <item>
+	    A recommended set of fonts which are sufficient
+            for most typesetting purposes if you don't have any
+            special requirements.
+          </item>
+
+          <tag><package>texlive-context</package></tag>
+          <item>
+	    The complete ConTeXt environment.
+          </item>
+          
+	  <tag><package>texlive</package></tag>
+          <item>
+	    A meta-package depending on a decent selection of
+            packages, comprising all the above. 
+          </item>
+
+	  <tag><package>texlive-full</package></tag>
+          <item>
+	    A meta-package depending on all packages from the texlive
+	    group and on some other packages to create something
+            similar to a full TeX live installation.
+          </item>
+
+	  <tag><package>texlive-doc-*</package></tag>
+          <item>
+	    Packages like <package>texlive-doc-en</package> and
+            <package>texlive-doc-de</package> provide documentation in
+            the respective language.
+          </item>
+
+	  <tag><package>texlive-lang-*</package></tag>
+          <item>
+	    Packages like <package>texlive-lang-dutch</package> and
+            <package>texlive-lang-spanish</package> provide language
+	    specific support, like hyphenation patterns.
+          </item>
+	</taglist>
+	There are many more packages, providing extra functionality
+          and extra fonts. Please see the respective descriptions of
+          these packages.
+      </p>
+    </chapt>
+
+    <chapt>
+      <heading>Changing your configuration, file placement</heading>
+
+      <sect id="sec-texmf-trees">
+        <heading>
+          Available <var>TEXMF</var> trees for users and system administrators
+        </heading>
+        <p>
+          The following <var>TEXMF</var> trees are available.  They
+          are displayed below in the order they are searched, where
+          earlier ones override later ones.
+          <taglist>
+            <tag><var>TEXMFCONFIG</var></tag>
+            <item>
+              <p>
+                Default location: <file>$HOME/.texmf-config/</file>
+              </p>
+              <p>
+                Contains user-specific configuration
+              </p>
+            </item>
+
+            <tag><var>TEXMFVAR</var></tag>
+            <item>
+              <p>
+                Default location: <file>$HOME/.texmf-var/</file>
+              </p>
+              <p>
+                Contains user-specific generated files
+              </p>
+            </item>
+
+            <tag><var>TEXMFHOME</var></tag>
+            <item>
+              <p>
+                Default location: <file>$HOME/texmf/</file>
+              </p>
+              <p>
+                Contains user-specific static input files, e.g. new
+                LaTeX packages.
+              </p>
+            </item>
+
+            <tag><var>TEXMFSYSCONFIG</var></tag>
+            <item>
+              <p>
+                Default location: <file>/etc/texmf</file>
+              </p>
+              <p>
+                Contains system-wide configuration 
+              </p>
+            </item>
+
+            <tag><var>TEXMFSYSVAR</var></tag>
+            <item>
+              <p>
+                Default location: <file>/var/lib/texmf/</file>
+              </p>
+              <p>
+                Contains system-wide generated files
+              </p>
+            </item>
+
+            <tag><var>TEXMFLOCAL</var></tag>
+            <item>
+              <p>
+                Default location: <file>/usr/local/share/texmf/</file>
+              </p>
+              <p>
+                Contains system-wide input files 
+              </p>
+            </item>
+
+            <tag><var>TEXMFMAIN</var></tag>
+            <item>
+              <p>
+                Default location: <file>/usr/share/texmf/</file>
+              </p>
+              <p>
+                Contains system-wide, <prgn>dpkg</prgn>-managed input files
+                (TeX add-on packages) 
+              </p>
+            </item>
+
+            <tag><var>TEXMFDIST</var></tag>
+            <item>
+              <p>
+                Default location: <file>/usr/share/texmf-{tetex,texlive}</file>
+              </p>
+              <p>
+                Contains system-wide, <prgn>dpkg</prgn>-managed input files
+                (basic TeX packages)
+              </p>
+            </item>
+          </taglist>
+        </p> 
+
+        <p>
+          If you want to add files, you should usually use
+          <var>TEXMFLOCAL</var> or <var>TEXMFHOME</var>, depending on whether
+          you are the system administrator or a user. If needed, a system
+          administrator can add additional trees to the <var>TEXMF</var>
+          variable in <file>/etc/texmf/texmf.d/05TeXMF.cnf</file> (earlier
+          entries take precedence). <var>TEXMFCONFIG</var> and
+          <var>TEXMFVAR</var> are used by the user-specific
+          <prgn>texconfig</prgn>, <prgn>updmap</prgn>, and
+          <prgn>fmtutil</prgn> commands. Note
+	  that <prgn>texconfig</prgn> creates a copy of configuration
+	  files from <var>TEXMFMAIN</var> (or <file>/etc/texmf</file>)
+	  at the time it is first invoked, and does not track later
+	  system-wide changes, and it does not know
+	  about <prgn>update-*</prgn> programs (see
+	  below <ref id="sec-core-config-files">
+        </p>
+      </sect>
+
+      <sect>
+        <heading>General hints</heading>
+
+        <sect1>
+          <heading>System-wide versus user-specific configuration</heading>
+          <p>
+            TeXLive as well as, since version 3.0, teTeX supports a
+            complete user-specific configuration setup in the user's
+            home directory. System administrators must use the
+            commands <prgn>texconfig-sys</prgn>,
+            <prgn>fmtutil-sys</prgn> and <prgn>updmap-sys</prgn> which act on
+            the system-wide configuration files. Users can invoke their user
+            counterparts <prgn>texconfig</prgn>, <prgn>fmtutil</prgn> and
+            <prgn>updmap</prgn>. This will put copies of the system-wide
+            configuration files into the user's <var>TEXCONFIG</var> directory
+            (by default, <file>$HOME/.texmf-config</file>), modify them and
+            generate according formats, if applicable.
+          </p>
+
+        <sect1>
+          <heading>Configuration file placement</heading>
+          <p>
+            On a TeX system, in principle every TeX input file can be used to
+            <em>change the behavior of the system</em> and hence could
+            be treated as a configuration file. To avoid an inflation
+            of configuration files, those that are used to control the
+            typeset output - the appearance of documents - are not
+            installed as configuration files.  It makes more sense to
+            keep changed versions in the current directory for a
+            certain project, or in <var>TEXMFHOME</var>
+            or <var>TEXMFCONFIG</var> of a particular user.  However,
+            local admins can take any file they want from
+            the <var>TEXMFDIST</var>
+            (<file>/usr/share/texmf-tetex</file>)
+            or <var>TEXMFMAIN</var> (<file>/usr/share/texmf</file>)
+            trees and put changed copies into the respective
+            directories below <file>/etc/texmf</file>
+            (<var>TEXMFSYSCONFIG</var> which sorts before all other
+            trees).
+          </p>
+
+          <p>
+            Since the package management system does not know whether a file
+            is treated as a configuration file on a specific system, it is up
+            to the site admin or local user to check whether one of their
+            changed files has changed in <var>TEXMFMAIN</var> or
+            <var>TEXMFDIST</var>.
+          </p>
+
+         <sect1>
+          <heading>What is configured where?</heading>
+          <p>
+            The central system-wide configuration files <file>texmf.cnf</file>
+            (which controls the basic operation and file search paths for the
+            included programs), <file>fmtutil.cnf</file> (which specifies the
+            available TeX formats), <file>updmap.cfg</file> (font
+            configuration) and <file>language.dat</file> (hyphenation patterns
+            for many formats) are handled through a Debian-specific mechanism
+            that allows the basic TeX packages, add-on packages and local
+            administrators to combine their changes
+            (see <ref id="sec-core-config-files"> below).
+          </p>
+
+          <p>
+            For some configuration changes, there is a program called
+            <prgn>texconfig-dialog</prgn> (or simply <prgn>texconfig</prgn>
+            for a commandline frontend); alternatively, you can of course make
+            the necessary changes in configuration files by hand.
+          </p>
+
+      <sect>
+        <heading>Hyphenation</heading>
+        <p>
+          Hyphenation should pretty much work out of the box. In
+          teTeX, there have been some changes in the past &mdash;
+          see <file>NEWS.Debian</file> and
+          <file>changelog.Debian</file> &mdash; but currently (nearly) all
+          available patterns are enabled. If you want to use a reduced set of
+          hyphenation patterns (which might gain you a trifle more speed), you
+          can exclude them from the format file by changing the file specified
+          in the third column of <file>fmtutil.cnf</file> &mdash; usually
+          <file>language.dat</file> &mdash; and rebuild the formats with
+          <prgn>fmtutil</prgn> or <prgn>fmtutil-sys</prgn>. Please note that
+          in Debian, language.dat is a generated file (see <ref
+          id="sec-core-config-files">).
+        </p>
+
+        <p>
+          For users of the norwegian language and teTeX, there are several
+          alternatives. For norwegian, there are different sets of patterns,
+          and upstream chose <file>nohyphb.tex</file>. Details can be found in
+          <file>/usr/share/texmf/doc/generic/nohyph/README.nohyph</file> &mdash; you
+          can choose another one by editing <file>language.dat</file> or
+          rather <file>/etc/texmf/language.d/01tetex.cnf</file>.
+        </p>
+
+        <p>
+          For users of the ukranian language (with teTeX and TeX
+          live), the right pattern file depends on the output encoding 
+          (see <file>/usr/share/texmf-{tetex,texlive}/tex/generic/ukrhyph/ukrhyph.tex</file>);
+          you can also choose different rule sets in the file.
+        </p>
+	<p>
+	  There are currently no free hyphenation patterns for british
+	  english.  Before enabling british/UKenglish, you need to get the
+	  non-free ukhyphen.tex - otherwise the format generation will
+	  fail.  Don't forget to complain to the UK TUG  about how
+	  annoying this is...
+	</p>
+
+      <sect id="sec-core-config-files">
+        <heading>
+          The files <file>texmf.cnf</file>, <file>fmtutil.cnf</file>,
+          <file>updmap.cfg</file> and <file>language.dat</file>
+        </heading>
+        <p>
+          These files contain configuration options from teTeX and/or
+          TeXLive, possibly from you, and from other TeX-related
+          packages. They are generated by scripts and should not
+          &mdash in fact, except <file>texmf.cnf</file> may not &mdash
+          be edited directly. Rather, you should edit the source
+          files, or better add new ones. 
+        </p>
+
+        <p>
+	  <prgn>update-texmf</prgn> is only available for root; if a
+	  user wants to maintain their own <file>texmf.cnf</file>,
+	  they can put it into <var>TEXMFCONFIG</var> and must
+	  manually edit it.  Since all <file>texmf.cnf</file> files
+	  are read, with earlier definitions taking precedence over
+	  later ones, it is best to keep only a minimal set of
+	  definitions in the user-specific file.  The other
+	  configuration update programs also work with files
+	  in <tt><var>TEXMFCONFIG</var>/updmap.d</tt>, <tt><var>TEXMFCONFIG</var>/fmt.d</tt>
+	  or <tt><var>TEXMFCONFIG</var>/language.d</tt>, combining
+	  files in these directories with the files in the system-wide
+	  directories &mdash naturally the user-specific ones take
+	  precedence if the names are equal
+	  (see <ref id="sec-user-specific-installation">). Note that
+	  changes to existing files made by packages updates will not
+	  be propagated to the user's files.
+        </p>
+
+        <p>
+          In order to make updates smooth, you should <em>avoid
+          editing</em> system-wide files as far as possible, and
+          instead <em>add new files</em> to change
+          settings. For <file>texmf.cnf</file> snippets, this is
+          particularly easy, since earlier entries override any later
+          entries.  Only for removing settings
+          from <file>fmtutil.cnf</file>,
+          <file>updmap.cfg</file> or <file>language.dat</file> is it necessary
+          to edit existing files.
+        </p>
+
+         <sect1 id="sec-texmfcnf-and-update-texmf">
+          <heading>
+            <file>texmf.cnf</file> and <prgn>update-texmf</prgn>
+          </heading>
+          <p>
+            The TeX binaries are built to look for <file>texmf.cnf</file> (the
+            master config file for TeX and MetaFont) in
+            <file>/usr/share/texmf/web2c/texmf.cnf</file> (or
+            <file>$HOME/.texmf-config/web2c/texmf.cnf</file> if it exists).
+            The system-wide file is a symbolic link to
+            <file>/etc/texmf/texmf.cnf</file>. The Debian packaging includes a
+            mechanism for constructing texmf.cnf from a collection of files
+            under <file>/etc/texmf/texmf.d/</file>. To customize
+            <file>texmf.cnf</file> while retaining the Debian-supplied
+            configuration, create an appropriate file (or files) in
+            <file>/etc/texmf/texmf.d/</file>, or change existing
+            files, and then run <prgn>update-texmf</prgn>. This will
+            generate the desired <file>texmf.cnf</file> for you.
+          </p>
+
+          <p>
+            You should not edit this file directly! While changes made
+            by the local administrator will not be overwritten, they
+            will cause you trouble once a package is updated and
+            brings in a configuration change. You will be shown the
+            differences between the edited and the newly generated
+            file. We will try to merge our and your changes, but that
+            might not always work, and you will probably have to edit
+            again.
+          </p>
+
+          <p>
+            Therefore, if you want a smooth upgrade, please edit the files in
+            <file>/etc/texmf/texmf.d</file>, or create an additional one, and
+            invoke <prgn>update-texmf</prgn>. This will write your changes
+            into <file>/etc/texmf/texmf.cnf</file>.
+          </p>
+
+          <p>
+            You should name your customization file something like
+            <file>40macros.cnf</file>; the leading numerals will decide the
+            order in which configuration fragments will be assembled by
+            <prgn>update-texmf</prgn>, so it might be important to place your
+            customizations in an appropriate place in the sequence &mdash;
+            earlier definitions take precedence over later ones.  In
+            previous versions the extension <tt>.cnf</tt> was not
+            necessary, and all files in the directory were used.  If you
+            had <package>teTeX</package> installed in woody, you might
+            still have private files which need the extension to be
+            added. 
+          </p>
+
+         <sect1>
+          <heading>
+            <file>fmtutil.cnf</file> and <prgn>update-fmtutil</prgn>,
+            <file>updmap.cfg</file> and <prgn>update-updmap</prgn>,
+            <file>language.dat</file> and <prgn>update-language</prgn>
+          </heading>
+          <p>
+            These files are also generated files, just as it has been
+            explained above for <file>texmf.cnf</file>. The difference to
+            <file>texmf.cnf</file> is that the system-wide files will
+            be put into <file>/var/lib/texmf/web2c</file>, and any
+            change made in these files will be <strong>unconditionally
+            overwritten</strong>
+            by <prgn>update-fmtutil</prgn>, <prgn>update-language</prgn>
+            and
+            <prgn>update-updmap</prgn>, respectively. Only the files in
+            <file>/etc/texmf/updmap.d/</file>, <file>/etc/texmf/fmt.d/</file>
+            and <file>/etc/texmf/language.d/</file> will be treated as
+            configuration files.
+          </p>
+
+          <p>
+            Just as for <file>texmf.cnf</file>, the right way to change
+            settings is to edit or add files in
+            <file>/etc/texmf/updmap.d/</file>, <file>/etc/texmf/fmt.d/</file>
+            or <file>/etc/texmf/language.d/</file>. The details have been
+            described above (see <ref id="sec-texmfcnf-and-update-texmf">).
+            Note, however, that the extension for <file>updmap.cfg</file>
+            snippets in <file>/etc/texmf/updmap.d/</file> is
+            <file>.cfg</file>, not <file>.cnf</file>.
+          </p>
+
+	  <p>
+	    <prgn>updmap(1)</prgn> and <prgn>updmap-sys</prgn> provide
+	    options for enabling or disabling font map files.  When
+	    enabling a new map file that is not
+	    mentioned, <prgn>updmap</prgn> will first create or
+	    edit <file>10local.cfg</file> in the site-wide or
+	    user-specific <file>updmap.d</file> directory, as
+	    appropriate, and then call <prgn>update-updmap</prgn>.
+	    Note that <prgn>updmap</prgn>'s <tt>--edit</tt>
+	    and <tt>--syncwithtrees</tt> options cannot be used on a
+	    Debian system.
+	  </p>
+
+    </chapt>
+
+    <chapt>
+      <heading>Usage hints, Debian-specific adaptations</heading>
+
+      <sect>
+        <heading>Note on <prgn>dvips</prgn></heading>
+
+        <p>
+          Per default, <prgn>dvips</prgn> is in secure mode and won't execute
+          shell commands in <tt>\special</tt> commands, like backticks in
+          <tt>\DeclareGraphicsRule</tt>, etc. To enable this, change
+          <tt>z1</tt> to <tt>z0</tt> in
+          <file>/etc/texmf/dvips/config.ps</file> (second entry) (for
+          teTeX) and in
+          <file>/etc/texmf/texlive/dvips/config.ps</file> (for TeX live).
+        </p>
+      </sect>
+
+      <sect>
+        <heading>Note on <prgn>dvipdfm</prgn></heading>
+
+        <p>
+          In Debian teTeX packages, <prgn>dvipdfm</prgn> uses the settings in
+          <file>/etc/papersize</file> to determine the default papersize. This
+          only takes effect if the paper geometry is not set explicitly in the
+          (La)TeX source, e.g. using the packages <tt>geometry</tt> or
+          <tt>hyperref</tt>.
+        </p>
+
+	<p>
+	  The Debian TeX live packages currently do not evaluate the
+          settings of <file>/etc/papersize</file>, please set the
+          paper geometry explicitly in the (La)TeX source, e.g. using
+          the packages <tt>geometry</tt> or <tt>hyperref</tt>.
+	</p>
+      </sect>
+
+      <sect>
+        <heading>
+          &ldquo;TeX capacity exceeded&rdquo; and similar errors
+        </heading>
+
+        <p>
+          In most cases, this error is the symptom of a syntax error in the
+          document &mdash; TeX is getting into an infinite loop, and after
+          some time all its internal registers have been used. Sometimes,
+          however, a large document that loads a package that uses a lot of
+          TeX's registers leads to that error, or to a similar error message.
+          The package documentation, the Google archive, or TeX-related
+          mailing-lists or newsgroups will be helpful to find out which
+          parameter needs to be changed in <file>/etc/texmf/texmf.cnf</file>
+          (or rather in <file>/etc/texmf/texmf.d/95NonPath.cnf</file>, (see
+          <ref id="sec-texmfcnf-and-update-texmf">)).
+        </p>
+     </sect>
+    </chapt>
+
+   <chapt>
+      <heading>
+        How to install additional or updated (La)TeX packages or fonts
+      </heading>
+
+      <p>
+        If you want to install additional (La)TeX stuff, you have to:
+        <!-- the compact enumlist is buggy... -->
+        <enumlist>
+          <item>
+            install it at a place where TeX can find it;
+          </item>
+          <item>
+            register it properly.
+          </item>
+        </enumlist>
+      </p>
+
+      <p>
+        This can generally be done site-wide (by an administrator who has
+        write access to at least <file>/usr/local/share/texmf</file> and
+        <file>/etc/texmf</file>), or on a per-user basis. This can be done by
+        any user on the system, without requiring write access to system
+        directories. Some people might also find it more convenient in case
+        they share their home directory between a couple of machines, even if
+        they do have administrator rights.
+      </p>
+
+      <p>
+        In the following, we first explain the principles by describing a
+        site-wide setup; then we explain the details for user-specific setup.
+      </p>
+
+      <sect>
+        <heading>(La)TeX input files</heading>
+
+        <p>
+          This is usually quite easy. Put the files in an appropriate
+          directory below <var>TEXMFLOCAL</var>, which is the directory tree
+          rooted at <file>/usr/local/share/texmf</file>.
+        </p>
+
+        <p>
+          For LaTeX packages, create the directory
+          <file>tex/latex/<var>packagename</var></file> within that tree (or
+          use <file>tex/latex/misc</file>) and put the files there; the
+          documentation should be put into
+          <file>doc/latex/<var>packagename</var></file>. If the package comes
+          as a pair of <file>.dtx</file> and <file>.ins</file> files, you need
+          to run <prgn>latex</prgn> over the <file>.ins</file> file in order
+          to produce the package files, and over the <file>.dtx</file> file to
+          produce the documentation. After that, the <file>.dtx</file> and
+          <file>.ins</file> files are no longer needed. Please refer to the
+          <file>README</file> file of the package if there is one.
+        </p>
+
+        <p>
+          After that, <em>registering</em> is easy: just run the command
+          <prgn>mktexlsr</prgn> (also called <prgn>texhash</prgn>). This will
+          regenerate the <file>ls-R</file> file for all <var>TEXMF</var> trees
+          you have write access to.
+        </p>
+     </sect>
+
+     <sect>
+        <heading>Complex installations</heading>
+
+        <p>
+          With some packages, e.g. when they contain fonts, the
+          procedure is more complicated. Please follow the
+          instructions given in the package. The Debian-specific part
+          comes in when the configuration files
+          <file>texmf.cnf</file>, <file>fmtutil.cnf</file>,
+          <file>updmap.cfg</file>, or <file>language.dat</file> need
+          to be changed. See the description above (<ref
+          id="sec-core-config-files">), the manual pages for
+          <prgn>update-updmap</prgn>, <prgn>update-texmf</prgn>,
+          <prgn>update-fmtutil</prgn>, <prgn>update-language</prgn>
+          and <ref id="sec-font-installation">.
+        </p>
+     </sect>
+
+     <sect id="sec-font-installation">
+        <heading>Font installation</heading>
+
+        <p>
+          If you wish to install a font package in a system-wide manner,
+          please follow the instructions in this section. If you are preparing
+          a Debian package containing fonts, you should refer to the Debian
+          TeX policy instead, which is shipped in the
+          <package>tex-common</package> package.
+        </p>
+
+        <p>
+          Generally, you should first have a look at the installation
+          instructions that come with the font package, in case there is
+          something specific to that package with respect to installation. But
+          you should make sure that you install most files in a subdirectory
+          of <var>TEXMFLOCAL</var> (see <ref id="sec-texmf-trees">). This is
+          because we are describing here a system-wide installation that is
+          not done by Debian packages.
+        </p>
+
+        <p>
+          For instance, AFM files should be stored into
+          <file><var>TEXMFLOCAL</var>/fonts/afm/<var>supplier</var>/<var>typeface</var>/</file>
+          where <var>supplier</var> identifies the supplier of the fonts (for
+          instance, <tt>adobe</tt>, <tt>urw</tt> or <tt>public</tt>) and
+          <var>typeface</var> refers to the name of the font family (e.g.,
+          <tt>marvosym</tt> or <tt>lm</tt>). If in doubt, you should have a
+          look at the system trees managed by Debian packages,
+          <file>/usr/share/texmf</file> and
+          <file>/usr/share/texmf-tetex</file>; it follows the same layout,
+          called the TeX Directory Structure (which is documented at <url
+          id="http://www.tug.org/tds/" name="&urlname">).
+        </p>
+
+        <p>
+          In order for the various TeX-related programs to be able to use a
+          font, you need to somehow register its map files (simply copying the
+          files to <var>TEXMFLOCAL</var> is not enough). You can do this with
+          the following steps, performed as <tt>root</tt>, where
+          <var>foo</var> stands for the name of the font package you are
+          installing:
+
+          <enumlist>
+            <item>
+              <p>
+                Make sure you have stored all the relevant files shipped in
+                the package (<file>.afm</file>, <file>.tfm</file>,
+                <file>.pfb</file>, <file>.pfa</file>, <file>.mf</file>,
+                <file>.fd</file>, <file>.enc</file>, <file>.map</file>,
+                <file>.sty</file> are all relevant in this context) in the
+                appropriate subdirectories of <var>TEXMFLOCAL</var>, as
+                explained above.
+              </p>
+
+              <p>
+                Note: in teTeX 3 (as opposed to teTeX 2):
+
+                <list compact>
+                  <item>
+                    <file>.map</file> files should go to
+                    <file><var>TEXMFLOCAL</var>/fonts/map/<var>syntax</var>/<var>foo</var>/</file>
+                  </item>
+
+                  <item>
+                    <file>.enc</file> files should go to
+                    <file><var>TEXMFLOCAL</var>/fonts/enc/<var>syntax</var>/<var>foo</var>/</file>
+                  </item>
+                </list>
+
+                where <var>syntax</var> indicates the syntax followed by the
+                files (it is often <tt>dvips</tt>). Please refer to the teTeX
+                Manual for details. You can read this manual with the command
+<example>
+texdoc TETEXDOC
+</example>
+              </p>
+            </item>
+
+            <item>
+              <p>
+                Create a configuration file
+                <file>/etc/texmf/updmap.d/10local-<var>foo</var>.cfg</file>
+                (the extension <file>.cfg</file> is important! You can also
+                use one <file>10local.cfg</file> for all your locally
+                installed fonts). The file should list the map files you
+                stored in step 1 under <var>TEXMFLOCAL</var>, with one line
+                per file, as in:
+
+<example>
+# This is a comment line
+Map <var>foo</var>.map
+Map other-map-file-from-package-<var>foo</var>.map
+</example>
+              </p>
+
+              <p>
+                If a font is available both as bitmap and outline, you should
+                use <tt>MixedMap</tt> instead of <tt>Map</tt>. Please refer to
+                the manual pages for <prgn>update-updmap</prgn> and
+                <prgn>updmap-sys</prgn> for details.
+              </p>
+	      <p>
+		You can also use <tt>updmap-sys --enable
+		Map <var>foo</var>.map</tt>, it will create
+		the <file>10local.cfg</file> file for you.
+	      </p>
+            </item>
+
+            <item>
+              <p>
+                Run the program <prgn>update-updmap</prgn>. This will generate
+                an appropriate <file>updmap.cfg</file> file under
+                <file>/var/lib/texmf/web2c/</file> (not
+                <file>/etc/texmf/</file>!), containing the <tt>Map</tt> and/or
+                <tt>MixedMap</tt> lines taken from
+                <file>10local-<var>foo</var>.cfg</file>.
+              </p>
+    
+              <p>
+                Note: modifying <file>updmap.cfg</file> directly is not
+                supported in Debian, because Debian font packages need to
+                update it when they are installed or removed. This is why
+                <file>updmap.cfg</file> is not stored under <file>/etc</file>
+                and why you have to use <prgn>update-updmap</prgn> whenever
+                you want to modify it.
+              </p>
+            </item>
+
+            <item>
+              <p>
+                Run the program <prgn>mktexlsr</prgn> (or
+               <prgn>texhash</prgn>, which is the same). This will record all
+               the newly created files in <file>ls-R</file> files (these are
+               used by TeX-related programs as indices to find the files they
+               need when operating).
+              </p>
+            </item>
+
+            <item>
+              <p>
+                Run the program <prgn>updmap-sys</prgn>. This will use your
+                updated <file>updmap.cfg</file> to generate files that are
+                needed by <prgn>dvips</prgn>, <prgn>pdflatex</prgn>,
+                <prgn>dvipdfm</prgn>, etc., such as <file>psfonts.map</file>
+                or <file>pdftex.map</file>.
+              </p>
+            </item>
+          </enumlist>
+        </p>
+
+        <p>
+          At this point, the font package should be properly installed for all
+          users on the system.
+        </p>
+      </sect>
+
+     <sect id="sec-user-specific-installation">
+        <heading>User-specific installation</heading>
+
+        <p>
+          Instead of a system-wide installation, one can also install input
+          files and fonts in the private <var>TEXMFHOME</var>, which is set to
+          <file>$HOME/texmf</file> by default. For fonts, compared to the
+          system-wide installation explained above, the following changes have
+          to be made:
+
+          <list>
+            <item>
+              In step 1, copy all relevant files to the appropriate
+              subdirectories in <var>TEXMFHOME</var>.
+            </item>
+
+            <item>
+              <p>
+		The configuration file created in step 2 should be placed in
+		<var>TEXMFCONFIG</var> (<file>$HOME/.texmf-config</file> by
+		default). An appropriate place would be
+		<file><var>TEXMFCONFIG</var>/updmap.d/</file>. Note that most
+		likely you will have to create this directory first.
+	      </p>
+	      <p>
+		As for the site-wide installation, you can also
+		use <tt>updmap --enable Map <var>foo</var>.map</tt>
+	      </p>
+            </item>
+
+            <item>
+              After updating the <file>ls-R</file> files with
+              <prgn>mktexlsr</prgn> or <prgn>texhash</prgn> (step 4), one has
+              to generate the map files in step 5. This is done by running the
+              program <prgn>updmap</prgn> instead of <prgn>updmap-sys</prgn>.
+              The generated files are also created in directories below
+              <var>TEXMFVAR</var>.
+            </item>
+          </list>
+        </p>
+
+        <p>
+          Note that <prgn>update-updmap</prgn> merges the configuration files
+          in <file>$HOME/.texmf-config/web2c/updmap.d</file> and in
+          <file>/etc/texmf/updmap.d</file>. Therefore, all system-wide
+          installed fonts are accessible without duplicating their
+          configuration files. Merging the configuration files is done on the
+          basis of file names: If a file exists in both directories, the
+          version in <var>TEXMFCONFIG</var> takes precedence. Thus, you can
+          also use this mechanism to change settings compared to the site-wide
+          configuration, e.g. by keeping a changed copy of
+          <file>00updmap.cfg</file> in
+          <file><var>TEXMFCONFIG</var>/updmap.d/</file>.
+        </p>
+
+        <p>
+          Keep in mind that you still have to call <prgn>update-updmap</prgn>
+          with the above options whenever the system-wide installation
+          changes. If you keep a changed copy of a file from the site-wide
+          directories, you need to manually merge any changes to this file, if
+          desired.
+        </p>
+      </sect>
+    </chapt>
+
+   <chapt>
+      <heading>Problems, bug reports</heading>
+
+      <p>
+        If the installation failed, please check the following points:
+
+        <list compact>
+          <item>
+            Is there enough room on your hard disk?
+          </item>
+
+          <item>
+            Is there any privately-compiled TeX system besides the Debian
+            packages?
+          </item>
+
+          <item>
+            Does the command:
+<example>
+kpsewhich --format=cnf texmf
+</example>
+            return <file>/usr/share/texmf/web2c/texmf.cnf</file>?
+          </item>
+
+          <item>
+            Is <file>texmf.cnf</file> modified a lot? Please check
+            <file>/etc/texmf/texmf.d/</file>.
+          </item>
+
+          <item>
+            Did you set any TeX-related environment variable?
+          </item>
+
+          <item>
+            Try again. This might work in some cases.
+          </item>
+
+          <item>
+            For <tt>amstex</tt>, <prgn>metapost</prgn>, <tt>eurosym</tt>,
+           <prgn>texdoctk</prgn>, <tt>txfonts</tt>, <tt>pxfonts</tt>, etc.,
+           you need <package>tetex-extra</package> at present.
+           (<prgn>pdftex</prgn>/<prgn>pdflatex</prgn> should work basically
+           only with <package>tetex-base</package> now.)
+          </item>
+
+          <item>
+            Is your <file>language.dat</file> correct?
+          </item>
+        </list>
+      </p>
+
+      <p>
+        How to report a bug:
+
+        <list compact>
+          <item>
+            Please calm down anyway. ;)
+          </item>
+
+          <item>
+            Please check the Debian Bug Tracking System first.
+          </item>
+
+          <item>
+            Please read carefully the error messages, if any. It will help
+            both you and us.
+          </item>
+
+          <item>
+            Please use <prgn>reportbug</prgn> and include all
+            information it gathers
+          </item>
+
+          <item>
+            Please attach a simple and short sample file which causes the
+            problem you want to report.
+          </item>
+
+          <item>
+            Be prepared that we will have to ask more questions:  You
+            should have time to exchange a couple of e-mails with us
+          </item>
+
+          <item>
+            It will be helpful to show us the output of the command:
+<example>
+ls /etc/texmf/texmf.d/*
+</example>
+          </item>
+
+          <item>
+            If you see something like:
+
+<example>
+Unpacking replacement tetex-base ...
+dpkg: error processing /var/cache/../tetex-base_*_all.deb (--unpack): trying to overwrite `/usr/share/texmf/dvips/config', which is also in package foo
+</example>
+
+            then the problem should be of package <package>foo</package>, not
+            of <package>tetex-base</package>.
+
+          <item>
+            Note that teTeX is not further developed upstream, and new
+            features will only be integrated in TeXlive.  The Debian
+            maintainers will not include anything in the TeXlive
+            packages that is not already in TeXlive upstream.
+          </item>
+        </list>
+      </p>
+    </chapt>
+  </book>
+</debiandoc>
