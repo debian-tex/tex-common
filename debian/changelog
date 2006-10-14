@@ -3,18 +3,18 @@ tex-common (0.34) unstable; urgency=medium
   * Handle non-writable /usr/local gracefully upon removal, thanks to Sam
     Hocevar <sam@zoy.org> (closes: #392518) [frank]
   * Change debianize-updmap so that the --syncwithtrees and --edit options
-    do something sensible, and won't break the system (closes: #392573,
-    #334747) [frank]
-    This change justifies the "medium" urgency.
-  * Add a check for shadowed config files to the update-* scripts [preining]
+    do something sensible, and won't break the system. Together with the
+    upload of tetex-bin 3.0-22, this will close #392573 and #334747.
+    [frank]
+  * Add a check for shadowed config files to update-fontlang [preining]
   * Move and extend the teTeX README.Debian to TeX-on-Debian Documentation
     [frank, preining]
-  * Move po-debconf from Build-Depends-Indep to Build-Depends, since it is
+  * Move po-debconf from Build-Depends-Indep to Build-Depends, since it's
     used in the clean target of debian/rules. [florent]
   * Adjust the TEXMFCNF setting in conf/texmf.d/85Misc.cnf to reflect the
     change in tetex-bin 3.0-22. [frank, florent]
 
- -- Florent Rougon <frn@debian.org>  Sat, 14 Oct 2006 15:28:14 +0200
+ -- Florent Rougon <frn@debian.org>  Sat, 14 Oct 2006 18:53:20 +0200
 
 tex-common (0.33) unstable; urgency=medium
 

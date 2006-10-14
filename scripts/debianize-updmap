@@ -517,7 +517,8 @@ syncWithTrees(){
   echo "If you know what you are doing, you can proceed, e.g. in order to compare"
   echo "the synchronized file with the old generated one."
   echo ""
-  echo "If you want to proceed, type 'Yes, I know what I am doing!'"
+  echo "If you do want to proceed, type 'Yes, I know what I am doing!'."
+  echo "Otherwise, press Enter to abort."
 
   read line
   if [ "$line" = "Yes, I know what I am doing!" ]; then
