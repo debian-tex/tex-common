@@ -5,7 +5,7 @@
     <titlepag>
       <title>Debian-specific information about TeX packages</title>
       <author>
-        <name>The Debian TeX mailing List</name>
+        <name>The Debian TeX mailing list</name>
         <email>debian-tex-maint@lists.debian.org</email>
       </author>
       <version>generated from $Id$</version>
@@ -15,9 +15,9 @@
        the Debian teTeX packages (<package>tetex-bin</package>,
        <package>tetex-base</package>, <package>tetex-extra</package>,
        <package>tetex-doc</package>, <package>tetex-doc-nonfree</package> and
-       <package>tetex-src</package>) and Debian TeX live packages (all
+       <package>tetex-src</package>) and Debian TeX Live packages (all
        packages named <package>texlive-something</package>). 
-       Further Information, especially for
+       Further information, especially for
        <em>developers</em>, can be found in the Debian TeX Policy draft in
        <file>/usr/share/doc/tex-common/</file>. Information for people
        upgrading from teTeX 2.0.2 in sarge is in the <file>NEWS.Debian</file>
@@ -112,69 +112,69 @@
       </p>
 
       <p>
-        The Debian TeX live packages are comprised of in total
-        (currently) 76 packages. The most important are:
+        The Debian TeX Live packages are comprised of (currently) 76 packages
+        in total. The most important are:
         <taglist>
           <tag><package>texlive-base-bin</package></tag>
           <item>
-            provides the basic binaries and basic TeX input files.
+            provides the basic binaries and basic TeX input files
           </item>
 
           <tag><package>texlive-latex-base</package></tag>
           <item>
             provides the most basic LaTeX input files, and will be
-            sufficient for some simple documents.
+            sufficient for some simple documents
           </item>
 
           <tag><package>texlive-latex-recommended</package></tag>
           <item>
-	    A recommended set of latex packages which are sufficient
+	    a recommended set of LaTeX packages which are sufficient
             for most typesetting purposes if you don't have any
-            special requirements.
+            special requirements
           </item>
 
           <tag><package>texlive-fonts-recommended</package></tag>
           <item>
-	    A recommended set of fonts which are sufficient
+	    a recommended set of fonts which are sufficient
             for most typesetting purposes if you don't have any
-            special requirements.
+            special requirements
           </item>
 
           <tag><package>texlive-context</package></tag>
           <item>
-	    The complete ConTeXt environment.
+	    the complete ConTeXt environment
           </item>
           
 	  <tag><package>texlive</package></tag>
           <item>
-	    A meta-package depending on a decent selection of
-            packages, comprising all the above. 
+	    a meta-package depending on a decent selection of
+            packages, comprising all of the above
           </item>
 
 	  <tag><package>texlive-full</package></tag>
           <item>
-	    A meta-package depending on all packages from the texlive
+	    a meta-package depending on all packages from the TeX Live
 	    group and on some other packages to create something
-            similar to a full TeX live installation.
+            similar to a full TeX Live installation
           </item>
 
 	  <tag><package>texlive-doc-*</package></tag>
           <item>
-	    Packages like <package>texlive-doc-en</package> and
+	    packages like <package>texlive-doc-en</package> and
             <package>texlive-doc-de</package> provide documentation in
-            the respective language.
+            the respective language
           </item>
 
 	  <tag><package>texlive-lang-*</package></tag>
           <item>
-	    Packages like <package>texlive-lang-dutch</package> and
-            <package>texlive-lang-spanish</package> provide language
-	    specific support, like hyphenation patterns.
+	    packages like <package>texlive-lang-dutch</package> and
+            <package>texlive-lang-spanish</package> provide
+            language-specific support, like hyphenation patterns
           </item>
 	</taglist>
-	There are many more packages, providing extra functionality
-          and extra fonts. Please see the respective descriptions of
-          these packages.
+        There are many more packages, providing extra functionality
+        and extra fonts. Please see the respective descriptions of
+        these packages.
       </p>
     </chapt>
 
@@ -300,7 +300,7 @@
         <sect1>
           <heading>System-wide versus user-specific configuration</heading>
           <p>
-            TeXLive as well as, since version 3.0, teTeX supports a
+            TeX Live as well as, since version 3.0, teTeX, supports a
             complete user-specific configuration setup in the user's
             home directory. System administrators must use the
             commands <prgn>texconfig-sys</prgn>,
@@ -411,7 +411,7 @@
         </heading>
         <p>
           These files contain configuration options from teTeX and/or
-          TeXLive, possibly from you, and from other TeX-related
+          TeX Live, possibly from you, and from other TeX-related
           packages. They are generated by scripts and should not
           &mdash in fact, except <file>texmf.cnf</file> may not &mdash
           be edited directly. Rather, you should edit the source
@@ -561,7 +561,7 @@
           <tt>z1</tt> to <tt>z0</tt> in
           <file>/etc/texmf/dvips/config.ps</file> (second entry) (for
           teTeX) and in
-          <file>/etc/texmf/texlive/dvips/config.ps</file> (for TeX live).
+          <file>/etc/texmf/texlive/dvips/config.ps</file> (for TeX Live).
         </p>
       </sect>
 
@@ -577,7 +577,7 @@
         </p>
 
 	<p>
-	  The Debian TeX live packages currently do not evaluate the
+	  The Debian TeX Live packages currently do not evaluate the
           settings of <file>/etc/papersize</file>, please set the
           paper geometry explicitly in the (La)TeX source, e.g. using
           the packages <tt>geometry</tt> or <tt>hyperref</tt>.
@@ -715,10 +715,10 @@
           <var>typeface</var> refers to the name of the font family (e.g.,
           <tt>marvosym</tt> or <tt>lm</tt>). If in doubt, you should have a
           look at the system trees managed by Debian packages,
-          <file>/usr/share/texmf</file> and
-          <file>/usr/share/texmf-tetex</file>; it follows the same layout,
-          called the TeX Directory Structure (which is documented at <url
-          id="http://www.tug.org/tds/" name="&urlname">).
+          <file>/usr/share/texmf</file>, <file>/usr/share/texmf-tetex</file>
+          and <file>/usr/share/texmf-texlive</file>; they follow the same
+          layout, called the TeX Directory Structure (which is documented at
+          <url id="http://www.tug.org/tds/" name="&urlname">).
         </p>
 
         <p>
@@ -742,7 +742,7 @@
               </p>
 
               <p>
-                Note: in teTeX 3 (as opposed to teTeX 2):
+                Note: in teTeX 3 and current TeX Live (as opposed to teTeX 2):
 
                 <list compact>
                   <item>
@@ -788,9 +788,10 @@ Map other-map-file-from-package-<var>foo</var>.map
                 the manual pages for <prgn>update-updmap</prgn> and
                 <prgn>updmap-sys</prgn> for details.
               </p>
+
 	      <p>
 		You can also use <tt>updmap-sys --enable
-		Map <var>foo</var>.map</tt>, it will create
+		Map <var>foo</var>.map</tt>; this will create
 		the <file>10local.cfg</file> file for you.
 	      </p>
             </item>
@@ -831,7 +832,7 @@ Map other-map-file-from-package-<var>foo</var>.map
                 updated <file>updmap.cfg</file> to generate files that are
                 needed by <prgn>dvips</prgn>, <prgn>pdflatex</prgn>,
                 <prgn>dvipdfm</prgn>, etc., such as <file>psfonts.map</file>
-                or <file>pdftex.map</file>.
+                and <file>pdftex.map</file>.
               </p>
             </item>
           </enumlist>
@@ -867,9 +868,10 @@ Map other-map-file-from-package-<var>foo</var>.map
 		<file><var>TEXMFCONFIG</var>/updmap.d/</file>. Note that most
 		likely you will have to create this directory first.
 	      </p>
+
 	      <p>
 		As for the site-wide installation, you can also
-		use <tt>updmap --enable Map <var>foo</var>.map</tt>
+		use <tt>updmap --enable Map <var>foo</var>.map</tt>.
 	      </p>
             </item>
 
@@ -1011,13 +1013,12 @@ dpkg: error processing /var/cache/../tetex-base_*_all.deb (--unpack): trying to 
 
           <item>
             Note that teTeX is not further developed upstream, and new
-            features will only be integrated in TeXlive.  The Debian
-            maintainers will not include anything in the TeXlive
-            packages that is not already in TeXlive upstream.
+            features will only be integrated in TeX Live.  The Debian
+            maintainers will not include anything in the TeX Live
+            packages that is not already in TeX Live upstream.
           </item>
         </list>
       </p>
     </chapt>
   </book>
 </debiandoc>
-

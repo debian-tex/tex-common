@@ -3,8 +3,8 @@ Section: tex
 Priority: optional
 Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, C.M. Connelly <cmc@debian.org>, Atsuhito KOHDA <kohda@debian.org>, Frank Küster <frank@debian.org>, Florent Rougon <frn@debian.org>
-Build-Depends: debhelper (>= 4.0.0)
-Build-Depends-Indep: debiandoc-sgml, po-debconf, eperl
+Build-Depends: debhelper (>= 4.0.0), po-debconf
+Build-Depends-Indep: debiandoc-sgml, eperl
 Standards-Version: 3.7.2.0
 
 Package: tex-common

@@ -23,7 +23,7 @@ tex-on-debian-html: TeX-on-Debian.sgml
 
 tex-on-debian-pdf: TeX-on-Debian.pdf
 
- TeX-on-Debian.pdf: TeX-on-Debian.sgml tex-sed
+TeX-on-Debian.pdf: TeX-on-Debian.sgml tex-sed
 	debiandoc2latexpdf -s ./tex-sed TeX-on-Debian.sgml
 
 
@@ -42,3 +42,7 @@ clean:
 allclean: clean
 	-rm  Debian-TeX-Policy.pdf
 	-rm  TeX-on-Debian.pdf
+
+.PHONY: all install clean allclean \
+        policy-txt policy-html policy-pdf \
+        tex-on-debian-txt tex-on-debian-html tex-on-debian-pdf
