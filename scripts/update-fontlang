@@ -265,9 +265,9 @@ perform_sanity_checks()
 Error: '$badly_located_cfg_file' should not exist when using the
        Debian teTeX or TeX Live packages. Presumably, you used ${badly_used_prg} 
        in maintainance mode (options ${bad_options}).
-       This shouldn't be done with the Debian teTeX or TeX Live packages. Instead,
-       you should edit the files in ${SYSWIDE_CONFDIR}/ and run ${progname},
-       mktexlsr and ${badly_used_prg}.
+       This shouldn't be done with the Debian teTeX or TeX Live packages.
+       Instead, you should edit the files in ${SYSWIDE_CONFDIR}/ and run
+       ${progname}, mktexlsr and ${badly_used_prg}.
        Please remove '$badly_located_cfg_file' and try again.\n" >&2
             exit 1
         fi
