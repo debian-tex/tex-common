@@ -5,8 +5,8 @@
     <titlepag>
       <title>The Debian TeX sub-policy</title>
       <author>
-	<name>The Debian teTeX mailing List</name>
-	<email>debian-tetex-maint@lists.debian.org</email>
+	<name>The Debian TeX mailing list</name>
+	<email>debian-tex-maint@lists.debian.org</email>
       </author>
       <version>generated from $Id$</version>
 
@@ -59,11 +59,11 @@
         Debian GNU/Linux distribution.  It is still a in a draft state
         -- some things might not yet be fully implemented, and others
         are advisable, but not strictly necessary.  If in doubt,
-        please ask on <tt>debian-tetex-maint@lists.debian.org</tt>.
+        please ask on <tt>debian-tex-maint@lists.debian.org</tt>.
       </p>
       <p>
 	The latest copy of this document can be found in the
-	<tt>Debian-TeX-policy</tt> files in the <package>tex-common</package>
+	<tt>Debian-TeX-Policy</tt> files in the <package>tex-common</package>
 	package. 
     </chapt>
     <chapt>
