@@ -544,7 +544,38 @@
 	    Note that <prgn>updmap</prgn>'s <tt>--edit</tt>
 	    and <tt>--syncwithtrees</tt> options cannot be used on a
 	    Debian system.
+      
 	  </p>
+	
+      <sect>
+	<heading>Font caching</heading>
+	<p>
+	  A TeX system needs to generate new font data (pixel data, metric,
+	  sources) on the fly. These files can be saved into the TeX font cache
+	  and later be reused.  By default, a separate font cache is created
+	  for each user in their own TEXMFVAR directory ($HOME/.texmf-var/).
+	  If this directory is not writable, e.g. during automated package
+	  building, a directory called VARTEXFONTS, /tmp/texfonts/, is used
+	  instead, but this directory is cleaned up regularly.
+	</p>
+	<p>
+	  On multi-user machines, it might be advisable that the local
+	  administrator enables a site-wide font cache and sets VARTEXFONTS to
+	  a persistent directory, e.g. /var/cache/fonts.  The variable is set
+	  in /etc/texmf/texmf.d/05TeXMF.cnf and can either be changed there or
+	  preferrably overwritten in a file that sorts before 05TeXMF.cnf, e.g.
+	  /etc/texmf/texmf.d/04VARTEXFONTS.cnf.  Do not forget to run
+	  update-texmf after making the change.  To enable a side-wide font
+	  caching the admin should edit /etc/texmf/web2c/mktex.cnf and use
+	  'varfonts' instead of 'texmfvar' in MT_FEATURES.  Care should be
+	  taken to specifiy appropriate permissions for the directory
+	  containing the font cache.  Either the local admin should create all
+	  available font data and not allow write access, or else write access
+	  should be limited to trusted users.  Yet an other alternative is to
+	  bind-mount /var/cache/fonts from a separate partition, so that users
+	  are not able to fill up the /var partition with font data.
+	</p>
+      </sect>
 
     </chapt>
 
