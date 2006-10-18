@@ -1,3 +1,10 @@
+tex-common (0.35~1) unreleased; urgency=low
+
+  * Use local variables in debianize-updmap, so that the right file for
+    enabling font maps will be found (closes: )
+
+ -- Frank Küster <frank@debian.org>  Wed, 18 Oct 2006 16:43:07 +0200
+
 tex-common (0.34) unstable; urgency=medium
 
   * Handle non-writable /usr/local gracefully upon removal, thanks to Sam

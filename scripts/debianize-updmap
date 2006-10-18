@@ -348,6 +348,8 @@ disableMapInner()
 {
 #  verboseMsg "entering disableMapInner"
   map=$1
+  local debCnfFile
+
   noverbose="$2"
   oldverbose="$verbose"
   if [ -n "$noverbose" ]; then
@@ -397,6 +399,7 @@ enableMap()
 {
   mapType=$1
   mapName=$2
+  local debCnfFile=""
   case $1 in
     Map|MixedMap)
       ;;
@@ -542,6 +545,9 @@ debianEditWarnAndShow(){
   echo "Please read the updmap(1) manpage and edit those files."
   echo ""
   echo "Instead of editing, you will now be shown updmap.cfg in a pager."
+  echo ""
+  echo "Press enter to continue."
+  read dummy
   
   sensible-pager $cnfFile
 
