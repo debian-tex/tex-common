@@ -1,3 +1,9 @@
+tex-common (0.36) UNRELEASED; urgency=low
+
+  * fix format extraction regexp in dh_installtex [preining]
+
+ -- Norbert Preining <preining@debian.org>  Sun, 22 Oct 2006 17:37:24 +0200
+
 tex-common (0.35) unstable; urgency=low
 
   * Use local variables in debianize-updmap, so that the right file for

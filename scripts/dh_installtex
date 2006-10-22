@@ -231,7 +231,7 @@ sub collect_data {
 
 sub extract_format {
 	my ($line) = @_;
-	if ($line =~ m/^[^\w#]*(\w+)*/) {
+	if ($line =~ m/^[^\w#]*([\w-]+)*/) {
 		return $1;
 	}
 }
