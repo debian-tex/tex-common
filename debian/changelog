@@ -9,7 +9,6 @@ tex-common (0.35.1) UNRELEASED; urgency=low
     recreate the ls-R DB for /usr/share/texmf and /var/lib/texmf [preining]
     (Closes: 392359)
   * Adjust the TEXFORMATS config to .;$TEXMF/web2c/{$engine,}
-  * 
 
  -- Norbert Preining <preining@debian.org>  Tue, 24 Oct 2006 15:56:16 +0200
 
