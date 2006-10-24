@@ -31,9 +31,11 @@ dh_installtex is a debhelper program that is responsible for
 updating the ls-R databases, registering map files, new formats, 
 and new hyphenation patterns with TeX.
 
-Your package should depend on tex-common so that the
-update-* commands are available. (This program adds that dependency to
-${misc:Depends}.)
+Your package should depend on an appropriate version of tex-common so
+that the update-* commands are available. (This program adds that
+dependency to ${misc:Depends}.)
+
+=head1 SIMPLE USAGE: Registering Files 
 
 If you only install files into /usr/share/texmf and want to be sure that 
 mktexlsr is called in a correct way (e.g., also
@@ -41,7 +43,7 @@ in the postrm script when there is no functional mktexlsr), simply call
 
 	dh_installtex
 
-[B<Warning:>] The ls-R databases are [B<only>] updated for the following
+The ls-R databases are [B<only>] updated for the following
 trees: /usr/share/texmf and /var/lib/texmf. Normal TeX related packages
 following the Debian TeX Policy should only install files into these 
 directories and /etc/texmf (which does not need a ls-R DB), so this is
@@ -55,15 +57,18 @@ texmftrees option:
 This will update the ls-R databases for /usr/share/texmf, /var/lib/texmf, and
 in addition tree1 and tree2.
 
-If in addition you have to install map files, language definitions, or 
-format definitions you can use three different methods to
-specify what should be installed:
+=head1 COMPLEX USAGE: Registering fonts, hyphenation patterns and formats
+
+If in addition you have to install map files, hyphenation patterns for
+additional languages, or format definitions you can use three
+different methods to specify what should be installed:
 
 1) B<Pre made config files:> These files can be specified with the
 different I<type>file= options, together with an optional priority.
-These files will be installed into /etc/texmf/I<configdir>/ for the
-respective type (for map files updmap.d, for language files language.d,
-and for format files fmt.d).
+I<type> can be one of map, format and language, and these files will be
+installed into /etc/texmf/I<configdir>/ for the respective type (for
+map files updmap.d, for language files language.d, and for format
+files fmt.d).
 
 Example:
 
