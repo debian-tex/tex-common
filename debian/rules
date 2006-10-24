@@ -89,6 +89,8 @@ install: build
         # dh_installtex(.1) is already installed via the bin_scripts
 	grep -v '^[ \t]*#' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
 	grep -v '^[ \t]*#' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
+	grep -v '^[ \t]*#' scripts/postrm-texlsr > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-texlsr
+	grep -v '^[ \t]*#' scripts/postinst-texlsr > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texlsr
 
         # fontcache stuff with proper permissions
 	install -d $(INSTDIR)/etc/texmf/web2c/

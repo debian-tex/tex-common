@@ -1,0 +1,66 @@
+#
+# postinst-texlsr
+#
+# postinst snippets for calling maketexlsr, update-*
+#
+# Authors:
+#       Florent Rougon <f.rougon@free.fr>
+#       Norbert Preining <preining@logic.at>
+#
+# Please note that comments in this file are stripped before installation
+# by calling a grep -v '^[ \t]*#'
+# So please be careful if you add stuff here!
+#
+# Let vim know that we don't want tabs
+# vim:set expandtab: #
+
+
+# Tell if kpsewhich works. If this is the case:
+#
+#   1. kpsewhich is installed and;
+#
+#   2. libkpathsea is configured.
+dhit_libkpathsea_configured ()
+{
+    kpsewhich --version >/dev/null 2>&1
+}
+
+dhit_update_lsr_files ()
+{
+    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+    printf "Running mktexlsr. This may take some time... "
+    if mktexlsr #TEXMFTREES# > $tempfile 2>&1 ; then
+        rm -f $tempfile
+        echo "done."
+    else
+        echo
+        echo "mktexlsr failed. Output has been stored in"
+        echo "$tempfile"
+        echo "Please include this file if you report a bug."
+        echo
+        exit 1
+    fi
+}
+
+case "$1" in
+    configure|abort-upgrade|abort-remove|abort-deconfigure)
+        # It doesn't hurt to call all of them.
+        # These programs are all in tex-common and can be run immediately.
+        update-updmap --quiet
+        update-language
+        update-fmtutil
+        # All of the following needs an installed and configured
+        # basic TeX system, so check this.
+        if dhit_libkpathsea_configured; then
+            # mktexlsr may not be present
+            if which mktexlsr >/dev/null; then
+                dhit_update_lsr_files
+            fi
+        fi
+    ;;
+
+    *)
+        echo "postinst called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac

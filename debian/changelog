@@ -1,8 +1,13 @@
-tex-common (0.36) UNRELEASED; urgency=low
+tex-common (0.35.1) UNRELEASED; urgency=low
 
   * fix format extraction regexp in dh_installtex [preining]
+  * dh_installtex: include only the minimal mktexlsr code in case no other
+    installation is done (ie no maps, formats, languages) [preining]
+  * dh_installtex: add ability to specify texmf trees on cmdline, and only
+    recreate the ls-R DB for /usr/share/texmf and /var/lib/texmf [preining]
+    (Closes: 392359)
 
- -- Norbert Preining <preining@debian.org>  Sun, 22 Oct 2006 17:37:24 +0200
+ -- Norbert Preining <preining@debian.org>  Tue, 24 Oct 2006 10:55:25 +0200
 
 tex-common (0.35) unstable; urgency=low
 
