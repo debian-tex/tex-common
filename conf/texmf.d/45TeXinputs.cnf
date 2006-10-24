@@ -71,7 +71,7 @@ MPINPUTS = .;$TEXMF/metapost//
 % and string pools (.pool) for ini{tex,mf,mp}.  It is silly that we have six
 % paths and directories here (they all resolve to a single place by default),
 % but historically ...
-TEXFORMATS = .;$TEXMF/web2c
+TEXFORMATS = .;$TEXMF/web2c/{$engine,}
 MFBASES = .;$TEXMF/web2c
 MPMEMS = .;$TEXMF/web2c
 TEXPOOL = .;$TEXMF/web2c
