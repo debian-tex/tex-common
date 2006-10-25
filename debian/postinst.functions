@@ -52,21 +52,6 @@ check_texmf(){
       echo "Error in $file: $variable incorrectly defined." >&2
       checkfailed=true
     fi
-    if [ "$variable" = TEXFONTMAPS ]; then
-    # the following is for backwards compatibility; must be dropped once all 
-    # font packages follow TDS 1.1
-      if ! echo "$line" | grep -q '/dvips//'; then
-	variable=${variable%$removepattern}
-	db_subst tex-common/check_texmf_wrong filename $file || true
-	db_subst tex-common/check_texmf_wrong variable $variable || true
-	db_subst tex-common/check_texmf_wrong pattern "/dvips//" || true
-	db_fset tex-common/check_texmf_wrong seen false || true
-	db_input critical tex-common/check_texmf_wrong || true
-	echo "Error in $file: $variable incorrectly defined." >&2
-	db_go || true
-	checkfailed=true
-      fi
-    fi
   fi
 }
 
