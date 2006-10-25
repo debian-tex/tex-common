@@ -20,10 +20,8 @@ MISCFONTS = .;$TEXMF/fonts/misc//
 
 % font name map files.
 % TEXFONTMAPS = .;$TEXMF/{fonts/map,}/{$progname,pdftex,dvips,}//
-% temporarily add the old path
-% old path
-% TEXFONTMAPS = .;$TEXMF/{fonts/,}map//;$TEXMF/dvips//
-TEXFONTMAPS = .;$TEXMF/{fonts/map,}/{$progname,pdftex,dvips,}//
+% To avoid triple slashes, Debian uses:
+TEXFONTMAPS = .;$TEXMF{/fonts/map,}{/$progname,/pdftex,/dvips,}//
 
 % support non"k"-xdvi:
 PKFONTS.XDvi    = .:$TEXMF/%s:$VARTEXFONTS/pk/{%m,modeless}//
