@@ -1,15 +1,15 @@
-tex-common (0.35.2) UNRELEASED; urgency=medium
+tex-common (0.36) unstable; urgency=medium
 
   * Depend on debconf (>= 1.4.69), which introduced the error template
     type (closes: #395032).  This broke upgrades, hence the urgency
     [frank] 
-  * fix format extraction regexp in dh_installtex, the format name must
-    now be at the beginning of the line, without any leading whitespace.
-    Thanks Ralf. [preining]
-  * dh_installtex: include only the minimal mktexlsr code in case no other
-    installation is done (ie no maps, formats, languages) [preining]
-  * dh_installtex: add ability to specify texmf trees on cmdline, and only
-    recreate the ls-R DB for /usr/share/texmf and /var/lib/texmf [preining]
+  * Fix format extraction regexp in dh_installtex, the format name must
+    now be at the beginning of the line, without any leading whitespace,
+    but hyphens are allowed in the name.  Thanks Ralf. [preining]
+  * dh_installtex: Include only the minimal mktexlsr code in case no other
+    installation is done (ie no maps, formats, languages).  Also add the
+    ability to specify texmf trees on the command line, and only recreate
+    the ls-R DB for /usr/share/texmf and /var/lib/texmf [preining]
     (Closes: #392359)
   * Add engine-specific paths to the TEXFORMATS and TEXFONTMAPS variables,
     and avoid triple slashes.  This is completely backwards-compatible (it
