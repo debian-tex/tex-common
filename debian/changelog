@@ -1,4 +1,4 @@
-tex-common (0.35.1) UNRELEASED; urgency=medium
+tex-common (0.35.2) UNRELEASED; urgency=medium
 
   * Depend on debconf (>= 1.4.69), which introduced the error template
     type (closes: #395032).  This broke upgrades, hence the urgency

@@ -43,6 +43,7 @@ check_texmf(){
   else
     if ! echo "$line" | egrep -q "$pattern"; then
       variable=${variable%$removepattern}
+      pattern=${pattern//\\/} # remove the slashes that escape the $ signs
       db_subst tex-common/check_texmf_wrong filename $file || true
       db_subst tex-common/check_texmf_wrong variable $variable || true
       db_subst tex-common/check_texmf_wrong pattern $pattern || true

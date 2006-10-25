@@ -7,7 +7,7 @@ _Description: Essential entry missing in ${filename}
  .
  TeX will not work without it, you need to fix your configuration
  files.  The version of ${filename} that is provided by the package
- should be available as ${filename}.dpkg-dist.
+ should be available as ${filename}.ucf-dist.
  .
  Exiting.
 
@@ -21,6 +21,6 @@ _Description: Essential entry wrong in ${filename}
  .
  TeX will not work without it, you need to fix your configuration
  files.  The version of ${filename} that is provided by the package
- should be available as ${filename}.dpkg-dist.
+ should be available as ${filename}.ucf-dist.
  .
  Exiting.
