@@ -1,3 +1,10 @@
+tex-common (0.37) unstable; urgency=low
+
+  * Fix bashism in postinst, thanks to Michael Biebl <biebl@teco.edu>
+    (closes: #395274) [frank]
+
+ -- Frank Küster <frank@debian.org>  Thu, 26 Oct 2006 08:14:29 +0200
+
 tex-common (0.36) unstable; urgency=medium
 
   * Depend on debconf (>= 1.4.69), which introduced the error template
