@@ -1,3 +1,12 @@
+tex-common (0.38~1) unstable; urgency=low
+
+  * Debconf translation updates:
+    - French, thanks to Christian Perrier (closes: #395844) [frank]
+    - All others except the heavily outdated ca.po where unfuzzied by me,
+      even in Japanese I can change "dpkg-dist" to "ucf-dist" [frank]
+
+ -- Frank Küster <frank@debian.org>  Sat, 28 Oct 2006 19:31:44 +0200
+
 tex-common (0.37) unstable; urgency=low
 
   * Fix bashism in postinst, thanks to Michael Biebl <biebl@teco.edu>
