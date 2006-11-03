@@ -9,9 +9,10 @@ tex-common (0.38~1) unstable; urgency=low
     - All others except the heavily outdated ca.po where unfuzzied by me,
       even in Japanese I can change "dpkg-dist" to "ucf-dist" [frank]
   * install update-fontlang and the three links all into /usr/bin
-    and keep symlinks in /usr/sbin for old packages. (Closes: #396822)
+    and keep symlinks in /usr/sbin for old packages. Update the man page
+    of update-fontlang. (Closes: #396822) [preining]
 
- -- Norbert Preining <preining@debian.org>  Fri,  3 Nov 2006 09:02:36 +0100
+ -- Norbert Preining <preining@debian.org>  Fri,  3 Nov 2006 11:00:53 +0100
 
 tex-common (0.37) unstable; urgency=low
 
