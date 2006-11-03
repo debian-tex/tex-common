@@ -410,6 +410,12 @@
           The files <file>texmf.cnf</file>, <file>fmtutil.cnf</file>,
           <file>updmap.cfg</file> and <file>language.dat</file>
         </heading>
+	<p>
+	  In the following we describe ways to configure these files
+	  for the <em>system administrator</em>, i.e. one that has
+	  write access to the <file>/etc/texmf</file> hierachy. In
+	  <ref id="sec-user-config-files"> we describe a per-user
+	  configuration.
         <p>
           These files contain configuration options from teTeX and/or
           TeX Live, possibly from you, and from other TeX-related
@@ -422,22 +428,12 @@
         <p>
 	  <prgn>update-texmf</prgn> is only available for root; if a
 	  user wants to maintain their own <file>texmf.cnf</file>,
-	  they can put it into <var>TEXMFCONFIG</var> and must
+	  they can put it into <tt><var>TEXMFCONFIG</var>/web2c</tt> and must
 	  manually edit it.  Since all <file>texmf.cnf</file> files
 	  are read, with earlier definitions taking precedence over
 	  later ones, it is best to keep only a minimal set of
-	  definitions in the user-specific file.  The other
-	  configuration update programs also work with files
-	  in <tt><var>TEXMFCONFIG</var>/updmap.d</tt>, <tt><var>TEXMFCONFIG</var>/fmt.d</tt>
-	  or <tt><var>TEXMFCONFIG</var>/language.d</tt>, combining
-	  files in these directories with the files in the system-wide
-	  directories &mdash naturally the user-specific ones take
-	  precedence if the names are equal
-	  (see <ref id="sec-user-specific-installation">). Note that
-	  changes to existing files made by packages updates will not
-	  be propagated to the user's files.
-        </p>
-
+	  definitions in the user-specific file.
+	</p>
         <p>
           In order to make updates smooth, you should <em>avoid
           editing</em> system-wide files as far as possible, and
@@ -517,7 +513,10 @@
             overwritten</strong>
             by <prgn>update-fmtutil</prgn>, <prgn>update-language</prgn>
             and
-            <prgn>update-updmap</prgn>, respectively. Only the files in
+            <prgn>update-updmap</prgn>, respectively. Furthermore, there is
+	    no built-in merge mechanism, these files are used on a 
+	    first-found-first-used basis.
+	    Only the files in
             <file>/etc/texmf/updmap.d/</file>, <file>/etc/texmf/fmt.d/</file>
             and <file>/etc/texmf/language.d/</file> will be treated as
             configuration files.
@@ -548,6 +547,39 @@
       
 	  </p>
 	
+         <sect1 id="sec-user-config-files">
+          <heading>
+	    Per user configuration changes
+          </heading>
+	  <p>
+	    To override entries in the system wide configuration file 
+	    <file>texmf.cnf</file>, a user only needs to add lines to 
+	    <tt><var>HOME</var>/.texmf-config/web2c/texmf.cnf</tt>.
+	    Please only add those lines which are absolutely necessary.
+	  </p>
+
+	  <p>
+	    In contrast to the above &mdash; TeX reading and merging all
+	    <file>texmf.cnf</file> files &mdash; the <em>first</em> found occurrence of
+	    one of the files <file>updmap.cfg</file>, <file>language.dat</file>,
+	    <file>fmtutil.cnf</file> are used. Thus, the other
+	    configuration update programs also work with files in
+	    <tt><var>TEXMFCONFIG</var>/updmap.d</tt>, 
+	    <tt><var>TEXMFCONFIG</var>/fmt.d</tt> or
+	    <tt><var>TEXMFCONFIG</var>/language.d</tt>, where
+	    <var>TEXMFCONFIG</var> is usually 
+	    <file><var>HOME</var>/.texmf-config</file>, combining
+	    files in these directories with the files in the system-wide
+	    directories &mdash naturally the user-specific ones take
+	    precedence if the names are equal
+	    (see <ref id="sec-user-specific-installation">)  &mdash and
+	    dropping the respective config file into the user's 
+	    <var>TEXMFCONFIG</var>, effectively overriding the system-wide
+	    config files. Note that
+	    changes to existing files made by packages updates will not
+	    be propagated to the user's files.
+	  </p>
+
       <sect>
 	<heading>Font caching</heading>
 	<p>
