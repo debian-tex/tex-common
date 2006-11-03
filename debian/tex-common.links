@@ -1,0 +1,14 @@
+usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-updmap.1
+usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-fmtutil.1
+usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-language.1
+usr/bin/update-fontlang usr/bin/update-updmap
+usr/bin/update-fontlang usr/bin/update-fmtutil
+usr/bin/update-fontlang usr/bin/update-language
+usr/bin/update-fontlang usr/sbin/update-updmap
+usr/bin/update-fontlang usr/sbin/update-fmtutil
+usr/bin/update-fontlang usr/sbin/update-language
+etc/texmf/texmf.cnf usr/share/texmf/web2c/texmf.cnf
+var/lib/texmf/ls-R-TEXMFMAIN usr/share/texmf/ls-R
+usr/share/doc/texmf usr/share/texmf/doc
+
+
