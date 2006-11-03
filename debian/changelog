@@ -3,13 +3,15 @@ tex-common (0.38~1) unstable; urgency=low
   * Debconf translation updates: [frank]
     - French, thanks to Christian Perrier (closes: #395844)
     - Italian, thanks to Luca Monducci <luca.mo@tiscali.it> (closes:
-      #396101) 
+      #396101)
     - German, thanks to Helge Kreutzmann <debian@helgefjell.de> (closes:
-      #396036) 
+      #396036)
     - All others except the heavily outdated ca.po where unfuzzied by me,
       even in Japanese I can change "dpkg-dist" to "ucf-dist" [frank]
+  * install update-fontlang and the three links all into /usr/bin
+    and keep symlinks in /usr/sbin for old packages. (Closes: #396822)
 
- -- Frank Küster <frank@debian.org>  Mon, 30 Oct 2006 00:51:12 +0100
+ -- Norbert Preining <preining@debian.org>  Fri,  3 Nov 2006 09:02:36 +0100
 
 tex-common (0.37) unstable; urgency=low
 

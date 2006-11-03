@@ -5,8 +5,8 @@
 
 INSTDIR=$(CURDIR)/debian/tex-common
 
-bin_scripts=dh_installtex
-sbin_scripts=update-texmf update-fontlang
+bin_scripts=dh_installtex update-fontlang
+sbin_scripts=update-texmf
 nonbin_scripts=tpm2licenses Tpm.pm FileUtils.pm tetex-bin-upgrade 01tetex.cnf 01tetex.cnf.md5sum debianize-updmap
 
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))
@@ -81,9 +81,13 @@ install: build
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
 	cp $(nonbin_installfiles) $(INSTDIR)/usr/share/tex-common/
-	ln -s update-fontlang $(INSTDIR)/usr/sbin/update-language
-	ln -s update-fontlang $(INSTDIR)/usr/sbin/update-fmtutil
-	ln -s ../sbin/update-fontlang $(INSTDIR)/usr/bin/update-updmap
+	# old location of files
+	ln -s ../bin/update-fontlang $(INSTDIR)/usr/sbin/update-language
+	ln -s ../bin/update-fontlang $(INSTDIR)/usr/sbin/update-fmtutil
+	# all update-* are useful for users, install them to /usr/bin
+	ln -s update-fontlang $(INSTDIR)/usr/bin/update-language
+	ln -s update-fontlang $(INSTDIR)/usr/bin/update-fmtutil
+	ln -s update-fontlang $(INSTDIR)/usr/bin/update-updmap
 
         # debhelper stuff
         # dh_installtex(.1) is already installed via the bin_scripts

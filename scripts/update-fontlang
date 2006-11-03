@@ -1,6 +1,7 @@
 #!/bin/sh -e
 #
-# update-fontlang --- Generate updmap.cfg and language.dat from a set of files
+# update-fontlang --- Generate updmap.cfg, language.dat, fmtutil.cnf
+#                     from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
 # Copyright (C) 2004, 2005, 2006 Florent Rougon
 # Copyright (C) 2005, 2006 Norbert Preining
