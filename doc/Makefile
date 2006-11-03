@@ -18,10 +18,11 @@ Debian-TeX-Policy.pdf: Debian-TeX-Policy.sgml version.ent tex-sed
 tex-on-debian-txt: TeX-on-Debian.sgml
 	debiandoc2text TeX-on-Debian.sgml
 
-tex-on-debian-html: TeX-on-Debian.sgml
-	debiandoc2html TeX-on-Debian.sgml
-
+tex-on-debian-html: TeX-on-Debian.html
 tex-on-debian-pdf: TeX-on-Debian.pdf
+
+TeX-on-Debian.html: TeX-on-Debian.sgml
+	debiandoc2html TeX-on-Debian.sgml
 
 TeX-on-Debian.pdf: TeX-on-Debian.sgml tex-sed
 	debiandoc2latexpdf -s ./tex-sed TeX-on-Debian.sgml
