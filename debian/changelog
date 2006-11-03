@@ -11,8 +11,11 @@ tex-common (0.38~1) unstable; urgency=low
   * install update-fontlang and the three links all into /usr/bin
     and keep symlinks in /usr/sbin for old packages. Update the man page
     of update-fontlang. (Closes: #396822) [preining]
+  * Clear up the description about user-specific configuration in
+    TeX-on-Debian, many thanks to Géraud Meyer <geraud_meyer@hotmail.com>
+    (closes: #396823) [preining,frank]
 
- -- Norbert Preining <preining@debian.org>  Fri,  3 Nov 2006 11:00:53 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  3 Nov 2006 14:14:12 +0100
 
 tex-common (0.37) unstable; urgency=low
 
