@@ -575,6 +575,13 @@
 	    configuration file snippets made by package updates will
 	    not be propagated to the user's files.
 	  </p>
+	  <p>
+	    <prgn>upmap(1)</prgn> provides the same options for
+	    enabling and disabling map files
+	    as <prgn>updmap-sys(8)</prgn>, see
+	    above.  <file>10local.cfg</file> is created or edited
+	    in <tt><var>TEXMFCONFIG</var>/updmap.d</tt>.
+	  </p>
 
       <sect>
 	<heading>Font caching</heading>
