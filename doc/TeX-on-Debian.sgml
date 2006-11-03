@@ -546,11 +546,25 @@
           <p>
 	    <prgn>update-texmf</prgn> is only available for root; if a
 	    user wants to maintain their own <file>texmf.cnf</file>,
-	    they can put it into <tt><var>TEXMFCONFIG</var>/web2c</tt> and must
-	    manually edit it.  Since all <file>texmf.cnf</file> files
-	    are read, with earlier definitions taking precedence over
-	    later ones, it is best to keep only a minimal set of
-	    definitions in the user-specific file.
+	    they can put it into <tt><var>TEXMFCONFIG</var>/web2c</tt>
+	    and must manually edit it.  However, in order for it to be
+	    found, they need to set an environment
+	    variable
+	    <footnote>
+	      The reason for this is that the search
+	      path for <file>texmf.cnf</file>, which is the file that
+	      defines all search paths for later use, naturally cannot
+	      be specified in the file, but is fixed at compile
+	      time.
+	    </footnote>:
+<example>
+export TEXMFCNF=$HOME/.texmf-config/web2c:
+</example>
+            The final colon includes the system wide default.  Since
+	    all <file>texmf.cnf</file> files are read, with earlier
+	    definitions taking precedence over later ones, it is best
+	    to keep only a minimal set of definitions in the
+	    user-specific file.
 	  </p>
 
 	  <p>
