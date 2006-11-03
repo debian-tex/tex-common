@@ -23,9 +23,9 @@ For a more in depth description please see the documentation TeX on Debian in
 
 The programs \fBupdate-language\fP, \fBupdate-updmap\fP, and 
 \fBupdate-fmtutil\fP create/update the configuration files \fIlanguage.dat\fP,
-\fIupdmap.sys\fP, and \fIfmtutil.cnf\fP, respectively. These files defines
+\fIupdmap.cfg\fP, and \fIfmtutil.cnf\fP, respectively. These files define
 the hyphenation patterns to be loaded into LaTeX related TeX formats
-(language.dat), the Outline fonts available for the TeX system (updmap.sys),
+(language.dat), the outline fonts available for the TeX system (updmap.sys),
 and the list of formats to be created (fmtutil.cnf).
 
 These programs can be used either in system wide mode if called by root, or
@@ -61,43 +61,57 @@ output version information and exit
 
 .SH USAGE
 
-In system-wide mode all three programs merge those files with a specific
-extension in the respective configuration directories to produce the final 
-file. These configuration directories and extensions are 
-\fIlanguage.d\fP and \fB.cnf\fP for update-language, 
-\fIupdmap.d\fP and \fB.cfg\fP for update-updmap, and 
-\fIfmt.d\fP and \fB.cnf\fP for update-fmtutil. In system-wide mode these
-directories are searched in \fI/etc/texmf/\fP.
+In system-wide mode all three programs merge those files
+("configuration snippets") with a specific extension in the respective
+configuration directories to produce the final file. These
+configuration directories and extensions are \fIlanguage.d\fP and
+\fB.cnf\fP for update-language, \fIupdmap.d\fP and \fB.cfg\fP for
+update-updmap, and \fIfmt.d\fP and \fB.cnf\fP for update-fmtutil. In
+system-wide mode these directories are searched in \fI/etc/texmf/\fP.
+Both TeX add-on packages and local administrators can add files to
+these directories.
 
-To prevent the inclusion of snippets from these directories in case that
-the providing package has been removed but not purged, only those files
-which are also listed in one of the files in 
+If a package that provides such snippets is removed but not purged,
+including the snippet will likely break the system.  To prevent the
+inclusion in these cases, snippets installed by \fIpackages\fP have to
+contain a magic header, 
+
+# -_- DebPkgProvidedMaps -_-
+
+which local administrators should \fInot\fP remove.  From the files
+with a magic header, only those files which are also listed in one of
+the files in
 .I /var/lib/tex-common/language-cnf/
 for update-language,
 .I /var/lib/tex-common/fontmap-cfg/
 for update-updmap, and
 .I /var/lib/tex-common/fmtutil-cnf/
-for update-fmtutil are actually included into the final output file. This
-way local changes to the configuration can be preserved.
+for update-fmtutil are actually included into the final output
+file. This way local changes to the configuration can be preserved
+while the package is in state `rc'.  For details about that mechanism,
+package maintainers should consult the Debian TeX Policy.
 
-In user-specific mode 
+The user-specific mode provides a way a non-admin user can override
+system-wide settings.  In this mode,
 \fBupdate-language\fP writes to 
 \fITEXMFVAR/tex/generic/config/language.dat\fP,
 \fBupdate-updmap\fP writes to 
 \fITEXMFVAR/web2c/updmap.cfg\fP, and
 \fBupdate-fmtutil\fP writes to
 \fITEXMFVAR/web2c/fmtutil.cnf\fP, where \fITEMXFVAR\fP is normally
-\fI$HOME/.texmf-var/\fP. Furthermore, files present within the user-specific 
-configuration directories 
+\fI$HOME/.texmf-var/\fP. 
+Furthermore, files present within the user-specific configuration
+directories are included in addition to the files present in the
+system-wide configuration directories.  In case the same filename
+exists in the system-wide configuration directory and the
+user-specific configuration directory, the user-specific file is used
+instead of the system-wide one.  These directories are
 \fITEXMFCONFIG/language.d\fP for \fBupdate-language\fP,
 \fITEXMFCONFIG/updmap.d\fP for \fBupdate-updmap\fP,
-\fITEXMFCONFIG/fmt.d\fP for \fBupdate-fmtutil\fP, where \fITEMXFCONFIG\fP
-is normally \fI$HOME/.texmf-config/\fP, are included in addition or instead
-(in case the same filename occurs under the system-wide configuration
-directories and the user-specific configuration directories) to (of) the file
-present in the system-wide configuration directories. This way a non
-admin user can override system-wide settings. Note that changes induces by
-updates of packages are not automatically propagated to the user's files.
+\fITEXMFCONFIG/fmt.d\fP for \fBupdate-fmtutil\fP, where
+\fITEMXFCONFIG\fP is normally \fI$HOME/.texmf-config/\fP.  Note that changes
+introduced by updates of packages are not automatically propagated to the
+user's files.
 
 .SH FILES
 .TP
