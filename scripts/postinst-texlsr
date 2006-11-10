@@ -33,6 +33,7 @@ dhit_update_lsr_files ()
         rm -f $tempfile
         echo "done."
     else
+        exec >&2
         echo
         echo "mktexlsr failed. Output has been stored in"
         echo "$tempfile"

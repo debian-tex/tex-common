@@ -19,6 +19,7 @@ dhitf_update_lsr_files ()
         rm -f $tempfile
 	echo " done."
     else
+        exec >&2
     	echo
 	echo "mktexlsr failed. Output has been stored in"
 	echo "$tempfile"
@@ -36,10 +37,15 @@ dhitf_create_fontmaps ()
     	rm -f $tempfile
 	echo " done."
     else
+        exec >&2
     	echo
 	echo "updmap-sys failed. Output has been stored in"
 	echo "$tempfile"
 	echo "Please include this file if you report a bug."
+	echo
+	echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
+	echo "causes updmap-sys to fail.  Please check for files with extension"
+	echo ".dpkg-dist or .ucf-new in this directory" 
 	echo
 	exit 1
     fi

@@ -1,3 +1,11 @@
+tex-common (0.39~1) unstable; urgency=low
+
+  * changelog editing: fix wrong bugnumber in last upload [frank]
+  * Add a more verbose explanation to the warning when updmap-sys failed
+    (closes: #397717), and echo errors to stderr. [frank]
+
+ -- Frank Küster <frank@debian.org>  Thu,  9 Nov 2006 13:17:21 +0100
+
 tex-common (0.38) unstable; urgency=low
 
   * install update-fontlang and the three links all into /usr/bin
@@ -5,7 +13,7 @@ tex-common (0.38) unstable; urgency=low
     of update-fontlang. (Closes: #396822) [preining]
   * Clear up the description about user-specific configuration in
     TeX-on-Debian, many thanks to Géraud Meyer <geraud_meyer@hotmail.com>
-    (closes: #396823) [preining,frank]
+    (closes: #396826) [preining,frank]
   * Debconf translation updates: [frank]
     - French, thanks to Christian Perrier (closes: #395844)
     - Italian, thanks to Luca Monducci <luca.mo@tiscali.it> (closes:
