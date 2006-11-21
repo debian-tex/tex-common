@@ -74,23 +74,23 @@ Example:
 
         dh_installtex mapfile=foo.cfg formatfile=debian/bar.cnf=42
 
-would install foo.cfg as /etc/texmf/updmap.d/10foo.cfg, and debian/bar.cnf
+would install foo.cfg as /etc/texmf/updmap.d/20foo.cfg, and debian/bar.cnf
 as /etc/texmf/fmt.d/42bar.cnf.
 
 
 2) B<Directly on the cmd line:>
 You can specify maps, formats, and languages on the cmd line. The items
-are stored in the respective config file 10package
+are stored in the respective config file 20package
 
 Example:
 
         dh_installtex map=Map,foo.map language=greek,grphyph4.tex,polygreek
 
-would install a file /etc/texmf/updmap.d/10package.cfg containing the line
+would install a file /etc/texmf/updmap.d/20package.cfg containing the line
 
         Map foo.map
 
-and a file /etc/texmf/language.d/10package.cnf containing the lines
+and a file /etc/texmf/language.d/20package.cnf containing the lines
 
 	greek grphyph4.tex
 	=polygreek
@@ -110,17 +110,17 @@ Example:
         dh_installtex
 
 would install a present debian/package.maps file as
-/etc/texmf/updmap.d/10package.cfg.
+/etc/texmf/updmap.d/20package.cfg.
 
 
 =head2 Mixing the different variants
 
 The command line items (Variant 2) are merged into the debian/package.maps 
 (debian/package.languages, debian/package.formats)
-file and the merged file is installed as 10package.cfg/cnf. If you specify
+file and the merged file is installed as 20package.cfg/cnf. If you specify
 an additional package.cfg/cnf (Variant 1) without a different priority than
 the default one on the cmd line, this will raise an error since both files
-would be installed as 10package.cfg/cnf. You can only specify 
+would be installed as 20package.cfg/cnf. You can only specify 
 package.cfg/cnf without
 a different priority than the default one if no debian/package.maps nor
 any command line Map files are present.
@@ -145,7 +145,7 @@ Do not modify postinst/prerm scripts.
 
 =item B<--priority=>I<n>
 
-Set the default priority to I<n> instead of 10.
+Set the default priority to I<n> instead of 20.
 
 =item B<--flavor=>I<flavor>
 
@@ -188,7 +188,7 @@ init();
 #
 my $flavor;		
 my $mapdoconfig =  0;	# doconfig depending map/subflavor
-my $priority=10;	# priority with which files are installed
+my $priority=20;	# priority with which files are installed
 my $dothefullstuff = 0;
 my %cmdlineargs;
 my %cmdlinefiles;

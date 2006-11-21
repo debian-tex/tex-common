@@ -544,8 +544,14 @@
               <item>
                 <p>
                 It should install one or more configuration files with names
-                following the pattern <tt>10<var>name</var>.cfg</tt> into
-                <file>/etc/texmf/updmap.d/</file>. Such files will be later
+                following the pattern <tt>20<var>name</var>.cfg</tt> into
+                <file>/etc/texmf/updmap.d/</file><footnote> Filenames
+		  starting with <tt>10</tt> are reserved for the basic
+		  TeX packages.  However, sorting order is actually
+		  only relevant for snippets
+		  for <file>texmf.cnf</file>, <file>fmtutil.cnf</file>
+		  and <file>language.dat</file>
+		</footnote>. Such files will be later
                 merged by <prgn>update-updmap</prgn> to form
                 <file>/var/lib/texmf/web2c/updmap.cfg</file>, the effective
                 configuration file for <prgn>updmap-sys</prgn>.
@@ -786,7 +792,9 @@ fi
 	  way to implement the configuration scheme described below is to 
 	  use the <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
 	  provided by <package>tex-common</package>. See 
-	  <manref name="dh_installtex" section="1"> for usage details.
+	  <manref name="dh_installtex" section="1"> for usage
+	  details.  Note that for <file>language.dat</file>, order is
+	  important: english should always be the first language.
 	  </p>
 	  <p>
 	  These packages 
@@ -871,7 +879,11 @@ fi
 	  way to implement the configuration scheme described below is to
 	  use the <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
 	  provided by <package>tex-common</package>. See
-	  <manref name="dh_installtex" section="1"> for usage details.
+	  <manref name="dh_installtex" section="1"> for usage
+	  details.  Note that for <file>fmtutil.cnf</file>, order is
+	  important:  Formats will be created for each line, and thus
+	  format files created from later lines will overwrite earlier
+	  ones. 
 	  </p>
 
 	  <p>

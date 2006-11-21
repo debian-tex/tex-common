@@ -3,8 +3,11 @@ tex-common (0.39~1) unstable; urgency=low
   * changelog editing: fix wrong bugnumber in last upload [frank]
   * Add a more verbose explanation to the warning when updmap-sys failed
     (closes: #397717), and echo errors to stderr. [frank]
+  * Change default priority for dh_installtex to 20, and document in the
+    TeX Policy that 10 is reserved for Basic TeX packages.  This would
+    have avoided bug #399447. [frank]
 
- -- Frank Küster <frank@debian.org>  Thu,  9 Nov 2006 13:17:21 +0100
+ -- Frank Küster <frank@debian.org>  Tue, 21 Nov 2006 18:32:32 +0100
 
 tex-common (0.38) unstable; urgency=low
 
