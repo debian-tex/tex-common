@@ -1,4 +1,4 @@
-tex-common (0.39~1) unstable; urgency=low
+tex-common (0.39) unstable; urgency=low
 
   * changelog editing: fix wrong bugnumber in last upload [frank]
   * Add a more verbose explanation to the warning when updmap-sys failed
