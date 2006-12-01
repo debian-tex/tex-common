@@ -160,16 +160,32 @@
       <heading>File Placement</heading>
       <p>
       This chapter describes the placement of TeX input files, so that
-      they can be found by programs.  Files that are not TeX input
-      files must not be put in a TEXMF tree (put them into
+      they can be found by programs.  Files that are not input files
+      for TeX or related programs must not be put in a TEXMF tree (put
+      them into
       <file>/usr/share/<var>package</var></file> instead).  As an
       exception, documentation files in plain text may be used inside
       a <var>TEXMF</var> tree, e.g. to explain the purpose of an
       otherwise empty directory.
       </p>
       <sect>
-      <heading>Path searching and <package>libkpathsea</package> / <package>libkpse</package></heading>
+      <heading>File searching and <package>libkpathsea</package> / <package>libkpse</package></heading>
 
+        <p>
+        File locations must follow the TeX Directory Structure, TDS.
+        The TDS specification is installed in
+        the <package>texlive-doc-en</package>
+        and <package>tetex-doc</package> packages
+        as <file>tds.dvi</file>, and the latest version of the TDS is
+        available at <tt><url name="http://www.tug.org/twg/tds/"
+        id="http://www.tug.org/twg/tds/"></tt>.  It is a bug if a
+        package only conforms to an outdated TDS version.  It is a
+        more severe bug, however, if it conforms to the current TDS
+        version but does not make sure to depend on an appropriately
+        recent version of the Basic TeX packages or
+        <package>tex-common</package> (that support this TDS version).
+        </p>
+  
         <p>The Basic TeX packages must provide a mechanism for searching
         through <var>TEXMF</var> trees that allows different files to be
         found depending on the invoking program and the specified file
@@ -191,15 +207,6 @@
       <sect>
       <heading>Directory trees</heading>
 
-        <p>
-        File locations must follow the TeX Directory Structure, TDS.  It
-        is a bug if a package only conforms to an outdated TDS version.
-        It is a more severe bug, however, if it conforms to the current
-        TDS version but does not make sure to depend on an appropriately
-        recent version of the Basic TeX packages or
-        <package>tex-common</package> (that support this TDS version).
-        </p>
-  
         <p>
         The following <var>TEXMF</var> trees are defined, as outlined
         below:
