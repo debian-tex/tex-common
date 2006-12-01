@@ -176,8 +176,8 @@
         The TDS specification is installed in
         the <package>texlive-doc-en</package>
         and <package>tetex-doc</package> packages
-        as <file>tds.dvi</file>, and the latest version of the TDS is
-        available at <tt><url name="http://www.tug.org/twg/tds/"
+        as <file>tds.dvi.gz</file>, and the latest version of the TDS
+        is available at <tt><url name="http://www.tug.org/twg/tds/"
         id="http://www.tug.org/twg/tds/"></tt>.  It is a bug if a
         package only conforms to an outdated TDS version.  It is a
         more severe bug, however, if it conforms to the current TDS
