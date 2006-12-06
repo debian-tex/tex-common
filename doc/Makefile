@@ -1,4 +1,5 @@
 DESTDIR = /usr/share/doc/tex-common
+TDS_VERSION = 1.1
 
 CLEANFILES = Debian-TeX-Policy.txt Debian-TeX-Policy.html Debian-TeX-Policy.tpt TeX-on-Debian.txt TeX-on-Debian.html TeX-on-Debian.tpt
 
@@ -27,8 +28,17 @@ TeX-on-Debian.html: TeX-on-Debian.sgml
 TeX-on-Debian.pdf: TeX-on-Debian.sgml tex-sed
 	debiandoc2latexpdf -s ./tex-sed TeX-on-Debian.sgml
 
+get-tds:
+	wget ftp://www.tug.org/tex/tds.tar.gz
+	tar -xzf tds.tar.gz
+	rm tds.tar.gz
 
-install:
+tds-all:
+	cd tds-$(TDS_VERSION); make tds.pdf
+	cd tds-$(TDS_VERSION); make tds.dvi
+	cd tds-$(TDS_VERSION); make tds.html
+
+install: 
 	install -d $(DESTDIR)
 	cp Debian-TeX-Policy.txt $(DESTDIR)/
 	cp Debian-TeX-Policy.pdf $(DESTDIR)/
@@ -36,9 +46,16 @@ install:
 	cp TeX-on-Debian.txt $(DESTDIR)/
 	cp TeX-on-Debian.pdf $(DESTDIR)/
 	cp -R TeX-on-Debian.html $(DESTDIR)/
+	
+	cp tds-$(TDS_VERSION)/tds.pdf $(DESTDIR)/
+	cp tds-$(TDS_VERSION)/tds.dvi $(DESTDIR)/
+	cp tds-$(TDS_VERSION)/tds.html $(DESTDIR)/
 
-clean:
+clean: tds-clean
 	-rm -r $(CLEANFILES)
+
+tds-clean:
+	-rm tds-$(TDS_VERSION)/tds.texi*
 
 allclean: clean
 	-rm  Debian-TeX-Policy.pdf
