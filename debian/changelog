@@ -1,4 +1,4 @@
-tex-common (0.40~1) UNRELEASED; urgency=low
+tex-common (0.40) unstable; urgency=low
 
   * Register TeX-on-Debian and the policy with doc-base
   * Change the wording of Policy to indicate more clearly that everything
