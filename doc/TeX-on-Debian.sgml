@@ -579,7 +579,7 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
 	    In contrast to the above&mdash;TeX reading and merging all
 	    <file>texmf.cnf</file> files&mdash;the <em>first</em> found occurrence of
 	    one of the files <file>updmap.cfg</file>, <file>language.dat</file>,
-	    <file>fmtutil.cnf</file> are used. Thus, when called by a
+	    <file>fmtutil.cnf</file> is used. Thus, when called by a
 	    user, the other configuration update programs also work
 	    with files in
 	    <tt><var>TEXMFCONFIG</var>/updmap.d</tt>, 
