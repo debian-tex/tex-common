@@ -1,0 +1,1834 @@
+% Id: tds.tex,v 1.43 2004/06/23 17:24:42 karl Exp 
+\input texinfo
+@setfilename tds.info
+@settitle A Directory Structure for TeX Files
+
+@set version 1.1
+
+@dircategory TeX
+@direntry
+* TeX Directories: (tds).       A directory structure for TeX files.
+@end direntry
+
+
+@titlepage
+@title A Directory Structure for TeX Files
+@subtitle Version @value{version}
+@author TUG Working Group on a TeX Directory Structure (TWG-TDS)
+
+@page
+@vskip 0pt plus 1filll
+
+Copyright @copyright{} 1994, 1995, 1996, 1997, 1998, 1999, 2003, 2004
+TeX Users Group.
+
+Permission to use, copy, and distribute this document @emph{without
+modification} for any purpose and without fee is hereby granted,
+provided that this notice appears in all copies.  It is provided ``as
+is'' without expressed or implied warranty.
+
+Permission is granted to copy and distribute modified versions of this
+document under the conditions for verbatim copying, provided that the
+modifications are clearly marked and the document is not represented as
+the official one.
+
+This document is available on any CTAN host
+(see Appendix@tie{}@ref{Related references}).
+Please send questions or suggestions by email to
+@email{tds@@tug.org}.  We welcome all comments.   This is version
+@value{version}.
+
+@end titlepage
+
+@ifnottex
+@node Top
+@top A Directory Structure for TeX Files
+
+Copyright @copyright{} 1994, 1995, 1996, 1997, 1998, 1999, 2003, 2004
+TeX Users Group.
+
+Permission to use, copy, and distribute this document @emph{without
+modification} for any purpose and without fee is hereby granted,
+provided that this notice appears in all copies.  It is provided ``as
+is'' without expressed or implied warranty.
+
+Permission is granted to copy and distribute modified versions of this
+document under the conditions for verbatim copying, provided that the
+modifications are clearly marked and the document is not represented as
+the official one.
+
+This document is available on any CTAN host
+(see Appendix@tie{}@ref{Related references}).
+Please send questions or suggestions by email to
+@email{tds@@tug.org}.  We welcome all comments.   This is version
+@value{version}.
+
+@menu
+* Introduction::		
+* General::			
+* Top-level directories::	
+* Summary::			
+* Unspecified pieces::		
+* Implementation issues::	
+* Is there a better way?::	
+* Related references::		
+* Contributors::		
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Introduction
+
+* History::			
+* The role of the TDS::		
+* Conventions::			
+
+General
+
+* Subdirectory searching::	
+* Rooting the tree::		
+* Local additions::		
+* Duplicate filenames::		
+
+Top-level directories
+
+* Macros::			
+* Fonts::			
+* Non-font Metafont files::	
+* MetaPost::			
+* BibTeX::			
+* Scripts::			
+* Documentation::		
+
+Macros
+
+* Extensions::			
+
+Fonts
+
+* Font bitmaps::		
+* Valid font bitmaps::		
+
+Summary
+
+* Documentation tree summary::	
+
+Unspecified pieces
+
+* Portable filenames::		
+
+Implementation issues
+
+* Adoption of the TDS::		
+* More on subdirectory searching::  
+* Example implementation-specific trees::  
+
+Example implementation-specific trees
+
+* AmiWeb2c 2.0::		
+* Public DECUS TeX::		
+* Web2c 7::			
+
+Is there a better way?
+
+* Macro structure::		
+* Font structure::		
+* Documentation structure::	
+
+Font structure
+
+* Font file type location::	
+* Mode and resolution location::  
+* Modeless bitmaps::		
+
+@end detailmenu
+@end menu
+
+@end ifnottex
+
+
+
+@node Introduction
+@chapter Introduction
+
+TeX is a powerful, flexible typesetting system used by many people
+around the world.  It is extremely portable and runs on virtually all
+operating systems.  One unfortunate side effect of TeX's flexibility,
+however, is that there has been no single ``right'' way to install it.
+This has resulted in many sites having different installed arrangements.
+
+The primary purpose of this document is to describe a standard TeX
+Directory Structure (TDS): a directory hierarchy for macros,
+fonts, and the other implementation-independent TeX system files.  As
+a matter of practicality, this document also suggests ways to
+incorporate the rest of the TeX files into a single structure.  The
+TDS has been designed to work on all modern systems.  In
+particular, the Technical Working Group (TWG) believes it is usable
+under MacOS, MS-DOS, OS/2, Unix, VMS, and
+Windows NT@.  We hope that administrators and developers of both
+free and commercial TeX implementations will adopt this standard.
+
+This document is intended both for the TeX system administrator at a
+site and for people preparing TeX distributions---everything from a
+complete runnable system to a single macro or style file. It may also
+help TeX users find their way around systems organized this way.  It
+is not a tutorial: we necessarily assume knowledge of the many parts of
+a working TeX system. If you are unfamiliar with any of the programs
+or file formats we refer to, consult the references in
+Appendix@tie{}@ref{Related references}.
+
+
+@menu
+* History::			
+* The role of the TDS::		
+* Conventions::			
+@end menu
+
+@node History
+@section History
+
+Version 1.0 of the TDS was released in February 2003.
+
+Version 1.1 was released in June 2004, with the following non-editorial
+changes:
+
+@itemize @bullet
+@item Inputs for TeX extensions included under @file{tex}, instead
+      of in their own top-level directories (Section@tie{}@ref{Extensions})
+@item New top-level directory @file{scripts} (Section@tie{}@ref{Scripts}).
+@item New subdirectories @file{lig}, @file{opentype},
+      @file{truetype}, and @file{type3} under @file{fonts}
+      (Section@tie{}@ref{Fonts}).
+@item @samp{enc},
+@file{lig}, and @file{map} all use
+      @file{@var{syntax}/@var{package}} subdirectories
+      (Section@tie{}@ref{Fonts}).
+@item @samp{pfm} files specified to go under @file{type1},
+and
+      @file{inf} files under @file{afm} (Section@tie{}@ref{Fonts}).
+@end itemize
+
+
+@node The role of the TDS
+@section The role of the TDS
+
+The role of the TDS is to stabilize the organization of
+TeX-related software packages that are installed and in use, possibly
+on multiple platforms simultaneously.
+
+At first glance, it may seem that the Comprehensive TeX Archive
+Network (CTAN) fulfills at least part of this role, but this is
+not the case.  The role of CTAN is to simplify archiving and
+distribution, not installation and use.
+
+In fact, the roles of the TDS and CTAN are frequently in
+conflict, as we will see.  For distribution, many different types of
+files must be combined into a single unit; for use, it is traditional to
+segregate files (even similar files) from a single package into
+separate, occasionally distant, directories.
+
+
+@node Conventions
+@section Conventions
+
+In this document, @file{/} is used to separate filename components;
+for example, @file{texmf/fonts}.  This is the Unix convention but the
+ideas are in no way Unix-specific.
+
+In this document, ``TeX'' generally means the TeX system, including
+Metafont, DVI drivers, utilities, etc., not just the TeX
+program itself.
+
+The word ``package'' in this document has its usual meaning: a set of
+related files distributed, installed, and maintained as a unit.  This is
+@emph{not} a LaTeX2e package, which is a style file supplementing
+a document class.
+
+We use the following typographic conventions:
+
+@itemize @bullet
+
+@item @samp{literal}
+Literal text such as @file{filename} is
+typeset in typewriter type.
+
+@item @samp{@var{replaceable}}
+Replaceable text such as
+@file{@var{package}}, identifying a class of things, is typeset in
+italics inside angle brackets.
+
+@end itemize
+
+
+@node General
+@chapter General
+
+This section describes common properties throughout the TDS tree.
+
+@menu
+* Subdirectory searching::	
+* Rooting the tree::		
+* Local additions::		
+* Duplicate filenames::		
+@end menu
+
+@node Subdirectory searching
+@section Subdirectory searching
+
+Older TeX installations store large numbers of related files in single
+directories, for example, all @file{TFM} files and/or all TeX
+input files.
+
+This monolithic arrangement hinders maintenance of a TeX system: it
+is difficult to determine what files are used by what packages, what
+files need to be updated when a new version is installed, or what files
+should be deleted if a package is removed.  It is also a source of error
+if two or more packages happen to have input files with the same name.
+
+Therefore, the TWG felt each package should be in a separate
+directory. But we recognized that explicitly listing all directories to
+be searched would be unbearable.  A site may wish to install dozens of
+packages.  Aside from anything else, listing that many directories would
+produce search paths many thousands of characters long, overflowing the
+available space on some systems.
+
+Also, if all directories are explicitly listed, installing or removing a
+new package would mean changing a path as well as installing or removing
+the actual files.  This would be a time-consuming and error-prone
+operation, even with implementations that provide some way to specify
+the directories to search at runtime.  On systems without runtime
+configuration, it would require recompiling software, an intolerable
+burden.
+
+As a result, the TWG concluded that a comprehensive TDS
+requires implementations to support some form of implicit subdirectory
+searching.  More precisely, implementations must make it possible to
+specify that TeX, Metafont, and their companion utilities search in both
+a specified directory and recursively through all subdirectories of that
+directory when looking for an input file.  Other forms of subdirectory
+searching, for example recursive-to-one-level searches, may also be
+provided.  We encourage implementors to provide subdirectory searching
+at the option of the installer and user for all paths.
+
+The TDS does not specify a syntax for specifying recursive
+searching, but we encourage implementors to provide interoperability
+(see Section@tie{}@ref{More on subdirectory searching}).
+
+
+@node Rooting the tree
+@section Rooting the tree
+
+In this document, we shall designate the root TDS directory by
+@file{texmf} (for ``TeX and Metafont''). We recommend using that name
+where possible, but the actual name of the directory is up to the
+installer. On PC networks, for example, this could map to a
+logical drive specification such as @file{T:}.
+
+Similarly, the location of this directory on the system is
+site-dependent.  It may be at the root of the file system; on Unix
+systems, @file{/usr/local/share}, @file{/usr/local},
+@file{/usr/local/lib}, and @file{/opt} are common choices.
+
+The name @file{texmf} was chosen for several reasons: it reflects the fact
+that the directory contains files pertaining to an entire TeX system
+(including Metafont, MetaPost, BibTeX, etc.), not just TeX itself; and it
+is descriptive of a generic installation rather than a particular
+implementation.
+
+A site may choose to have more than one TDS hierarchy installed
+(for example, when installing an upgrade). This is perfectly legitimate.
+
+
+@node Local additions
+@section Local additions
+
+The TDS cannot specify precisely when a package is or is not a
+``local addition''. Each site must determine this according to its own
+conventions.  At the two extremes, one site might wish to consider
+``nonlocal'' all files not acquired as part of the installed TeX
+distribution; another site might consider ``local'' only those files
+that were actually developed at the local site and not distributed
+elsewhere.
+
+We recognize two common methods for local additions to a distributed
+@file{texmf} tree. Both have their place; in fact, some sites employ
+both simultaneously:
+
+@enumerate
+
+@item A completely separate tree which is a TDS structure
+itself; for example, @file{/usr/local/umbtex} at the University of
+Massachusetts at Boston. This is another example of the multiple
+@file{texmf} hierarchies mentioned in the previous section.
+
+@item A directory named @file{local} at any appropriate level, for
+example, in the @file{@var{format}}, @file{@var{package}}, and
+@file{@var{supplier}} directories discussed in the following sections.
+The TDS reserves the directory name @file{local} for this
+purpose.
+
+We recommend using @file{local} for site-adapted configuration files,
+such as @file{language.dat} for the Babel package or @file{graphics.cfg}
+for the graphics package.  Unmodified configuration files from a package
+should remain in the package directory. The intent is to separate
+locally modified or created files from distribution files, to ease
+installing new releases.
+
+@end enumerate
+
+One common case of local additions is dynamically generated files, e.g.,
+PK fonts by the @file{mktexpk} script (which originated in
+Dvips as @file{MakeTeXPK}).  A site may store the
+generated files directly in any of:
+@itemize @bullet
+@item their standard location in the main TDS tree (if it can be
+made globally writable);
+
+@item an alternative location in the main TDS tree (for
+example, under @file{texmf/fonts/tmp});
+
+@item a second complete TDS tree (as outlined above);
+
+@item any other convenient directory (perhaps under
+@file{/var}, for example @file{/var/spool/fonts}).
+
+@end itemize
+
+No one solution will be appropriate for all sites.
+
+
+@node Duplicate filenames
+@section Duplicate filenames
+
+Different files by the same name may exist in a TDS tree. The
+TDS generally leaves unspecified which of two files by the same
+name in a search path will be found, so generally the only way to
+reliably find a given file is for it to have a unique name.  However,
+the TDS requires implementations to support the following
+exceptions:
+
+@itemize @bullet
+
+@item Names of TeX input files must be unique within each first-level
+subdirectory of @file{texmf/tex} and @file{texmf/tex/generic}, but not
+within all of @file{texmf/tex}; i.e., different TeX formats may have
+files by the same name. (Section@tie{}@ref{Macros} discusses this
+further.)  Thus, no single format-independent path specification, such
+as a recursive search beginning at @file{texmf/tex} specifying no other
+directories, suffices.  So implementations must provide format-dependent
+path specifications, for example via wrapper scripts or configuration
+files.
+
+@item Many font files will have the same name (e.g., @file{cmr10.pk}),
+as discussed in Section@tie{}@ref{Valid font bitmaps}.  Implementations
+must distinguish these files by mode and resolution.
+
+@end itemize
+
+All implementations we know of already have these capabilities.
+
+One place where duplicate names are likely to occur is not an exception:
+
+@itemize @bullet
+
+@item Names of Metafont input files (as opposed to bitmaps) must be unique
+within all of @file{texmf/fonts}. In practice, this is a problem with
+some variants of Computer Modern which contain slightly modified files
+named @file{punct.mf}, @file{romanl.mf}, and so on. We believe the only
+feasible solution is to rename the derivative files to be
+unique.
+
+@end itemize
+
+
+@node Top-level directories
+@chapter Top-level directories
+
+The directories under the @file{texmf} root identify the major components of
+a TeX system (see Section@tie{}@ref{Summary} for a summary).  A site
+may omit any unneeded directories.
+
+Although the TDS by its nature can specify precise locations only
+for implementation-independent files, we recognize that installers may
+well wish to place other files under @file{texmf} to simplify administration
+of the TeX tree, especially if it is maintained by someone other than
+the system administrator.  Therefore, additional top-level directories
+may be present.
+
+The top-level directories specified by the TDS are:
+
+@itemize @bullet
+@item @samp{tex}
+for TeX files (Section@tie{}@ref{Macros}).
+
+@item @samp{fonts}
+for font-related files (Section@tie{}@ref{Fonts}).
+
+@item @samp{metafont}
+for Metafont files which are not fonts (Section@tie{}@ref{Non-font Metafont files}).
+
+@item @samp{metapost}
+for MetaPost files (Section@tie{}@ref{MetaPost}).
+
+@item @samp{bibtex}
+for BibTeX files (Section@tie{}@ref{BibTeX}).
+
+@item @samp{scripts}
+for platform-independent executables (Section@tie{}@ref{Scripts}).
+
+@item @samp{doc}
+for user documentation (Section@tie{}@ref{Documentation}).
+
+@item @samp{source}
+for sources.  This includes both traditional
+program sources (for example, Web2C sources go in
+@file{texmf/source/web2c}) and, e.g., LaTeX @file{dtx} sources (which
+go in @file{texmf/source/latex}). The TDS leaves unspecified any
+structure under @file{source}.
+
+@file{source} is intended for files which are not needed at runtime by
+any TeX program; it should not be included in any search path. For
+example, @file{plain.tex} does not belong under @file{texmf/source},
+even though it is a ``source file'' in the sense of not being derived
+from another file. (It goes in @file{texmf/tex/plain/base}, as explained
+in Section@tie{}@ref{Macros}).
+
+@item @samp{@var{implementation}}
+for implementations (examples:
+@file{emtex}, @file{vtex}, @file{web2c}), to be used for whatever
+purpose deemed suitable by the implementor or TeX administrator.
+That is, files that cannot be shared between implementations, such as
+pool files (@file{tex.pool}) and memory dump files (@file{plain.fmt}) go
+here, in addition to implementation-wide configuration files.  See
+Section@tie{}@ref{Example implementation-specific trees} for examples of
+real @file{@var{implementation}} trees.
+
+Such implementation-specific configuration files should @emph{not}
+be located using the main TeX input search path (e.g.,
+@file{TEXINPUTS}).  This must be reserved for files actually read by a
+TeX engine.  See Section@tie{}@ref{Extensions}.
+
+@item @samp{@var{program}}
+for program-specific input and
+configuration files for any TeX-related programs (examples:
+@file{mft}, @file{dvips}).  In fact, the @file{tex}, @file{metafont},
+@file{metapost}, and @file{bibtex} items above may all be seen as
+instances of this case.
+
+@end itemize
+
+
+@menu
+* Macros::			
+* Fonts::			
+* Non-font Metafont files::	
+* MetaPost::			
+* BibTeX::			
+* Scripts::			
+* Documentation::		
+@end menu
+
+@node Macros
+@section Macros
+
+TeX macro files shall be stored in separate directories, segregated
+by TeX format and package name (we use `format' in its traditional
+TeX sense to mean a usefully @file{\dump}-able package):
+@example
+texmf/tex/@var{format}/@var{package}/
+@end example
+
+@itemize @bullet
+
+@item @samp{@var{format}}
+is a format name (examples: @file{amstex},
+@file{latex}, @file{plain}, @file{texinfo}).
+
+The TDS allows distributions that can be used as either formats or
+packages (e.g., Texinfo, Eplain) to be stored at either level, at the
+option of the format author or TeX administrator. We recommend that
+packages used as formats at a particular site be stored at the
+@file{@var{format}} level: by adjusting the TeX inputs search path,
+it will be straightforward to use them as macro packages under another
+format, whereas placing them in another tree completely obscures their
+use as a format.
+
+The TDS reserves the following @file{@var{format}} names:
+
+@itemize @bullet
+
+@item @samp{generic},
+for input files that are useful across a wide
+range of formats (examples: @file{null.tex}, @file{path.sty}).
+Generally, this means any format that uses the category codes of Plain
+TeX and does not rely on any particular format.  This is in contrast
+to those files which are useful only with Plain TeX (which go under
+@file{texmf/tex/plain}), e.g., @file{testfont.tex} and @file{plain.tex}
+itself.
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local
+additions}.
+
+@end itemize
+
+Thus, for almost every format, it is necessary to search at least the
+@file{@var{format}} directory and then the @file{generic} directory (in
+that order).  Other directories may need to be searched as well,
+depending on the format.  When using AMS-TeX, for example, the
+@file{amstex}, @file{plain}, and @file{generic} directories should be
+searched, because AMS-TeX is compatible with Plain.
+
+@item @samp{@var{package}}
+is a TeX package name (examples:
+@file{babel}, @file{texdraw}).
+
+In the case where a format consists of only a single file and has no
+auxiliary packages, that file can simply be placed in the
+@file{@var{format}} directory, instead of
+@file{@var{format}/base}.  For example, Texinfo may go in
+@file{texmf/tex/texinfo/texinfo.tex}, not
+@file{texmf/tex/texinfo/base/texinfo.tex}.
+
+The TDS reserves the following @file{@var{package}} names:
+
+@itemize @bullet
+
+@item @samp{base},
+for the base distribution of each format,
+including files used by INITEX when dumping format files.  For
+example, in the standard LaTeX distribution, the @file{ltx} files
+created during the build process.  Another example: the @file{.ini}
+driver files for formats used by TeX Live and other distributions.
+
+@item @samp{hyphen},
+for hyphenation patterns, including the original
+American English @file{hyphen.tex}.  These are typically used only by
+INITEX.  In most situations, this directory need exist only under the
+@file{generic} format.
+
+@item @samp{images},
+for image input files, such as Encapsulated
+PostScript figures. Although it is somewhat non-intuitive for these to
+be under a directory named @file{tex}, TeX needs to read these
+files to glean bounding box or other information.  A mechanism for
+sharing image inputs between TeX and other typesetting programs
+(e.g., Interleaf, FrameMaker) is beyond the scope of the
+TDS@. In most situations, this directory need exist only under
+the @file{generic} format.
+
+@item @samp{local},
+for local additions and configuration files. See
+Section@tie{}@ref{Local additions}.
+
+@item @samp{misc},
+for packages that consist of a single file.  An
+administrator or package maintainer may create directories for
+single-file packages at their discretion, instead of using @file{misc}.
+
+@end itemize
+
+@end itemize
+
+
+@menu
+* Extensions::			
+@end menu
+
+@node Extensions
+@subsection Extensions
+
+TeX has spawned many companion and successor programs (``engines''),
+such as PDFTeX, Omega, and others.  The TDS specifies
+that the input files for such programs (using a TeX-like syntax) be
+placed within the top-level @file{tex} directory, either at the top
+level or within a format subdirectory, even though the original TeX
+program may not be able to read them.  For example:
+
+@example
+texmf/tex/aleph
+texmf/tex/enctex
+@end example
+
+This is a change from TDS@tie{}1.0, which specified top-level
+@file{@var{extension}} directories for each such program.  We felt the
+new approach is preferable, because:
+
+@itemize @bullet
+
+@item Authors of relevant packages typically make their code detect the
+engine being used, and issue error messages or adapt to circumstances
+appropriately.  Furthermore, as a package matures, it may support
+multiple engines.  Thus, a package could conceivably be placed in any of
+several top-level directories, at different times.  Putting all packages
+under the top-level @file{tex} directory provides a stable location over
+time.
+
+@item Users need to be able to switch between engines, and configuring
+different search paths for each engine is difficult and error-prone.
+
+@end itemize
+
+Thus, in practice, having different top-level directories caused
+difficulties for everyone involved---users, package authors, site
+administrators, and system distributors.
+
+Please contrast this approach with the @file{@var{implementation}}
+top-level subdirectory (Section@tie{}@ref{Top-level directories}), which
+is to be used for configuration files that (presumably) do not use
+TeX syntax and in any case should not be found along the main TeX
+input search path.
+
+
+@node Fonts
+@section Fonts
+
+Font files are stored in separate directories, segregated by file type,
+and then (in most cases) font supplier and typeface.  PK and
+GF files need additional structure, as detailed in the next
+section.
+
+@example
+texmf/fonts/@var{type}/@var{supplier}/@var{typeface}/
+texmf/fonts/enc,lig,map/@var{subpath}/
+@end example
+
+@itemize @bullet
+
+@item @samp{@var{type}}
+is the type of font file. The TDS
+reserves the following @file{@var{type}} names for common TeX file
+types:
+
+@itemize @bullet
+@item @samp{afm},
+for Adobe font metrics, and @file{inf} files.
+@item @samp{gf},
+for generic font bitmap files.
+@item @samp{opentype},
+for OpenType fonts.
+@item @samp{pk},
+for packed bitmap files.
+@item @samp{source},
+for font sources (Metafont files, property lists, etc.).
+@item @samp{tfm},
+for TeX font metric files.
+@item @samp{truetype},
+for TrueType fonts.
+@item @samp{type1},
+for PostScript Type 1 fonts (in @file{pfa},
+      @file{pfb}, or any other format), and @file{pfm} files. 
+@item @samp{type3},
+for PostScript Type 3 fonts.
+@item @samp{vf},
+for virtual fonts.
+@end itemize
+
+The TDS also reserves the names @file{enc}, @file{lig}, and
+@file{map} for font encoding, ligature, and mapping files, respectively.
+All of these directories are structured the same way, with
+@file{@var{syntax}} subdirectories, and then @file{@var{package}}
+subsubdirectories.  Each of these file types is intended to be searched
+along its own recursively-searched path.  The names of the actual files
+must be unique within their subtree, as usual.  Examples:
+@example
+fonts/map/dvipdfm/updmap/dvipdfm.map  
+fonts/map/dvips/lm/lm.map
+fonts/enc/dvips/base/8r.enc
+@end example
+
+The Fontname and Dvips packages have more examples of the @file{enc} and
+@file{map} types.  The @file{afm2pl} program uses @file{lig} files.  
+
+@file{pfm} files are included in the @file{type1} directory, instead of
+being given their own directory, for two reasons: 1)@tie{}a @file{.pfm} file
+is always an adjunct to a given @file{.pfb} file; 2)@tie{}they must be
+installed from the same directory for Windows programs other than TeX
+to use them.
+
+@file{inf} files are included in the @file{afm} directory, since
+an @file{inf} and @file{afm} file can be used to generate a @file{pfm}.
+(Unfortunately, Adobe Type Manager and perhaps other software requires
+that the @file{pfb} be in the same directory as @file{afm} and
+@file{inf} for installation.)
+
+As usual, a site may omit any of these directories that are unnecessary.
+@file{gf} is a particularly likely candidate for omission.
+
+@item @samp{@var{supplier}}
+is a name identifying font source
+(examples: @file{adobe}, @file{ams}, @file{public}). The TDS
+reserves the following @file{@var{supplier}} names:
+
+@itemize @bullet
+
+@item @samp{ams},
+for the American Mathematical Society's AMS-fonts
+collection.
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local additions}.
+
+@item @samp{public},
+for freely redistributable fonts where the supplier
+neither (1)@tie{}requested their own directory (e.g., @file{ams}), nor
+(2)@tie{}also made proprietary fonts (e.g., @file{adobe}).  It does not
+contain all extant freely distributable fonts, nor are all files therein
+necessarily strictly public domain.
+
+@item @samp{tmp},
+for dynamically-generated fonts, as is traditional on
+some systems. It may be omitted if unnecessary, as usual.
+
+@end itemize
+
+
+@item @samp{@var{typeface}}
+is the name of a typeface family
+(examples: @file{cm}, @file{euler}, @file{times}). The TDS
+reserves the following @file{@var{typeface}} names:
+
+@itemize @bullet
+
+@item @samp{cm} (within @file{public}),
+for the 75 fonts defined in
+@cite{Computers and Typesetting, Volume@tie{}E}.
+
+@item @samp{latex} (within @file{public}),
+for those fonts distributed
+with LaTeX in the base distribution.
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local additions}.
+
+@end itemize
+
+@end itemize
+
+Some concrete examples:
+@example
+texmf/fonts/source/public/pandora/pnr10.mf
+texmf/fonts/tfm/public/cm/cmr10.tfm
+texmf/fonts/type1/adobe/utopia/putr.pfa
+@end example
+
+For complete supplier and typeface name lists, consult
+@cite{Filenames for TeX fonts} (see Appendix@tie{}@ref{Related
+references}).
+
+@menu
+* Font bitmaps::		
+* Valid font bitmaps::		
+@end menu
+
+@node Font bitmaps
+@subsection Font bitmaps
+
+Font bitmap files require two characteristics in addition to the above
+to be uniquely identifiable: (1)@tie{}the type of device (i.e., mode) for
+which the font was created; (2)@tie{}the resolution of the bitmap.
+
+Following common practice, the TDS segregates fonts with
+different device types into separate directories.  See @file{modes.mf}
+in Appendix@tie{}@ref{Related references} for recommended mode names.
+
+Some printers operate at more than one resolution (e.g., at 300@dmn{dpi} and
+600@dmn{dpi}), but each such resolution will necessarily have a different
+mode name. Nothing further is needed, since implicit in the TeX
+system is the assumption of a single target resolution.
+
+Two naming strategies are commonly used to identify the resolution of
+bitmap font files.  On systems that allow long filenames (and in the
+original Metafont program itself), the resolution is included in the
+filename (e.g., @file{cmr10.300pk}).  On systems which do not support
+long filenames, fonts are generally segregated into directories by
+resolution (e.g., @file{dpi300/cmr10.pk}).
+
+Because the TDS cannot require long filenames, we must use the
+latter scheme for naming fonts. So we have two more subdirectory
+levels under @file{pk} and @file{gf}:
+
+@example
+texmf/fonts/pk/@var{mode}/@var{supplier}/@var{typeface}/dpi@var{nnn}/
+texmf/fonts/gf/@var{mode}/@var{supplier}/@var{typeface}/dpi@var{nnn}/
+@end example
+
+@itemize @bullet
+
+@item @samp{@var{mode}}
+is a name which identifies the device type
+(examples: @file{cx}, @file{ljfour}, @file{modeless}).  Usually, this is
+the name of the Metafont mode used to build the PK file.  For fonts
+rendered as bitmaps by a program that does not distinguish between
+different output devices, the @file{@var{mode}} name shall be simply
+@file{modeless}.  The @file{@var{mode}} level shall not be omitted,
+even if only a single mode happens to be in use.
+
+@item @samp{dpi@var{nnn}}
+specifies the resolution of the font
+(examples: @file{dpi300}, @file{dpi329}).  @file{dpi} stands for
+dots per inch, i.e., pixels per inch. We recognize that pixels per
+millimeter is used in many parts of the world, but dpi is too
+traditional in the TeX world to consider changing now.
+
+The integer @file{@var{nnn}} is to be calculated as if using Metafont
+arithmetic and then rounded; i.e., it is the integer Metafont uses in its
+output @file{gf} filename.  We recognize small differences in the
+resolution are a common cause of frustration among users, however, and
+recommend implementors follow the level@tie{}0 DVI driver standard
+(see Appendix@tie{}@ref{Related references}) in bitmap font searches by
+allowing a fuzz of +-0.2% (with a minimum of 1) in the
+@file{@var{dpi}}.
+
+@end itemize
+
+Implementations may provide extensions to the basic naming scheme, such
+as long filenames (as in the original Metafont) and font library files (as
+in emTeX's @file{.fli} files), provided that the basic scheme is also
+supported.
+
+@node Valid font bitmaps
+@subsection Valid font bitmaps
+
+The TWG recognizes that the use of short filenames has many
+disadvantages.  The most vexing is that it results in the creation of
+dozens of different files with the same name.  At a typical site,
+@file{cmr10.pk} will be the filename for Computer Modern Roman 10@dmn{pt} at
+5--10 magnifications for 2--3 modes. (Section@tie{}@ref{Duplicate
+filenames} discusses duplicate filenames in general.)
+
+To minimize this problem, we strongly recommend that PK files
+contain enough information to identify precisely how they were created:
+at least the mode, base resolution, and magnification used to create the
+font.
+
+This information is easy to supply: a simple addition to the local modes
+used for building the fonts with Metafont will automatically provide the
+required information.  If you have been using a local modes file derived
+from (or that is simply) @file{modes.mf} (see Appendix@tie{}@ref{Related
+references}), the required information is already in your PK
+files.  If not, a simple addition based on the code found in
+@file{modes.mf} can be made to your local modes file and the PK
+files rebuilt.
+
+
+@node Non-font Metafont files
+@section Non-font Metafont files
+
+Most Metafont input files are font programs or parts of font programs and
+are thus covered by the previous section. However, a few non-font input
+files do exist. Such files shall be stored in:
+
+@example
+texmf/metafont/@var{package}/
+@end example
+
+@file{@var{package}} is the name of a
+Metafont package (for example, @file{mfpic}).
+
+The TDS reserves the following @file{@var{package}} names:
+
+@itemize @bullet
+
+@item @samp{base},
+for the standard Metafont macro files as described in
+@cite{The Metafontbook}, such as @file{plain.mf} and @file{expr.mf}.
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local additions}.
+
+@item @samp{misc},
+for Metafont packages consisting of only a single file
+(for example, @file{modes.mf}).  An administrator or package maintainer
+may create directories for single-file packages at their discretion,
+instead of using @file{misc}.
+
+@end itemize
+
+
+@node MetaPost
+@section MetaPost
+
+MetaPost is a picture-drawing language developed by John Hobby, derived
+from Knuth's Metafont. Its primary purpose is to output Encapsulated PostScript
+instead of bitmaps.
+
+MetaPost input files and the support files for MetaPost-related utilities
+shall be stored in:
+
+@example
+texmf/metapost/@var{package}/
+@end example
+
+@file{@var{package}} is the name of a MetaPost package.  At the present
+writing none exist, but the TWG thought it prudent to leave room
+for contributed packages that might be written in the future.
+
+The TDS reserves the following @file{@var{package}} names:
+
+@itemize @bullet
+
+@item @samp{base},
+for the standard MetaPost macro files, such as
+@file{plain.mp}, @file{mfplain.mp}, @file{boxes.mp}, and
+@file{graph.mp}.  This includes files used by INIMP when dumping mem
+files containing preloaded macro definitions.
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local
+additions}.
+
+@item @samp{misc},
+for MetaPost packages consisting of only a single file.
+An administrator or package maintainer may create directories for
+single-file packages at their discretion, instead of using @file{misc}.
+
+@item @samp{support},
+for additional input files required by MetaPost
+utility programs, including a font map, a character adjustment table,
+and a subdirectory containing low-level MetaPost programs for rendering
+some special characters.
+
+@end itemize
+
+
+@node BibTeX
+@section BibTeX
+
+BibTeX-related files shall be stored in:
+
+@example
+texmf/bibtex/bib/@var{package}/
+texmf/bibtex/bst/@var{package}/
+@end example
+
+The @file{bib} directory is for BibTeX database (@file{.bib}) files,
+the @file{bst} directory for style (@file{.bst}) files.
+
+@file{@var{package}} is the name of a BibTeX package.  The
+TDS reserves the following @file{@var{package}} names (the same
+names are reserved under both @file{bib} and @file{bst}):
+
+@itemize @bullet
+
+@item @samp{base},
+for the standard BibTeX databases and styles, such
+as @file{xampl.bib}, @file{plain.bst}.
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local
+additions}.
+
+@item @samp{misc},
+for BibTeX packages consisting of only a single
+file.  An administrator or package maintainer may create directories for
+single-file packages at their discretion, instead of using @file{misc}.
+
+@end itemize
+
+
+@node Scripts
+@section Scripts
+
+The top-level @file{scripts} directory is for platform-independent
+executables, such as Perl, Python, and shell scripts, and Java class
+files.  Subdirectories under @file{scripts} are package names.  This
+eases creating distributions, by providing a common place for such
+platform-independent programs.
+
+The intent is not for all such directories to be added to a user's
+command search path, which would be quite impractical.  Rather, these
+executables are primarily for the benefit of wrapper scripts in whatever
+executable directory a distribution may provide (which is not specified
+by the TDS).  
+
+Truly auxiliary scripts which are invoked directly by other programs,
+rather than wrapper scripts, may also be placed here.  That is,
+@file{scripts} also serves as a platform-independent analog of the
+standard Unix @file{libexec} directory.
+
+We recommend using extensions specifying the language (such as
+@file{.pl}, @file{.py}, @file{.sh}) on these files, to help uniquely
+identify the name.  Since the intent of the TDS is for programs
+in @file{scripts} not to be invoked directly by users, this poses no
+inconvenience.
+
+For example, in the TeX Live distribution, the ConTeXt user-level
+program @file{texexec} can exist as a small wrapper script in each
+@file{bin/@var{platform}/texexec} (which is outside the
+@file{texmf} tree), which merely finds and calls
+@file{texmf/scripts/context/perl/texexec.pl}.
+
+Examples:
+@example
+scripts/context/perl/texexec.pl
+scripts/context/ruby/examplex.rb
+scripts/thumbpdf/thumbpdf.pl
+@end example
+
+The TDS does not specify a location for platform-dependent
+binary executables, whether auxiliary or user-level.
+
+
+@node Documentation
+@section Documentation
+
+Most packages come with some form of documentation: user manuals,
+example files, programming guides, etc.  In addition, many independent
+files not part of any macro or other package have been created to
+describe various aspects of the TeX system.
+
+The TDS specifies that these additional documentation files shall
+be stored in a structure that parallels to some extent the
+@file{fonts} and @file{tex} directories, as follows:
+
+@example
+texmf/doc/@var{category}/...
+@end example
+
+@file{@var{category}} identifies the general topic of documentation
+that resides below it; for example, a TeX format name (@file{latex}),
+program name (@file{bibtex}, @file{tex}), language (@file{french},
+@file{german}), a file format (@file{info}, @file{man}), or other system
+components (@file{web}, @file{fonts}).
+
+One possible arrangement is to organize @file{doc} by language, with all
+the other category types below that.  This helps users find
+documentation in the language(s) in which they are fluent.  Neither this
+nor any other particular arrangement is required, however.
+
+Within each @file{@var{category}} tree for a TeX format, the
+directory @file{base} is reserved for base documentation distributed by
+the format's maintainers.
+
+The TDS reserves the following category names:
+
+@itemize @bullet
+
+@item @samp{general},
+for standalone documents not specific to any
+particular program (for example, Joachim Schrod's @cite{Components
+of TeX}).
+
+@item @samp{help},
+for meta-information, such as FAQ's, 
+the TeX Catalogue, etc.
+
+@item @samp{info},
+for processed Texinfo documents.  (Info files, like
+anything else, may also be stored outside the TDS, at the
+installer's option.)
+
+@item @samp{local},
+for local additions. See Section@tie{}@ref{Local
+additions}.
+
+@end itemize
+
+The @file{doc} directory is intended for implementation-independent and
+operating system-independent documentation
+files. Implementation-dependent files are best stored elsewhere, as
+provided for by the implementation and/or TeX administrator (for
+example, VMS help files under @file{texmf/vms/help}).
+
+The documentation directories may contain TeX sources, DVI
+files, PostScript files, text files, example input files, or any other useful
+documentation format(s).
+
+See Section@tie{}@ref{Documentation tree summary} for a summary.
+
+
+@node Summary
+@chapter Summary
+
+A skeleton of a TDS @file{texmf} directory tree.  This is not to
+imply these are the only entries allowed.  For example, @file{local} may
+occur at any level.
+
+@example
+  bibtex/           BibTeX input files
+  . bib/            BibTeX databases
+  . . base/         base distribution (e.g., @file{xampl.bib})
+  . . misc/         single-file databases
+  . <package>/      name of a package
+  . bst/            BibTeX style files
+  . . base/         base distribution (e.g., @file{plain.bst}, @file{acm.bst})
+  . . misc/         single-file styles
+  . <package>/      name of a package
+  doc/              see Section@tie{}@ref{Documentation} and the summary below
+  fonts/            font-related files
+  . <type>/         file type (e.g., @file{pk})
+  . . <mode>/       type of output device (for @file{pk} and @file{gf} only)
+  . . . <supplier>/     name of a font supplier (e.g., @file{public})
+  . . . . <typeface>/   name of a typeface (e.g., @file{cm})
+  . . . . . dpi<nnn>/   font resolution (for @file{pk} and @file{gf} only)
+  <implementation>/ TeX implementations, by name (e.g., @file{emtex})
+  local/            files created or modified at the local site
+  metafont/         Metafont (non-font) input files
+  . base/           base distribution (e.g., @file{plain.mf})
+  . misc/           single-file packages (e.g., @file{modes.mf})
+  . <package>/      name of a package (e.g., @file{mfpic})
+  metapost/         MetaPost input and support files
+  . base/           base distribution (e.g., @file{plain.mp})
+  . misc/           single-file packages
+  . <package>/      name of a package
+  . support/        support files for MetaPost-related utilities
+  mft/              @file{MFT} inputs (e.g., @file{plain.mft})
+  <program>/        TeX-related programs, by name (e.g., @file{dvips})
+  source/           program source code by name (e.g., @file{latex}, @file{web2c})
+  tex/              TeX input files
+  . <engine>/       name of an engine (e.g., @file{aleph}); can also be lower
+  . <format>/       name of a format (e.g., @file{plain})
+  . . base/         base distribution for format (e.g., @file{plain.tex})
+  . . misc/         single-file packages (e.g., @file{webmac.tex})
+  . . local/        local additions to or local configuration files for @file{@var{format}}
+  . . <package>/    name of a package (e.g., @file{graphics}, @file{mfnfss})
+  . generic/        format-independent packages
+  . . hyphen/       hyphenation patterns (e.g., @file{hyphen.tex})
+  . . images/       image input files (e.g., Encapsulated PostScript)
+  . . misc/         single-file format-independent packages (e.g., @file{null.tex}).
+  . . <package>/    name of a package (e.g., @file{babel})
+@end example
+
+
+@menu
+* Documentation tree summary::	
+@end menu
+
+@node Documentation tree summary
+@section Documentation tree summary
+
+An example skeleton of a TDS directory tree under
+@file{texmf/doc}.  This is not to imply these are the only entries
+allowed, or that this structure must be followed precisely for the
+entries listed.
+
+As mentioned, the @file{texmf/doc} tree may be organized by language, so
+that all documentation in French, say, is in a @file{french}
+subdirectory.  In that case, the example structure here would be in a
+given language directory.
+
+@example
+  ams/
+  . amsfonts/       @file{amsfonts.faq}, @file{amfndoc}
+  . amslatex/       @file{amslatex.faq}, @file{amsldoc}
+  . amstex/         @file{amsguide}, @file{joyerr}
+  bibtex/           BibTeX
+  . base/           @file{btxdoc.tex}
+  fonts/
+  . fontname/       @cite{Filenames for TeX fonts}
+  . oldgerm/        @file{corkpapr}
+  <format>/         name of a TeX format (e.g., @file{generic}, @file{latex})
+  . base/           for the base distribution
+  . misc/           for contributed single-file package documentation
+  . <package>/      for @emph{package}
+  general/          across programs, generalities
+  . errata/         @file{errata}, @file{errata[1-8]}
+  . texcomp/        @cite{Components of TeX}
+  help/             meta-information
+  . ctan/           info about CTAN mirror sites
+  . faq/            FAQs of @file{comp.text.tex}, etc.
+  info/             GNU Info files, made from Texinfo sources
+  latex/            example of @file{@var{format}}
+  . base/           @file{ltnews*}, @file{*guide}, etc.
+  . graphics/       @file{grfguide}
+  local/            site-specific documentation
+  man/              Unix man pages
+  <program>/        TeX-related programs, by name (examples follow)
+  metafont/         @file{mfbook.tex}, @file{metafont-for-beginners}, etc.
+  metapost/         @file{mpman}, @file{manfig}, etc.
+  tex/              @file{texbook.tex}, @cite{A Gentle Introduction to TeX}, etc.
+  web/              @file{webman}, @file{cwebman}
+@end example
+
+
+
+@node Unspecified pieces
+@appendix Unspecified pieces
+
+The TDS cannot address the following aspects of a functioning
+TeX system:
+
+@enumerate
+
+@item The location of executable programs: this is too site-dependent
+even to recommend a location, let alone require one. A site may place
+executables outside the @file{texmf} tree altogether (e.g.,
+@file{/usr/local/bin}), in a platform-dependent directory within
+@file{texmf}, or elsewhere.
+
+@item Upgrading packages when new releases are made: we could find no
+way of introducing version specifiers into @file{texmf} that would do more
+good than harm, or that would be practical for even a plurality of
+installations.
+
+@item The location of implementation-specific files (e.g., TeX
+@file{.fmt} files): by their nature, these must be left to the
+implementor or TeX maintainer. See Section@tie{}@ref{Example
+implementation-specific trees}.
+
+@item Precisely when a package or file should be considered ``local'',
+and where such local files are installed.  See Section@tie{}@ref{Local
+additions} for more discussion.
+
+@end enumerate
+
+
+@menu
+* Portable filenames::		
+@end menu
+
+@node Portable filenames
+@section Portable filenames
+
+The TDS cannot require any particular restriction on filenames in
+the tree, since the names of many existing TeX files conform to no
+standard scheme. For the benefit of people who wish to make a portable
+TeX distribution or installation, however, we outline here the
+necessary restrictions. The TDS specifications themselves are
+compatible with these.
+
+ISO-9660 is the only universally acceptable file system format
+for CD-ROMs.  A subset thereof meets the stringent limitations of
+all operating systems in use today. It specifies the following:
+
+@itemize @bullet
+
+@item File and directory names, not including any directory path or
+extension part, may not exceed eight characters.
+
+@item Filenames may have a single extension.  Extensions may not exceed
+three characters. Directory names may not have an extension.
+
+@item Names and extensions may consist of @emph{only} the characters
+@file{A}--@file{Z}, @file{0}--@file{9}, and underscore.
+Lowercase letters are excluded.
+
+@item A period separates the filename from the extension and is always
+present, even if the name or extension is missing (e.g.,
+@file{FILENAME.} or @file{.EXT}).
+
+@item A version number, ranging from 1--32767, is appended to the file
+extension, separated by a semicolon (e.g., @file{FILENAME.EXT;1}).
+
+@item Only eight directory levels are allowed, including the top-level
+(mounted) directory (see Section@tie{}@ref{Rooting the tree}).  Thus, the
+deepest valid ISO-9660 path is:
+@example
+texmf/L2/L3/L4/L5/L6/L7/L8/FOO.BAR;1
+1     2  3  4  5  6  7  8
+@end example
+The deepest TDS path needs only seven levels:
+@example
+texmf/fonts/pk/cx/public/cm/dpi300/cmr10.pk
+1     2     3  4  5      6  7
+@end example
+
+@end itemize
+
+Some systems display a modified format of ISO-9660 names,
+mapping alphabetic characters to lowercase, removing version numbers and
+trailing periods, etc.
+
+Before the December 1996 release, LaTeX used mixed-case names for
+font descriptor files.  Fortunately, it never relied on case alone to
+distinguish among the files.  Nowadays, it uses only monocase names.
+
+@node Implementation issues
+@appendix Implementation issues
+
+We believe that the TDS can bring a great deal of order to the
+current anarchic state of many TeX installations.  In addition, by
+providing a common frame of reference, it will ease the burden of
+documenting administrative tasks.  Finally, it is a necessary part of
+any reasonable system of true ``drop-in'' distribution packages for
+TeX.
+
+
+@menu
+* Adoption of the TDS::		
+* More on subdirectory searching::  
+* Example implementation-specific trees::  
+@end menu
+
+@node Adoption of the TDS
+@section Adoption of the TDS
+
+[This section is retained for historical purposes; the TDS
+is now quite firmly entrenched in most TeX distributions.]
+
+We recognize that adoption of the TDS will not be immediate or
+universal.  Most TeX administrators will not be inclined to make the
+final switch until:
+
+@itemize @bullet
+@item Clear and demonstrable benefits can be shown for the TDS.
+@item TDS-compliant versions of all key programs are available
+in ported, well-tested forms.
+@item A ``settling'' period has taken place, to flush out problems.  The
+public release of the first draft of this document was the first step in
+this process.
+@end itemize
+
+Consequently, most of the first trials of the TDS will be made by
+members of the TDS committee and/or developers of TeX-related
+software.  This has already taken place during the course of our
+deliberations (see Appendix@tie{}@ref{Related references} for a sample
+tree available electronically).  They will certainly result in the
+production of a substantial number of TDS-compliant packages.
+Indeed, the teTeX and TeX Live
+distributions are TDS-compliant and in use now at many sites.
+
+Once installable forms of key TDS-compliant packages are more
+widespread, some TeX administrators will set up TDS-compliant
+trees, possibly in parallel to existing production directories.  This
+testing will likely flush out problems that were not obvious in the
+confined settings of the developers' sites; for example, it should help
+to resolve system and package dependencies, package interdependencies, and
+other details not addressed by this TDS version.
+
+After most of the dust has settled, hopefully even conservative TeX
+administrators will begin to adopt the TDS.  Eventually, most
+TeX sites will have adopted the common structure, and most packages
+will be readily available in TDS-compliant form.
+
+We believe that this process will occur relatively quickly.  The
+TDS committee spans a wide range of interests in the TeX
+community.  Consequently, we believe that most of the key issues
+involved in defining a workable TDS definition have been covered,
+often in detail.  TeX developers have been consulted about
+implementation issues, and have been trying out the TDS
+arrangement.  Thus, we hope for few surprises as implementations mature.
+
+Finally, there are several (current or prospective) publishers of TeX
+CD-ROMs.  These publishers are highly motivated to work out
+details of TDS implementation, and their products will provide
+inexpensive and convenient ways for experimentally-minded TeX
+administrators to experiment with the TDS.
+
+
+@node More on subdirectory searching
+@section More on subdirectory searching
+
+Recursive subdirectory searching is the ability to specify a search not
+only of a specified directory @file{@var{d}}, but recursively of all
+directories below @file{@var{d}}.
+
+Since the TDS specifies precise locations for most files, with no
+extra levels of subdirectories allowed, true recursive searching is not
+actually required for a TDS-compliant implementation. We do,
+however, strongly recommend recursive searching as the most
+user-friendly and natural approach to the problem, rather than
+convoluted methods to specify paths without recursion.
+
+This feature is already supported by many implementations of TeX and
+companion utilities, for example DECUS TeX for VMS,
+Dvips(k), emTeX (and its drivers),
+PubliC TeX, Web2C, Xdvi(k),
+and Y&YTeX.  The Kpathsea library is a reusable
+implementation of subdirectory searching for TeX, used in a number of
+the above programs.
+
+Even if your TeX implementation does not directly support
+subdirectory searching, you may find it useful to adopt the structure if
+you do not use many fonts or packages. For instance, if you only use
+Computer Modern and AMS fonts, it would be feasible to store them
+in the TDS layout and list the directories individually in
+configuration files or environment variables.
+
+The TWG recognizes that subdirectory searching places an extra
+burden on the system and may be the source of performance bottlenecks,
+particularly on slower machines.  Nevertheless, we feel that
+subdirectory searching is imperative for a well-organized TDS,
+for the reasons stated in Section@tie{}@ref{Subdirectory searching}.
+Implementors are encouraged to provide enhancements to the basic
+principle of subdirectory searching to avoid performance problems, e.g.,
+the use of a filename cache (this can be as simple as a recursive
+directory listing) that is consulted before disk searching begins.  If a
+match is found in the database, subdirectory searching is not required,
+and performance is thus independent of the number of subdirectories
+present on the system.
+
+Different implementations specify subdirectory searching differently.
+In the interest of typographic clarity, the examples here do not use the
+@file{@var{replaceable}} font.
+
+@itemize @bullet
+
+@item Dvips:
+via a separate
+@file{TEXFONTS_SUBDIR} environment variable.
+
+@item emTeX:
+@file{t:\subdir!!}; @file{t:\subdir!} for
+a single level of searching.
+
+@item Kpathsea:
+@file{texmf/subdir//}
+
+@item VMS:
+@file{texmf:[subdir...]}
+
+@item Xdvi (patchlevel 20):
+@file{texmf/subdir/**};
+@file{texmf/subdir/*} for a single level of searching.  Version 20.50
+and above support the @file{//} notation.
+
+@item Y&Y TeX:
+@file{t:/subdir//} or
+@file{t:\subdir\\}.
+
+@end itemize
+
+
+@node Example implementation-specific trees
+@section Example implementation-specific trees
+
+The TDS cannot specify a precise location for
+implementation-specific files, such as @file{texmf/ini}, because a site
+may have multiple TeX implementations.
+
+Nevertheless, for informative purposes, we provide here the default
+locations for some implementations. Please contact us with additions or
+corrections. These paths are not definitive, may not match anything at
+your site, and may change without warning.
+
+We recommend all implementations have default search paths that start
+with the current directory (e.g., @file{.}).  Allowing users to
+include the parent directory (e.g., @file{..}) is also helpful.
+
+
+@menu
+* AmiWeb2c 2.0::		
+* Public DECUS TeX::		
+* Web2c 7::			
+@end menu
+
+@node AmiWeb2c 2.0
+@subsection AmiWeb2c 2.0
+
+(Email @email{scherer@@physik.rwth-aachen.de} to contact the maintainer
+of this implementation.)
+
+AmiWeb2c 2 is compatible with Web2c 7 to the greatest possible
+extent, so only the very few differences are described in this
+section.  Detailed information about the basic concepts is given in
+the section for Web2c 7 below.
+
+Thanks to the @file{SELFAUTO} mechanism of Kpathsea 3.0 no specific
+location for the installation of AmiWeb2c is required as long as the
+general structure of the distribution is preserved.
+
+In addition to Kpathsea's @file{//} notation recursive path search may
+also be started by @file{@var{DEVICE}:/}, e.g., @file{TeXMF:/}
+will scan this specific device completely.
+
+Binaries coming with the AmiWeb2c distribution are installed in the
+directory @file{bin/amiweb2c/} outside the common TDS tree
+@file{share/texmf/}.  In addition to the set of AmiWeb2c binaries
+you will find two subdirectories @file{local/} and @file{pastex/}
+with auxiliary programs.
+
+A stripped version of the PasTeX system (used by kind permission of
+Georg He@ss{}mann) is coming with AmiWeb2c, pre-installed in its own
+@file{share/texmf/amiweb2c/pastex/} directory.  If you want to use
+PasTeX you have to @file{assign} the name @file{TeX:} to this place.
+
+Documentation files in AmigaGuide format should be stored at
+@file{doc/guide/} similar to @file{doc/info/}.
+
+
+@node Public DECUS TeX
+@subsection Public DECUS TeX
+
+If another VMS implementation besides Public DECUS TeX
+appears, the top level implementation directory name will be modified to
+something more specific (e.g., @file{vms_decus}).
+
+@example
+  texmf/
+  . vms/            VMS implementation specific files
+  . . exe/          end-user commands
+  . . . common/     command procedures, command definition files, etc.
+  . . . axp/        binary executables for Alpha AXP
+  . . . vax/        binary executables for VAX
+  . . formats/      pool files, formats, bases
+  . . help/         VMS help library, and miscellaneous help sources
+  . . mgr/          command procedures, programs, docs, etc., for system management
+@end example
+
+
+@node Web2c 7
+@subsection Web2c 7
+
+All implementation-dependent TeX system files (@file{.pool},
+@file{.fmt}, @file{.base}, @file{.mem}) are stored by default directly
+in @file{texmf/web2c}.  The configuration file @file{texmf.cnf} and
+various subsidiary @file{MakeTeX...} scripts used as subroutines are
+also stored there.
+
+Non-TeX specific files are stored following the GNU coding
+standards.  Given a root directory @file{@var{prefix}}
+(@file{/usr/local} by default), we have default locations as follows:
+
+@example
+  <prefix>/         installation root (@file{/usr/local} by default)
+  . bin/            executables
+  . man/            man pages
+  . info/           info files
+  . lib/            libraries (@file{libkpathsea.*})
+  . share/          architecture-independent files
+  . . texmf/        TDS root
+  . . . web2c/      implementation-dependent files (@file{.pool}, @file{.fmt}, @file{texmf.cnf}, etc.)
+@end example
+
+See @uref{http://www.gnu.org/prep/standards_toc.html} for the
+rationale behind and descriptions of this arrangement. A site may of
+course override these defaults; for example, it may put everything under
+a single directory such as @file{/usr/local/texmf}.
+
+
+@node Is there a better way?
+@appendix Is there a better way?
+
+Defining the TDS required many compromises.  Both the overall
+structure and the details of the individual directories were arrived at
+by finding common ground among many opinions.  The driving forces were
+feasibility (in terms of what could technically be done and what could
+reasonably be expected from developers) and regularity (files grouped
+together in an arrangement that ``made sense'').
+
+Some interesting ideas could not be applied due to implementations
+lacking the necessary support:
+
+@itemize @bullet
+
+@item Path searching control at the TeX level. If documents could
+restrict subdirectory searching to a subdirectory via some portable
+syntax in file names, restrictions on uniqueness of filenames could be
+relaxed considerably (with the cooperation of the formats), and the
+TeX search path would not need to depend on the format.
+
+@item Multiple logical @file{texmf} trees. For example, a site might have
+one (read-only) location for stable files, and a different (writable)
+location for dynamically-created fonts or other files. It would be
+reasonable for two such trees to be logically merged when searching.
+See Michael Downes' article in the references for how this can work in
+practice with Web2C.
+
+@end itemize
+
+@menu
+* Macro structure::		
+* Font structure::		
+* Documentation structure::	
+@end menu
+
+@node Macro structure
+@section Macro structure
+
+The TWG settled on the
+@file{@var{format}/@var{package}} arrangement after long
+discussion about how best to arrange the files.
+
+The primary alternative to this arrangement was a scheme which reversed
+the order of these directories:
+@file{@var{package}/@var{format}}.  This reversed
+arrangement has a strong appeal: it keeps all of the files related to a
+particular package in a single place.  The arrangement actually adopted
+tends to spread files out into two or three places (macros,
+documentation, and fonts, for example, are spread into different
+sections of the tree right at the top level).
+
+Nevertheless, the @file{@var{format}/@var{package}}
+structure won for a couple of reasons:
+
+@itemize @bullet
+@item It is closer to current practice; in fact, several members of the
+TWG have already implemented the TDS hierarchy.  The
+alternative is not in use at any known site, and the TWG felt it
+wrong to mandate something with which there is no practical experience.
+
+@item The alternative arrangement increases the number of top-level
+directories, so the files that must be found using subdirectory
+searching are spread out in a wide, shallow tree.  This could have a
+profound impact on the efficiency of subdirectory searching.
+
+@end itemize
+
+
+@node Font structure
+@section Font structure
+
+The TWG struggled more with the font directory structure than
+anything else. This is not surprising; the need to use the proliferation
+of PostScript fonts with TeX is what made the previous arrangement
+with all files in a single directory untenable, and therefore what
+initiated the TDS effort.
+
+
+@menu
+* Font file type location::	
+* Mode and resolution location::  
+* Modeless bitmaps::		
+@end menu
+
+@node Font file type location
+@subsection Font file type location
+
+We considered the supplier-first arrangement in use at many sites:
+
+@example
+texmf/fonts/@var{supplier}/@var{typeface}/@var{type}/
+@end example
+
+This improves the maintainability of the font tree, since all files
+comprising a given typeface are in one place, but unless all the
+programs that search this tree employ some form of caching, there are
+serious performance concerns.  For example, in order to find a
+@file{TFM} file, the simplest implementation would require TeX to
+search through all the directories that contain PK files in all
+modes and at all resolutions.
+
+In the end, a poll of developers revealed considerable resistance to
+implementing sufficient caching mechanisms, so this arrangement was
+abandoned.  The TDS arrangement allows the search tree to be
+restricted to the correct type of file, at least.  Concerns about
+efficiency remain, but there seems to be no more we can do without
+abandoning subdirectory searching entirely.
+
+We also considered segregating all font-related files strictly by file
+type, so that Metafont sources would be in a directory
+@file{texmf/fonts/mf}, property list files in @file{texmf/fonts/pl}, the
+various forms of Type@tie{}1 fonts separated, and so on. Although more
+blindly consistent, we felt that the drawback of more complicated path
+constructions outweighed this. The TDS merges file types
+(@file{mf} and @file{pl} under @file{source}, @file{pfa} and @file{pfb}
+and @file{gsf} under @file{type1}) where we felt this was beneficial.
+
+
+@node Mode and resolution location
+@subsection Mode and resolution location
+
+We considered having the @file{mode} at the bottom of the font tree:
+@example
+texmf/fonts/pk/@var{supplier}/@var{typeface}/@var{mode}/@var{dpi}/
+@end example
+
+In this case, however, it is difficult to limit subdirectory searching
+to the mode required for a particular device.
+
+We then considered moving the @file{dpi@var{nnn}} up to below
+the mode:
+@example
+texmf/fonts/pk/@var{mode}/@var{dpi}/@var{supplier}/@var{typeface}/
+@end example
+
+But then it is not feasible to omit the @file{dpi@var{nnn}}
+level altogether on systems which can and do choose to use long
+filenames.
+
+
+@node Modeless bitmaps
+@subsection Modeless bitmaps
+
+The TDS specifies using a single directory @file{modeless/} as
+the mode name for those utilities which generate bitmaps, e.g.,
+@file{texmf/fonts/modeless/times/}.  This has the considerable advantage
+of not requiring each such directory name to be listed in a search path.
+
+An alternative was to use the utility name below which all such
+directories could be gathered.  That has the advantage of separating,
+say, @file{gsftopk}-generated bitmaps from @file{ps2pk}-generated ones.
+However, we decided this was not necessary; most sites will use only one
+program for the purpose.  Also, PK and GF fonts generally
+identify their creator in the font comment following the @file{PK_ID}
+byte.
+
+We are making an implicit assumption that Metafont is the only program
+producing mode-dependent bitmaps. If this becomes false we could add an
+abbreviation for the program to mode names, as in @file{mfcx} vs.@:
+@file{xyzcx} for a hypothetical program Xyz, or we could
+at that time add an additional program name level uniformly to the tree.
+It seemed more important to concisely represent the current situation
+than to worry about hypothetical possibilities that may never@tie{}happen.
+
+
+@node Documentation structure
+@section Documentation structure
+
+We considered placing additional documentation files in the same
+directory as the source files for the packages, but we felt that users
+should be able to find documentation separately from sources, since most
+users have no interest in sources.
+
+We hope that a separate, but parallel, structure for documentation would
+(1)@tie{}keep the documentation together and (2)@tie{}make it as straightforward
+as possible for users to find the particular documentation they were
+after.
+
+
+@node Related references
+@appendix Related references
+
+This appendix gives pointers to related files and other documents.  For
+CTAN references, we use @file{http://www.ctan.org} as the
+top-level domain only to make the links be live in this document.  See
+@uref{http://www.ctan.org/tex-archive/CTAN.sites} for a complete list of
+CTAN sites; there are mirrors worldwide.
+
+@itemize @bullet
+
+@item This document, in many formats (tex, dvi, info, pdf):@*
+@uref{http://tug.org/tds/}
+
+@item The TDS mailing list archives:@*
+@uref{http://tug.org/mail-archives/twg-tds/}
+
+@item The level@tie{}0 DVI driver standard:@*
+@uref{http://www.ctan.org/tex-archive/dviware/driv-standard/level-0/}
+
+@item @cite{Filenames for TeX fonts}, with lists of recommended
+supplier and typeface names:@*
+@uref{http://tug.org/fontname/}
+
+@item ISO-9660 CD-ROM file system standard:@*
+@uref{http://www.iso.ch/cate/cat.html}
+
+@item @cite{Components of TeX}, a paper by Joachim
+Schrod:@*
+@uref{http://www.ctan.org/tex-archive/documentation/components-of-TeX/}
+
+@item @cite{Managing Multiple TDS trees}, an article by Michael
+Downes:@*
+@uref{http://tug.org/TUGboat/Articles/tb22-3/tb72downes.pdf}
+
+@item A complete set of Metafont modes:@*
+@uref{http://www.ctan.org/tex-archive/fonts/modes/modes.mf}
+
+@item A large collection of BibTeX databases and styles:@*
+@uref{ftp://ftp.math.utah.edu/pub/tex/bib/}
+
+@end itemize
+
+
+@node Contributors
+@appendix Contributors
+
+The TWG has had no physical meetings; electronic mail was the
+communication medium.
+
+Sebastian Rahtz is the TeX Users Group Technical Council liaison.
+Norman Walsh was the original committee chair.  Karl Berry is the
+current editor.
+
+The list of contributors has grown too large to fairly include, as some
+would surely be inadvertently omitted.  Please consider the archives of
+the @email{tds@@tug.org} and @email{tex-live@@tug.org} mailing lists as
+the record of contributions.
+
+
+@iftex
+@contents
+@end iftex
+@bye
