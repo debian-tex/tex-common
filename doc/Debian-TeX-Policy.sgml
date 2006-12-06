@@ -157,6 +157,29 @@
       </p>
     </chapt>
     <chapt>
+      <heading>TeX packages for the impatient</heading>
+      <p>      
+	<list>
+	<item>
+	  Ah package that only installs TeX input files, e.g. a new
+	  LaTeX package, should install them in
+	  the <var>TEXMFMAIN</var> tree
+	  (<file>/usr/share/texmf/</file>) at the place indicated by
+	  the TDS, see <ref id="tds-libkpse">, and register them in
+	  the maintainer scripts, usually by
+	  calling <prgn>dh_installtex</prgn>
+	  in <file>debian/rules</file>
+	</item>
+	<item>
+	  Packages that add fonts, hyphenation patterns or formats, or
+	  want to change the basic configuration
+	  in <file>texmf.cnf</file> need to follow the rules in
+	  in <ref id="update-progs"> addition to that.
+	</item>
+      </list>
+      </p>
+    </chapt>
+    <chapt>
       <heading>File Placement</heading>
       <p>
       This chapter describes the placement of TeX input files, so that
@@ -168,7 +191,7 @@
       a <var>TEXMF</var> tree, e.g. to explain the purpose of an
       otherwise empty directory.
       </p>
-      <sect>
+      <sect id="tds-libkpse">
       <heading>File searching and <package>libkpathsea</package> / <package>libkpse</package></heading>
 
         <p>
@@ -450,7 +473,7 @@
 	<file>updmap.d</file>).
 	</p>
       </sect>
-      <sect>
+      <sect id="update-progs">
         <heading>Configuration update programs</heading>
 
 	<p>
@@ -518,7 +541,16 @@
           <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
           provided by <package>tex-common</package>. See <manref
           name="dh_installtex" section="1"> for usage details.
+	  </p>
+	    
+	  <sect2 id="font-configuration-details">
+	    <heading>Description of manual font package setup</heading>
 
+	  <p>
+	    This section describes how <prgn>dh_installtex</prgn>
+	    manages font packages, and what packages need to do that
+	    want to do without it.
+	  </p>
           <p>
           For the rest of this section, we'll assume we are dealing with a
           package named <var>package</var> that installs PostScript
@@ -536,7 +568,8 @@
                 It should install the necessary map files
                 (<file>.map</file> extension) below
                 <file><var>TEXMFMAIN</var>/fonts/map</file>.  The
-                precise location must conform to TDS version 1.1. 
+                precise location must conform to the applicable TDS
+                version.
                 </p>
               </item>
 
@@ -666,7 +699,9 @@ fi
           id="appen-sample-font">, but the recommended way to implement this
           scheme is to use <prgn>dh_installtex</prgn>.
           </p>
-
+	  </sect2>
+	  <sect2 id="font-configuration-rationale">
+	    <heading>Rationale</heading>
           <p>
           The rest of this section explains the rationale behind the previous
           recommendations.
@@ -789,6 +824,7 @@ fi
                   </item> </list>
             </p>
           </list>
+	  </sect2>
 	</sect1>
 
 	<sect1>
@@ -987,6 +1023,14 @@ fi
 	programs) 
 	</p>
 	<p>
+	Local administrators can override settings from
+	<file>texmf.cnf</file> with environment variables; this has
+	sometimes lead to errors in <file>postinst</file> scripts.  It
+	is recommended that <file>postinst</file> scripts unset
+	relevant variables before format creation or other problematic
+	tasks. 
+	</p>
+	<p>
 	If an add-on package generates a format upon installation that
 	needs a base format (e.g. latex.fmt), it must not load the
 	existing base format
@@ -1040,14 +1084,6 @@ and the following <file>jadetex.ini</file> file:
 <example>
 jadetex         etex    language.dat    -translate-file=cp227.tcx *jadetex.ini
 </example>
-	</p>
-	<p>
-	Local administrators can override settings from
-	<file>texmf.cnf</file> with environment variables; this has
-	sometimes lead to errors in <file>postinst</file> scripts.  It
-	is recommended that <file>postinst</file> scripts unset
-	relevant variables before format creation or other problematic
-	tasks. 
 	</p>
 <!-- 	<p> -->
 <!-- 	Format generation involves many configuration and input -->
