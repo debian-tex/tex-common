@@ -514,9 +514,13 @@
             <prgn>update-updmap</prgn>, respectively.  Only the files
 	    in <file>/etc/texmf/updmap.d/</file>, <file>/etc/texmf/fmt.d/</file>
 	    and <file>/etc/texmf/language.d/</file> will be treated as
-	    configuration files.  The files <file>fmtutil.cnf</file>,
+	    configuration files.  Furthermore, the files <file>fmtutil.cnf</file>,
 	    <file>updmap.cfg</file> and <file>language.dat</file> are
-	    used on a first-found-first-used basis.
+	    used on a first-found-first-used basis, if there are more
+	    than one in the search path, whereas if there are
+	    several <file>texmf.cnf</file> files in the search path,
+	    their settings are combined as described
+	    in <ref id="sec-user-config-files">.
           </p>
 
           <p>
