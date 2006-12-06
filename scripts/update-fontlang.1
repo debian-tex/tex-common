@@ -98,7 +98,7 @@ system-wide settings.  In this mode,
 \fBupdate-updmap\fP writes to 
 \fITEXMFVAR/web2c/updmap.cfg\fP, and
 \fBupdate-fmtutil\fP writes to
-\fITEXMFVAR/web2c/fmtutil.cnf\fP, where \fITEMXFVAR\fP is normally
+\fITEXMFVAR/web2c/fmtutil.cnf\fP, where \fITEXMFVAR\fP is normally
 \fI$HOME/.texmf-var/\fP. 
 Furthermore, files present within the user-specific configuration
 directories are included in addition to the files present in the
@@ -109,7 +109,7 @@ instead of the system-wide one.  These directories are
 \fITEXMFCONFIG/language.d\fP for \fBupdate-language\fP,
 \fITEXMFCONFIG/updmap.d\fP for \fBupdate-updmap\fP,
 \fITEXMFCONFIG/fmt.d\fP for \fBupdate-fmtutil\fP, where
-\fITEMXFCONFIG\fP is normally \fI$HOME/.texmf-config/\fP.  Note that changes
+\fITEXMFCONFIG\fP is normally \fI$HOME/.texmf-config/\fP.  Note that changes
 introduced by updates of packages are not automatically propagated to the
 user's files.
 
@@ -117,7 +117,7 @@ user's files.
 .TP
 .B /var/lib/texmf/tex/generic/config/language.dat
 This file is generated/updated by \fBupdate-language\fP in system-wide
-mode and contains a lists the hyphenation patters loaded into
+mode and contains a list of the hyphenation patterns loaded into
 LaTeX based formats by \fBfmtutil-sys\fP.
 .TP
 .B /var/lib/texmf/web2c/updmap.cfg
@@ -139,13 +139,13 @@ Input files for \fBupdate-updmap\fP
 Input files for \fBupdate-fmtutil\fP
 .TP
 .B /var/lib/tex-common/language-cnf/\fIpackage\fP.list
-lists the \fI/etc/texmf/language.d/\fP file installed by \fIpackage\fP.
+lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/language.d/\fP.
 .TP
 .B /var/lib/tex-common/fontmap-cfg/\fIpackage\fP.list
-lists the \fI/etc/texmf/updmap.d/\fP file installed by \fIpackage\fP.
+lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/updmap.d/\fP.
 .TP
 .B /var/lib/tex-common/fmtutil-cnf/\fIpackage\fP.list
-lists the \fI/etc/texmf/fmt.d/\fP file installed by \fIpackage\fP.
+lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/fmt.d/\fP.
 
 .SH SEE ALSO
 
