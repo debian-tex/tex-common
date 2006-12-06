@@ -107,6 +107,7 @@ EOF
       # reinstalled by postinst (a copy is already saved).
       rm -f $tempfile1 $conffile
       ucf --purge $conffile
+      test -x "`which ucfr`" && ucfr --purge tex-common $conffile || true
     fi
     rm -rf "$tempdir"
 
@@ -115,6 +116,7 @@ EOF
     # reinstalled by postinst 
     rm -f $conffile
     ucf --purge $conffile
+    test -x "`which ucfr`" && ucfr --purge tex-common $conffile || true
   fi
 
 }

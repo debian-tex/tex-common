@@ -15,5 +15,8 @@ purge_ucf_file () {
   if [ -x /usr/bin/ucf ]; then
     ucf --purge "${conffile}"
   fi
+  if [ -x /usr/bin/ucfr ]; then
+    ucfr --purge tex-common "${conffile}"
+  fi
 }
 
