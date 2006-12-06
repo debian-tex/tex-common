@@ -315,11 +315,8 @@
           </p>
 	  <p>
 	    There is no such mechanism for <file>texmf.cnf</file>.
-	    However, the system will read all files of that name that
-	    are found in the search path, and earlier definitions take
-	    precedence over later ones.  Therefore users can override
-	    system-wide settings in their
-	    own <file><var>TEXMFCONFIG</var>/web2c/texmf.cnf</file>.
+	    For a way to customize <file>texmf.cnf</file> as a user,
+	    see <ref id="sec-user-config-files">.
 	  </p>
 
         <sect1>
@@ -517,10 +514,7 @@
             <prgn>update-updmap</prgn>, respectively.  Only the files
 	    in <file>/etc/texmf/updmap.d/</file>, <file>/etc/texmf/fmt.d/</file>
 	    and <file>/etc/texmf/language.d/</file> will be treated as
-	    configuration files.  In contrast
-	    to <file>texmf.cnf</file>, where all files of that name
-	    that are found in the search path will be read, the
-	    files <file>fmtutil.cnf</file>,
+	    configuration files.  The files <file>fmtutil.cnf</file>,
 	    <file>updmap.cfg</file> and <file>language.dat</file> are
 	    used on a first-found-first-used basis.
           </p>
