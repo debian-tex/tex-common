@@ -1,3 +1,11 @@
+tex-common (0.41~1) UNRELEASED; urgency=low
+
+  * Fixes by Florent: ?
+  * Install the TDS specification along with the Debian TeX Policy
+    (closes: #401196) [frank]
+
+ -- Frank Küster <frank@debian.org>  Wed,  6 Dec 2006 17:11:58 +0100
+
 tex-common (0.40) unstable; urgency=low
 
   * Register TeX-on-Debian and the policy with doc-base

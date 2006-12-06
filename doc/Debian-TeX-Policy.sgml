@@ -115,8 +115,13 @@
 	<tag>TDS</tag>
 	<item>
 	
-	<p> The TeX Directory Structure, which describes file placement
-	  for TeX input files.  The latest version of the TDS is
+	<p> The TeX Directory Structure, which describes file
+	  placement for TeX input files.  The current version of the
+	  TDS is installed with this document
+	  as <url id="file:///usr/share/doc/tex-common/tds.pdf"
+	  name="tds.pdf">
+	  and <url id="file:///usr/share/doc/tex-common/tds.html"
+	  name="tds.html">.  The latest version of the TDS is
 	  available at <tt><url name="http://www.tug.org/twg/tds/"
 	  id="http://www.tug.org/twg/tds/"></tt>.</p> </item>
 
@@ -165,8 +170,10 @@
 	  LaTeX package, should install them in
 	  the <var>TEXMFMAIN</var> tree
 	  (<file>/usr/share/texmf/</file>) at the place indicated by
-	  the TDS, see <ref id="tds-libkpse">, and register them in
-	  the maintainer scripts, usually by
+	  the TDS,
+	  see <url id="file:///usr/share/doc/tex-common/tds.html"
+	  name="tds.html"> and <ref id="tds-libkpse">, and register
+	  them in the maintainer scripts, usually by
 	  calling <prgn>dh_installtex</prgn>
 	  in <file>debian/rules</file>
 	</item>
@@ -196,11 +203,11 @@
 
         <p>
         File locations must follow the TeX Directory Structure, TDS.
-        The TDS specification is installed in
-        the <package>texlive-doc-en</package>
-        and <package>tetex-doc</package> packages
-        as <file>tds.dvi.gz</file>, and the latest version of the TDS
-        is available at <tt><url name="http://www.tug.org/twg/tds/"
+        The TDS specification is available as
+	<url id="file:///usr/share/doc/tex-common/tds.pdf" name="tds.pdf">
+	and <url id="file:///usr/share/doc/tex-common/tdbs.html"
+        name="tds.html">, and the latest version of the TDS is
+        available at <tt><url name="http://www.tug.org/twg/tds/"
         id="http://www.tug.org/twg/tds/"></tt>.  It is a bug if a
         package only conforms to an outdated TDS version.  It is a
         more severe bug, however, if it conforms to the current TDS
