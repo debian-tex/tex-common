@@ -161,7 +161,7 @@
       <p>      
 	<list>
 	<item>
-	  Ah package that only installs TeX input files, e.g. a new
+	  A package that only installs TeX input files, e.g. a new
 	  LaTeX package, should install them in
 	  the <var>TEXMFMAIN</var> tree
 	  (<file>/usr/share/texmf/</file>) at the place indicated by
@@ -173,8 +173,8 @@
 	<item>
 	  Packages that add fonts, hyphenation patterns or formats, or
 	  want to change the basic configuration
-	  in <file>texmf.cnf</file> need to follow the rules in
-	  in <ref id="update-progs"> addition to that.
+	  in <file>texmf.cnf</file>, need to follow the rules in
+	  <ref id="update-progs"> in addition to that.
 	</item>
       </list>
       </p>
@@ -206,7 +206,7 @@
         more severe bug, however, if it conforms to the current TDS
         version but does not make sure to depend on an appropriately
         recent version of the Basic TeX packages or
-        <package>tex-common</package> (that support this TDS version).
+        <package>tex-common</package> (that supports this TDS version).
         </p>
   
         <p>The Basic TeX packages must provide a mechanism for searching
@@ -586,11 +586,11 @@
                 It should install one or more configuration files with names
                 following the pattern <tt>20<var>name</var>.cfg</tt> into
                 <file>/etc/texmf/updmap.d/</file><footnote> Filenames
-		  starting with <tt>10</tt> are reserved for the basic
+		  starting with <tt>10</tt> are reserved for the Basic
 		  TeX packages.  However, sorting order is actually
 		  only relevant for snippets
 		  for <file>texmf.cnf</file>, <file>fmtutil.cnf</file>
-		  and <file>language.dat</file>
+		  and <file>language.dat</file>.
 		</footnote>. Such files will be later
                 merged by <prgn>update-updmap</prgn> to form
                 <file>/var/lib/texmf/web2c/updmap.cfg</file>, the effective
@@ -618,15 +618,15 @@
                 <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
                 that contains a reference to every <tt>.cfg</tt> file from the
                 previous step, one per line. For instance, if
-                <var>package</var> installs <file>10foo.cfg</file> and
-                <file>10bar.cfg</file> into <file>/etc/texmf/updmap.d/</file>,
+                <var>package</var> installs <file>20foo.cfg</file> and
+                <file>20bar.cfg</file> into <file>/etc/texmf/updmap.d/</file>,
                 the contents of
                 <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
                 should be:
 
 <example>
-10foo
-10bar
+20foo
+20bar
 </example>
 
                 This <file><var>package</var>.list</file> file must be shipped
@@ -759,23 +759,23 @@ fi
               <p>
               The solution we chose was to add a little bit of logic into
               <prgn>update-updmap</prgn>, so that whenever it sees a
-              <file>.cfg</file> file (let's call it <file>10foo.cfg</file>)
+              <file>.cfg</file> file (let's call it <file>20foo.cfg</file>)
               that has the "magic comment", it actually includes its contents
               into <file>updmap.cfg</file> if, and only if:
                 <list>
                   <item>
                     it is up-to-date (which is assumed if
-                    <file>10foo.cfg.dpkg-new</file> doesn't exist in the same
+                    <file>20foo.cfg.dpkg-new</file> doesn't exist in the same
                     directory);
                   </item>
                   <item>
-                    <tt>10foo</tt> appears on a line by itself in one of the
+                    <tt>20foo</tt> appears on a line by itself in one of the
                     <file>.list</file> files in
                     <file>/var/lib/tex-common/fontmap-cfg/</file>.
                   </item>
                 </list>
               Additionally, that <file>.list</file> file should be named
-              <file><var>package</var>.list</file> if <file>10foo.cfg</file>
+              <file><var>package</var>.list</file> if <file>20foo.cfg</file>
               comes from <var>package</var>, for simple reasons of tidiness.
               </p>
           
@@ -803,9 +803,9 @@ fi
                   If <var>package</var> is reinstalled later, two files are
                   first created by <prgn>dpkg</prgn> during the unpack phase:
                   <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-                  and <file>/etc/texmf/updmap.d/10foo.cfg.dpkg-new</file>. As
+                  and <file>/etc/texmf/updmap.d/20foo.cfg.dpkg-new</file>. As
                   long as the second one exists, the conffile
-                  <file>/etc/texmf/updmap.d/10foo.cfg</file> will be ignored
+                  <file>/etc/texmf/updmap.d/20foo.cfg</file> will be ignored
                   by <prgn>update-updmap</prgn><footnote>An
                   <prgn>update-updmap</prgn> call could take place if another
                   package such as <package>tetex-bin</package> is configured

@@ -48,9 +48,9 @@ trees: /usr/share/texmf and /var/lib/texmf. Normal TeX related packages
 following the Debian TeX Policy should only install files into these 
 directories and /etc/texmf (which does not need a ls-R DB), so this is
 a sensible choice. If you need to rehash the ls-R database of some other
-trees (eg. because an old package had files in /usr/share/texmf-tetex)
-please specify these additional trees on the command line via the 
-texmftrees option:
+trees (e.g., because an old version of your package had files in
+/usr/share/texmf-tetex), please specify these additional trees on the
+command line via the texmftrees option:
 
 	dh_installtex texmftrees=tree1,tree2,...
 
@@ -59,16 +59,15 @@ in addition tree1 and tree2.
 
 =head1 COMPLEX USAGE: Registering fonts, hyphenation patterns and formats
 
-If in addition you have to install map files, hyphenation patterns for
+If in addition, you have to install map files, hyphenation patterns for
 additional languages, or format definitions you can use three
 different methods to specify what should be installed:
 
 1) B<Pre made config files:> These files can be specified with the
 different I<type>file= options, together with an optional priority.
 I<type> can be one of map, format and language, and these files will be
-installed into /etc/texmf/I<configdir>/ for the respective type (for
-map files updmap.d, for language files language.d, and for format
-files fmt.d).
+installed into /etc/texmf/I<configdir>/ for the respective type (updmap.d for
+map files, language.d for language files, and fmt.d for format files).
 
 Example:
 
