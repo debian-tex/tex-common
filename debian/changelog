@@ -35,7 +35,7 @@ tex-common (0.42) unstable; urgency=low
   * remove the left-over definition of dhit_check_run_without_errors in
     postrm-tex, it is included in postrm-texlsr (Closes: #402068). [NP]
 
- -- Frank Küster <frank@debian.org>  Mon, 11 Dec 2006 13:42:01 +0100
+ -- Frank Küster <frank@debian.org>  Mon, 11 Dec 2006 19:46:08 +0100
 
 tex-common (0.41) unstable; urgency=low
 
