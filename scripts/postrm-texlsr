@@ -35,7 +35,7 @@ dhit_check_run_without_errors ()
     if which "$1" >/dev/null; then
         tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
         if [ $silent = 0 ] ; then
-	    printf "Running $*. This may take some time..."
+	    printf "Running '$*'.\nThis may take some time..."
 	fi
         set +e
         if "$@" > $tempfile 2>&1 ; then
@@ -65,7 +65,8 @@ case "$1" in
         # The mktexlsr call needs an installed and configured basic TeX
         # system, so check this.
         if dhit_libkpathsea_configured; then
-            dhit_check_run_without_errors mktexlsr #TEXMFTREES#
+            dhit_check_run_without_errors \
+              mktexlsr #TEXMFTREES#
         fi
     ;;
 

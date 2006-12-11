@@ -28,6 +28,9 @@ tex-common (0.42) unstable; urgency=low
 
   * Fix to update-fontlang: don't forget the arguments to '-c' and '-o' in
     the usage message ('--help'). [florent]
+  
+  * Minor fixes to postrm-texlsr to avoid having too long lines (greater
+    than 80 characters). [florent]
 
   * remove the left-over definition of dhit_check_run_without_errors in
     postrm-tex, it is included in postrm-texlsr (Closes: #402068). [NP]
