@@ -1,132 +1,148 @@
-.TH update-fontlang 1 "2006-11-03" "Update TeX config files: fmtutil.cnf, updmap.cfg, language.dat"
+.TH update-fontlang 1 "2006-12-11" "Debian" "Debian User's Manual"
 
 .SH NAME
-update-updmap, update-language, update-fmtutil, update-fontlang \- update various TeX related config files
+update-updmap, update-language, update-fmtutil, update-fontlang \- update
+various TeX-related configuration files
 
 .SH SYNOPSIS
-.B update-[language,updmap,fmtutil]
+.B update-updmap
+.RI [ options ]
+.br
+.B update-language
+.RI [ options ]
+.br
+.B update-fmtutil
 .RI [ options ]
 .br
 
 .SH DESCRIPTION
 This manual page explains briefly the usage of the three TeX configuration
 update programs
-.B update-language, update-updmap,
+.B update-updmap, update-language
 and \fBupdate-fmtutil\fP.
 .PP
 The
 .B update-fontlang
-script should not be called directly, only via the three described links.
-For a more in depth description please see the documentation TeX on Debian in
+script should not be called directly, but only via the three described links.
+For a more in-depth description, please see the document \fITeX on Debian\fP in
 .I /usr/share/doc/tex-common/TeX-on-Debian.txt.gz
 (also available as HTML and PDF).
 
-The programs \fBupdate-language\fP, \fBupdate-updmap\fP, and 
-\fBupdate-fmtutil\fP create/update the configuration files \fIlanguage.dat\fP,
-\fIupdmap.cfg\fP, and \fIfmtutil.cnf\fP, respectively. These files define
-the hyphenation patterns to be loaded into LaTeX related TeX formats
-(language.dat), the outline fonts available for the TeX system (updmap.sys),
-and the list of formats to be created (fmtutil.cnf).
+The programs \fBupdate-updmap\fP, \fBupdate-language\fP and
+\fBupdate-fmtutil\fP create or update the configuration files
+\fIupdmap.cfg\fP, \fIlanguage.dat\fP and \fIfmtutil.cnf\fP, respectively.
+These files define the the outline fonts available for the TeX system
+(\fIupdmap.cfg\fP), the hyphenation patterns to be loaded into LaTeX-related
+TeX formats (\fIlanguage.dat\fP), and the list of formats to be created
+(\fIfmtutil.cnf\fP).
 
-These programs can be used either in system wide mode if called by root, or
-in a user-specific mode if called by a user without write permissions to
-system areas.
+These programs can be used either in system-wide mode if called by root, or
+in a user-specific mode if called by a user without super-user privileges.
 .SH OPTIONS
-.B
-.IP -c|--conf-dir
-directory where the user-specific configuration is looked for in 
-user-specific mode
-.B
-.IP -o|--output-file
-file to write the output to. Per default in system-wide mode 
-\fBupdate-language\fP writes to 
-\fI/var/lib/texmf/tex/generic/config/language.dat\fP,
+.TP
+.BI \-c\  DIR ,\ \-\-conf-dir= DIR
+directory where the user-specific configuration files are looked for in
+user-specific mode (default: \fITEXMFCONFIG/updmap.d\fP for
+\fBupdate-updmap\fP, \fITEXMFCONFIG/language.d\fP for \fBupdate-language\fP
+and \fITEXMFCONFIG/fmt.d\fP for \fBupdate-fmtutil\fP, where \fITEXMFCONFIG\fP
+is usually \fI$HOME/.texmf-config\fP).
+.TP
+.BI \-o\  FILE ,\ \-\-output-file= FILE
+file to write the output to. Per default, in system-wide mode,
 \fBupdate-updmap\fP writes to 
-\fI/var/lib/texmf/web2c/updmap.cfg\fP, and
+\fI/var/lib/texmf/web2c/updmap.cfg\fP,
+\fBupdate-language\fP writes to 
+\fI/var/lib/texmf/tex/generic/config/language.dat\fP
+and
 \fBupdate-fmtutil\fP writes to
 \fI/var/lib/texmf/web2c/fmtutil.cnf\fP.
-.B
-.IP --checks
+.TP
+.B \-\-checks
 perform sanity checks on the generated config file. Don't use this
 in maintainer scripts.
-.B
-.IP --quiet
+.TP
+.B \-\-quiet
 don't write anything to the standard output during normal operation
-.B
-.IP --help
-display this help message and exit
-.B
-.IP --version
+.TP
+.B \-\-help
+print a summary of the command-line usage and exit
+.TP
+.B \-\-version
 output version information and exit
 
 .SH USAGE
 
-In system-wide mode all three programs merge those files
+In system-wide mode, all three programs merge those files
 ("configuration snippets") with a specific extension in the respective
 configuration directories to produce the final file. These
 configuration directories and extensions are \fIlanguage.d\fP and
-\fB.cnf\fP for update-language, \fIupdmap.d\fP and \fB.cfg\fP for
-update-updmap, and \fIfmt.d\fP and \fB.cnf\fP for update-fmtutil. In
-system-wide mode these directories are searched in \fI/etc/texmf/\fP.
-Both TeX add-on packages and local administrators can add files to
-these directories.
+\fB.cnf\fP for \fBupdate-language\fP, \fIupdmap.d\fP and \fB.cfg\fP for
+\fBupdate-updmap\fP, and \fIfmt.d\fP and \fB.cnf\fP for \fBupdate-fmtutil\fP.
+In system-wide mode, these directories are those under \fI/etc/texmf/\fP. Both
+TeX add-on packages and local administrators can add files to these
+directories.
 
 If a package that provides such snippets is removed but not purged,
 including the snippet will likely break the system.  To prevent the
 inclusion in these cases, snippets installed by \fIpackages\fP have to
-contain a magic header, 
+contain a magic header:
 
 # -_- DebPkgProvidedMaps -_-
 
 which local administrators should \fInot\fP remove.  From the files
 with a magic header, only those files which are also listed in one of
 the files in
-.I /var/lib/tex-common/language-cnf/
-for update-language,
 .I /var/lib/tex-common/fontmap-cfg/
-for update-updmap, and
+for \fBupdate-updmap\fP,
+.I /var/lib/tex-common/language-cnf/
+for \fBupdate-language\fP, and
 .I /var/lib/tex-common/fmtutil-cnf/
-for update-fmtutil are actually included into the final output
-file. This way local changes to the configuration can be preserved
-while the package is in state `rc'.  For details about that mechanism,
+for \fBupdate-fmtutil\fP, are actually included into the final output
+file. This way, local changes to the configuration can be preserved
+while the package is in state 'rc' (that is, the package is removed, but its
+configuration files are still present).  For details about this mechanism,
 package maintainers should consult the Debian TeX Policy.
 
-The user-specific mode provides a way a non-admin user can override
+The user-specific mode provides a way for a non-admin user to override
 system-wide settings.  In this mode,
 \fBupdate-language\fP writes to 
 \fITEXMFVAR/tex/generic/config/language.dat\fP,
 \fBupdate-updmap\fP writes to 
 \fITEXMFVAR/web2c/updmap.cfg\fP, and
 \fBupdate-fmtutil\fP writes to
-\fITEXMFVAR/web2c/fmtutil.cnf\fP, where \fITEXMFVAR\fP is normally
-\fI$HOME/.texmf-var/\fP. 
+\fITEXMFVAR/web2c/fmtutil.cnf\fP, where \fITEXMFVAR\fP is usually
+\fI$HOME/.texmf-var\fP. 
 Furthermore, files present within the user-specific configuration
-directories are included in addition to the files present in the
+directories are included \fIin addition\fP to the files present in the
 system-wide configuration directories.  In case the same filename
 exists in the system-wide configuration directory and the
 user-specific configuration directory, the user-specific file is used
-instead of the system-wide one.  These directories are
-\fITEXMFCONFIG/language.d\fP for \fBupdate-language\fP,
+instead of the system-wide one. The user-specific configuration directories
+are
 \fITEXMFCONFIG/updmap.d\fP for \fBupdate-updmap\fP,
-\fITEXMFCONFIG/fmt.d\fP for \fBupdate-fmtutil\fP, where
-\fITEXMFCONFIG\fP is normally \fI$HOME/.texmf-config/\fP.  Note that changes
-introduced by updates of packages are not automatically propagated to the
-user's files.
+\fITEXMFCONFIG/language.d\fP for \fBupdate-language\fP and
+\fITEXMFCONFIG/fmt.d\fP
+for \fBupdate-fmtutil\fP, where \fITEXMFCONFIG\fP is usually
+\fI$HOME/.texmf-config\fP. The system-wide configuration directories have the
+same names, but are located in \fI/etc/texmf/\fP instead of \fITEXMFCONFIG\fP.
+
+Note that changes introduced by updates of packages are \fInot\fP
+propagated to the user's configuration files. This has to be done by hand.
 
 .SH FILES
 .TP
 .B /var/lib/texmf/tex/generic/config/language.dat
-This file is generated/updated by \fBupdate-language\fP in system-wide
+This file is generated or updated by \fBupdate-language\fP in system-wide
 mode and contains a list of the hyphenation patterns loaded into
-LaTeX based formats by \fBfmtutil-sys\fP.
+LaTeX-based formats by \fBfmtutil-sys\fP.
 .TP
 .B /var/lib/texmf/web2c/updmap.cfg
-This file is generated/updated by \fBupdate-updmap\fP in system-wide
+This file is generated or updated by \fBupdate-updmap\fP in system-wide
 mode and contains a list of map files to be included
-into the list of outline fonts generated by \fBupdmap-sys\fP.
+into the lists of outline fonts generated by \fBupdmap-sys\fP.
 .TP
 .B /var/lib/texmf/web2c/fmtutil.cnf
-This file is generated/updated by \fBupdate-fmtutil\fP in system-wide
+This file is generated or updated by \fBupdate-fmtutil\fP in system-wide
 mode and contains a list of formats to be generated by \fBfmtutil-sys\fP.
 .TP
 .B /etc/texmf/language.d/\fIname\fP.cnf
@@ -139,35 +155,41 @@ Input files for \fBupdate-updmap\fP
 Input files for \fBupdate-fmtutil\fP
 .TP
 .B /var/lib/tex-common/language-cnf/\fIpackage\fP.list
-lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/language.d/\fP.
+Lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/language.d/\fP.
 .TP
 .B /var/lib/tex-common/fontmap-cfg/\fIpackage\fP.list
-lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/updmap.d/\fP.
+Lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/updmap.d/\fP.
 .TP
 .B /var/lib/tex-common/fmtutil-cnf/\fIpackage\fP.list
-lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/fmt.d/\fP.
+Lists the file(s) installed by \fIpackage\fP in \fI/etc/texmf/fmt.d/\fP.
 
 .SH SEE ALSO
 
 .TP
-.B fmtutil(1), fmtutil-sys(1), updmap(1), updmap-sys(1)
-The programs actually using the generated configuration files.
+.B updmap(1), updmap-sys(1), fmtutil(1), fmtutil-sys(1)
+The programs actually using the generated configuration files
+(\fIupdmap.cfg\fP, \fIlanguage.dat\fP and \fIfmtutil.cnf\fP).
 .TP
 .B TeX on Debian Documentation
-to be found in \fI/usr/share/tex-common/TeX-on-Debian.txt.gz\fP (also
+to be found in \fI/usr/share/doc/tex-common/TeX-on-Debian.txt.gz\fP (also
 available as HTML and PDF), describing in more detail how to setup
-and maintain a TeX system. It also includes details on user-specific
+and maintain a TeX system in Debian. It also includes details on user-specific
 configuration.
 .TP
 .B Debian TeX Policy
-to be found in \fI/usr/share/doc/tex-common/Debian-TeX-Policy.txt.gz\fP
-(also available as HTML and PDF), describing the internals and the
-suggested policy.
+to be found in \fI/usr/share/doc/tex-common/Debian-TeX-Policy.txt.gz\fP (also
+available as HTML and PDF), describing the internals and the TeX Policy
+established on the Debian TeX mailing-list
+(debian-tex-maint@lists.debian.org). Intended audience is mainly developers
+packaging TeX-related resources for Debian.
 .TP
 .B dh_installtex(1)
-a debhelper script for managing the installation of files into the
-system-wide configuration directories to be used in other Debian packages.
+a debhelper-like script for managing the installation of files into the
+system-wide configuration directories; this script helps to write Debian
+packages containing TeX-related resources that conform to the Debian TeX
+Policy.
 
 .SH AUTHOR
 This manual page was written by Norbert Preining <preining@debian.org>
-for the Debian distribution (and may be used by others).
+for the Debian distribution (and may be used by others). It was later updated
+by Florent Rougon <f.rougon@free.fr>.

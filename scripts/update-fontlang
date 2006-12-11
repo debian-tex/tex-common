@@ -77,9 +77,9 @@ usage="Usage: $progname [OPTION...]
 ${SHORT_DESC}.
 
 Options:
-  -c, --conf-dir         directory where the user-specific configuration is
+  -c, --conf-dir=DIR     directory where the user-specific configuration is
                          looked for in user-specific mode
-  -o, --output-file      file to write the output to (default is
+  -o, --output-file=FILE file to write the output to (default is
                          $SYSWIDE_DEFAULT_OUTPUTFILE in system-wide-mode,
                          and depends on your Kpathsea settings in
                          user-specific mode)

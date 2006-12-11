@@ -1,6 +1,34 @@
 tex-common (0.42) unstable; urgency=low
 
-  * Minor fixes to the documentation [frn]
+  * Documentation fixes to update-fontlang.1:
+      - the .TH line was broken, causing an ugly footer in the formatted
+        manpage;
+      - the SYNOPSIS had an incorrect syntax ('-language', '-updmap', and
+        '-fmtutil' aren't optional) and the new way is much easier to read
+        anyway IMO;
+      - always mention the programs in that order: update-updmap,
+        update-language and update-fmtutil (reason is, I think the average
+        user is more likely to need update-updmap than any of the two
+        others);
+      - the arguments to some options were forgotten, as in the
+        update-fontlang usage message ('--help');
+      - better option formatting (for those with a short and a long form;
+         copied from /usr/share/man/man1/man.1.gz);
+      - the default values for TEXMFCONFIG and TEXMFVAR do *not* end with
+        a slash;
+      - the path to TeX-on-Debian.txt.gz was wrong;
+      - s/updmap.sys/updmap.cfg/;
+      - s/TEMXF/TEXMF/ in a few places;
+      - a package may install *several* files in each /etc/texmf/*.d
+        directory (and list them in the .list files under
+        /var/lib/tex-common).
+      - a bit more details here and there;
+      - more formatting to ease reading (such as italics), punctuation,
+        typographical fixes. [florent]
+
+  * Fix to update-fontlang: don't forget the arguments to '-c' and '-o' in
+    the usage message ('--help'). [florent]
+
   * remove the left-over definition of dhit_check_run_without_errors in
     postrm-tex, it is included in postrm-texlsr (Closes: #402068). [NP]
 
