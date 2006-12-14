@@ -1,7 +1,7 @@
 tex-common (0.43~1) UNRELEASED; urgency=low
 
   * Register documentation in section TeX instead of Text (closes:
-    $NONUMBERYET) [frank]
+    #403086) [frank]
 
  -- Frank Küster <frank@debian.org>  Thu, 14 Dec 2006 15:31:42 +0100
 
