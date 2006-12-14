@@ -5,7 +5,7 @@ Abstract: Debian-specific information about TeX packages.  This
  document is intended for TeX users who want to know how to change
  settings in the TeX system, install additional components, or deal
  with problems.
-Section: Apps/Text
+Section: Apps/TeX
 
 Format: text
 Files: /usr/share/doc/tex-common/TeX-on-Debian.txt.gz

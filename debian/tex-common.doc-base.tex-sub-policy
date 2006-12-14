@@ -3,7 +3,7 @@ Title: The Debian TeX sub-policy
 Author: debian-tex-maint@lists.debian.org
 Abstract: Rules and information for packaging TeX add-on packages
  (styles, fonts, viewers, etc.).
-Section: Apps/Text
+Section: Apps/TeX
 
 Format: text
 Files: /usr/share/doc/tex-common/Debian-TeX-Policy.txt.gz
