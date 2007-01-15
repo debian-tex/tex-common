@@ -2,8 +2,11 @@ tex-common (0.43~1) UNRELEASED; urgency=low
 
   * Register documentation in section TeX instead of Text (closes:
     #403086) [frank]
+  * Debconf translations: 
+    - add Russian translation, thanks to Yuri Kozlov <kozlov.y@gmail.com>
+      (closes: #406872)
 
- -- Frank Küster <frank@debian.org>  Thu, 14 Dec 2006 15:31:42 +0100
+ -- Frank Küster <frank@debian.org>  Mon, 15 Jan 2007 07:51:34 +0100
 
 tex-common (0.42) unstable; urgency=low
 
