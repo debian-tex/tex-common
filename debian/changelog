@@ -1,4 +1,4 @@
-tex-common (0.43~1) UNRELEASED; urgency=low
+tex-common (0.43) unstable; urgency=low
 
   * Register documentation in section TeX instead of Text (closes:
     #403086) [frank]
