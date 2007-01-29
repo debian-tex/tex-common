@@ -1,4 +1,4 @@
-tex-common (0.44~1) unreleased; urgency=low
+tex-common (0.44) unstable; urgency=low
 
   * Use full pathname when registering files with ucf (closes: #408263) 
   * New and updated debconf translations:
