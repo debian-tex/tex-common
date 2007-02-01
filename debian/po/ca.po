@@ -1,16 +1,16 @@
 # Catalan translation of tetex-bin debconf template
-# Copyright (c) 2004 Software in the Public Interest, Inc.
+# Copyright (c) 2004, 2007 Software in the Public Interest, Inc.
 # This file is distributed under the same license as the tetex-bin package.
-# Josep Mon√©s i Teixidor <jmones@puntbarra.com>, 2004.
-# 
-# 
+# Josep MonÈs i Teixidor <jmones@puntbarra.com>, 2004.
+# Guillem Jover <guillem@debian.org>, 2007.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-21\n"
 "Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
 "POT-Creation-Date: 2006-10-28 19:21+0200\n"
-"PO-Revision-Date: 2004-09-16 19:02+0200\n"
-"Last-Translator: Josep Mon√©s i Teixidor <jmones@puntbarra.com>\n"
+"PO-Revision-Date: 2007-01-29 04:18+0200\n"
+"Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,25 +20,25 @@ msgstr ""
 #. Description
 #: ../templates:3
 msgid "Essential entry missing in ${filename}"
-msgstr ""
+msgstr "Manca entrada essencial a ${filename}"
 
 #. Type: error
 #. Description
 #: ../templates:3
 msgid "An essential entry is missing in ${filename}:"
-msgstr ""
+msgstr "Manca una entrada essencial a ${filename}:"
 
 #. Type: error
 #. Description
 #: ../templates:3
 msgid "No setting of ${variable}."
-msgstr ""
+msgstr "No hi ha valor per a ${variable}."
 
 #. Type: error
 #. Description
 #: ../templates:16
 msgid "Essential entry wrong in ${filename}"
-msgstr ""
+msgstr "Entrada essencial incorrecta a ${filename}"
 
 #. Type: error
 #. Description
@@ -46,12 +46,13 @@ msgstr ""
 msgid ""
 "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgstr ""
+"Una entrada essencial a ${filename} Ès incorrecta: ${variable} no contÈ"
 
 #. Type: error
 #. Description
 #: ../templates:16
 msgid "${pattern}"
-msgstr ""
+msgstr "${pattern}"
 
 #. Type: error
 #. Description
@@ -61,12 +62,15 @@ msgid ""
 "version of ${filename} that is provided by the package should be available "
 "as ${filename}.ucf-dist."
 msgstr ""
+"sense aixÚ, TeX no funcionar‡, haurÌeu d'esmenar els vostres fitxers de "
+"configuraciÛ. La versiÛ de ${filename} proveÔda pel paquet est‡ disponible "
+"com ${filename}.ucf-dist."
 
 #. Type: error
 #. Description
 #: ../templates:16
 msgid "Exiting."
-msgstr ""
+msgstr "S'est‡ sortint."
 
 # ../templates:75
 #, fuzzy
@@ -76,8 +80,8 @@ msgstr ""
 #~ "with extension '.cnf'."
 #~ msgstr ""
 #~ "En versions anteriors update-texmf generava el fitxer texmf.cnf a partir "
-#~ "de tots els fitxers de /etc/texmf/texmf.d/. Ara update-texmf nom√©s "
-#~ "utilitza fitxers amb l'extensi√≥ '.cnf'."
+#~ "de tots els fitxers de /etc/texmf/texmf.d/. Ara update-texmf nomÈs "
+#~ "utilitza fitxers amb l'extensiÛ '.cnf'."
 
 # ../templates:75
 #, fuzzy
@@ -85,7 +89,7 @@ msgstr ""
 #~ "So if you had any private file in /etc/texmf/texmf.d/, then you should "
 #~ "add '.cnf' to its name; for example, 22mymacro => 22mymacro.cnf."
 #~ msgstr ""
-#~ "Si heu afegit algun fitxer privat a /etc/texmf/texmf.d/, haur√≠eu d'afegir "
+#~ "Si heu afegit algun fitxer privat a /etc/texmf/texmf.d/, haurÌeu d'afegir "
 #~ "'.cnf' al seu nom (per exemple, s'hauria de canviar el nom de 22mymacro a "
 #~ "22mymacro.cnf) i posteriorment executar update-texmf."
 
@@ -103,11 +107,11 @@ msgstr ""
 #~ "on-the-fly  when needed.  Since the directory is group-writable, the ls-R "
 #~ "file should be the same"
 #~ msgstr ""
-#~ "√âs necessari generar molts fitxers de fonts abans que els programes de "
-#~ "visualitzaci√≥ i impressi√≥ de teTeX (xdvi, dvips, etc.) els puguin "
+#~ "…s necessari generar molts fitxers de fonts abans que els programes de "
+#~ "visualitzaciÛ i impressiÛ de teTeX (xdvi, dvips, etc.) els puguin "
 #~ "utilitzar. Aquests fitxers s'emmagatzemen a /var/cache/fonts per tal "
 #~ "d'evitar que s'hagin de regenerar cada vegada. Els fitxers ls-R contenen "
-#~ "la informaci√≥ de quins fitxers s'emmagatzemen, i on."
+#~ "la informaciÛ de quins fitxers s'emmagatzemen, i on."
 
 # ../templates:38
 #, fuzzy
@@ -116,9 +120,9 @@ msgstr ""
 #~ "those ls-R files using debconf. Otherwise you will have to manually "
 #~ "ensure that they get useful but safe permissions."
 #~ msgstr ""
-#~ "L'acceptaci√≥ d'aquesta opci√≥ us permetr√† gestionar f√†cilment els permisos "
+#~ "L'acceptaciÛ d'aquesta opciÛ us permetr‡ gestionar f‡cilment els permisos "
 #~ "dels fitxers ls-R utilitzant debconf. En cas contrari haureu d'assegurar-"
-#~ "vos manualment que tenen permisos √∫tils i a la vegada segurs."
+#~ "vos manualment que tenen permisos ˙tils i a la vegada segurs."
 
 # ../templates:52
 #, fuzzy
@@ -128,10 +132,10 @@ msgstr ""
 #~ "of your choice, and enter that group name here.  The default group, "
 #~ "'users', is appropriate for most systems."
 #~ msgstr ""
-#~ "√âs possible restringir la modificaci√≥ dels fitxers ls-R als membres d'un "
-#~ "grup que n'√©s propietari. Per poder utilitzar aquesta opci√≥, afegiu els "
-#~ "usuaris al grup que escolliu, i introdu√Øu el nom d'aquest grup aqu√≠. El "
-#~ "grup per defecte 'users' √©s apropiat per a la majoria de sistemes."
+#~ "…s possible restringir la modificaciÛ dels fitxers ls-R als membres d'un "
+#~ "grup que n'Ès propietari. Per poder utilitzar aquesta opciÛ, afegiu els "
+#~ "usuaris al grup que escolliu, i introduÔu el nom d'aquest grup aquÌ. El "
+#~ "grup per defecte 'users' Ès apropiat per a la majoria de sistemes."
 
 # ../templates:61
 #~ msgid "Allow group members to modify ls-R files?"
@@ -144,9 +148,9 @@ msgstr ""
 #~ "Accepting this option will allow members of the owning group to modify "
 #~ "the ls-R files."
 #~ msgstr ""
-#~ "Si accepteu aquesta opci√≥ permetreu que els membres del grup propietari "
+#~ "Si accepteu aquesta opciÛ permetreu que els membres del grup propietari "
 #~ "puguin modificar els fitxers ls-R. Quasi tothom hauria d'acceptar aquesta "
-#~ "opci√≥!"
+#~ "opciÛ!"
 
 # ../templates:68
 #~ msgid "Allow all users to modify ls-R files?"
@@ -158,9 +162,9 @@ msgstr ""
 #~ "generally not a good idea for security reasons; you should instead "
 #~ "restrict such access to members of one group."
 #~ msgstr ""
-#~ "Si accepteu aquesta opci√≥ permetreu a tots els usuaris modificar els "
-#~ "fitxers ls-R. En general aix√≤ no √©s una bona idea per motius de "
-#~ "seguretat; √©s preferible restringir-ne l'acc√©s als membres d'un √∫nic grup."
+#~ "Si accepteu aquesta opciÛ permetreu a tots els usuaris modificar els "
+#~ "fitxers ls-R. En general aixÚ no Ès una bona idea per motius de "
+#~ "seguretat; Ès preferible restringir-ne l'accÈs als membres d'un ˙nic grup."
 
 # ../templates:38
 #~ msgid "Use debconf to manage permissions of ls-R files?"
@@ -170,7 +174,7 @@ msgstr ""
 # ../templates:4
 #~ msgid "Use update-fmtutil to automatically generate fmtutil.cnf?"
 #~ msgstr ""
-#~ "Voleu utilitzar update-fmtutil per generar autom√†ticament fmtutil.cnf?"
+#~ "Voleu utilitzar update-fmtutil per generar autom‡ticament fmtutil.cnf?"
 
 # ../templates:4
 #~ msgid ""
@@ -178,9 +182,9 @@ msgstr ""
 #~ "Automatic generation is recommended to make the setup work with other TeX-"
 #~ "related packages."
 #~ msgstr ""
-#~ "El fitxer fmtutil.cnf √©s el fitxer de configuraci√≥ principal per a motors "
-#~ "TeX. Es recomana la generaci√≥ autom√†tica d'aquest fitxer per tal que la "
-#~ "configuraci√≥ funcioni correctament amb altres paquets relacionats amb el "
+#~ "El fitxer fmtutil.cnf Ès el fitxer de configuraciÛ principal per a motors "
+#~ "TeX. Es recomana la generaciÛ autom‡tica d'aquest fitxer per tal que la "
+#~ "configuraciÛ funcioni correctament amb altres paquets relacionats amb el "
 #~ "TeX."
 
 # ../templates:4
@@ -189,9 +193,9 @@ msgstr ""
 #~ "instead modify the files in /etc/texmf/fmt.d/ and run update-fmtutil.  "
 #~ "The generated fmtutil.cnf will then be placed under /var/lib/texmf/web2c/."
 #~ msgstr ""
-#~ "En acceptar aquesta opci√≥, no haur√≠eu d'editar fmtutil.cnf directament, "
-#~ "sin√≥ que haur√≠eu de modificar els fitxers a /etc/texmf/fmt.d/ i executar "
-#~ "update-fmtutil. Aix√≤ generar√† el fitxer fmtutil.cnf sota el directori /"
+#~ "En acceptar aquesta opciÛ, no haurÌeu d'editar fmtutil.cnf directament, "
+#~ "sinÛ que haurÌeu de modificar els fitxers a /etc/texmf/fmt.d/ i executar "
+#~ "update-fmtutil. AixÚ generar‡ el fitxer fmtutil.cnf sota el directori /"
 #~ "var/lib/texmf/web2c/."
 
 # ../templates:4
@@ -202,14 +206,14 @@ msgstr ""
 #~ "this option."
 #~ msgstr ""
 #~ "Si necessiteu seguir utilitzant un fitxer fmtutil.cnf ja existent, podeu "
-#~ "refusar aquesta opci√≥ i modificar /etc/texmf/fmtutil.cnf manualment. "
-#~ "Tanmateix, la instal¬∑laci√≥ d'alguns paquets relacionats amb TeX podria "
-#~ "fallar si no accepteu aquesta opci√≥."
+#~ "refusar aquesta opciÛ i modificar /etc/texmf/fmtutil.cnf manualment. "
+#~ "Tanmateix, la instal∑laciÛ d'alguns paquets relacionats amb TeX podria "
+#~ "fallar si no accepteu aquesta opciÛ."
 
 # ../templates:22
 #~ msgid "Use update-updmap to automatically generate updmap.cfg?"
 #~ msgstr ""
-#~ "Voleu utilitzar update-updmap per generar updmap.cfg autom√†ticament?"
+#~ "Voleu utilitzar update-updmap per generar updmap.cfg autom‡ticament?"
 
 # ../templates:22
 #~ msgid ""
@@ -217,9 +221,9 @@ msgstr ""
 #~ "of TeX.  Automatic generation is recommended to make the setup work with "
 #~ "TeX font packages."
 #~ msgstr ""
-#~ "El fitxer updmap.cfg √©s el fitxer de configuraci√≥ principal del sistema "
-#~ "de fonts de TeX. Es recomana la generaci√≥ autom√†tica d'aquest fitxer per "
-#~ "tal que la configuraci√≥ funcioni correctament amb els paquets de fonts de "
+#~ "El fitxer updmap.cfg Ès el fitxer de configuraciÛ principal del sistema "
+#~ "de fonts de TeX. Es recomana la generaciÛ autom‡tica d'aquest fitxer per "
+#~ "tal que la configuraciÛ funcioni correctament amb els paquets de fonts de "
 #~ "TeX."
 
 # ../templates:22
@@ -228,9 +232,9 @@ msgstr ""
 #~ "instead modify the files in /etc/texmf/updmap.d/ and run update-updmap. "
 #~ "The generated updmap.cfg will be placed under /var/lib/texmf/web2c."
 #~ msgstr ""
-#~ "En acceptar aquesta opci√≥, no haur√≠eu d'editar udpmap.cfg directament, "
-#~ "sin√≥ que haur√≠eu de modificar els fitxers a /etc/texmf/updmap.d/ i "
-#~ "executar update-updmap. Aix√≤ generar√† el fitxer updmap.cfg sota el "
+#~ "En acceptar aquesta opciÛ, no haurÌeu d'editar udpmap.cfg directament, "
+#~ "sinÛ que haurÌeu de modificar els fitxers a /etc/texmf/updmap.d/ i "
+#~ "executar update-updmap. AixÚ generar‡ el fitxer updmap.cfg sota el "
 #~ "directori /var/lib/texmf/web2c/."
 
 # ../templates:22
@@ -240,9 +244,9 @@ msgstr ""
 #~ "installation of TeX fonts will fail unless you accept this option."
 #~ msgstr ""
 #~ "Si necessiteu seguir utilitzant un fitxer updmap.cfg ja existent, podeu "
-#~ "refusar aquesta opci√≥ i modificar /etc/texmf/updmap.cfg manualment. "
-#~ "Tanmateix, la instal¬∑laci√≥ de paquets de fonts de TeX fallar√† si no "
-#~ "accepteu aquesta opci√≥."
+#~ "refusar aquesta opciÛ i modificar /etc/texmf/updmap.cfg manualment. "
+#~ "Tanmateix, la instal∑laciÛ de paquets de fonts de TeX fallar‡ si no "
+#~ "accepteu aquesta opciÛ."
 
 # ../templates:75
 #~ msgid "Files in /etc/texmf/texmf.d/ must be renamed."
@@ -251,7 +255,7 @@ msgstr ""
 # ../templates:87
 #~ msgid "Remove old (and harmful) file /etc/X11/Xresources/tetex-base?"
 #~ msgstr ""
-#~ "Voleu suprimir el fitxer antic (i perill√≥s) /etc/X11/Xresources/tetex-"
+#~ "Voleu suprimir el fitxer antic (i perillÛs) /etc/X11/Xresources/tetex-"
 #~ "base?"
 
 # ../templates:87
@@ -260,9 +264,9 @@ msgstr ""
 #~ "it is now unused and it is even harmful for it to exist.  It is strongly "
 #~ "recommended to let the installation script remove this file right now!"
 #~ msgstr ""
-#~ "Una versi√≥ antiga de tetex-bin instal¬∑lava /etc/X11/Xresources/tetex-"
-#~ "base, per√≤ en l'actualitat ja no s'utilitza i pot ser incl√∫s perill√≥s. √âs "
-#~ "molt recomanable que permeteu que la instal¬∑laci√≥ suprimeixi aquest "
+#~ "Una versiÛ antiga de tetex-bin instal∑lava /etc/X11/Xresources/tetex-"
+#~ "base, perÚ en l'actualitat ja no s'utilitza i pot ser incl˙s perillÛs. …s "
+#~ "molt recomanable que permeteu que la instal∑laciÛ suprimeixi aquest "
 #~ "fitxer."
 
 # ../templates:87
@@ -289,11 +293,11 @@ msgstr ""
 #~ "smaller (La)TeX format files.  Manual editing is still possible, and your "
 #~ "changes will be preserved."
 #~ msgstr ""
-#~ "Si no seleccioneu aquesta opci√≥, s'habilitar√† un conjunt de patrons per "
+#~ "Si no seleccioneu aquesta opciÛ, s'habilitar‡ un conjunt de patrons per "
 #~ "cada un dels idiomes suportats (en el cas de l'alemany se n'habilitaran "
 #~ "dos, un per l'ortografia nova i un altre per l'antiga). Podeu seleccionar "
 #~ "que debconf els gestioni si preferiu excloure alguns patrons i obtenir "
-#~ "aix√≠ fitxers de format (La)TeX m√©s petits. Tamb√© √©s possible configurar-"
+#~ "aixÌ fitxers de format (La)TeX mÈs petits. TambÈ Ès possible configurar-"
 #~ "ho manualment, i els canvis no es sobreescriuran."
 
 # ../templates:112
@@ -305,7 +309,7 @@ msgstr ""
 #~ "If you want to load extra hyphenation pattern(s) please select them from "
 #~ "the list."
 #~ msgstr ""
-#~ "Si voleu carregar alguns patrons de guions m√©s seleccioneu-los de la "
+#~ "Si voleu carregar alguns patrons de guions mÈs seleccioneu-los de la "
 #~ "llista."
 
 # ../templates:112
@@ -315,12 +319,12 @@ msgstr ""
 #~ "and your changes will be preserved."
 #~ msgstr ""
 #~ "Si voleu canviar els patrons de guions en el futur, podeu utilitzar "
-#~ "\"dpkg-reconfigure tetex-bin\". Tamb√© √©s possible editar-los manualment i "
+#~ "\"dpkg-reconfigure tetex-bin\". TambÈ Ès possible editar-los manualment i "
 #~ "es respectaran els canvis."
 
 # ../templates:122
 #~ msgid "TeX format generation failed."
-#~ msgstr "La generaci√≥ dels fitxers de format TeX ha fallat."
+#~ msgstr "La generaciÛ dels fitxers de format TeX ha fallat."
 
 # ../templates:122
 #~ msgid ""
@@ -328,7 +332,7 @@ msgstr ""
 #~ "has failed. You will not be able to run these programs until this is "
 #~ "fixed."
 #~ msgstr ""
-#~ "La generaci√≥ d'alguns dels fitxers de format necessaris per utilitzar "
+#~ "La generaciÛ d'alguns dels fitxers de format necessaris per utilitzar "
 #~ "TeX, LaTeX, etc. ha fallat. No podreu utilitzar aquests programes fins "
 #~ "que no solucioneu aquest error."
 
@@ -338,10 +342,10 @@ msgstr ""
 #~ "bin changed configuration files, but you did not accept the maintainers' "
 #~ "version of a file you manually changed."
 #~ msgstr ""
-#~ "La causa m√©s freq√ºent d'aquesta fallada √©s que una nova versi√≥ de tetex-"
-#~ "bin hagi introdu√Øt canvis en els fitxers de configuraci√≥, per√≤ que no "
-#~ "hagueu acceptat sobreescriure els fitxers de configuraci√≥ editats "
-#~ "manualment amb la versi√≥ dels fitxers de configuraci√≥ subministrada pels "
+#~ "La causa mÈs freq¸ent d'aquesta fallada Ès que una nova versiÛ de tetex-"
+#~ "bin hagi introduÔt canvis en els fitxers de configuraciÛ, perÚ que no "
+#~ "hagueu acceptat sobreescriure els fitxers de configuraciÛ editats "
+#~ "manualment amb la versiÛ dels fitxers de configuraciÛ subministrada pels "
 #~ "mantenidors del paquet."
 
 # ../templates:122
@@ -354,7 +358,7 @@ msgstr ""
 
 # ../templates:136
 #~ msgid "Generation of TeX font information failed."
-#~ msgstr "La generaci√≥ de la informaci√≥ de fonts TeX ha fallat."
+#~ msgstr "La generaciÛ de la informaciÛ de fonts TeX ha fallat."
 
 # ../templates:136
 #~ msgid ""
@@ -362,8 +366,8 @@ msgstr ""
 #~ "Therefore, TeX, LaTeX etc. will have problems finding the font files they "
 #~ "need."
 #~ msgstr ""
-#~ "La generaci√≥ dels fitxers de mapes de fonts amb updmap ha fallat. Per "
-#~ "aquesta ra√≥, TeX, LaTeX, etc. tindran problemes per trobar els fitxers de "
+#~ "La generaciÛ dels fitxers de mapes de fonts amb updmap ha fallat. Per "
+#~ "aquesta raÛ, TeX, LaTeX, etc. tindran problemes per trobar els fitxers de "
 #~ "fonts que necessiten."
 
 # ../templates:136

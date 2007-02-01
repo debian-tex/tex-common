@@ -1,0 +1,77 @@
+# Portuguese translation of tex-common's debconf messages
+# This file is distributed under the same license as the tex-common package.
+# Rui Branco <ruipb@debianpt.org>, 2007
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: tex-common\n"
+"Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
+"POT-Creation-Date: 2007-01-15 07:53+0000\n"
+"PO-Revision-Date: 2007-01-28 19:47+0000\n"
+"Last-Translator: Rui Branco <ruipb@debianpt.org>\n"
+"Language-Team: Portuguese <traduz@debianpt.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "Essential entry missing in ${filename}"
+msgstr "Falta entrada essencial em ${filename}"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "An essential entry is missing in ${filename}:"
+msgstr "Uma entrada essencial falta em ${filename}:"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "No setting of ${variable}."
+msgstr "Nenhuma definição da ${variable}."
+
+#. Type: error
+#. Description
+#. Type: error
+#. Description
+#: ../templates:1001 ../templates:2001
+msgid ""
+"TeX will not work without it, you need to fix your configuration files.  The "
+"version of ${filename} that is provided by the package should be available "
+"as ${filename}.ucf-dist."
+msgstr ""
+"O Tex não irá funcionar sem ela, precisa de corrigir os seus ficheiros de "
+"configuração.  A versão do ${filename} fornecida por este pacote deverá "
+"estar disponível como ${filename}.ucf-dist."
+
+#. Type: error
+#. Description
+#. Type: error
+#. Description
+#: ../templates:1001 ../templates:2001
+msgid "Exiting."
+msgstr "A sair."
+
+#. Type: error
+#. Description
+#: ../templates:2001
+msgid "Essential entry wrong in ${filename}"
+msgstr "Entrada essencial errada em ${filename}"
+
+#. Type: error
+#. Description
+#: ../templates:2001
+msgid ""
+"An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgstr ""
+"Uma entrada essencial está errada em ${filename}: a ${variable} não "
+"contém "
+
+#. Type: error
+#. Description
+#: ../templates:2001
+msgid "${pattern}"
+msgstr "${pattern}"
+
