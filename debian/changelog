@@ -1,5 +1,7 @@
-tex-common (0.45) unstable; urgency=low
+tex-common (1.0) unstable; urgency=low
 
+  * Release as version 1.0, tex-common has been stable for months and
+    deserves a non-zero version number
   * Debconf translations: [frank]
     - New Romanian translation, thanks to Eddy Petrișor
       <eddy.petrisor@gmail.com> (closes: #409267) 
@@ -8,7 +10,7 @@ tex-common (0.45) unstable; urgency=low
     - Updated Catalan translation, thanks to Guillem Jover
       <guillem@debian.org> (closes: #409162)
 
- -- Frank Küster <frank@debian.org>  Thu,  1 Feb 2007 22:02:27 +0100
+ -- Frank Küster <frank@debian.org>  Mon,  5 Feb 2007 10:55:26 +0100
 
 tex-common (0.44) unstable; urgency=low
 
