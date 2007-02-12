@@ -1,3 +1,10 @@
+tex-common (1.1~1) unstable; urgency=low
+
+  * Increase trie_size to the value in TeXLive 2007, and update the
+    comment from their texmf.in file, too.
+
+ -- Frank Küster <frank@debian.org>  Mon, 12 Feb 2007 19:05:54 +0100
+
 tex-common (1.0) unstable; urgency=low
 
   * Release as version 1.0, tex-common has been stable for months and
