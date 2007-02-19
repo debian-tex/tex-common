@@ -16,6 +16,7 @@ B<dh_installtex>
 [B<-n>]
 [B<--priority=>I<n>]
 [B<--flavor=>I<flavor>[,I<flavor>]]
+[B<--no-format-links>]
 [B<map=MixedMap,>I<file.map>]
 [B<map=Map,>I<file.map>]
 [B<mapfile=>I<file.cfg>[=I<n>]]
@@ -168,12 +169,24 @@ activated via the updmap(-sys) mechanism.
 
 Default is I<not> to generate any config files.
 
-B<format:build_all> creates all defined formats in the postinst file,
-recreates all defined formats in the postrm file, and in addition cleans
-the generated files in the postrm files.
+B<format:build_all> will add code to the postinst script to create all
+defined formats, and to the postrm script to clean and recreate? FIXME?
+the generated formats.
 
 B<format:add_one:I<formatname>> allows to add the generation of a specific
-format without actually providing it (in a cnf file).
+format without actually providing it (in a cnf file).  This is useful if a 
+package adds hyphenation patterns to an existing formats.
+
+=item B<--no-format-links>]
+
+Usually, for every format that is specified in a configuration file in
+/etc/texmf/fmt.d/, dh_installtex will create a symlink
+/usr/bin/I<format> that points to the corresponding engine.  For
+example, /usr/bin/latex would be created as a symlink to pdftex.  
+
+The option B<--no-format-links> inhibits this. If a link already
+exists, dh_installtex will skip this format with an informational
+message, even if this option is not given.
 
 =head1 NOTES
 
