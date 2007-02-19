@@ -1,18 +1,18 @@
-#
-# postinst-tex
-#
-# postinst snippets for registering hyphenation patterns, font maps, and formats
-#
-# Authors:
-#       Florent Rougon <f.rougon@free.fr>
-#       Norbert Preining <preining@logic.at>
-#
+##
+## postinst-tex
+##
+## postinst snippets for registering hyphenation patterns, font maps, 
+## and formats
+##
+## Authors:
+##       Florent Rougon <f.rougon@free.fr>
+##       Norbert Preining <preining@logic.at>
+##
 # Please note that comments in this file are stripped before installation
-# by calling a grep -v '^[ \t]*#'
+# by calling a grep -v '^[ \t]*# '
+# Thus, first lines containing ## are preserved!
 # So please be careful if you add stuff here!
 #
-# Let vim know that we don't want tabs
-# vim:set expandtab: #
 
 dhit_create_fontmaps ()
 {
@@ -86,6 +86,9 @@ case "$1" in
                         dhit_create_fontmaps
                     fi
                 fi
+                if [ "$i" = allformats ] ; then
+                    dhit_build_format --all
+                fi
                 if [ "$i" = format ] ; then
                     for fmt in #FORMATS# ; do
                         dhit_build_format --byfmt $fmt
@@ -104,3 +107,6 @@ case "$1" in
         exit 1
     ;;
 esac
+
+# Let vim know that we don't want tabs
+# vim:set expandtab: #

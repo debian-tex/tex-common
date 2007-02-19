@@ -1,18 +1,17 @@
-#
-# postrm-tex
-#
-# postrm snippets for registering hyphenation patterns, font maps, and formats
-#
-# Authors:
-#       Florent Rougon <f.rougon@free.fr>
-#       Norbert Preining <preining@logic.at>
-#
+##
+## postrm-tex
+##
+## postrm snippets for registering hyphenation patterns, font maps, and formats
+##
+## Authors:
+##       Florent Rougon <f.rougon@free.fr>
+##       Norbert Preining <preining@logic.at>
+##
 # Please note that comments in this file are stripped before installation
-# by calling a grep -v '^[ \t]*#'
+# by calling a grep -v '^[ \t]*# '
+# Thus, first lines containing ## are preserved!
 # So please be careful if you add stuff here!
 #
-# Let vim know that we don't want tabs
-# vim:set expandtab: #
 
 dhit_build_format ()
 {
@@ -54,6 +53,12 @@ case "$1" in
                 dhit_libkpathsea_configured && \
                     dhit_check_run_without_errors updmap-sys
             fi
+            if [ "$i" = allformats ] ; then
+                for fmt in #FORMATS# ; do
+                    rm -f /var/lib/texmf/web2c/$fmt.*
+                done
+                dhit_build_format --all
+            fi
             if [ "$i" = format ] ; then
                 for fmt in #FORMATS# ; do
                     rm -f /var/lib/texmf/web2c/$fmt.*
@@ -77,3 +82,6 @@ case "$1" in
         exit 1
     ;;
 esac
+
+# Let vim know that we don't want tabs
+# vim:set expandtab: #

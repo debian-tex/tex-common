@@ -1,18 +1,17 @@
-#
-# postrm-texlsr
-#
-# postrm snippets for calling mktexlsr and update-*
-#
-# Authors:
-#       Florent Rougon <f.rougon@free.fr>
-#       Norbert Preining <preining@logic.at>
-#
+##
+## postrm-texlsr
+##
+## postrm snippets for calling mktexlsr and update-*
+##
+## Authors:
+##       Florent Rougon <f.rougon@free.fr>
+##       Norbert Preining <preining@logic.at>
+##
 # Please note that comments in this file are stripped before installation
-# by calling a grep -v '^[ \t]*#'
+# by calling a grep -v '^[ \t]*# '
+# Thus, first lines containing ## are preserved!
 # So please be careful if you add stuff here!
 #
-# Let vim know that we don't want tabs
-# vim:set expandtab: #
 
 
 # Tell if kpsewhich works. If this is the case:
@@ -78,3 +77,6 @@ case "$1" in
         exit 1
     ;;
 esac
+
+# Let vim know that we don't want tabs
+# vim:set expandtab: #
