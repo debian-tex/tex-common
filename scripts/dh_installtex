@@ -288,7 +288,7 @@ sub collect_data {
 
 sub extract_format {
 	my ($line) = @_;
-	if ($line =~ m/^([^#\s]\S+)\s*(\S*)\s+) {
+	if ($line =~ m/^([^#\s]\S+)\s*(\S*)\s+/) {
 		return "$1\t$2";
 	}
 }
@@ -451,9 +451,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			error("This call would create multiple copies of $priority$package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
 		}
 
-        	if ( ! -d "$tmp/etc/texmf/$configdir{$type}/") {
+        	if ( ! $dh{ONLYSCRIPTS} && ! -d "$tmp/etc/texmf/$configdir{$type}/") {
 			doit("install","-d","$tmp/etc/texmf/$configdir{$type}/");
-        	} unless ($dh{ONLYSCRIPTS});
+        	};
 		#
 		# the cmd line cfg files
 		#
@@ -513,7 +513,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			}
 			close(CFGFILE);
 			push @listlines, "$priority$package";
-		} unless ($dh{ONLYSCRIPTS});
+		};
 
 	      WRITELISTFILE: do {
         	if ( ! -d "$tmp/var/lib/tex-common/$managedir{$type}/") {
@@ -533,9 +533,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	if (defined($data{"map"})) {
 		@mapdata = @{$data{"map"}};
 	}
-	if ($#mapdata >= 0) {
+	if ( ! $dh{ONLYSCRIPTS} && ($#mapdata >= 0) ) {
 		doit("install","-d","$tmp/usr/share/texmf/dvips/config/");
-	} unless ($dh{ONLYSCRIPTS});
+	};
+ INSTALLDVIPSCONF: do {
 	foreach $i (@mapdata) {
 		my $font = $i;
 		$font =~ s/\.map$//;
@@ -547,25 +548,29 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		verbose_print("Writing $dofilen");
 		print CNFFILE "p +$i\n";
 		close(CNFFILE);
-        } unless ($dh{ONLYSCRIPTS});
+        } 
+	} unless ($dh{ONLYSCRIPTS});
 
 	my @fmtpairs = ();
 	my @fmtdata = ();
 	if (defined($data{"format"})) {
 		@fmtpairs = @{$data{"format"}};
 	}
+ installformatlink: do {
 	foreach my $pair (@fmtpairs) {
 		my ($format,$engine) = $pair =~ m/^(.*)\t(.*)$/;
 		push @fmtdata, $format;
-		if ($doformatlinks) {
+		if ($doformatlinks && ($format ne $engine)) {
 		  my $formatlink = "$tmp/usr/bin/$format";
 		  if ( -e $formatlink ) {
 		    warning("/usr/bin/$format already exists, skipping");
 		  } else {
-		    doit("ln","-s","$engine",$formatlink);
+		    doit("mkdir","-p","$tmp/usr/bin");
+		    doit("ln","-s","$engine","$formatlink");
 		  };
 		}
-	} unless ($dh{ONLYSCRIPTS});
+	} 
+}unless ($dh{ONLYSCRIPTS});
 
 	if ($#addbuildformats >= 0) {
 		push @fmtdata, @addbuildformats;
