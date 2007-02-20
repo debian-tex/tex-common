@@ -450,9 +450,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		if ($pkgfileoncmdline && ($pkgprovidedfile || ($#cmdlinearguments >= 0))) {
 			error("This call would create multiple copies of $priority$package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
 		}
+
         	if ( ! -d "$tmp/etc/texmf/$configdir{$type}/") {
 			doit("install","-d","$tmp/etc/texmf/$configdir{$type}/");
-        	}
+        	} unless ($dh{ONLYSCRIPTS});
 		#
 		# the cmd line cfg files
 		#
@@ -460,6 +461,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			$bn=basename($_);
 			$pr=$cmdlinefilespriority{$type}{$_};
 			$dofilen = "$tmp/etc/texmf/$configdir{$type}/$pr$bn";
+		      WRITECMDLINECFGFILE: do {
 			-r $dofilen &&
 				error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
 			open(CFGFILE, ">$dofilen") ||
@@ -480,12 +482,13 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			close(CFGFILE);
 			$bn =~ s/\.$configfileext{$type}$//;
 			push @listlines, "$pr$bn";
+		      } unless ($dh{ONLYSCRIPTS});
 		}
 		#
 		# now debian/package.maps and/or debian/maps formats languages
 		# merge in the cmd line arguments
 		#
-		if ($pkgprovidedfile || ($#cmdlinearguments >= 0)) {
+		if ( ! $dh{ONLYSCRIPTS} && ( $pkgprovidedfile || ($#cmdlinearguments >= 0) )) {
 			$dofilen = "$tmp/etc/texmf/$configdir{$type}/$priority$package.$configfileext{$type}";
 			-r $dofilen && 
 				error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
@@ -510,12 +513,12 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			}
 			close(CFGFILE);
 			push @listlines, "$priority$package";
-		}
-		
+		} unless ($dh{ONLYSCRIPTS});
+
+	      WRITELISTFILE: do {
         	if ( ! -d "$tmp/var/lib/tex-common/$managedir{$type}/") {
             		doit("install","-d","$tmp/var/lib/tex-common/$managedir{$type}/");
-        	}
-		$dofilen = "$tmp/var/lib/tex-common/$managedir{$type}/$package.list";
+        	}		$dofilen = "$tmp/var/lib/tex-common/$managedir{$type}/$package.list";
 		open(LISTFILE, ">>$dofilen")||
 			error("Cannot open $dofilen for writing/appending!");
 		verbose_print("Writing $dofilen");
@@ -523,8 +526,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			print LISTFILE "$_\n";
 		}
 		close(LISTFILE);
+	      }  unless ($dh{ONLYSCRIPTS});
 	}
-
 	
 	my @mapdata = ();
 	if (defined($data{"map"})) {
@@ -532,11 +535,11 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	}
 	if ($#mapdata >= 0) {
 		doit("install","-d","$tmp/usr/share/texmf/dvips/config/");
-	}
+	} unless ($dh{ONLYSCRIPTS});
 	foreach $i (@mapdata) {
-		my $f = $i;
-		$f =~ s/\.map$//;
-		$dofilen = "$tmp/usr/share/texmf/dvips/config/config.$f";
+		my $font = $i;
+		$font =~ s/\.map$//;
+		$dofilen = "$tmp/usr/share/texmf/dvips/config/config.$font";
 		-r $dofilen &&
 			error("The dvips config file $dofilen already exists!\nYou may have to call dh_clean -k!\n");
 		open(CNFFILE, ">$dofilen") ||
@@ -544,23 +547,26 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		verbose_print("Writing $dofilen");
 		print CNFFILE "p +$i\n";
 		close(CNFFILE);
-	}
+        } unless ($dh{ONLYSCRIPTS});
 
 	my @fmtpairs = ();
 	my @fmtdata = ();
 	if (defined($data{"format"})) {
 		@fmtpairs = @{$data{"format"}};
 	}
-	foreach my $ab (@fmtpairs) {
-		$ab =~ m/^(.*)\t(.*)$/;
-		push @fmtdata, $1;
+	foreach my $pair (@fmtpairs) {
+		my ($format,$engine) = $pair =~ m/^(.*)\t(.*)$/;
+		push @fmtdata, $format;
 		if ($doformatlinks) {
-			# the following should be done in a
-			# better way!!!!!!!!!!!!!!!!!!!!!!!
-			# but it is too late ...
-			`ln -s $2 $tmp/usr/bin/$1`
+		  my $formatlink = "$tmp/usr/bin/$format";
+		  if ( -e $formatlink ) {
+		    warning("/usr/bin/$format already exists, skipping");
+		  } else {
+		    doit("ln","-s","$engine",$formatlink);
+		  };
 		}
-	}
+	} unless ($dh{ONLYSCRIPTS});
+
 	if ($#addbuildformats >= 0) {
 		push @fmtdata, @addbuildformats;
 	}
