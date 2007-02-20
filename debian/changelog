@@ -7,6 +7,8 @@ tex-common (1.1~1) unstable; urgency=low
   * small fix to dh_installtex for useless inclusion of postinst-tex
     (move the definition of $dothefullstuff into the package loop)
   * implement flavors format:build_all and format:add_one:formatname
+  * let dh_installtex automatically create links for formats installed
+    and add flavor to disable this behaviour.
 
  -- Norbert Preining <preining@debian.org>  Sun, 18 Feb 2007 13:13:04 +0100
 

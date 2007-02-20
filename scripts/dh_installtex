@@ -213,6 +213,7 @@ my $mapdoconfig =  0;	# doconfig depending map/subflavor
 my $doallformats = 0;	# depending on flavor format:build_all
 my @addbuildformats = (); # additional formats to be build
 my $priority=20;	# priority with which files are installed
+my $doformatlinks = 1;
 my %cmdlineargs;
 my %cmdlinefiles;
 my %cmdlinefilespriority;
@@ -271,8 +272,9 @@ my @magicheader = ( "You can change/add entries to this file and changes will be
 # 	(with map:config_for_active_maps or map:config_for_all_maps)
 # 	we collect the map files
 # for config file for formats
-# 	we extract the formats which have to be generated with
-# 	fmtutil-sys --byfmt
+# 	we extract format\tengine for
+# 		- generation with fmtutil-sys --byfmt
+# 		- creation of links /usr/bin/format -> /usr/bin/engine
 sub collect_data {
 	my ($type,$dataref,$entry) = @_;
 	my $m;
@@ -286,8 +288,8 @@ sub collect_data {
 
 sub extract_format {
 	my ($line) = @_;
-	if ($line =~ m/^([^#\s]\S*)/) {
-		return $1;
+	if ($line =~ m/^([^#\s]\S+)\s*(\S*)\s+) {
+		return "$1\t$2";
 	}
 }
 
@@ -313,7 +315,7 @@ sub build_line {
 		if ($line =~ m/^(Map|MixedMap),(.*)$/) {
 			return("$1 $2");
 		} else {
-			error("$line is neither of the form Map,filename.map, MixedMap,filename.map.");
+			error("$line is neither of the form Map filename.map, nor MixedMap filename.map.");
 		}
 	} elsif ($type eq "format") {
 		my ($format,$engine,$pat,@rest) = split(",",$line);
@@ -379,6 +381,8 @@ if (defined($dh{FLAVOR})) {
 			$doallformats = 1;
 		} elsif ($fl =~ /^format:add_one:(.*)$/) {
 			push @addbuildformats , $1;
+		} elsif ($fl eq "format:no_format_links") {
+			$doformatlinks = 0;
 		} else {
 			error("Specified flavor $fl not supported.\nPlease see man page for supported flavors!\n");
 		}
@@ -519,30 +523,43 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			print LISTFILE "$_\n";
 		}
 		close(LISTFILE);
-
-		if ($type eq "map") {
-		    my @data = @{$data{"map"}};
-		    if ($#data >= 0) {
-			doit("install","-d","$tmp/usr/share/texmf/dvips/config/");
-		    }
-		    foreach $i (@data) {
-			my $f = $i;
-			$f =~ s/\.map$//;
-			$dofilen = "$tmp/usr/share/texmf/dvips/config/config.$f";
-			-r $dofilen &&
-			    error("The dvips config file $dofilen already exists!\nYou may have to call dh_clean -k!\n");
-			open(CNFFILE, ">$dofilen") ||
-			    error("Cannot open $dofilen for writing!");
-			verbose_print("Writing $dofilen");
-			print CNFFILE "p +$i\n";
-			close(CNFFILE);
-		    }
-		}
 	}
 
+	
+	my @mapdata = ();
+	if (defined($data{"map"})) {
+		@mapdata = @{$data{"map"}};
+	}
+	if ($#mapdata >= 0) {
+		doit("install","-d","$tmp/usr/share/texmf/dvips/config/");
+	}
+	foreach $i (@mapdata) {
+		my $f = $i;
+		$f =~ s/\.map$//;
+		$dofilen = "$tmp/usr/share/texmf/dvips/config/config.$f";
+		-r $dofilen &&
+			error("The dvips config file $dofilen already exists!\nYou may have to call dh_clean -k!\n");
+		open(CNFFILE, ">$dofilen") ||
+			error("Cannot open $dofilen for writing!");
+		verbose_print("Writing $dofilen");
+		print CNFFILE "p +$i\n";
+		close(CNFFILE);
+	}
+
+	my @fmtpairs = ();
 	my @fmtdata = ();
 	if (defined($data{"format"})) {
-		@fmtdata = @{$data{"format"}};
+		@fmtpairs = @{$data{"format"}};
+	}
+	foreach my $ab (@fmtpairs) {
+		$ab =~ m/^(.*)\t(.*)$/;
+		push @fmtdata, $1;
+		if ($doformatlinks) {
+			# the following should be done in a
+			# better way!!!!!!!!!!!!!!!!!!!!!!!
+			# but it is too late ...
+			`ln -s $2 $tmp/usr/bin/$1`
+		}
 	}
 	if ($#addbuildformats >= 0) {
 		push @fmtdata, @addbuildformats;
