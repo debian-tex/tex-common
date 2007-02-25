@@ -1,7 +1,7 @@
 tex-common (1.1~2) experimental; urgency=low
 
   * Upload to experimental.  This version is needed to build TeXLive
-    2007. 
+    2007.
   * Increase trie_size to the value in TeXLive 2007, and update the
     comment from their texmf.in file, too.
   * Only strip comments with '^[ \t]*# ' from the auto files to preserve
@@ -11,8 +11,10 @@ tex-common (1.1~2) experimental; urgency=low
   * implement flavors format:build_all and format:add_one:formatname
   * let dh_installtex automatically create links for formats installed
     and add flavor to disable this behaviour.
+  * fix a bug in dh_installtex which prohibits --priority to work 
+    correctly for command line config files. [NP]
 
- -- Frank Küster <frank@debian.org>  Tue, 20 Feb 2007 14:42:45 +0100
+ -- Norbert Preining <preining@debian.org>  Sun, 25 Feb 2007 18:25:53 +0100
 
 tex-common (1.0) unstable; urgency=low
 

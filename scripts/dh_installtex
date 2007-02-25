@@ -346,6 +346,10 @@ sub magic_comment_present {
 #
 #
 
+if (defined($dh{PRIORITY}) && $dh{PRIORITY} ne '') {
+	$priority=$dh{PRIORITY};
+}
+
 #
 # parse the cmd line and fill in the various hashes
 #
@@ -389,9 +393,6 @@ if (defined($dh{FLAVOR})) {
 	}
 }
 
-if (defined($dh{PRIORITY}) && $dh{PRIORITY} ne '') {
-	$priority=$dh{PRIORITY};
-}
 
 
 foreach my $package (@{$dh{DOPACKAGES}}) {
