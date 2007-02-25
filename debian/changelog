@@ -11,10 +11,12 @@ tex-common (1.1~2) experimental; urgency=low
   * implement flavors format:build_all and format:add_one:formatname
   * let dh_installtex automatically create links for formats installed
     and add flavor to disable this behaviour.
-  * fix a bug in dh_installtex which prohibits --priority to work 
+  * fix a bug in dh_installtex which prohibits --priority to work
     correctly for command line config files. [NP]
+  * add Norbert Preining <preining@debian.org> to the uploaders
+  * add lintian overrides for wrongly detected bashism
 
- -- Norbert Preining <preining@debian.org>  Sun, 25 Feb 2007 18:25:53 +0100
+ -- Norbert Preining <preining@debian.org>  Sun, 25 Feb 2007 18:50:08 +0100
 
 tex-common (1.0) unstable; urgency=low
 
