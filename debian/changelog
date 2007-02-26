@@ -1,4 +1,4 @@
-tex-common (1.1~2) experimental; urgency=low
+tex-common (1.1) experimental; urgency=low
 
   * Upload to experimental.  This version is needed to build TeXLive
     2007.
@@ -16,7 +16,7 @@ tex-common (1.1~2) experimental; urgency=low
   * add Norbert Preining <preining@debian.org> to the uploaders
   * add lintian overrides for wrongly detected bashism
 
- -- Norbert Preining <preining@debian.org>  Sun, 25 Feb 2007 18:50:08 +0100
+ -- Norbert Preining <preining@debian.org>  Mon, 26 Feb 2007 18:31:32 +0100
 
 tex-common (1.0) unstable; urgency=low
 
