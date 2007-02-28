@@ -1,3 +1,10 @@
+tex-common (1.2) UNRELEASED; urgency=low
+
+  * rename flavor format:no_format_links to format:no_links (nobody is using
+    it already), and document it. [NP]
+
+ -- Norbert Preining <preining@debian.org>  Wed, 28 Feb 2007 21:11:20 +0100
+
 tex-common (1.1) experimental; urgency=low
 
   * Upload to experimental.  This version is needed to build TeXLive
