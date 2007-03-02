@@ -1,9 +1,11 @@
-tex-common (1.2) UNRELEASED; urgency=low
+tex-common (1.2~1) UNRELEASED; urgency=low
 
   * rename flavor format:no_format_links to format:no_links (nobody is using
-    it already), and document it. [NP]
+    it already), and document it [NP]
+  * increase trie_size to 400000 to allow the loading of all texlive 
+    hyphenation patterns [NP]
 
- -- Norbert Preining <preining@debian.org>  Wed, 28 Feb 2007 21:11:20 +0100
+ -- Norbert Preining <preining@debian.org>  Fri,  2 Mar 2007 04:08:35 +0100
 
 tex-common (1.1) experimental; urgency=low
 
