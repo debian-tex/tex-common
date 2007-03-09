@@ -1,11 +1,13 @@
-tex-common (1.2~1) UNRELEASED; urgency=low
+tex-common (1.2) experimental; urgency=low
 
   * rename flavor format:no_format_links to format:no_links (nobody is using
     it already), and document it [NP]
   * increase trie_size to 400000 to allow the loading of all texlive 
     hyphenation patterns [NP]
+  * Make sure that dh_installtex's postrm snippets won't try to run
+    fmtutil-sys when it might be already uninstalled.
 
- -- Norbert Preining <preining@debian.org>  Fri,  2 Mar 2007 04:08:35 +0100
+ -- Frank Küster <frank@debian.org>  Fri,  9 Mar 2007 16:12:17 +0100
 
 tex-common (1.1) experimental; urgency=low
 

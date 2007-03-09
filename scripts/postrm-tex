@@ -41,7 +41,7 @@ dhit_build_hyphen_format_if_format_exists ()
     fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
     X=$(grep "^[[:space:]]*$1[[:space:]]" "$fmtcnffile" || true)
     if [ -n "$X" ] ; then
-        dhit_build_format --byhyphen "$2"
+        dhit_check_run_without_errors fmtutil-sys --byhyphen "$2"
     fi
 }
 
@@ -57,7 +57,7 @@ case "$1" in
                 for fmt in #FORMATS# ; do
                     rm -f /var/lib/texmf/web2c/$fmt.*
                 done
-                dhit_build_format --all
+                dhit_check_run_without_errors fmtutil-sys --all
             fi
             if [ "$i" = format ] ; then
                 for fmt in #FORMATS# ; do
