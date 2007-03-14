@@ -288,10 +288,10 @@
           <prgn>fmtutil</prgn> commands. Note
 	  that <prgn>texconfig</prgn> creates a copy of configuration
 	  files from <var>TEXMFMAIN</var> (or <file>/etc/texmf</file>)
-	  at the time it is first invoked, and does not track later
-	  system-wide changes, and it does not know
-	  about <prgn>update-*</prgn> programs (see
-	  below <ref id="sec-core-config-files">
+	  at the time it is first invoked to handle a particular file,
+	  and does not track later system-wide changes, and it does
+	  not know about <prgn>update-*</prgn> programs (see
+	  below <ref id="sec-core-config-files">)
         </p>
       </sect>
 

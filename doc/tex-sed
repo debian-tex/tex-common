@@ -1,6 +1,7 @@
 #!/bin/bash
-sed -e 's@TeX@\\TeX{}@g;
-s@La\\TeX@\\LaTeX@g;
-s@Debian-\\TeX{}-policy@Debian-TeX-policy@g;
-s@Metafont@\\MF{}@g;
+sed -e 's@(^|[[:space:]])TeX([[:space:]]|$)@\1\\TeX{}\2@g
+s@(^|[[:space:]])LaTeX([[:space:]]|$)@\1\\LaTeX{}\2@g
+s@(^|[[:space:]])pdfTeX([[:space:]]|$)@\1pdf\\TeX{}\2@g
+s@(^|[[:space:]])TeX-related([[:space:]]|$)@\1\\TeX-related\2@g
+s@(^|[[:space:]])Metafont([[:space:]]|$)@\1\\MF{}\2@g
 /fontenc/ a \\\\usepackage{mflogo}' < $1 > $2
