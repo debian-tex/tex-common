@@ -1,7 +1,0 @@
-#!/bin/bash
-sed -r -e 's@(^|[[:space:]])TeX([[:space:]]|$)@\1\\TeX{}\2@g;
-s@(^|[[:space:]])LaTeX([[:space:]]|$)@\1\\LaTeX{}\2@g;
-s@(^|[[:space:]])pdfTeX([[:space:]]|$)@\1pdf\\TeX{}\2@g;
-s@(^|[[:space:]])TeX-related([[:space:]]|$)@\1\\TeX-related\2@g;
-s@(^|[[:space:]])Metafont([[:space:]]|$)@\1\\MF{}\2@g;
-/fontenc/ a \\\\usepackage{mflogo}' < $1 > $2

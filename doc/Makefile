@@ -13,8 +13,8 @@ policy-html: Debian-TeX-Policy.sgml version.ent
 
 policy-pdf: Debian-TeX-Policy.pdf
 
-Debian-TeX-Policy.pdf: Debian-TeX-Policy.sgml version.ent tex-sed
-	debiandoc2latexpdf -s ./tex-sed Debian-TeX-Policy.sgml
+Debian-TeX-Policy.pdf: Debian-TeX-Policy.sgml version.ent texify-tex-output
+	debiandoc2latexpdf -s ./texify-tex-output Debian-TeX-Policy.sgml
 
 tex-on-debian-txt: TeX-on-Debian.sgml
 	debiandoc2text TeX-on-Debian.sgml
@@ -25,8 +25,8 @@ tex-on-debian-pdf: TeX-on-Debian.pdf
 TeX-on-Debian.html: TeX-on-Debian.sgml
 	debiandoc2html TeX-on-Debian.sgml
 
-TeX-on-Debian.pdf: TeX-on-Debian.sgml tex-sed
-	debiandoc2latexpdf -s ./tex-sed TeX-on-Debian.sgml
+TeX-on-Debian.pdf: TeX-on-Debian.sgml texify-tex-output
+	debiandoc2latexpdf -s ./texify-tex-output TeX-on-Debian.sgml
 
 get-tds:
 	wget ftp://www.tug.org/tex/tds.tar.gz
@@ -46,7 +46,7 @@ install:
 	cp TeX-on-Debian.txt $(DESTDIR)/
 	cp TeX-on-Debian.pdf $(DESTDIR)/
 	cp -R TeX-on-Debian.html $(DESTDIR)/
-	
+
 	cp tds-$(TDS_VERSION)/tds.pdf $(DESTDIR)/
 	cp tds-$(TDS_VERSION)/tds.dvi $(DESTDIR)/
 	cp tds-$(TDS_VERSION)/tds.html $(DESTDIR)/

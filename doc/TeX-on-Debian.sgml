@@ -450,7 +450,7 @@
           </heading>
           <p>
             The TeX binaries are built to look for <file>texmf.cnf</file> (the
-            master config file for TeX and MetaFont) in
+            master config file for TeX and Metafont) in
             <file>/usr/share/texmf/web2c/texmf.cnf</file> (or
             <file>$HOME/.texmf-config/web2c/texmf.cnf</file> if it exists).
             The system-wide file is a symbolic link to
@@ -488,12 +488,11 @@
             order in which configuration fragments will be assembled by
             <prgn>update-texmf</prgn>, so it might be important to place your
             customizations in an appropriate place in the sequence &mdash;
-            earlier definitions take precedence over later ones.  In
-            previous versions the extension <tt>.cnf</tt> was not
-            necessary, and all files in the directory were used.  If you
-            had <package>teTeX</package> installed in woody, you might
-            still have private files which need the extension to be
-            added. 
+            earlier definitions take precedence over later ones. In previous
+            versions the extension <tt>.cnf</tt> was not necessary, and all
+            files in the directory were used. If you had teTeX installed in
+            woody, you might still have private files which need the extension
+            to be added.
           </p>
 
          <sect1>

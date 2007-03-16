@@ -993,7 +993,7 @@ fi
 	</sect1>
 	<sect1><heading>Font cache data</heading>
 	  <p>
-	    Font cache data are created each time a font in MetaFont
+	    Font cache data are created each time a font in Metafont
 	    format is used, and placed by default
 	    in <var>TEXMFVAR</var>.  During package build, this has to
 	    be avoided.  In order to be able to clean up the generated
@@ -1004,7 +1004,7 @@ fi
 	    e.g. <file><var>$(CURDIR)</var>/.texmf-var</file>, using
 	    Make's built-in variable.  Packages which do not
 	    change <var>TEXMFVAR</var> <em>must</em> not create
-	    documentation that uses MetaFont fonts in
+	    documentation that uses Metafont fonts in
 	    the <tt>binary</tt> target.
 	  </p>
 	</sect1>
