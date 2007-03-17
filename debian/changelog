@@ -1,4 +1,6 @@
 tex-common (1.3~1) unreleased; urgency=low
+  
+### PDF docs have to be rebuilt before release ###
 
   * Fix typography in Debian-on-TeX, thanks to Miguel de Val Borro
     <miguel.deval@gmail.com> (closes: #413449) [frank]
