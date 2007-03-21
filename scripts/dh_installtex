@@ -558,7 +558,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
  installformatlink: do {
 	foreach my $pair (@fmtpairs) {
 		my ($format,$engine) = $pair =~ m/^(.*)\t(.*)$/;
-		push @fmtdata, $format;
+		push @fmtdata, "$engine/$format";
+		push @fmtdata, "$format";
 		if ($doformatlinks && ($format ne $engine)) {
 		  my $formatlink = "$tmp/usr/bin/$format";
 		  if ( -e $formatlink ) {
