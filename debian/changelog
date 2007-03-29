@@ -1,3 +1,11 @@
+tex-common (1.4) UNRELEASED; urgency=low
+
+  * change main_memory to 1500000 to go with the main_memory of mpost
+    and TeX Live's texmf.cnf. This change is needed to make mpost work
+    under all circumstances [np].
+
+ -- Norbert Preining <preining@debian.org>  Thu, 29 Mar 2007 18:19:26 +0200
+
 tex-common (1.3) experimental; urgency=low
 
   * Fix typography in Debian-on-TeX, thanks to Miguel de Val Borro

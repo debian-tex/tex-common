@@ -87,7 +87,7 @@ MPXCOMMAND = makempx
 % For some xy-pic samples, you may need as much as 700000 words of memory.
 % For the vast majority of documents, 60000 or less will do.
 % 
-main_memory = 1000000 % words of inimemory available; also applies to inimf&mp
+main_memory = 1500000 % words of inimemory available; also applies to inimf&mp
 extra_mem_top = 0     % extra high memory for chars, tokens, etc.
 extra_mem_bot = 0     % extra low memory for boxes, glue, breakpoints, etc.
 
