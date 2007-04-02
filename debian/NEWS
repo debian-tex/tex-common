@@ -1,3 +1,27 @@
+tex-common (1.4) unstable; urgency=low
+
+  * Filename database in $TEXMFHOME is no longer created and updated
+  
+    The ls-R filename database in $TEXMFHOME, $HOME/texmf, is no longer
+    created in new installs, and also not updated by default.  This makes
+    sense unless you have a very large number of files installed in that
+    tree. 
+  
+    However, you MUST remove the old file $HOME/texmf/ls-R in order to
+    allow TeX to find new files in that hierarchy!
+   
+  * Backwards compatibility hacks dropped
+  
+    In etch, some tools and search paths still supported obsolete paths
+    and invocations.  These backwards compatibility hacks, most notably to
+    the *-sys tools and font search paths, have now been dropped.
+
+  * The parse-first-line feature is now enabled by default, in order to
+    allow MetaPost to call TeX with different formats.  Only when invoked
+    as "teX" it is disabled to remain Knuth-compatible.
+  
+ -- Frank Küster <frank@debian.org>  Mon,  2 Apr 2007 13:42:06 +0200
+
 tex-common (0.26) unstable; urgency=low
   
   * New font cache handling

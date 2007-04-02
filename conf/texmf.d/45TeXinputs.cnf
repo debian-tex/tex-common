@@ -42,8 +42,9 @@ TEXINPUTS.pdfxlatex = .;$TEXMF/tex/{latex,generic,}//
 TEXINPUTS.pdfxtex   = .;$TEXMF/tex/{plain,generic,}//
 
 % XeTeX
-TEXINPUTS.xelatex = .;$TEXMF/tex/{latex,generic,}//
-TEXINPUTS.xetex   = .;$TEXMF/tex/{plain,generic,}//
+TEXINPUTS.xelatex       = .;$TEXMF/tex/{xelatex,latex,generic,}//
+TEXINPUTS.xeplain       = .;$TEXMF/tex/{xeplain,eplain,plain,generic,}//
+TEXINPUTS.xetex         = .;$TEXMF/tex/{xetex,plain,generic,}//
 
 % Omega / Aleph
 TEXINPUTS.lamed = .;$TEXMF/tex/{lamed,lambda,latex,generic,}//
@@ -51,7 +52,7 @@ TEXINPUTS.lambda = .;$TEXMF/tex/{lambda,latex,generic,}//
 TEXINPUTS.omega = .;$TEXMF/tex/{plain,generic,}//
 TEXINPUTS.aleph = .;$TEXMF/tex/{plain,generic,}//
 
-% Context macros by Hans Hagen:
+% ConTeXt
 TEXINPUTS.context = .;$TEXMF/tex/{context,plain,generic,}//
 
 % odd formats  needing their own paths
@@ -71,9 +72,9 @@ MPINPUTS = .;$TEXMF/metapost//
 % and string pools (.pool) for ini{tex,mf,mp}.  It is silly that we have six
 % paths and directories here (they all resolve to a single place by default),
 % but historically ...
-TEXFORMATS = .;$TEXMF/web2c/{$engine,}
-MFBASES = .;$TEXMF/web2c/{$engine,}
-MPMEMS = .;$TEXMF/web2c/{$engine,}
+TEXFORMATS = .;$TEXMF/web2c/{$engine,}//
+MFBASES = .;$TEXMF/web2c/{$engine,}//
+MPMEMS = .;$TEXMF/web2c/{$engine,}//
 TEXPOOL = .;$TEXMF/web2c
 MFPOOL = .;$TEXMF/web2c
 MPPOOL = .;$TEXMF/web2c

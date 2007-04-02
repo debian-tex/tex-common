@@ -1,3 +1,9 @@
+% support the original xdvi.  Must come before the generic settings.
+PKFONTS.XDvi   = .;$TEXMF/%s;$VARTEXFONTS/pk/{%m,modeless}//
+VFFONTS.XDvi   = .;$TEXMF/%s
+PSHEADERS.XDvi = .;$TEXMF/%q{dvips,fonts/type1}//
+TEXPICTS.XDvi  = .;$TEXMF/%q{dvips,tex}//
+
 % Device-independent font metric files.
 VFFONTS = .;$TEXMF/fonts/vf//
 TFMFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/tfm//
@@ -18,14 +24,9 @@ GLYPHFONTS = .;$TEXMF/fonts
 % A place to puth everything that doesn't fit the other font categories.
 MISCFONTS = .;$TEXMF/fonts/misc//
 
-% font name map files.
-% TEXFONTMAPS = .;$TEXMF/{fonts/map,}/{$progname,pdftex,dvips,}//
-% To avoid triple slashes, Debian uses:
+% font name map files.  This isn't just fonts/map// because ConTeXt
+% wants support for having files with the same name in the different
+% subdirs.  Maybe if the programs ever get unified to accepting the same
+% map file syntax the definition can be simplified again.
 TEXFONTMAPS = .;$TEXMF{/fonts/map,}{/$progname,/pdftex,/dvips,}//
-
-% support non"k"-xdvi:
-PKFONTS.XDvi    = .:$TEXMF/%s:$VARTEXFONTS/pk/{%m,modeless}//
-VFFONTS.XDvi    = .:$TEXMF/%s 
-PSHEADERS.XDvi  = .:$TEXMF/%q{dvips,fonts/type1}//
-TEXPICTS.XDvi   = .:$TEXMF/%q{dvips,tex}//
 

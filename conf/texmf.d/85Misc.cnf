@@ -2,9 +2,7 @@
 INDEXSTYLE = .;$TEXMF/makeindex//
 
 % Font encoding files (.enc).
-% ENCFONTS = .;$TEXMF/{fonts/enc,}/{$progname,pdftex,dvips,}//
-% Temporarily add the old path
-ENCFONTS = .;$TEXMF/{fonts/enc,}/{$progname,pdftex,dvips,}//;$TEXMF/dvips//
+ENCFONTS = .;$TEXMF/fonts/enc//
 
 % CMap files.
 CMAPFONTS = .;$TEXMF/fonts/cmap//
@@ -12,25 +10,34 @@ CMAPFONTS = .;$TEXMF/fonts/cmap//
 % Subfont definition files.
 SFDFONTS = .;$TEXMF/fonts/sfd//
 
-% Opentype outline fonts.
+% OpenType outline fonts.
 OPENTYPEFONTS = .;$TEXMF/fonts/opentype//
 
 % pdftex config files:
 PDFTEXCONFIG = .;$TEXMF/pdftex/{$progname,}//
 
 % Used by DMP (ditroff-to-mpx), called by makempx -troff.
-% The path given is correct for GROFF on Linux installed under /usr.
-% Originally: TRFONTS = /usr/lib/font/devpost
-TRFONTS = /usr/share/groff/current/font/devps
+TRFONTS = /usr/{local,}/share/groff/{current/font,site-font}/devps
 MPSUPPORT = .;$TEXMF/metapost/support
 
 % For xdvi to find mime.types and .mailcap, if they do not exist in
 % $HOME.  These are single directories, not paths.
 % (But the default mime.types, at least, may well suffice.)
-MIMELIBDIR = /usr/etc
-MAILCAPLIBDIR = /usr/etc
+MIMELIBDIR = /etc
+MAILCAPLIBDIR = /etc
+
+% Default settings for fontconfig library, used by Win32 versions of  
+% xetex/xdvipdfmx (note that fontconfig on Linux/Unix-like systems 
+% will ignore settings in this file)
+FONTCONFIG_FILE=fonts.conf
+FONTCONFIG_PATH=$SELFAUTOLOC/conf
+FC_CACHEDIR=$SELFAUTOLOC/cache
 
 % TeX documentation and source files, for use with kpsewhich.
+% TeX Live has a separate hierarchy with just documentation, texmf-doc,
+% in addition to the doc files in the other hierarchies.
+TEXMFDOCDIR = $SELFAUTOPARENT/texmf-doc/doc
+% On Debian systems, $TEXMFDOCDIR is unused
 TEXDOCS = .;$TEXMF/doc//
 TEXSOURCES = .;$TEXMF/source//
 
@@ -38,13 +45,10 @@ TEXSOURCES = .;$TEXMF/source//
 WEBINPUTS = .;$TEXMF/web//
 CWEBINPUTS = .;$TEXMF/cweb//
 
-% Omega-related fonts and other files.  The odd construction for OFMFONTS
-% makes it behave in the face of a definition of TFMFONTS.  Unfortunately
-% no default substitution would take place for TFMFONTS, so an explicit
-% path is retained.
-OFMFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/{ofm,tfm}//;$TFMFONTS
+% Omega-related fonts and other files.
+OFMFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/{ofm,tfm}//
 OPLFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/opl//
-OVFFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/ovf//
+OVFFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/{ovf,vf}//
 OVPFONTS = .;{$TEXMF/fonts,$VARTEXFONTS}/ovp//
 OTPINPUTS = .;$TEXMF/omega/otp//
 OCPINPUTS = .;$TEXMF/omega/ocp//
@@ -54,8 +58,8 @@ OCPINPUTS = .;$TEXMF/omega/ocp//
 % search formats, you'll want to add their variables here as well.
 T4HTINPUTS   = .;$TEXMF/tex4ht//
 
-% Architecture independent executables
-TEXMFSCRIPTS = $TEXMF/scripts//
+% Architecture independent executables.
+TEXMFSCRIPTS = $TEXMF/scripts/{$engine,$progname,}//
 
 %% The mktex* scripts rely on KPSE_DOT. Do not set it in the environment.
 % KPSE_DOT = .
@@ -65,13 +69,11 @@ TEXMFSCRIPTS = $TEXMF/scripts//
 % The SELFAUTO* variables are set automatically from the location of
 % argv[0], in kpse_set_progname.  
 % 
-% The TETEXDIR stuff isn't likely to be relevant unless you're using teTeX,
-% but it doesn't hurt.
+% The TETEXDIR stuff isn't likely to be relevant unless you're using 
+% teTeX, but it doesn't hurt.
 %
 % For security reasons, it is better not to have . part of the path.
 % 
-% TEXMFCNF = {$SELFAUTOLOC,$SELFAUTODIR,$SELFAUTOPARENT}{,{/share,}/texmf{-local,}/web2c};$TETEXDIR;/usr/share/texmf/web2c;/usr/share/texmf/web2c
-%
 % Since tetex-bin_3.0-22, it restricts this to dirs that actually exist,
 % to silent e.g. automounters:
 TEXMFCNF = $TETEXDIR;/usr/share/texmf/web2c;/usr/share/texmf/web2c
