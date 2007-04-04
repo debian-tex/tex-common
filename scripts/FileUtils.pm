@@ -1,4 +1,4 @@
-# $Id: //depot/Master/Tools/FileUtils.pm#17 $ $Date: 2005/06/02 $ $Author: karl $
+# $Id: FileUtils.pm 2402 2006-11-08 01:45:28Z karl $
 # Written 2004, Fabrice Popineau.
 # Public domain.
 # 
@@ -196,7 +196,7 @@ sub walk_dir {
   my ($dir, $proc, $prune) = @_;
   my (@l, $f, $done, $src, $DIR);
 
-  warn " Walking $dir\n" if $::opt_debug;
+  #print " walking $dir with $proc, $prune\n" if $::opt_debug;
 
   if ((! $prune) || ($prune && ! &{$prune}($dir))) {
     $done = 0;
@@ -204,7 +204,7 @@ sub walk_dir {
     opendir (DIR, $dir) || die "opendir($dir) failed: $!";
     while (my $d = readdir (DIR)) {
       # do not forget to remove "." and ".."
-      next if $d =~ /^\.\.?$/;
+      next if $d =~ /^\.(\.?|svn)$/;
       push (@l, $d);
     }
     closedir (DIR) || warn "closedir($dir) failed: $!";
@@ -588,10 +588,12 @@ sub globexpand_push {
   my ($file);
   $dir =~ s@\\@/@g;
   foreach $file (@l) {
-    next if $file =~ /^\.\.$/;
-    #print "    push $dir/$file\n" if $::opt_debug;
-    if (-f "$dir/$file") {
-      push @listglob, "$dir/$file";
+    next if $file =~ /^\.(\.?|svn)$/;
+    my $path = "$dir/$file";
+    next if $path =~ m/^${Tpm::IgnoredFiles}$/;
+    if (-f $path) {
+      #print "    push $dir/$file\n" if $::opt_debug;
+      push @listglob, $path;
     }
   }
 }
@@ -972,6 +974,16 @@ sub regexpify {
     &FileUtils::walk_tree($node, '', \&regexpify_node);
   }
   return &FileUtils::tree2list($node);
+}
+
+# Print Perl backtrace, for debugging.
+sub backtrace {
+  my $subr;
+  my $stackframe = 0;
+  while (($pkg,$filename,$line,$subr) = caller ($stackframe)) {
+    print "$filename:$line: $pkg::$subr called\n";
+    $stackframe++;
+  }
 }
 
 END { }

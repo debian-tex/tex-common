@@ -4,11 +4,12 @@ tex-common (1.4) UNRELEASED; urgency=low
     and TeX Live's texmf.cnf. This change is needed to make mpost work
     under all circumstances [np].
   * Update settings and comments in the texmf.cnf snippets to match
-    upstream's as close as possible
-  * Drop backwards compatibility hacks for paths (see NEWS.Debian)
-  * Enable parse-first-line feature, except for Knuth's "tex".
+    upstream's as close as possible [fk]
+  * Drop backwards compatibility hacks for paths (see NEWS.Debian) [fk]
+  * Enable parse-first-line feature, except for Knuth's "tex". [fk]
+  * Update Tpm.pm and FileUtils.pm from TeXLive 2007 [fk]
 
- -- Frank Küster <frank@debian.org>  Mon,  2 Apr 2007 16:30:44 +0200
+ -- Frank Küster <frank@debian.org>  Wed,  4 Apr 2007 15:53:09 +0200
 
 tex-common (1.3) experimental; urgency=low
 

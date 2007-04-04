@@ -1,4 +1,4 @@
-# $Id: //depot/Master/Tools/Tpm.pm#92 $ $Date: 2005/10/19 $ $Author: karl $
+# $Id: Tpm.pm 3719 2007-01-23 01:44:19Z karl $
 # Written 2004, Fabrice Popineau.
 # Public domain.
 # 
@@ -72,12 +72,16 @@ $Editor = ($^O =~ m/win32/i ? "notepad": "vi");
 @ArchList = (
 	     "alpha-linux",
 	     "alpha-osf",
+	     "hppa-hpux",
 	     "i386-darwin",
 	     "i386-freebsd",
 	     "i386-linux",
+	     "i386-openbsd",
+	     "i386-solaris",
 	     "mips-irix",
 	     "powerpc-aix",
 	     "powerpc-darwin",
+	     "powerpc-linux",
 	     "sparc-solaris",
 	     "sparc-linux",
 	     "win32",
@@ -101,51 +105,68 @@ $Editor = ($^O =~ m/win32/i ? "notepad": "vi");
 		       "TLCore/bin-windvi"
 		      );
 
-$IgnoredFiles = "(bin/i386-freebsd|bin/i386-openbsd|bin/i386-solaris|bin/mips-irix|bin/powerpc-aix|bin/powerpc-darwin|bin/sparc-solaris|bin/win32/TeXLive.exe|texmf/tpm/(collection-binaries|texlive|xemtex|scheme-.*|.*-static)\.tpm|texmf(-doc|-dist)?/(ls-R|aliases|lists/.*|README|tpm/tpm.dtd)|source/.*)";
+# this list is not up to date, therefore I think it is not needed.
+#  . "bin/i386-freebsd|bin/i386-openbsd|bin/i386-solaris|bin/mips-irix"
+#  . "|bin/powerpc-aix|bin/powerpc-darwin|bin/sparc-solaris"
+
+# used both to ignore whole tpm's (?) and individual files?
+# must match whole path
+$IgnoredFiles = "("
+  . 'source/.*'
+  . '|texmf/tpm/(collection-binaries|texlive|xemtex|scheme-.*|.*-static)\.tpm'
+  . '|texmf(-doc|-dist)?/(ls-R|aliases|lists/.*|README|tpm/tpm.dtd)'
+  . '|.*/\.svn.*'
+  . ")";
 
 # The so-called engines
-my @engines = ("aleph", "enctex", "eomega", "metafont", "metapost", "omega", "pdftex", "pdfetex", "tex", "vtex",
+my @engines = (
+               "aleph", "enctex", "eomega", "metafont", "metapost",
+               "omega", "pdftex", "pdfetex", "tex", "vtex", 
 	       "bibtex", "context", "dvipdfm", "dvips", "ispell",
 	       "makeindex","mft", "psutils", "tex4ht", "texdoctk",
 	       "ttf2pk");
 # The so called formats
 my @formats = (
 	       "alatex", "amstex", "context", "cslatex", "csplain", "enctex",
-	       "eplain", "fontinst", "generic", "jadetex", "lambda", "latex", "latex3",
+	       "eplain", "fontinst", "generic", "jadetex", "lambda",
+	       "latex", "latex3",
 	       "mex", "physe", "phyzzx", "plain", "psizzl", 
-	       "startex", "texinfo", "texsis", "xmltex", "ytex", );
+	       "startex", "texinfo", "texsis", "xetex", "xelatex",
+               "xmltex", "ytex", );
 # Kind of font files
 my @fonttypes = (
 		 "afm", "misc", "ofm", "opentype", "ovf", "ovp", "pfb",
-		 "pk", "sfd", "source", "tfm", "truetype", "type1", "vf"
+		 "pfm", "pk", "sfd", "source", "tfm", "truetype", "type1", "vf"
 		);
 # Font vendors
 my @vendors = (
-	       "adobe", "amsfonts", "archaic", "arphic",
+	       "adobe", "amsfonts", "arabi", "archaic", "arphic",
                "bakoma", "bh", "bitstrea", "bluesky",
-               "cg", ,"cns", "cspsfonts-adobe", 
+               "cg", "cns", "cspsfonts-adobe", "groff",
 	       "hoekwater", "ibm", "itc", "jknappen", "jmn", "korean", "lh",
-	       "misc", "monotype", "paragrap",
+	       "mathdesign", "misc", "monotype", "paragrap",
 	       "public", "uhc", "urw", "urw35vf", "vntex", "wadalab",
-	       "yandy");
+	       "xetex", "yandy");
 my @fontmodes = (
 		 "ljfour", "ljfive", "cx"
 		); 
-my @languages = ("bulgarian", "czechslovak", "dutch", "english",
+my @languages = ("bulgarian", "chinese", "czechslovak", "dutch", "english",
                  "finnish", "french", "general", 
 		 "german", "greek", "italian", "japanese", "korean",
 		 "mongolian",
 		 "polish", "portuguese", "russian", "slovak", "spanish",
-		 "thai", "ukrainian", "vietnamese");
+		 "thai", "turkish", "ukrainian", "vietnamese");
 
 my %dotfiles = (
 		"texmf-dist/tex/latex/tools/*" => ( "texmf-dist/tex/latex/tools/.tex" ),
 		"texmf/chktex/*" => ( "texmf/chktex/.chktexrc" )
 		);
 
-my $CatalogueDir = "/src/TeX/texcatalogue";
+my $CatalogueDir = "${MasterDir}/texmf-doc/doc/english/catalogue";
 my $Catalogue;
 
+#
+# %Tpm2Catalogue gives a mapping from tpm names to Catalogue entries
 #
 # missing entries
 # ? bengali:pandey
@@ -153,41 +174,43 @@ my $Catalogue;
 # ? helvetic:urwvf
 # ? knuthotherfonts:halftone
 # makedtx:makedtx not working!
-# ? oberdiek:twoopt, tabularht, tabularkv, settobox, refcount, alphalph, chemarr, classlist, dvipscol, engord, hypbmsec, hypcap, ifdraft, ifpdf, ifvtexm pagesel, pdfcolmk pdfcrypt, pdflscape (somehing missing???)
+# ? oberdiek:twoopt, tabularht, tabularkv, settobox, refcount, alphalph, chemar
+# r, classlist, dvipscol, engord, hypbmsec, hypcap, ifdraft, ifpdf, ifvtexm pagese
+# l, pdfcolmk pdfcrypt, pdflscape (somehing missing???)
 my %Tpm2Catalogue = (
-	"ctib" => "ctib4tex",
-	"CJK" => "cjk",
-	"bayer" => "universa",
-	"bigfoot" => "suffix",
-	"cb" => "cbgreek",
-	"cd-cover" => "cdcover",
-	"cmex" => "cmextra",
-	"cs" => "csfonts", 
-	"cyrplain" => "t2",
-	"devanagr" => "devanagari",
-	"eCards" => "ecards",
-	"ESIEEcv" => "esieecv",
-	"euclide" => "pst-eucl",
-	"GuIT" => "guit",
-	"HA-prosper" => "prosper",
-	"ibycus" => "ibycus4",
-	"ibygrk" => "ibycus4",
-	"IEEEconf" => "ieeeconf",
-	"IEEEtran" => "ieeetran",
-	"iso" => "isostds",
-	"iso10303" => "isostds",
-	"jknapltx" => "jknappen",
-	"kastrup" => "binhex",
-	"le" => "frenchle",
-	"mathtime" => "mathtime-ltx",
-	"omega-devanagari" => "devanagari-omega",
-	"pdftexdef" => "pdftex-def",
-	"procIAGssymp" => "prociagssymp",
-	"resume" => "res",
-	"SIstyle" => "sistyle",
-	"SIunits" => "siunits",
-	"syntax" => "syntax2",
-	"Tabbing" => "tabbing" );
+      "ctib" => "ctib4tex",
+      "CJK" => "cjk",
+      "bayer" => "universa",
+      "bigfoot" => "suffix",
+      "cb" => "cbgreek",
+      "cd-cover" => "cdcover",
+      "cmex" => "cmextra",
+      "cs" => "csfonts", 
+      "cyrplain" => "t2",
+      "devanagr" => "devanagari",
+      "eCards" => "ecards",
+      "ESIEEcv" => "esieecv",
+      "euclide" => "pst-eucl",
+      "GuIT" => "guit",
+      "HA-prosper" => "prosper",
+      "ibycus" => "ibycus4",
+      "ibygrk" => "ibycus4",
+      "IEEEconf" => "ieeeconf",
+      "IEEEtran" => "ieeetran",
+      "iso" => "isostds",
+      "iso10303" => "isostds",
+      "jknapltx" => "jknappen",
+      "kastrup" => "binhex",
+      "le" => "frenchle",
+      "mathtime" => "mathtime-ltx",
+      "omega-devanagari" => "devanagari-omega",
+      "pdftexdef" => "pdftex-def",
+      "procIAGssymp" => "prociagssymp",
+      "resume" => "res",
+      "SIstyle" => "sistyle",
+      "SIunits" => "siunits",
+      "syntax" => "syntax2",
+      "Tabbing" => "tabbing" );
 
 my $Verbose = 0;
 
@@ -231,12 +254,9 @@ sub getListField {
   my ($doc, $f) = @_;
 
   my %s = getTextField($doc, $f);
-  my $str = "";
-  if (defined($s{"text"})) {
-    $str = $s{"text"};
-  }
-  $str =~ s/^\n*//gmx;
-  $str =~ s/\n*$//gm;
+  my $str = $s{"text"};
+  $str =~ s/^\n*//;
+  $str =~ s/\n*$//;
   $str =~ s/\n/ /gomsx;
   @{$s{"text"}} = split(" ", $str);
   return %s;
@@ -408,7 +428,7 @@ sub fresh {
   my $parser = new XML::DOM::Parser;
   chomp (my $user = `whoami`);  # for Creator field.
   my $doc = $parser->parse("\
-<!DOCTYPE rdf:RDF SYSTEM \"../../Tools/tpm.dtd\">\
+<!DOCTYPE rdf:RDF SYSTEM \"../../support/tpm.dtd\">\
 <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:TPM=\"http://texlive.dante.de/\">\
   <rdf:Description about=\"http://texlive.dante.de/texlive/tlcore/${name}.zip\">\
     <TPM:Name>${name}</TPM:Name>\
@@ -418,12 +438,12 @@ sub fresh {
     <TPM:Creator>$user</TPM:Creator>\
     <TPM:Author></TPM:Author>\
     <TPM:Title>The ${name} package.</TPM:Title>\
-    <TPM:Size>864</TPM:Size>\
+    <TPM:Size>314</TPM:Size>\
     <TPM:Description></TPM:Description>\
     <TPM:Build>\
       <TPM:RunPatterns>${texmf}/tpm/${name}.tpm</TPM:RunPatterns>\
     </TPM:Build>\
-    <TPM:RunFiles size=\"679\">${texmf}/tpm/${name}.tpm</TPM:RunFiles>\
+    <TPM:RunFiles size=\"270\">${texmf}/tpm/${name}.tpm</TPM:RunFiles>\
     <TPM:Provides>${type}/${name}</TPM:Provides>\
   </rdf:Description>\
 </rdf:RDF>\
@@ -437,7 +457,7 @@ sub toRDF {
   my $parser = new XML::DOM::Parser;
 
   $doc = $parser->parse("<!DOCTYPE rdf:RDF\n\
-  SYSTEM \"../../Tools/tpm.dtd\">\n\
+  SYSTEM \"../../support/tpm.dtd\">\n\
 <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns\#\"\n\
  xmlns:TPM=\"http://texlive.dante.de/\">\n</rdf:RDF>\n");
 
@@ -535,7 +555,7 @@ sub toRDF {
   $node = $doc->createElement("TPM:Requires");
   my %requires = $self->getHash("Requires");
   if (%requires) {
-    foreach my $k (@TpmCategories) {
+    foreach my $k (sort @TpmCategories) {
       my @taglist = @{$requires{$k}};
       for my $tag (sort @taglist) {
         my $tpmbin = $doc->createElement("TPM:$k");
@@ -623,7 +643,9 @@ sub getFileList {
     foreach $v (@{$self->{$n}}) {
       if (($CurrentArch eq "all" && FileUtils::member(${$v}{"arch"}, @Tpm::ArchList))
 	  || ${$v}{"arch"} eq ${CurrentArch}) {
-        push @l, @{${$v}{"text"}};
+        my @val = @{${$v}{"text"}};
+	#print "getfilelist pushing for $v: @val\n";
+        push @l, @val;
       }
     }
   }
@@ -636,9 +658,13 @@ sub getFileList {
   }
 
   if (wantarray) {
+    #print "getfilelist($n) returning list: @l\n";
+    #&debug_hash ($n, $self->{$n});
+    #print "$n {text} = " . @{$n{text}} . "\n";
     return @l;
   }
   else {
+    #print "getfilelist($n) returning scalar: @l\n";
     if (@l) {
       return (join "\n", @l);
     }
@@ -1014,7 +1040,7 @@ sub testSync {
   }
 }
 
-
+
 sub formatdate {
   return sprintf("%4d/%02d/%02d %02d:%02d:%02d", 
 	       $_[5]+1900, $_[4]+1, $_[3], $_[2], $_[1], $_[0]);
@@ -1046,49 +1072,74 @@ sub printdate {
   return &formatdate(@mytime);
 }
 
+sub debug_date
+{
+  my ($str,$date) = @_;
+  #warn "$str " . &formatdate(gmtime($date)) . "\n";
+}
+
+# if any of FILES are newer than OLDDATE, return the newest mtime.
+# 
 sub max_date
 {
   my ($olddate, @files) = @_;
-  my ($f, $tpmdate);
-#  print "olddate was " . &formatdate(gmtime($oldate)) . "\n";
-  foreach $f (@files) {
-    if ($f =~ m@^texmf-dist/tpm/.*\.tpm@) {
-      $tpmdate = ${stat($f)}[9];
+  my $tpmdate = 0;
+  &debug_date ("  max_date files=@files, olddate=", $olddate);
+  for my $f (@files) {
+    # although the texmf/tpm/*.tpm files are mostly hand-maintained, it
+    # still seems best for the TPM:Date to reflect the newest date of
+    # the actual files in the package; the sizes and such might still
+    # get autoupdated.
+    if ($f =~ m,/tpm/.*\.tpm$,) {
+      $tpmdate = (stat("$MasterDir/$f"))[9];
+      &debug_date ("   tpm itself, found ", $tpmdate);
     }
-    else {
+    elsif (-f "$MasterDir/$f") {
       my @st = stat("$MasterDir/$f");
-#      print "file $f is " . &formatdate(gmtime($st[9])) . "\n";
+      &debug_date ("   file $f is ", $st[9]);
       if ($st[9] > $olddate) {
-#	print "replacing\n";
+	&debug_date ("    replacing olddate ", $olddate);
         $olddate = $st[9];
       }
     }
   }
-  if ($olddate == 0) {
+  if ($olddate == 0 && $tpmdate) {
+    &debug_date ("  max_date using tpm date", $tpmdate);
     $olddate = $tpmdate;
   }
-#  print "newdate is " . &formatdate(gmtime($oldate)) . "\n";
+  &debug_date ("  max_date returning ", $olddate);
   return $olddate;
 }
 
 sub fixDate {
   my ($self) = @_;
   my $newdate = 0;
-  foreach my $s (@{$self->getFileList("BinFiles")}) {
-    if ($CurrentArch eq "all" || $s =~ m@/${CurrentArch}/@) {
-      $newdate = &max_date($newdate, ${$s}{"text"});
-    }
+  my @binfiles = $self->getFileList("BinFiles");
+  #warn "binfiles=@binfiles";
+  if ($CurrentArch ne "all") {
+    @binfiles = grep { m@/${CurrentArch}/@ } @binfiles;
+    warn "arch-filtered for $CurrentArch binfiles=@binfiles";
   }
-#  print "#### newdate is " . &formatdate(gmtime($newdate)) . "\n";
-  $newdate = &max_date($newdate, $self->getFileList("RunFiles"));
-#  print "#### newdate is " . &formatdate(gmtime($newdate)) . "\n";
+  $newdate = &max_date($newdate, @binfiles);
+  &debug_date (" newdate after bin: ", $newdate);
+  #
   $newdate = &max_date($newdate, $self->getFileList("DocFiles"));
-#  print "#### newdate is " . &formatdate(gmtime($newdate)) . "\n";
+  &debug_date (" newdate after doc: ", $newdate);
+  #
   $newdate = &max_date($newdate, $self->getFileList("SourceFiles"));
+  &debug_date (" newdate after source: " , $newdate);
+  #
   $newdate = &max_date($newdate, $self->getFileList("RemoteFiles"));
+  &debug_date (" newdate after remote: " , $newdate);
+  #
+  # Check the RunFiles last, because it includes the tpm itself, and we
+  # only want to use that as a last resort.
+  $rundate = &max_date($newdate, $self->getFileList("RunFiles"));
+  &debug_date (" newdate after run: ", $newdate);
   $self->setAttribute("Date", &formatdate(gmtime($newdate)));
 }
 
+
 sub fixRequires {
   my ($self, $test) = @_;
 
@@ -1153,12 +1204,13 @@ sub completeUsingCatalogue {
   my $pkgname = $self->getAttribute("Name");
   $pkgname =~ s/^(bin-|lib-|tex-)//;
 
+  # handle several cases where the Catalogue name
+  # is not the package name...
   if (defined($Tpm2Catalogue{$pkgname})) {
     $pkgcat = $Tpm2Catalogue{$pkgname};
   } else {
     $pkgcat = $pkgname;
-  }
-  print STDERR "Looking for $pkgname (as $pkgcat) in the Catalogue.\n" if $Verbose;
+  }print STDERR "Looking for $pkgname (as $pkgcat) in the Catalogue.\n" if $Verbose;
   my $fletter = substr($pkgcat, 0, 1);
   my $catname = "${CatalogueDir}/entries/$fletter/${pkgcat}.xml"; 
   return if (! -f $catname);
@@ -1242,6 +1294,7 @@ sub buildPatternsPackage {
   my @doc_patterns = ( );
   my @source_patterns = ( );
 
+  # 
   # Usually the package name and the directory name match.
   # Here are the special cases when they don't.
   if (&FileUtils::member(${name}, @engines)) {
@@ -1271,13 +1324,21 @@ sub buildPatternsPackage {
 	( $texmf . "/fonts/map/${name}/base/*", $texmf . "/fonts/map/${name}/config/*",
 	  $texmf . "/fonts/enc/${name}/base/*", $texmf . "/fonts/enc/${name}/config/*" );
 
+    # exception for context doc, since everything belongs to context.tpm.
+    } elsif (${name} eq 'context') {
+      push (@doc_patterns, "$texmf/doc/context/*");
+
     # Exception for metapost !
     } elsif (${name} eq 'metapost') {
       push @run_patterns, $texmf . "/metapost/support/*";
 
-    # Exception for tex4ht !
+    # Exception for tex4ht, since we just want everything.
     } elsif (${name} eq 'tex4ht') {
-      push @run_patterns, $texmf . "/tex4ht/ht-fonts/*";
+      push @run_patterns,
+           ("$texmf/tex4ht/bin/*",
+            "$texmf/tex4ht/ht-fonts/*",
+            "$texmf/tex4ht/xttl/*",
+           );
 
     # Exception for omega !
     } elsif (${name} eq 'omega') {
@@ -1295,6 +1356,7 @@ sub buildPatternsPackage {
 
     }
 
+  # 
   } elsif (&FileUtils::member(${name}, @formats)) {
     print "special format patterns for $name\n" if $::opt_debug;
     # if our $name is one of the formats
@@ -1303,24 +1365,31 @@ sub buildPatternsPackage {
       push @run_patterns, (  $texmf . "/$e/${name}/base/*",
 			     $texmf . "/$e/${name}/config/*",
 			  );
-      push @run_patterns, $texmf . "/$e/${name}/*" if ($_ ne 'tex' && $_ ne 'omega');
+      push @run_patterns, $texmf . "/$e/${name}/*"
+        unless ($_ eq 'tex' || $_ eq 'omega')
     } @engines;
-    
+
     map {
       push @run_patterns, $texmf . "/tex/$_/${name}/*";
     } @formats;
+
+    # for xetex
+    push @run_patterns, "$texmf/fonts/misc/$name/*";
+    push @doc_patterns, ( $texmf . "/doc/$name/*" ) if $name eq "xetex";
 
     push @doc_patterns, ( $texmf . "/doc/${name}/base/*" );
 
     push @source_patterns, ( $texmf . "/source/${name}/base/*" );
 
-    # Exception for Context !
-    if (${name} eq 'context') {
-      push @run_patterns, $texmf . "/tex/context/*";
-
     # exception for texinfo since it has no subdirs.
-    } elsif (${name} eq 'texinfo') {
+    if (${name} eq 'texinfo') {
       push @run_patterns, $texmf . "/tex/texinfo/*";
+
+    # exception for eplain since it has no subdirs either.
+    } elsif (${name} eq 'eplain') {
+      push @run_patterns, "$texmf/tex/eplain/*";
+      push @doc_patterns, "$texmf/doc/eplain/*";
+      push @source_patterns, "$texmf/source/eplain/*";
 
     # Exception for fontinst, since it has lots of subdirs, including misc.
     # cyrfinst is really a separate package, but let's not clean that up now.
@@ -1328,37 +1397,42 @@ sub buildPatternsPackage {
       push @run_patterns, $texmf . "/tex/fontinst/*/*";
     }
     
+  # 
   } elsif (&FileUtils::member(${name}, @vendors)) {
     print "special vendor patterns for $name\n" if $::opt_debug;
     push @run_patterns, $texmf . "/dvips/${name}/*";
     
-    map { push @run_patterns, $texmf . "/fonts/$_/${name}/*"; } @fonttypes;
+    if ($name eq "groff") {
+      # Exception for groff: we do not want subdirectories (e.g.,
+      # times), we only want actual files (psyrgo.tfm).  Let groff/times
+      # end up in times.tpm.
+      map { push @run_patterns, "$texmf/fonts/$_/${name}/*.*"; }
+      @fonttypes;      
+    } else {
+      # Everything but groff:
+      map { push @run_patterns, "$texmf/fonts/$_/${name}/*"; }
+      @fonttypes;
+    }
 
     map { 
       my $e = $_;
       map {
 	push @run_patterns, $texmf . "/$e/$_/${name}/*"
-          unless $name eq "misc" && $_ eq "fontinst";
-            # keep fontinst/misc in fontinst.
+            # keep fontinst/misc in fontinst:
+          unless ($name eq "misc" && $_ eq "fontinst");
       } @formats;
     } @engines;
     
-    # Exception for amsfonts -- te/staw decided in June 2005 to use ams
-    # for the directory name within fonts, but amsfonts elsehwere.
-    if (${name} eq 'amsfonts') {
-      push @run_patterns, 
-	( $texmf . "/dvips/ams/config.*",
-	  $texmf . "/fonts/map/*/ams/*",
-	  $texmf . "/fonts/*/bluesky/ams/*",
-	  $texmf . "/fonts/*/public/ams/*",
-	);
-      push @source_patterns,
-        ( $texmf . "/source/latex/amsfonts/*" );
-     }
+    # Exception for lh: also have source/latex/lh.
+    push @source_patterns, ( $texmf . "/source/latex/$name/*" );  # lh
     
-    # Exception for vntex -- doc is in doc/generic instead of doc/fonts.
+    # Exception for mathdesign: doc is in doc/latex instead of doc/fonts.
+    push @doc_patterns, ( $texmf . "/doc/latex/$name/*" );  # mathdesign
+
+    # Exception for vntex: doc is in doc/generic instead of doc/fonts.
     push @doc_patterns, ( $texmf . "/doc/generic/$name/*" );  # vntex
 
+  # 
   } else {
     print "normal patterns for $name\n" if $::opt_debug;
     map {
@@ -1367,13 +1441,19 @@ sub buildPatternsPackage {
       push @doc_patterns, $texmf . "/doc/$e/${name}/*";
       push @source_patterns, $texmf . "/source/$e/${name}/*";
       map {
-	push @run_patterns, $texmf . "/$e/$_/${name}/*";
+	push @run_patterns, $texmf . "/$e/$_/${name}/*"
+	  # keep tex/context/pgf in context.
+	  unless $name eq "pgf" && $_ eq "context" && $e eq "tex";
       } @formats;
-
+      #warn "run_patterns after engine $e = @run_patterns\n";
     } @engines;
-    
+
     map {
-      push @run_patterns, $texmf . "/tex/$_/${name}/*";
+      push @run_patterns, $texmf . "/tex/$_/${name}/*"
+        # keep tex/context/pgf in context.
+	unless $name eq "pgf" && $_ eq "context";
+      #warn "run_patterns after format $_ = @run_patterns\n";
+
       push @doc_patterns, $texmf . "/doc/$_/${name}/*";
       push @source_patterns, $texmf . "/source/$_/${name}/*";
     } @formats;
@@ -1381,12 +1461,15 @@ sub buildPatternsPackage {
     push @doc_patterns, $texmf . "/doc/${name}/*";
     push @source_patterns, $texmf . "/source/${name}/*";
     
-    # one more special case, fontname has its own odd map files.
+    # Exceptions for fontname and glyphlist: their own odd map files.
     if ($name eq 'fontname') {
-      push @run_patterns, $texmf . "/fonts/map/${name}/*";
+      push @run_patterns, "$texmf/fonts/map/${name}/*";
+    } elsif ($name eq 'glyphlist') {
+      push @run_patterns, "$texmf/fonts/map/${name}/*";
     }
   }
   
+  #  common to all.
   map {
     my $v = $_;
     map {
@@ -1426,6 +1509,7 @@ sub buildPatternsPackage {
   push @source_patterns, $texmf . "/source/fonts/${name}/*";
   push @run_patterns, $texmf. "/tpm/$name.tpm";
   
+  #warn "final run_patterns for $name: @run_patterns\n";
   $self->setList("RunPatterns", @run_patterns);
   $self->setList("DocPatterns", @doc_patterns);
   $self->setList("SourcePatterns", @source_patterns);
@@ -1668,7 +1752,7 @@ sub Tpm2Zip {
 }
 
 sub Clean {
-  my ($self, $patterns, $fixreq, $newdir) = @_;
+  my ($self, $patterns, $fixreq) = @_;
 
   # Update the Date to the date of the latest file in the package
   $self->fixDate();
@@ -1717,24 +1801,10 @@ sub Clean {
 
   # Alternatively you could expand patterns if for example you have just edited them
   # See the 'process2_tpm' function below
-  # If newdir is not set or it is a direcory
-  $outfname = "";
-  if ($newdir) {
-    if (!(-e $newdir)) {
-      `mkdir -p $newdir`;
-    }
-    if (!(-d $newdir)) {
-      print "ERROR: $newdir is not a directory, not writing tpm file!\n"; 
-      return;
-    }
-    $outfname = "$newdir/" . ${Tpm::TexmfTreeOfType}{$type} . "/tpm/$name.tpm";
-    $dn = &FileUtils::dirname($outfname);
-    `mkdir -p $dn`;
-  }
   # Test that patterns and files list are n sync
   if ($self->testSync()) {
-    print "Writing $type/$name $outfname\n";
-    $self->writeFile($outfname);
+    print "Writing $type/$name\n";
+    $self->writeFile();
   }
   else {
     print "ERROR: out of sync between patterns and files in $tpmname (not written).\n";
@@ -1777,6 +1847,28 @@ sub Remove {
       print "unlinked $file\n";
     }
   } $self->getAllFileList();
+}
+
+
+# Log LABEL followed by hash elements, all on one line.
+#
+sub debug_hash
+{
+  my ($label) = shift;
+  my (%hash) = (ref $_[0] && $_[0] =~ /.*HASH.*/) ? %{$_[0]} : @_;
+
+  my $str = "$label: {";
+  my @items = ();
+  for my $key (sort keys %hash) {
+    my $val = $hash{$key};
+    $key =~ s/\n/\\n/g;
+    $val =~ s/\n/\\n/g;
+    push (@items, "$key:$val");
+  }
+  $str .= join (",", @items);
+  $str .= "}";
+
+  print "$str\n";
 }
 
 1;
