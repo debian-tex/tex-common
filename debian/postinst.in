@@ -132,9 +132,9 @@ EOF
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFMAIN '/usr/share/texmf'
     check_texmf /etc/texmf/texmf.cnf TEXMFMAIN '/usr/share/texmf'
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFDIST \
-          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}'
+          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}|/usr/share/texmf-texlive'
     check_texmf /etc/texmf/texmf.cnf TEXMFDIST \
-          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}'
+          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}|/usr/share/texmf-texlive'
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFSYSCONFIG
     check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFSYSCONFIG
     check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFSYSVAR
