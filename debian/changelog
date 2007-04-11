@@ -1,3 +1,9 @@
+tex-common (1.5) unstable; urgency=low
+
+  * fix missing tetex component of TEXMFDIST (Closes: #418674)
+
+ -- Norbert Preining <preining@debian.org>  Wed, 11 Apr 2007 09:45:29 +0200
+
 tex-common (1.4) unstable; urgency=low
 
   * Change main_memory to 1500000 to go with the main_memory of mpost
