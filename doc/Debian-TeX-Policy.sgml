@@ -187,6 +187,24 @@
       </p>
     </chapt>
     <chapt>
+      <heading>Meta-packages and dependencies</heading>
+      <p>
+	The TeX Live collection of basic and add-on TeX packages
+	provides some meta-packages for the convenience of users.
+      </p>
+      <p>
+	Depending on the <package>texlive-*</package>
+	or <package>tetex-*</package> metapackages is only acceptable
+	for editors, IDEs and other tools which handle user-generated
+	code.  TeX add-on packages, as well as automated input
+	generators etc., must instead depend on a list of individual
+	texlive packages which are actually used.
+	<footnote>This is, for example, required to be able to adapt
+	dependencies of metapackages according to the users'
+	needs. </footnote>
+      </p>
+    </chapt>
+    <chapt>
       <heading>File Placement</heading>
       <p>
       This chapter describes the placement of TeX input files, so that
