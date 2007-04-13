@@ -9,7 +9,7 @@ Standards-Version: 3.7.2.0
 
 Package: tex-common
 Architecture: all
-Depends: ucf, ${misc:Depends}, debconf (>= 1.4.69) | debconf-2.0
+Depends: ucf, ${misc:Depends}, debconf (>= 1.4.69) | debconf (>= 0.39)
 Suggests: debhelper (>= 4.0)
 Replaces: tetex-base (<= 3.0-10)
 Conflicts: tetex-bin (<= 3.0-4), tetex-base (<= 3.0-3)

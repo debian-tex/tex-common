@@ -8,7 +8,9 @@ tex-common (1.6) unstable; urgency=low
 
   * reverse the order of autoscripts snippets in postrm (Closes: #418984)
 
- -- Norbert Preining <preining@debian.org>  Fri, 13 Apr 2007 09:21:21 +0200
+  * change alternative dep on cdebconf to (>= 0.39), lintian error.
+
+ -- Norbert Preining <preining@debian.org>  Fri, 13 Apr 2007 09:34:44 +0200
 
 tex-common (1.5) unstable; urgency=low
 
