@@ -1,4 +1,4 @@
-tex-common (1.6~1) unstable; urgency=low
+tex-common (1.6) unstable; urgency=low
 
   * Document in NEWS.Debian that support for ls-R in TEXMFHOME has been
     dropped [fk]
@@ -6,7 +6,9 @@ tex-common (1.6~1) unstable; urgency=low
   * Policy: Add a chapter on meta-packages and document that they are
     usually not acceptable as dependencies
 
- -- Frank Küster <frank@debian.org>  Wed, 11 Apr 2007 13:16:17 +0200
+  * reverse the order of autoscripts snippets in postrm (Closes: #418984)
+
+ -- Norbert Preining <preining@debian.org>  Fri, 13 Apr 2007 09:21:21 +0200
 
 tex-common (1.5) unstable; urgency=low
 
