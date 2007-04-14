@@ -1,3 +1,10 @@
+tex-common (1.7) unstable; urgency=low
+
+  * Undo the changes of the autoscripts snippets ordering, debhelper has
+    changed back to the former method.
+
+ -- Norbert Preining <preining@debian.org>  Sat, 14 Apr 2007 08:39:46 +0200
+
 tex-common (1.6) unstable; urgency=low
 
   * Document in NEWS.Debian that support for ls-R in TEXMFHOME has been

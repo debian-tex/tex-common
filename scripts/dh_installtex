@@ -599,16 +599,11 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		}
 		my @foo = keys(%uniq);
 		autoscript($package, "postinst", "postinst-texlsr", "s|#TEXMFTREES#|@foo|");
+		autoscript($package, "postrm",   "postrm-texlsr", "s|#TEXMFTREES#|@foo|");
 		if ($dothefullstuff) {
 			autoscript($package, "postinst", "postinst-tex", "s|#FORMATS#|@fmtdata|; s|#WHATTODO#|@whattodo|");
-		}
-		# in the postrm case the autoscript snippets are added in
-		# inverse order, but we NEED it in the first texlsr then tex
-		# in the file!
-		if ($dothefullstuff) {
 			autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodo|");
 		}
-		autoscript($package, "postrm",   "postrm-texlsr", "s|#TEXMFTREES#|@foo|");
 	}
 
 	addsubstvar($package, "misc:Depends", "tex-common", ">= 0.7");
