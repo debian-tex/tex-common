@@ -1,3 +1,9 @@
+tex-common (1.8) UNRELEASED; urgency=low
+
+  * make proper ucfr checking in maintainer scripts (Closes: #409897) [np]
+
+ -- Norbert Preining <preining@debian.org>  Mon, 16 Apr 2007 16:07:58 +0200
+
 tex-common (1.7) unstable; urgency=low
 
   * Undo the changes of the autoscripts snippets ordering, debhelper has

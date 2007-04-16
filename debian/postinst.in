@@ -61,7 +61,9 @@ EOF
     # handle ucf-managed configuration files
     for file in $UCF_FILES; do
       $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
-      test -x "`which ucfr`" && ucfr tex-common /etc/texmf/$file || true
+      if test -x "`which ucfr`" ; then
+        ucfr tex-common /etc/texmf/$file
+      fi
     done
 
 # remove left over fmt/efmt/log files in /usr/share/texmf/web2c/.  If they are
