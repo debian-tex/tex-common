@@ -59,8 +59,8 @@ dhit_build_format ()
 {
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-    printf "Building format(s) $1 $(basename "$2"). This may take some time... "
-    if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
+    printf "Building format(s) $@. This may take some time... "
+    if fmtutil-sys "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
     else
@@ -90,8 +90,8 @@ case "$1" in
                     dhit_build_format --all
                 fi
                 if [ "$i" = format ] ; then
-                    for fmt in #FORMATS# ; do
-                        dhit_build_format --byfmt $fmt
+                    for fmt in #FORMATSFILES# ; do
+                        dhit_build_format --all --cnffile "/etc/texmf/fmt.d/$fmt.cnf"
                     done
                 fi
                 if [ "$i" = language ] ; then
