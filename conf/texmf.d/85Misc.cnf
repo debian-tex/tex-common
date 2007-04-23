@@ -58,8 +58,22 @@ OCPINPUTS = .;$TEXMF/omega/ocp//
 % search formats, you'll want to add their variables here as well.
 T4HTINPUTS   = .;$TEXMF/tex4ht//
 
+%% t4ht utility, sharing files with TeX4ht
+TEX4HTFONTSET=alias,iso8859,unicode
+TEX4HTINPUTS = .;$TEXMF/tex4ht/base//;$TEXMF/tex4ht/ht-fonts/{$TEX4HTFONTSET}//
+
+% Part for scripts that are distributed/installed in the texmf tree.
+
 % Architecture independent executables.
 TEXMFSCRIPTS = $TEXMF/scripts/{$engine,$progname,}//
+
+% Perl, Python, Ruby, Java scripts
+JAVAINPUTS   = .;$TEXMF/scripts/{$progname,$engine,}/java//
+LUAINPUTS    = .;$TEXMF/scripts/{$progname,$engine,}/lua//
+PERLINPUTS   = .;$TEXMF/scripts/{$progname,$engine,}/perl//
+PYTHONINPUTS = .;$TEXMF/scripts/{$progname,$engine,}/python//
+RUBYINPUTS   = .;$TEXMF/scripts/{$progname,$engine,}/ruby//
+
 
 %% The mktex* scripts rely on KPSE_DOT. Do not set it in the environment.
 % KPSE_DOT = .

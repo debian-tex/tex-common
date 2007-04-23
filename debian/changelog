@@ -8,8 +8,10 @@ tex-common (1.8~1) unstable; urgency=low
     way a dpkg-reconfigure will create *all* formats defined in the config
     file, even if the sysadm has defined additional formats.
     (Closes: #418983) [np]
+  * Update snippets in texmf.d according to a reordering patch accepted
+    upstream [fk]
 
- -- Norbert Preining <preining@debian.org>  Wed, 18 Apr 2007 10:18:47 +0200
+ -- Frank Küster <frank@debian.org>  Mon, 23 Apr 2007 14:40:08 +0200
 
 tex-common (1.7) unstable; urgency=low
 

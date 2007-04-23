@@ -64,9 +64,26 @@ TEXINPUTS.pdfplatex = .;$TEXMF/tex/{platex,latex,generic,}//
 % Earlier entries override later ones, so put this last.
 TEXINPUTS = .;$TEXMF/tex/{$progname,generic,}//
 
+% extra format definitions for TeX Live
+
+TEXINPUTS.elambda       = .;$TEXMF/tex/{lambda,latex,generic,}//
+TEXINPUTS.eomega        = .;$TEXMF/tex/{plain,generic,}//
+TEXINPUTS.pdfxmex       = .;$TEXMF/tex/{mex,plain,generic,}//
+TEXINPUTS.frpdflatex    = .;$TEXMF/tex/{french,latex,generic,}//
+TEXINPUTS.frpdftex      = .;$TEXMF/tex/{french,plain,generic,}//
+TEXINPUTS.xmltex        = .;$TEXMF/tex/{xmltex,latex,generic,}//
+TEXINPUTS.pdfxmltex     = .;$TEXMF/tex/{xmltex,latex,generic,}//
+
+TTF2TFMINPUTS =                 .;$TEXMF/ttf2pk//
+
 % Metafont, MetaPost inputs.
 MFINPUTS = .;$TEXMF/metafont//;{$TEXMF/fonts,$VARTEXFONTS}/source//
 MPINPUTS = .;$TEXMF/metapost//
+
+% allow for compressed files, and various extenions
+TEXDOCSSUFFIX   = ;.pdf;.ps;.dvi;.html;.txt;.tex
+TEXDOCSCOMPRESS = ;.gz;.bz2;.zip;.Z
+TEXDOCEXT       = {$TEXDOCSSUFFIX}{$TEXDOCSCOMPRESS}
 
 % Dump files (fmt/base/mem) for vir{tex,mf,mp} to read (see web2c/INSTALL),
 % and string pools (.pool) for ini{tex,mf,mp}.  It is silly that we have six
