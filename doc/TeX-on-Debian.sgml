@@ -13,10 +13,7 @@
 
       <abstract>
        This document covers Debian-specific information for <em>users</em> of
-       the Debian teTeX packages (<package>tetex-bin</package>,
-       <package>tetex-base</package>, <package>tetex-extra</package>,
-       <package>tetex-doc</package>, <package>tetex-doc-nonfree</package> and
-       <package>tetex-src</package>) and Debian TeX Live packages (all
+       the Debian TeX Live packages (all
        packages named <package>texlive-something</package>). 
        Further information, especially for
        <em>developers</em>, can be found in the Debian TeX Policy draft in
@@ -27,7 +24,7 @@
 
       <copyright>
         <copyrightsummary>
-          Copyright &copy; 2004-2006 Frank Küster, Florent Rougon,
+          Copyright &copy; 2004-2007 Frank Küster, Florent Rougon,
         Norbert Preining
         </copyrightsummary>
         <p>
@@ -63,57 +60,7 @@
       <heading>Overview of the packages</heading>
 
       <p>
-        The Debian teTeX packages are comprised of:
-        <taglist>
-          <tag><package>tetex-bin</package></tag>
-          <item>
-            provides the binary files
-          </item>
-
-          <tag><package>tetex-base</package></tag>
-          <item>
-            provides the most basic TeX and LaTeX input files, and will be
-            sufficient for some simple documents, e.g. to build the
-            documentation of other Debian packages (hopefully)
-          </item>
-
-          <tag><package>tetex-extra</package></tag
-          <item>
-            contains lots of fonts and add-on packages for LaTeX and TeX
-            development. If you want to use LaTeX to write and format your own
-            documents, you will probably need many of these.
-          </item>
-
-          <tag><package>tetex-doc</package></tag>
-          <item>
-            the free part (according to the Debian Free Software Guidelines)
-            of the documentation for <package>tetex-bin</package>,
-            <package>tetex-base</package> and <package>tetex-extra</package>.
-            It is not needed to build existing documents, but as an author,
-            you will for sure want to install it.
-          </item>
-
-          <tag><package>tetex-doc-nonfree</package></tag>
-          <item>
-            the non-free part (according to the Debian Free Software
-            Guidelines) of the documentation for <package>tetex-bin</package>,
-            <package>tetex-base</package> and <package>tetex-extra</package>
-          </item>
-
-          <tag><package>tetex-src</package></tag>
-          <item>
-            the sources (i.e., <file>.dtx</file> files) of all the TeX/LaTeX
-            files in <package>tetex-base</package> and
-            <package>tetex-extra</package>, and of the documentation in
-            <package>tetex-doc</package>. This package will only be needed by
-            (La)TeX developers, or if you want to look up licensing
-            information.
-          </item>
-        </taglist>
-      </p>
-
-      <p>
-        The Debian TeX Live packages are comprised of (currently) 76 packages
+        The Debian TeX Live packages are comprised of (currently) 80 packages
         in total. The most important are:
         <taglist>
           <tag><package>texlive-base-bin</package></tag>
@@ -141,11 +88,6 @@
             special requirements
           </item>
 
-          <tag><package>texlive-context</package></tag>
-          <item>
-	    the complete ConTeXt environment
-          </item>
-          
 	  <tag><package>texlive</package></tag>
           <item>
 	    a meta-package depending on a decent selection of
@@ -266,7 +208,7 @@
             <tag><var>TEXMFDIST</var></tag>
             <item>
               <p>
-                Default location: <file>/usr/share/texmf-{tetex,texlive}</file>
+                Default location: <file>/usr/share/texmf-texlive</file>
               </p>
               <p>
                 Contains system-wide, <prgn>dpkg</prgn>-managed input files
@@ -301,7 +243,7 @@
         <sect1>
           <heading>System-wide versus user-specific configuration</heading>
           <p>
-            TeX Live as well as, since version 3.0, teTeX, supports a
+            TeX Live supports a
             complete user-specific configuration setup in the user's
             home directory. System administrators must use the
             commands <prgn>texconfig-sys</prgn>,
@@ -333,7 +275,7 @@
             or <var>TEXMFCONFIG</var> of a particular user.  However,
             local admins can take any file they want from
             the <var>TEXMFDIST</var>
-            (<file>/usr/share/texmf-tetex</file>)
+            (<file>/usr/share/texmf-texlive</file>)
             or <var>TEXMFMAIN</var> (<file>/usr/share/texmf</file>)
             trees and put changed copies into the respective
             directories below <file>/etc/texmf</file>
@@ -388,27 +330,11 @@
         </p>
 
         <p>
-          For users of the norwegian language and teTeX, there are several
-          alternatives. For norwegian, there are different sets of patterns,
-          and upstream chose <file>nohyphb.tex</file>. Details can be found in
-          <file>/usr/share/texmf/doc/generic/nohyph/README.nohyph</file>&mdash;you
-          can choose another one by editing <file>language.dat</file> or
-          rather <file>/etc/texmf/language.d/01tetex.cnf</file>.
-        </p>
-
-        <p>
-          For users of the ukranian language (with teTeX and TeX
-          live), the right pattern file depends on the output encoding 
-          (see <file>/usr/share/texmf-{tetex,texlive}/tex/generic/ukrhyph/ukrhyph.tex</file>);
+          For users of the ukranian language,
+          the right pattern file depends on the output encoding 
+          (see <file>/usr/share/texmf-texlive/tex/generic/ukrhyph/ukrhyph.tex</file>);
           you can also choose different rule sets in the file.
         </p>
-	<p>
-	  There are currently no free hyphenation patterns for british
-	  english.  Before enabling british/UKenglish, you need to get the
-	  non-free ukhyphen.tex - otherwise the format generation will
-	  fail.  Don't forget to complain to the UK TUG  about how
-	  annoying this is...
-	</p>
 
       <sect id="sec-core-config-files">
         <heading>
@@ -808,7 +734,7 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
           <var>typeface</var> refers to the name of the font family (e.g.,
           <tt>marvosym</tt> or <tt>lm</tt>). If in doubt, you should have a
           look at the system trees managed by Debian packages,
-          <file>/usr/share/texmf</file>, <file>/usr/share/texmf-tetex</file>
+          <file>/usr/share/texmf</file>, <file>/usr/share/texmf-texlive</file>
           and <file>/usr/share/texmf-texlive</file>; they follow the same
           layout, called the TeX Directory Structure (which is documented at
           <url id="http://www.tug.org/tds/" name="&urlname">).
@@ -1041,14 +967,6 @@ kpsewhich --format=cnf texmf
           </item>
 
           <item>
-            For <tt>amstex</tt>, <prgn>metapost</prgn>, <tt>eurosym</tt>,
-           <prgn>texdoctk</prgn>, <tt>txfonts</tt>, <tt>pxfonts</tt>, etc.,
-           you need <package>tetex-extra</package> at present.
-           (<prgn>pdftex</prgn>/<prgn>pdflatex</prgn> should work basically
-           only with <package>tetex-base</package> now.)
-          </item>
-
-          <item>
             Is your <file>language.dat</file> correct?
           </item>
         </list>
@@ -1105,9 +1023,7 @@ dpkg: error processing /var/cache/../tetex-base_*_all.deb (--unpack): trying to 
             of <package>tetex-base</package>.
 
           <item>
-            Note that teTeX is not further developed upstream, and new
-            features will only be integrated in TeX Live.  The Debian
-            maintainers will not include anything in the TeX Live
+            The Debian maintainers will not include anything in the TeX Live
             packages that is not already in TeX Live upstream.
           </item>
         </list>
