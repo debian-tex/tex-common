@@ -11,8 +11,9 @@ tex-common (1.8~1) unstable; urgency=low
   * Update snippets in texmf.d according to a reordering patch accepted
     upstream [fk]
   * (first) rework of Debian-on-TeX document for TeX Live only [np]
+  * add a list of old files from teTeX which can be removed
 
- -- Norbert Preining <preining@debian.org>  Wed, 25 Apr 2007 08:17:02 +0200
+ -- Norbert Preining <preining@debian.org>  Thu, 26 Apr 2007 08:22:25 +0200
 
 tex-common (1.7) unstable; urgency=low
 
