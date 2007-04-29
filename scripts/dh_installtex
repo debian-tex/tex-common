@@ -401,6 +401,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	my $dothefullstuff = 0;
 	my %data;
 	my @whattodo = ();
+	my @fmtconffiles;
 
 	if (($package eq $dh{FIRSTPACKAGE} || $dh{PARAMS_ALL}) && @ARGV) {
 		# we do nothing here
@@ -450,9 +451,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			error("This call would create multiple copies of $priority$package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
 		}
 
-        	if ( ! $dh{ONLYSCRIPTS} && ! -d "$tmp/etc/texmf/$configdir{$type}/") {
+		if ( ! $dh{ONLYSCRIPTS} && ! -d "$tmp/etc/texmf/$configdir{$type}/") {
 			doit("install","-d","$tmp/etc/texmf/$configdir{$type}/");
-        	};
+		};
 		#
 		# the cmd line cfg files
 		#
@@ -460,28 +461,28 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			$bn=basename($_);
 			$pr=$cmdlinefilespriority{$type}{$_};
 			$dofilen = "$tmp/etc/texmf/$configdir{$type}/$pr$bn";
-		      WRITECMDLINECFGFILE: do {
-			-r $dofilen &&
-				error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
-			open(CFGFILE, ">$dofilen") ||
-				error("Cannot open $dofilen for writing!");
-			verbose_print("Writing $dofilen");
-			if (!magic_comment_present($_)) {
-				print CFGFILE "$commentchar{$type} $pr$bn\n";
-				foreach $i (@magicheader) {
-					print CFGFILE "$commentchar{$type} $i\n";
+			WRITECMDLINECFGFILE: do {
+				-r $dofilen &&
+					error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
+				open(CFGFILE, ">$dofilen") ||
+					error("Cannot open $dofilen for writing!");
+				verbose_print("Writing $dofilen");
+				if (!magic_comment_present($_)) {
+					print CFGFILE "$commentchar{$type} $pr$bn\n";
+					foreach $i (@magicheader) {
+						print CFGFILE "$commentchar{$type} $i\n";
+					}
 				}
-			}
-			open(FOO,"<$_") || error("Cannot open $_ for reading!");
-			while (<FOO>) { 
-				print CFGFILE $_; 
-				collect_data($type,\@{$data{$type}},$_);
-			}
-			close(FOO);
-			close(CFGFILE);
-			$bn =~ s/\.$configfileext{$type}$//;
-			push @listlines, "$pr$bn";
-		      } unless ($dh{ONLYSCRIPTS});
+				open(FOO,"<$_") || error("Cannot open $_ for reading!");
+				while (<FOO>) { 
+					print CFGFILE $_; 
+					collect_data($type,\@{$data{$type}},$_);
+				}
+				close(FOO);
+				close(CFGFILE);
+				$bn =~ s/\.$configfileext{$type}$//;
+				push @listlines, "$pr$bn";
+			} unless ($dh{ONLYSCRIPTS});
 		}
 		#
 		# now debian/package.maps and/or debian/maps formats languages
@@ -495,7 +496,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				error("Cannot open $dofilen for writing!");
 			verbose_print("Writing $dofilen");
 			if (($pkgprovidedfile && !magic_comment_present($pkgfilename)) ||
-		    	    (!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
+				(!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
 				print CFGFILE "$commentchar{$type} $priority$package.$configfileext{$type}\n";
 				foreach (@magicheader) {
 					print CFGFILE "$commentchar{$type} $_\n";
@@ -514,18 +515,22 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			push @listlines, "$priority$package";
 		};
 
-	      WRITELISTFILE: do {
-        	if ( ! -d "$tmp/var/lib/tex-common/$managedir{$type}/") {
-            		doit("install","-d","$tmp/var/lib/tex-common/$managedir{$type}/");
-        	}		$dofilen = "$tmp/var/lib/tex-common/$managedir{$type}/$package.list";
-		open(LISTFILE, ">>$dofilen")||
-			error("Cannot open $dofilen for writing/appending!");
-		verbose_print("Writing $dofilen");
-		foreach (@listlines) {
-			print LISTFILE "$_\n";
-		}
-		close(LISTFILE);
-	      }  unless ($dh{ONLYSCRIPTS});
+		WRITELISTFILE: do {
+			if ( ! -d "$tmp/var/lib/tex-common/$managedir{$type}/") {
+				doit("install","-d","$tmp/var/lib/tex-common/$managedir{$type}/");
+			}		
+			$dofilen = "$tmp/var/lib/tex-common/$managedir{$type}/$package.list";
+			open(LISTFILE, ">>$dofilen") ||
+				error("Cannot open $dofilen for writing/appending!");
+			verbose_print("Writing $dofilen");
+			foreach (@listlines) {
+				print LISTFILE "$_\n";
+			}
+			if ($type eq "format") {
+				@fmtconffiles = @listlines;
+			}
+			close(LISTFILE);
+		}  unless ($dh{ONLYSCRIPTS});
 	}
 	
 	my @mapdata = ();
@@ -535,19 +540,19 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	if ( ! $dh{ONLYSCRIPTS} && ($#mapdata >= 0) ) {
 		doit("install","-d","$tmp/usr/share/texmf/dvips/config/");
 	};
- INSTALLDVIPSCONF: do {
-	foreach $i (@mapdata) {
-		my $font = $i;
-		$font =~ s/\.map$//;
-		$dofilen = "$tmp/usr/share/texmf/dvips/config/config.$font";
-		-r $dofilen &&
-			error("The dvips config file $dofilen already exists!\nYou may have to call dh_clean -k!\n");
-		open(CNFFILE, ">$dofilen") ||
-			error("Cannot open $dofilen for writing!");
-		verbose_print("Writing $dofilen");
-		print CNFFILE "p +$i\n";
-		close(CNFFILE);
-        } 
+	INSTALLDVIPSCONF: do {
+		foreach $i (@mapdata) {
+			my $font = $i;
+			$font =~ s/\.map$//;
+			$dofilen = "$tmp/usr/share/texmf/dvips/config/config.$font";
+			-r $dofilen &&
+				error("The dvips config file $dofilen already exists!\nYou may have to call dh_clean -k!\n");
+			open(CNFFILE, ">$dofilen") ||
+				error("Cannot open $dofilen for writing!");
+			verbose_print("Writing $dofilen");
+			print CNFFILE "p +$i\n";
+			close(CNFFILE);
+		} 
 	} unless ($dh{ONLYSCRIPTS});
 
 	my @fmtpairs = ();
@@ -556,23 +561,23 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	if (defined($data{"format"})) {
 		@fmtpairs = @{$data{"format"}};
 	}
- installformatlink: do {
-	foreach my $pair (@fmtpairs) {
-		my ($format,$engine) = $pair =~ m/^(.*)\t(.*)$/;
-		push @postrmfmtdata, "$engine/$format";
-		push @postrmfmtdata, "$format";
-		push @fmtdata, "$format";
-		if ($doformatlinks && ($format ne $engine)) {
-		  my $formatlink = "$tmp/usr/bin/$format";
-		  if ( -e $formatlink ) {
-		    warning("/usr/bin/$format already exists, skipping");
-		  } else {
-		    doit("mkdir","-p","$tmp/usr/bin");
-		    doit("ln","-s","$engine","$formatlink");
-		  };
-		}
-	} 
-}unless ($dh{ONLYSCRIPTS});
+ 	installformatlink: do {
+		foreach my $pair (@fmtpairs) {
+			my ($format,$engine) = $pair =~ m/^(.*)\t(.*)$/;
+			push @postrmfmtdata, "$engine/$format";
+			push @postrmfmtdata, "$format";
+			push @fmtdata, "$format";
+			if ($doformatlinks && ($format ne $engine)) {
+				my $formatlink = "$tmp/usr/bin/$format";
+				if ( -e $formatlink ) {
+					warning("/usr/bin/$format already exists, skipping");
+				} else {
+					doit("mkdir","-p","$tmp/usr/bin");
+					doit("ln","-s","$engine","$formatlink");
+		  		};
+			}
+		} 
+	} unless ($dh{ONLYSCRIPTS});
 
 	if ($#addbuildformats >= 0) {
 		push @fmtdata, @addbuildformats;
@@ -601,7 +606,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		autoscript($package, "postinst", "postinst-texlsr", "s|#TEXMFTREES#|@foo|");
 		autoscript($package, "postrm",   "postrm-texlsr", "s|#TEXMFTREES#|@foo|");
 		if ($dothefullstuff) {
-			autoscript($package, "postinst", "postinst-tex", "s|#FORMATSFILES#|@listlines|; s|#WHATTODO#|@whattodo|");
+			autoscript($package, "postinst", "postinst-tex", "s|#FORMATSFILES#|@fmtconffiles|; s|#WHATTODO#|@whattodo|");
 			autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodo|");
 		}
 	}
@@ -618,3 +623,10 @@ L<debhelper(7)>
 Norbert Preining <preining@logic.at>
 
 =cut
+
+### Local Variables:
+### perl-indent-level: 4
+### tab-width: 4
+### indent-tabs-mode: t
+### End:
+# vim:set tabstop=4: #
