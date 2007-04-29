@@ -1,9 +1,9 @@
-The following files and directories have been installed with older
-versions of teTeX and are not longer per default installed by any
-TeX package into /etc/texmf. If you did NOT install them you can
-remove them without any problems.
+The following files have been installed with older versions of teTeX 
+and are not longer per default installed by any TeX package into /etc/texmf. 
+If you did NOT install them you can remove them without any problems.
 
-Files:
+As usual in a TEXMF tree, empty directories can safely be removed.
+
 /etc/texdoctk/texdocrc
 /etc/texmf/dvips/builtin35.map
 /etc/texmf/dvips/config/antp.cfg
@@ -246,37 +246,3 @@ Files:
 /etc/texmf/tex/platex/config/language.dat
 /etc/texmf/tex/platex/config/platex.ini
 /etc/X11/app-defaults/XDvi
-
-If the following directories are empty you can also remove them:
-/etc/texmf/context
-/etc/texmf/cslatex
-/etc/texmf/cyrplain
-/etc/texmf/dvipdfm
-/etc/texmf/dvips
-/etc/texmf/oldstuff_unused
-/etc/texmf/etex
-/etc/texmf/generic
-/etc/texmf/latex
-/etc/texmf/map
-/etc/texmf/map/dvipdfm
-/etc/texmf/map/dvipdfm/tetex
-/etc/texmf/map/dvips
-/etc/texmf/map/dvips/antp
-/etc/texmf/map/dvips/antt
-/etc/texmf/map/dvips/cc-pl
-/etc/texmf/map/dvips/context
-/etc/texmf/map/dvips/lucida
-/etc/texmf/map/dvips/misc
-/etc/texmf/map/dvips/ps
-/etc/texmf/map/dvips/psnfssx
-/etc/texmf/map/dvips/qfonts
-/etc/texmf/map/dvips/tetex
-/etc/texmf/map/dvips/urwvn
-/etc/texmf/map/dvips/vntex
-/etc/texmf/map/pdftex
-/etc/texmf/map/pdftex/cmttf
-/etc/texmf/pdftex
-/etc/texmf/plain
-/etc/texmf/platex
-/var/cache/fonts
-/var/spool/texmf
