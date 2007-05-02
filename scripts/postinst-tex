@@ -59,7 +59,8 @@ dhit_build_format ()
 {
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-    printf "Building format(s) $@. This may take some time... "
+    tmp="Building format(s) $@.\n\tThis may take some time... "
+    printf "$tmp"
     if fmtutil-sys "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
