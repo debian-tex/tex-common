@@ -12,8 +12,9 @@ tex-common (1.8~1) unstable; urgency=low
     upstream [fk]
   * (first) rework of Debian-on-TeX document for TeX Live only [np]
   * add a list of old files from teTeX which can be removed
-
- -- Norbert Preining <preining@debian.org>  Sun, 29 Apr 2007 18:28:14 +0200
+  * Do not install unused 01tetex.cnf and its md5sum file [fk]
+  
+ -- Frank Küster <frank@debian.org>  Fri, 18 May 2007 09:31:09 +0200
 
 tex-common (1.7) unstable; urgency=low
 
