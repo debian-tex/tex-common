@@ -13,8 +13,9 @@ tex-common (1.8~1) unstable; urgency=low
   * (first) rework of Debian-on-TeX document for TeX Live only [np]
   * add a list of old files from teTeX which can be removed
   * Do not install unused 01tetex.cnf and its md5sum file [fk]
-  
- -- Frank Küster <frank@debian.org>  Fri, 18 May 2007 09:31:09 +0200
+  * dh_installtex: rewrite $engine to metafont if $engine = mf|mf-nowin
+
+ -- Norbert Preining <preining@debian.org>  Mon, 21 May 2007 14:24:31 +0200
 
 tex-common (1.7) unstable; urgency=low
 

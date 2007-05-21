@@ -564,7 +564,11 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
  	installformatlink: do {
 		foreach my $pair (@fmtpairs) {
 			my ($format,$engine) = $pair =~ m/^(.*)\t(.*)$/;
-			push @postrmfmtdata, "$engine/$format";
+			if ($engine =~ m/^(mf|mf-nowin)$/) {
+				push @postrmfmtdata, "metafont/$format";
+			} else {
+				push @postrmfmtdata, "$engine/$format";
+			}
 			push @postrmfmtdata, "$format";
 			push @fmtdata, "$format";
 			if ($doformatlinks && ($format ne $engine)) {
