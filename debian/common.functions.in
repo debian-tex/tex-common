@@ -269,7 +269,8 @@ get_newfilename(){
 
 dpkg_md5sum(){
   file=$1
-  md5sum=$(grep "$file[[:space:]]"  /var/lib/dpkg/status | cut -f 3 -d ' ')
+  package=$2
+  md5sum=$(dpkg-query -W -f='${Conffiles}' $package | grep "$file[[:space:]]" | cut -f 3 -d ' ')
   if [ -z "$md5sum" ]; then
     get_sarge_md5sum_from_list $file
   fi
