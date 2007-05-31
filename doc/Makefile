@@ -13,7 +13,7 @@ Debian-TeX-Policy.txt: Debian-TeX-Policy.sgml version.ent
 	debiandoc2text Debian-TeX-Policy.sgml
 
 Debian-TeX-Policy.html: Debian-TeX-Policy.sgml version.ent
-	rm -r $@
+	-rm -r $@
 	debiandoc2html Debian-TeX-Policy.sgml
 
 Debian-TeX-Policy.pdf: Debian-TeX-Policy.sgml version.ent texify-tex-output
