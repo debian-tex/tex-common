@@ -1,3 +1,16 @@
+tex-common (1.8) unstable; urgency=low
+
+  * Manually reinstalling removed conffiles
+  
+    Due to a bug in the postrm script of tetex-base in etch, purging this
+    package removes essential configuration files of texlive
+    packages. tex-common is also affected, because tetex-base removed
+    /etc/texmf/web2c/mktex.cnf.  This file isn't strictly needed, but it
+    is very much recommended that you reinstall it.  You can find a copy
+    in /usr/share/tex-common/.
+  
+ -- Frank Küster <frank@debian.org>  Thu, 31 May 2007 10:32:21 +0200
+
 tex-common (1.4) unstable; urgency=low
 
   * Filename database in $TEXMFHOME is no longer created and updated

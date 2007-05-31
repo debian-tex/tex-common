@@ -62,7 +62,6 @@ dhit_libkpathsea_configured ()
     kpsewhich --version >/dev/null 2>&1
 }
 
-
 #################################################################
 ##  End of function definitions from file postinst.functions
 #################################################################

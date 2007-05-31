@@ -15,7 +15,7 @@ sbin_manpages=$(foreach script,$(sbin_scripts), scripts/$(script).8)
 bin_installfiles=$(foreach script,$(bin_scripts), scripts/$(script))
 bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1) 
 
-nonbin_installfiles=$(foreach script,$(nonbin_scripts), scripts/$(script))
+nonbin_installfiles=$(foreach script,$(nonbin_scripts), scripts/$(script)) texmf/web2c/mktex.cnf
 
 # create maintainer scripts etc.
 EPERL_FILES := debian/common.functions debian/postinst debian/postrm debian/config debian/preinst
