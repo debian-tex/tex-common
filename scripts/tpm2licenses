@@ -15,6 +15,7 @@
 #       --package
 #       --listallfiles
 #       --nocoverage
+#       --nosourcefiles
 # optional tpm file: check only that one
 #
 
@@ -43,7 +44,7 @@ use Cwd;
 
 
 # initialize AppConfig
-my $config = AppConfig->new("catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s", "listallfiles", "texmfPath=s", "nocoverage");
+my $config = AppConfig->new("catalogue=s", "nocheckcatalogue", "tpmdir=s", "package=s", "what=s", "listallfiles", "texmfPath=s", "nocoverage", "nosourcefiles");
 
 # parse configurationfile, if present
 my @cfgDirs = (".","./debian","..","~");
@@ -68,6 +69,7 @@ my $listallfiles = $config->listallfiles() ? 1 : 0;
 my $texmfPathString = $config->texmfPath() ? $config->texmfPath() : ".";
 my @texmfPath = split ' ', $texmfPathString;
 my $nocoverage = $config->nocoverage() ? $config->nocoverage() : '';
+my $nosourcefiles = $config->nosourcefiles() ? 1 : 0;
 
 if ($debian_package) {
   die "Unknown Debian package: $debian_package." unless
@@ -330,13 +332,17 @@ sub printFiles {
       @DocFiles = map { $_ =~ s,^doc/,, ; $_; } @DocFiles ;
       foreach (@RunFiles) {CheckFileExistence($_)};
       foreach (@DocFiles) {CheckFileExistence($_)};
-      foreach (@SourceFiles) {CheckFileExistence($_)};
+      if (!$nosourcefiles) {
+        foreach (@SourceFiles) {CheckFileExistence($_)};
+      }
       MergeDirectories(\@RunFiles);
       MergeDirectories(\@DocFiles) if (@DocFiles);
-      MergeDirectories(\@SourceFiles) if (@SourceFiles);
+      if (!$nosourcefiles) {
+        MergeDirectories(\@SourceFiles) if (@SourceFiles);
+      }
       print @RunFiles;
       print @DocFiles;
-      print @SourceFiles;
+      print @SourceFiles if (!$nosourcefiles);
     };
     if ( /^tetex-base$/ ) {
       #@texmfPath = (".");

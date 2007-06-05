@@ -18,8 +18,10 @@ tex-common (1.8~1) unstable; urgency=low
     NEWS.Debian to reinstall it. [fk]
   * Debconf translations: Added Vietnamese translation, thanks to Clytie
     Siddall <clytie@riverland.net.au> (closes: #426881)
+  * implement an opion --nosourcefiles for tpm2licenses to not check 
+    source files
 
- -- Frank Küster <frank@debian.org>  Thu, 31 May 2007 18:11:44 +0200
+ -- Norbert Preining <preining@debian.org>  Tue, 05 Jun 2007 17:59:32 +0200
 
 tex-common (1.7) unstable; urgency=low
 
