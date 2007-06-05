@@ -255,6 +255,7 @@ sub getListField {
 
   my %s = getTextField($doc, $f);
   my $str = $s{"text"};
+  $str = "" if (!defined($str));
   $str =~ s/^\n*//;
   $str =~ s/\n*$//;
   $str =~ s/\n/ /gomsx;
