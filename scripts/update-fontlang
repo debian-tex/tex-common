@@ -111,6 +111,11 @@ include_file()
     printf "\n${PCC}${PCC}${PCC} From file: $file\n" >>"$tempfile"
     cat "$file" >>"$tempfile"
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
+    case $file in
+      *10texlive-latex-base.cnf)
+	seen_latex="true"
+	;;
+    esac
 }
 
 do_not_include_file()
@@ -139,6 +144,34 @@ swap_basename_and_dirname()
         echo "$(basename "$file")$(dirname "$file")"
     done
 }
+# check_special_jadetex_xmltex <file path>
+#
+# special case for jadetex and xmltex: If no latex format information
+# is included so far (seen_latex is still "false"), then we cannot
+# generate the jadetex or xmltex formats, and may not include them in
+# fmtutil.cnf.  Even if both packages depend on tl-latex-base this is
+# still needed, because if tl-base-bin and tl-latex-base are upgraded
+# at the same time, the latex information is not included while
+# tl-base-bin is configured and runs "fmtutil --all" (see bug #427562).
+check_special_jadetex_xmltex()
+{
+  [ $progname = "update-fmtutil" ] || return 0
+  
+  file=$1
+
+  case $file in
+    *40jadetex.cnf|*40xmltex.cnf)
+      if [ $seen_latex = "true" ]; then
+	return 0
+      else
+	return 1
+      fi
+      ;;
+    *)
+      return 0 ;;
+  esac
+  
+}
 
 # handle_file <file path>
 #
@@ -162,7 +195,9 @@ handle_file()
             | xargs -0r cat \
             | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null;
 	then
+	  if check_special_jadetex_xmltex $file; then
             include_file "$file"
+	  fi
         else
             do_not_include_file "$file"
         fi
@@ -562,6 +597,7 @@ fi
 
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
+seen_latex="false"
 
 if [ $syswide_mode = 1 ]; then
     find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}

@@ -369,7 +369,7 @@
           <file>updmap.cfg</file> or <file>language.dat</file> is it necessary
           to edit existing files.
         </p>
-
+	
          <sect1 id="sec-texmfcnf-and-update-texmf">
           <heading>
             <file>texmf.cnf</file> and <prgn>update-texmf</prgn>
@@ -472,6 +472,51 @@
       
 	  </p>
 	
+         <sect1 id="jadetex-xmltex-specialcase">
+	   <heading>A special case in <prgn>update-fmtutil</prgn>:
+	   Formats which are based on other formats</heading>
+	   <p>
+	     The JadeTeX and xmlTeX formats are built on top of LaTeX
+	     and therefore require special treatment.  This is done
+	     automatically for the Debian packages for these formats.
+	     However, local administrators who similarly base their
+	     custom formats on LaTeX (or any other format) might need
+	     to take special care, in particular when dist-upgrading.
+	   </p>
+	   <p>
+	     JadeTeX is based on LaTeX such that during format
+	     generation, the LaTeX format dump is preloaded with this
+	     line in <file>fmtutil.cnf</file>:
+<example>
+jadetex		etex	language.dat	&latex jadetex.ini
+</example>
+             This is problematic if the package which provides LaTeX
+             (currently <package>texlive-latex-base</package>) is
+             upgraded at the same time as the package which provides
+             the executables
+             (currently <package>texlive-base-bin</package>).  In this
+             dpkg run, <package>texlive-base-bin</package> will be
+             configured while <package>texlive-latex-base</package> is
+             unpacked but unconfigured and might have
+             a <file>10texlive-latex-base.cnf.dpkg-new</file> file
+             in <file>/etc/texmf/fmt.d</file>.
+             <package>texlive-base-bin</package> will
+             call <prgn>update-fmtutil</prgn>  just before it executes
+             <tt>fmtutil --all</tt>, and because of
+             the <file>dpkg-new</file> file information for LaTeX will
+             not be included.  If JadeTeX would still be included, its
+             format generation would consequently fail.
+	   </p>
+	   <p>
+	     <prgn>update-fmtutil</prgn> knows about this problem and
+	     will ignore JadeTeX and xmlTeX if LaTeX is not
+	     available.  It does not know which other (locally
+	     defined) formats are also based on LaTeX, though.  To
+	     prevent failures (and actually a possible fork bomb, see
+	     Debian Bug #427562), local administrators should manually
+	     disable such formats before upgrading TeX Live packages.
+	   </p>
+
          <sect1 id="sec-user-config-files">
           <heading>
 	    Per user configuration changes

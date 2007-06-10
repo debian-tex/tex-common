@@ -101,7 +101,10 @@ for \fBupdate-fmtutil\fP, are actually included into the final output
 file. This way, local changes to the configuration can be preserved
 while the package is in state 'rc' (that is, the package is removed, but its
 configuration files are still present).  For details about this mechanism,
-package maintainers should consult the Debian TeX Policy.
+package maintainers should consult the Debian TeX Policy.  As a
+special case, the files for JadeTeX and xmlTeX are only included if
+there is already a file for the LaTeX format (see \fITeX on Debian\fP
+for details).
 
 The user-specific mode provides a way for a non-admin user to override
 system-wide settings.  In this mode,
