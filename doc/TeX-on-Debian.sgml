@@ -488,7 +488,7 @@
 	     generation, the LaTeX format dump is preloaded with this
 	     line in <file>fmtutil.cnf</file>:
 <example>
-jadetex		etex	language.dat	&latex jadetex.ini
+jadetex		etex	language.dat	&amp;latex jadetex.ini
 </example>
              This is problematic if the package which provides LaTeX
              (currently <package>texlive-latex-base</package>) is
