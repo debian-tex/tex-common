@@ -50,6 +50,9 @@ install:
 	cp TeX-on-Debian.txt $(DESTDIR)/
 	cp TeX-on-Debian.pdf $(DESTDIR)/
 	cp -R TeX-on-Debian.html $(DESTDIR)/
+	ln -s TeX-on-Debian.txt $(DESTDIR)/README.Debian.txt
+	ln -s TeX-on-Debian.pdf $(DESTDIR)/README.Debian.pdf
+	ln -s TeX-on-Debian.html/index.html $(DESTDIR)/README.Debian.html
 	cp obsolete-tex-files.txt $(DESTDIR)/
 
 	cp tds-$(TDS_VERSION)/tds.pdf $(DESTDIR)/

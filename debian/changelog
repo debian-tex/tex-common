@@ -20,8 +20,12 @@ tex-common (1.8~1) unstable; urgency=low
     Siddall <clytie@riverland.net.au> (closes: #426881)
   * implement an opion --nosourcefiles for tpm2licenses to not check 
     source files
+  * Add a workaround for the fork bomb problem in format generation:
+    Ignore jadetex and xmltex if latex is not present (closes: #427562) [fk]
+  * Add symlinks "README.Debian.$ext" to the respective "TeX-on-Debian"
+    formats. [fk]
 
- -- Norbert Preining <preining@debian.org>  Tue, 05 Jun 2007 17:59:32 +0200
+ -- Frank Küster <frank@debian.org>  Sun, 10 Jun 2007 23:11:36 +0200
 
 tex-common (1.7) unstable; urgency=low
 
