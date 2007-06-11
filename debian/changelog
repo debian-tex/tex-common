@@ -1,4 +1,4 @@
-tex-common (1.8) unstable; urgency=low
+tex-common (1.8) unstable; urgency=medium
 
   * Bump urgency since this fixes a RC bug which hits anyone upgrading
     from lenny to sid and triggers a forkbomb.  Urgency only medium
