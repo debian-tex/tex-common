@@ -55,6 +55,7 @@ FindDebianUserdir(){
 #  verboseMsg "entering FindDebianUserdir"
 
   defaultuserdir=$HOME/.texmf-config/updmap.d
+  /usr/share/texmf/web2c/mktexdir $defaultuserdir
 
   # this should read a config item in updmap.cfg, but for now we just
   # check whether the default exists.
@@ -317,7 +318,6 @@ EOF
 ###############################################################################
 # findRightLocalfile (mapname)
 #   find the right file to enable mapname, site-wide or user-specific
-#   mapname is only needed for the error message
 ###############################################################################
 findRightLocalfile(){
   mapName=$1
@@ -326,7 +326,6 @@ findRightLocalfile(){
     DebCnfFile=`pickLocalFile $mapName /etc/texmf/updmap.d`
   else
     debianuserdir=`FindDebianUserdir`
-    /usr/share/texmf/web2c/mktexdir $debianuserdir
     test -w $debianuserdir || (
       echo "Target directory $debianuserdir not writable."
       echo "Exiting"
@@ -542,7 +541,7 @@ debianEditWarnAndShow(){
   echo ""
   echo "In Debian, updmap.cfg, the font configuration file, is a generated file."
   echo "The actual configuration files are in /etc/texmf/updmap.d."
-  echo "Please read the updmap(1) manpage and edit those files."
+  echo "Please read the update-updmap(1) manpage and edit those files."
   echo ""
   echo "Instead of editing, you will now be shown updmap.cfg in a pager."
   echo ""
