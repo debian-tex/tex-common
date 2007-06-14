@@ -477,8 +477,8 @@ else
     IFS="$OLDIFS"
 
     # Does $TEXMFVAR expand to a single directory?
-    texmfvar=$(kpsewhich --expand-path '$TEXMFVAR')
-    if ! echo "$texmfvar" | grep -e ':'; then
+    texmfvar=$(kpsewhich --var-value 'TEXMFVAR')
+    if ! echo "$texmfvar" | grep -e '[,:]'; then 
         output_file="$texmfvar/$PATH_COMPONENT/$DEFAULT_OUTPUTFILE_BASENAME"
     else
         # We don't know what to do in this case, therefore: do nothing unless
