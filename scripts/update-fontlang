@@ -468,13 +468,26 @@ else
     texmfconfig=$(kpsewhich --expand-path '$TEXMFCONFIG')
     OLDIFS="$IFS"
     IFS=:
+    count=0
     for d in "$texmfconfig"; do
+        : $((count++))
+        : ${cnfdir:=$d}
         if [ -d "$d/$CNFDIR" ]; then
             conf_dir="$d/$CNFDIR"
             break
         fi
     done
     IFS="$OLDIFS"
+    # still empty?  Pick one
+    if [ -z "$defaultuserdir" ] && [ $count -eq 1 ]; then
+      defaultuserdir="$cnfdir/updmap.d"
+    else
+      echo "TEXMFCONFIG contains more than one directory, and none of them"
+      echo "already contains a updmap.d/ subdirectory."
+      echo "I don't know how to proceed here, stopping."
+      exit 1
+    fi
+
 
     # Does $TEXMFVAR expand to a single directory?
     texmfvar=$(kpsewhich --var-value 'TEXMFVAR')

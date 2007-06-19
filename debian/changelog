@@ -1,9 +1,12 @@
 tex-common (1.9~1) unstable; urgency=low
 
   * Make sure that update-fontlang detects TEXMFVAR properly even if the
-    directory does not yet exist (closes: #428448)
+    directory does not yet exist (closes: #428448) [fk].
+  * let update-fontlang and debianize-updmap create TEXMFCONFIG if  it
+    doesn't exist yet (at least when there's only one directory in that
+    variable) [fk].
 
- -- Frank Küster <frank@debian.org>  Wed, 13 Jun 2007 15:33:35 +0200
+ -- Frank Küster <frank@debian.org>  Tue, 19 Jun 2007 11:32:09 +0200
 
 tex-common (1.8) unstable; urgency=medium
 
