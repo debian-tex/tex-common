@@ -74,7 +74,7 @@ FindDebianUserdir(){
     echo "TEXMFCONFIG contains more than one directory, and none of them"
     echo "already contains a updmap.d/ subdirectory."
     echo "I don't know how to proceed here, stopping."
-    exit 1
+    return
   fi
 
   /usr/share/texmf/web2c/mktexdir $defaultuserdir
