@@ -59,7 +59,7 @@ FindDebianUserdir(){
   IFS=:
   count=0
   for d in "$texmfconfig"; do
-    : $((count++))
+    count=$(($count+1))
     : ${cnfdir:=$d}
     if [ -d "$d/updmap.d" ]; then
       defaultuserdir="$d/updmap.d"
