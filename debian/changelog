@@ -1,4 +1,4 @@
-tex-common (1.9~1) unstable; urgency=low
+tex-common (1.9) unstable; urgency=low
 
   * Make sure that update-fontlang detects TEXMFVAR properly even if the
     directory does not yet exist (closes: #428448) [fk].
