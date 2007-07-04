@@ -3,8 +3,9 @@
 # update-fontlang --- Generate updmap.cfg, language.dat, fmtutil.cnf
 #                     from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
-# Copyright (C) 2004, 2005, 2006 Florent Rougon
+# Copyright (C) 2004, 2005, 2006, 2007 Florent Rougon
 # Copyright (C) 2005, 2006 Norbert Preining
+# Copyright (C) 2007 Frank Küster
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -106,20 +107,26 @@ cleanup()
 }
 
 
+# include_file <file path>
 include_file()
 {
+    file="$1"
+
     printf "\n${PCC}${PCC}${PCC} From file: $file\n" >>"$tempfile"
     cat "$file" >>"$tempfile"
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
-    case $file in
-      *10texlive-latex-base.cnf)
-	seen_latex="true"
+    case "$file" in
+      */10texlive-latex-base.cnf)
+	seen_latex=1
 	;;
     esac
 }
 
+# do_not_include_file <file path>
 do_not_include_file()
 {
+    file="$1"
+
     cat >>"$tempfile" <<EOF
 
 $CC$CC
@@ -131,6 +138,25 @@ $CC$CC
 EOF
 }
 
+# do_not_include_snippet_that_depends_on_a_not_included_snippet <file path>
+do_not_include_snippet_that_depends_on_a_not_included_snippet()
+{
+    file="$1"
+
+    cat >>"$tempfile" <<EOF
+
+$CC$CC
+$CC$CC$CC $file not included because it depends
+$CC$CC$CC on another file that is not included here. For instance, jadetex and
+$CC$CC$CC xmltex snippets are not included in fmtutil.cnf when the snippet for
+$CC$CC$CC LaTeX isn't included itself. This is because the jadetex and xmltex
+$CC$CC$CC formats need the LaTeX format when being built (see bug #427562).
+$CC$CC
+EOF
+}
+
+# swap_basename_and_dirname
+#
 # This function expects a file path on every line of stdin and will write
 # on stdout the same lines with the file basename and dirname swapped.
 # This is useful because we want to sort the files from several directories
@@ -144,33 +170,40 @@ swap_basename_and_dirname()
         echo "$(basename "$file")$(dirname "$file")"
     done
 }
+
 # check_special_jadetex_xmltex <file path>
 #
-# special case for jadetex and xmltex: If no latex format information
-# is included so far (seen_latex is still "false"), then we cannot
-# generate the jadetex or xmltex formats, and may not include them in
-# fmtutil.cnf.  Even if both packages depend on tl-latex-base this is
-# still needed, because if tl-base-bin and tl-latex-base are upgraded
-# at the same time, the latex information is not included while
-# tl-base-bin is configured and runs "fmtutil --all" (see bug #427562).
+# Special case for jadetex and xmltex: If no latex format information is
+# included so far ($seen_latex is still 0), then we cannot generate the jadetex
+# or xmltex formats, and may not include them in fmtutil.cnf. Even if both
+# packages depend on tl-latex-base, this is still needed, because if
+# tl-base-bin and tl-latex-base are upgraded at the same time, the latex
+# information is not included while tl-base-bin is configured and runs
+# "fmtutil --all" (see bug #427562).
+#
+# Return value:
+#
+#   - 0 if:
+#       * we are being called as update-fmtutil;
+#       * and <file path> points to 40jadetex.cnf or 40xmltex.cnf;
+#       * and $seen_latex=0.
+#
+#   - 1 in all other cases.
 check_special_jadetex_xmltex()
 {
-  [ $progname = "update-fmtutil" ] || return 0
+  [ "$progname" = update-fmtutil ] || return 1
   
-  file=$1
+  file="$1"
 
-  case $file in
-    *40jadetex.cnf|*40xmltex.cnf)
-      if [ $seen_latex = "true" ]; then
-	return 0
-      else
-	return 1
+  case "$file" in
+    */40jadetex.cnf|*/40xmltex.cnf)
+      if [ $seen_latex = 0 ]; then
+          return 0
       fi
       ;;
-    *)
-      return 0 ;;
   esac
-  
+
+  return 1
 }
 
 # handle_file <file path>
@@ -195,7 +228,10 @@ handle_file()
             | xargs -0r cat \
             | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null;
 	then
-	  if check_special_jadetex_xmltex $file; then
+	  if check_special_jadetex_xmltex "$file"; then
+              do_not_include_snippet_that_depends_on_a_not_included_snippet() \
+                "$file"
+          else
             include_file "$file"
 	  fi
         else
@@ -242,6 +278,12 @@ merge_files()
     # Overloaded files are files with the same basename that were found in
     # several directories.
     overloaded=0
+    # In case we are being called as update-fmtutil, seen_latex tells whether
+    # we have included the snippet for the LaTeX format so far. This is
+    # useful, because the snippets for formats that depend on LaTeX such
+    # jadetex and xmltex should only be included along with the snippet for
+    # the LaTeX format (see bug #427562).
+    seen_latex=0
 
     while read line; do
         filename="${line%%/*}"
@@ -337,7 +379,6 @@ second one.\n"
     fi
 }
 
-#
 # perform_contents_check
 #
 # This function *TRIES* to check wether the installed files are correct in
@@ -475,14 +516,6 @@ else
         fi
     done
     IFS="$OLDIFS"
-    # still empty?  Pick one
-    if [ -z "$conf_dir" ]; then
-      echo "No fmt.d directory found in"
-      echo "$texmfconfig"
-      echo "I don't know what you want me to do, exiting."
-      exit 1
-    fi
-
 
     # Does $TEXMFVAR expand to a single directory?
     texmfvar=$(kpsewhich --var-value 'TEXMFVAR')
@@ -605,7 +638,6 @@ fi
 
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
-seen_latex="false"
 
 if [ $syswide_mode = 1 ]; then
     find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}
