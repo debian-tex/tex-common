@@ -624,7 +624,9 @@ L<debhelper(7)>
 
 =head1 AUTHOR
 
-Norbert Preining <preining@logic.at>
+This program and its documentation was written by
+Norbert Preining <F<preining@logic.at>> for the Debian Operating System
+and both are licensed under the GNU General Public License Version 2 or later.
 
 =cut
 
