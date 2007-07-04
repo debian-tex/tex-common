@@ -607,11 +607,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			$uniq{$_} = 1; 
 		}
 		my @foo = keys(%uniq);
-		# we should conditionally check that there are files actually
-		# installed. ie
-		# - NO additional texmf trees are given
-		# - the two dirs /var/lib/texmf and /usr/share/texmf do NOT exists
-		# then we do NOT call the texlsr calls!
+		# we should NOT check whether files are actually installed
+		# because we have to update the ls-R db for disappearing files, too.
 		autoscript($package, "postinst", "postinst-texlsr", "s|#TEXMFTREES#|@foo|");
 		autoscript($package, "postrm",   "postrm-texlsr", "s|#TEXMFTREES#|@foo|");
 		if ($dothefullstuff) {
