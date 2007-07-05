@@ -54,6 +54,12 @@ Your package should depend on an appropriate version of tex-common so
 that the update-* commands are available. (This program adds that
 dependency to ${misc:Depends}.)
 
+B<WARNING> This program does B<not> check for the actual existence of any 
+input files in TEXMF trees. If you call it without any further specification
+on which packages to work on (using C<-p> or C<-N>) it will add calls to
+management functions to B<all> packages. In this case don't forget to 
+add ${misc:Depends} to all packages' dependencies.
+
 =head1 SIMPLE USAGE: Registering Files 
 
 If you only install files into /usr/share/texmf and want to be sure that 
