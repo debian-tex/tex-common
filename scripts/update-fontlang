@@ -229,7 +229,7 @@ handle_file()
             | grep -E "^$(basename "$file" ".$EXT")\$" >/dev/null;
 	then
 	  if check_special_jadetex_xmltex "$file"; then
-              do_not_include_snippet_that_depends_on_a_not_included_snippet() \
+              do_not_include_snippet_that_depends_on_a_not_included_snippet \
                 "$file"
           else
             include_file "$file"

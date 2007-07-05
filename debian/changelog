@@ -1,9 +1,20 @@
 tex-common (1.9~1) unstable; urgency=low
 
-  * do something with update-fontlang ... Florent please fill in stuff here
+  * update-fontlang:
+       - properly handle file paths containing spaces;
+       - when the jadetex or xmltex snippet is not included, write an
+         explanation to fmtutil.cnf;
+       - only trigger special behavior on 40jadetex.cnf, not on
+         *40jadetex.cnf; same thing with 40xmltex.cnf and
+         10texlive-latex-base.cnf;
+       - use 0 and 1 instead of "false" and "true" for $seen_latex in order
+         to be consistent with the rest of the script.
+    [florent]
+  
   * add warning to the pod documentation / man page of dh_installtex that
     it will add management calls to *all* packages if not instructed
     otherwise (Closes: #400742) [np]
+
   * remove duplicate TEXDOC configuration in 45TeXinputs.cnf which gave
     .html a higher priority then pdf.gz. Thanks Jörg. (Closes: #431610) [np]
 
