@@ -2,10 +2,12 @@ tex-common (1.9~1) unstable; urgency=low
 
   * do something with update-fontlang ... Florent please fill in stuff here
   * add warning to the pod documentation / man page of dh_installtex that
-    it will add management calls to *all* packages if not instructed 
-    otherwise (Closes: #400742)
+    it will add management calls to *all* packages if not instructed
+    otherwise (Closes: #400742) [np]
+  * remove duplicate TEXDOC configuration in 45TeXinputs.cnf which gave
+    .html a higher priority then pdf.gz. Thanks Jörg. (Closes: #431610) [np]
 
- -- Norbert Preining <preining@debian.org>  Thu, 05 Jul 2007 09:53:19 +0200
+ -- Norbert Preining <preining@debian.org>  Thu, 05 Jul 2007 13:17:25 +0200
 
 tex-common (1.9) unstable; urgency=low
 
@@ -914,3 +916,4 @@ tex-common (0.1) unstable; urgency=low
 ;; Local Variables:
 ;; coding: utf-8
 ;; End:
+# vim:set termencoding=iso8859-15 encoding=utf-8 fileencoding=utf-8: #

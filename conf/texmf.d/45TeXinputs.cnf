@@ -81,9 +81,10 @@ MFINPUTS = .;$TEXMF/metafont//;{$TEXMF/fonts,$VARTEXFONTS}/source//
 MPINPUTS = .;$TEXMF/metapost//
 
 % allow for compressed files, and various extenions
-TEXDOCSSUFFIX   = ;.pdf;.ps;.dvi;.html;.txt;.tex
-TEXDOCSCOMPRESS = ;.gz;.bz2;.zip;.Z
-TEXDOCEXT       = {$TEXDOCSSUFFIX}{$TEXDOCSCOMPRESS}
+% settings are now in 90TeXDoc.cnf
+%TEXDOCSSUFFIX   = ;.pdf;.ps;.dvi;.html;.txt;.tex
+%TEXDOCSCOMPRESS = ;.gz;.bz2;.zip;.Z
+%TEXDOCEXT       = {$TEXDOCSSUFFIX}{$TEXDOCSCOMPRESS}
 
 % Dump files (fmt/base/mem) for vir{tex,mf,mp} to read (see web2c/INSTALL),
 % and string pools (.pool) for ini{tex,mf,mp}.  It is silly that we have six
