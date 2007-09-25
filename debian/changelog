@@ -10,7 +10,7 @@ tex-common (1.9~1) unstable; urgency=low
        - use 0 and 1 instead of "false" and "true" for $seen_latex in order
          to be consistent with the rest of the script.
     [florent]
-  
+
   * add warning to the pod documentation / man page of dh_installtex that
     it will add management calls to *all* packages if not instructed
     otherwise (Closes: #400742) [np]
@@ -18,7 +18,9 @@ tex-common (1.9~1) unstable; urgency=low
   * remove duplicate TEXDOC configuration in 45TeXinputs.cnf which gave
     .html a higher priority then pdf.gz. Thanks Jörg. (Closes: #431610) [np]
 
- -- Norbert Preining <preining@debian.org>  Thu, 05 Jul 2007 13:17:25 +0200
+  * Remove some outdated stuff in TeX-on-Debian [np]
+
+ -- Norbert Preining <norbert@frodo.Belkin>  Tue, 25 Sep 2007 13:00:28 +0200
 
 tex-common (1.9) unstable; urgency=low
 
