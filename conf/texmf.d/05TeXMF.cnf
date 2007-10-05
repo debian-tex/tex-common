@@ -59,9 +59,7 @@
 TEXMFMAIN = /usr/share/texmf
 
 % The main distribution tree:
-% after we have texlive 2007 in  unstable:
-% TEXMFDIST = /usr/share/texmf-texlive
-TEXMFDIST = /usr/share/texmf-{texlive,tetex}
+TEXMFDIST = /usr/share/texmf-texlive
 
 % A place for local additions to a "standard" texmf tree.
 % This tree is not used for local configuration maintained by

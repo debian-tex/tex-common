@@ -90,4 +90,4 @@ RUBYINPUTS   = .;$TEXMF/scripts/{$progname,$engine,}/ruby//
 % 
 % Since tetex-bin_3.0-22, it restricts this to dirs that actually exist,
 % to silent e.g. automounters:
-TEXMFCNF = $TETEXDIR;/usr/share/texmf/web2c;/usr/share/texmf/web2c
+TEXMFCNF = /var/lib/texmf/web2c;/usr/share/texmf/web2c;/usr/share/texmf/web2c

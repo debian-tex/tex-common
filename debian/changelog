@@ -20,7 +20,10 @@ tex-common (1.9~1) unstable; urgency=low
 
   * Remove some outdated stuff in TeX-on-Debian [np]
 
- -- Norbert Preining <preining@debian.org>  Tue, 25 Sep 2007 13:09:41 +0200
+  * remove the tetex part in TEXMFDIST, add /v/l/texmf/web2c to
+    TEXMFCNF, remove TETEXDIR from TEXMFCNF [np]
+
+ -- Norbert Preining <preining@debian.org>  Fri, 05 Oct 2007 16:07:12 +0200
 
 tex-common (1.9) unstable; urgency=low
 
