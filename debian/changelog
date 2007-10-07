@@ -1,4 +1,4 @@
-tex-common (1.9~1) unstable; urgency=low
+tex-common (1.10~1) unstable; urgency=low
 
   * update-fontlang:
        - properly handle file paths containing spaces;
@@ -23,7 +23,7 @@ tex-common (1.9~1) unstable; urgency=low
   * remove the tetex part in TEXMFDIST, add /v/l/texmf/web2c to
     TEXMFCNF, remove TETEXDIR from TEXMFCNF [np]
 
- -- Norbert Preining <preining@debian.org>  Fri, 05 Oct 2007 16:07:12 +0200
+ -- Norbert Preining <preining@debian.org>  Mon, 08 Oct 2007 00:37:36 +0200
 
 tex-common (1.9) unstable; urgency=low
 
