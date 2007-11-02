@@ -6,6 +6,8 @@ Uploaders: Julian Gilbey <jdg@debian.org>, C.M. Connelly <cmc@debian.org>, Atsuh
 Build-Depends: debhelper (>= 4.0.0), po-debconf
 Build-Depends-Indep: debiandoc-sgml, eperl
 Standards-Version: 3.7.2.0
+Vcs-Svn: svn://svn.debian.org/svn/debian-tex/tex-common/trunk
+Vcs-Browser: http://svn.debian.org/wsvn/debian-tex/tex-common/trunk/
 
 Package: tex-common
 Architecture: all

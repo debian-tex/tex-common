@@ -23,7 +23,9 @@ tex-common (1.10~1) unstable; urgency=low
   * remove the tetex part in TEXMFDIST, add /v/l/texmf/web2c to
     TEXMFCNF, remove TETEXDIR from TEXMFCNF [np]
 
- -- Norbert Preining <preining@debian.org>  Mon, 08 Oct 2007 00:37:36 +0200
+  * add Vcs-Svn and Vcs-Browser fields to debian/control [np]
+
+ -- Norbert Preining <preining@debian.org>  Fri, 02 Nov 2007 00:50:06 +0100
 
 tex-common (1.9) unstable; urgency=low
 
