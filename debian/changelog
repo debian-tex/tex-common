@@ -25,7 +25,10 @@ tex-common (1.10~1) unstable; urgency=low
 
   * add Vcs-Svn and Vcs-Browser fields to debian/control [np]
 
-  * I10N updates + additions
+  * update debconf template and package descriptions in control file
+    (Closes: #447689) [hilmar-guest]
+
+  * l10n updates + additions [hilmar-guest]
     - Galician (Closes: #448232)
     - Finnish (Closes: 448291)
     - Italian (Closes: #448367)
