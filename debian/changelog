@@ -32,6 +32,7 @@ tex-common (1.10~1) unstable; urgency=low
     - Basque (Closes: #448485)
     - Czech (Closes: #449263)
     - Finnish (Closes: 448291)
+    - French (Closes: #450704)
     - Galician (Closes: #448232)
     - German (Closes: #448245)
     - Italian (Closes: #448367)
