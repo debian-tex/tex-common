@@ -20,8 +20,7 @@ tex-common (1.10~1) unstable; urgency=low
 
   * Remove some outdated stuff in TeX-on-Debian [np]
 
-  * remove the tetex part in TEXMFDIST, add /v/l/texmf/web2c to
-    TEXMFCNF, remove TETEXDIR from TEXMFCNF [np]
+  * remove the tetex part in TEXMFDIST, remove TETEXDIR from TEXMFCNF [np]
 
   * add Vcs-Svn and Vcs-Browser fields to debian/control [np]
 
@@ -42,7 +41,7 @@ tex-common (1.10~1) unstable; urgency=low
     - Portuguese (Closes: #449234)
     - Spanish (Closes: #448541)
 
- -- Norbert Preining <preining@debian.org>  Fri, 02 Nov 2007 00:50:06 +0100
+ -- Norbert Preining <preining@debian.org>  Tue, 13 Nov 2007 08:45:21 +0100
 
 tex-common (1.9) unstable; urgency=low
 
