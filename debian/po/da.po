@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin_2.0.2-8_da\n"
 "Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-10-28 19:21+0200\n"
+"POT-Creation-Date: 2007-10-27 09:09+0200\n"
 "PO-Revision-Date: 2006-10-28 19:25+0200\n"
 "Last-Translator: Claus Hindsgaul <claus.hindsgaul@gmail.com>\n"
 "Language-Team: Danish\n"
@@ -19,56 +19,73 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "Essential entry missing in ${filename}"
 msgstr "Der mangler en essentiel linje i ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Der mangler en essentiel linje i ${filename}:"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "No setting of ${variable}."
 msgstr "${variable} er ikke sat."
 
 #. Type: error
 #. Description
-#: ../templates:16
-msgid "Essential entry wrong in ${filename}"
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "TeX will not work without it, you need to fix your configuration files.  "
+#| "The version of ${filename} that is provided by the package should be "
+#| "available as ${filename}.ucf-dist."
+msgid ""
+"TeX will not work until the configuration files are fixed. The version of "
+"${filename} that is provided by the package should be available as "
+"${filename}.ucf-dist."
+msgstr ""
+"TeX vil ikke fungere uden den, så du er nødt til at korrigere dine "
+"opsætningsfiler. Den udgave af ${filename}, som følger med pakken, skulle "
+"være tilgængelig som ${filename}.ucf-dist."
+
+#. Type: error
+#. Description
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+msgid "The configuration process has been aborted."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid "Essential entry wrong in ${filename}"
+msgid "Invalid essential entry in ${filename}"
 msgstr "Fejlbehæftet essentiel linje i ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:16
+#: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgid ""
-"An essential entry is wrong in ${filename}: ${variable} does not contain"
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr ""
 "En essentiel linje er fejlbehæftet i ${filename}: ${variable} indeholder ikke"
 
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "${pattern}"
-msgstr "${pattern}"
+#~ msgid "Exiting."
+#~ msgstr "Afslutter."
 
-#. Type: error
-#. Description
-#: ../templates:16
-msgid ""
-"TeX will not work without it, you need to fix your configuration files.  The "
-"version of ${filename} that is provided by the package should be available "
-"as ${filename}.ucf-dist."
-msgstr "TeX vil ikke fungere uden den, så du er nødt til at korrigere dine opsætningsfiler. Den udgave af ${filename}, som følger med pakken, skulle være tilgængelig som ${filename}.ucf-dist."
-
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "Exiting."
-msgstr "Afslutter."
+#~ msgid "${pattern}"
+#~ msgstr "${pattern}"
 
 #~ msgid "Change of name of files in /etc/texmf/texmf.d/"
 #~ msgstr "Ret navne på filerne i /etc/texmf/texmf.d/"

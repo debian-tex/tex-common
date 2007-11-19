@@ -50,7 +50,9 @@ msgid ""
 "TeX will not work until the configuration files are fixed. The version of "
 "${filename} that is provided by the package should be available as "
 "${filename}.ucf-dist."
-msgstr "TeX は、設定ファイルを修正するまで動作しません。パッケージによって提供されるバージョンの ${filename} は、${filename}.ucf-dist として利用できます。"
+msgstr ""
+"TeX は、設定ファイルを修正するまで動作しません。パッケージによって提供される"
+"バージョンの ${filename} は、${filename}.ucf-dist として利用できます。"
 
 #. Type: error
 #. Description

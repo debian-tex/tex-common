@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tetex-bin 2.0.2-21\n"
 "Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-10-28 19:21+0200\n"
+"POT-Creation-Date: 2007-10-27 09:09+0200\n"
 "PO-Revision-Date: 2007-01-29 04:18+0200\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
@@ -18,49 +18,36 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "Essential entry missing in ${filename}"
 msgstr "Manca entrada essencial a ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Manca una entrada essencial a ${filename}:"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "No setting of ${variable}."
 msgstr "No hi ha valor per a ${variable}."
 
 #. Type: error
 #. Description
-#: ../templates:16
-msgid "Essential entry wrong in ${filename}"
-msgstr "Entrada essencial incorrecta a ${filename}"
-
 #. Type: error
 #. Description
-#: ../templates:16
+#: ../templates:2001 ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "TeX will not work without it, you need to fix your configuration files.  "
+#| "The version of ${filename} that is provided by the package should be "
+#| "available as ${filename}.ucf-dist."
 msgid ""
-"An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgstr ""
-"Una entrada essencial a ${filename} és incorrecta: ${variable} no conté"
-
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "${pattern}"
-msgstr "${pattern}"
-
-#. Type: error
-#. Description
-#: ../templates:16
-msgid ""
-"TeX will not work without it, you need to fix your configuration files.  The "
-"version of ${filename} that is provided by the package should be available "
-"as ${filename}.ucf-dist."
+"TeX will not work until the configuration files are fixed. The version of "
+"${filename} that is provided by the package should be available as "
+"${filename}.ucf-dist."
 msgstr ""
 "sense això, TeX no funcionarà, hauríeu d'esmenar els vostres fitxers de "
 "configuració. La versió de ${filename} proveïda pel paquet està disponible "
@@ -68,9 +55,36 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:16
-msgid "Exiting."
-msgstr "S'està sortint."
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+msgid "The configuration process has been aborted."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid "Essential entry wrong in ${filename}"
+msgid "Invalid essential entry in ${filename}"
+msgstr "Entrada essencial incorrecta a ${filename}"
+
+#. Type: error
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
+msgid ""
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
+msgstr ""
+"Una entrada essencial a ${filename} és incorrecta: ${variable} no conté"
+
+#~ msgid "Exiting."
+#~ msgstr "S'està sortint."
+
+#~ msgid "${pattern}"
+#~ msgstr "${pattern}"
 
 # ../templates:75
 #, fuzzy

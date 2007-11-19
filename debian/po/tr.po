@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-10-28 19:21+0200\n"
+"POT-Creation-Date: 2007-10-27 09:09+0200\n"
 "PO-Revision-Date: 2006-10-28 19:29+0200\n"
 "Last-Translator: Osman Yüksel <yuxel@sonsuzdongu.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -19,55 +19,72 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "Essential entry missing in ${filename}"
 msgstr "${filename} dosyasýnda gerekli bir girdi eksik"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "An essential entry is missing in ${filename}:"
 msgstr "${filename} dosyasýnda gerekli bir girdi eksik:"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "No setting of ${variable}."
 msgstr "${variable} için ayar yok."
 
 #. Type: error
 #. Description
-#: ../templates:16
-msgid "Essential entry wrong in ${filename}"
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "TeX will not work without it, you need to fix your configuration files.  "
+#| "The version of ${filename} that is provided by the package should be "
+#| "available as ${filename}.ucf-dist."
+msgid ""
+"TeX will not work until the configuration files are fixed. The version of "
+"${filename} that is provided by the package should be available as "
+"${filename}.ucf-dist."
+msgstr ""
+"TeX bu olmadan çalýþamaz.  Yapýlandýrma dosyalarýnýzý düzeltmeniz "
+"gerekiyor.  Paket tarafýndan saðlanan ${filename} dosyasýna ${filename}.ucf-"
+"dist adýyla ulaþabilirsiniz."
+
+#. Type: error
+#. Description
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+msgid "The configuration process has been aborted."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid "Essential entry wrong in ${filename}"
+msgid "Invalid essential entry in ${filename}"
 msgstr "${filename} dosyasýndaki gerekli bir girdi yanlýþ"
 
 #. Type: error
 #. Description
-#: ../templates:16
+#: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgid ""
-"An essential entry is wrong in ${filename}: ${variable} does not contain"
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr "${filename} dosyasýnda gerekli bir girdi yanlýþ: ${variable} içermiyor"
 
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "${pattern}"
-msgstr "${pattern}"
+#~ msgid "Exiting."
+#~ msgstr "Çýkýlýyor."
 
-#. Type: error
-#. Description
-#: ../templates:16
-msgid ""
-"TeX will not work without it, you need to fix your configuration files.  The "
-"version of ${filename} that is provided by the package should be available "
-"as ${filename}.ucf-dist."
-msgstr "TeX bu olmadan çalýþamaz.  Yapýlandýrma dosyalarýnýzý düzeltmeniz gerekiyor.  Paket tarafýndan saðlanan ${filename} dosyasýna ${filename}.ucf-dist adýyla ulaþabilirsiniz."
-
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "Exiting."
-msgstr "Çýkýlýyor."
+#~ msgid "${pattern}"
+#~ msgstr "${pattern}"
 
 #~ msgid "Change of name of files in /etc/texmf/texmf.d/"
 #~ msgstr "/etc/texmf/texmf.d/ altýndaki dosya adý deðiþiklikleri"

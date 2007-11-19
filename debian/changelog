@@ -29,7 +29,10 @@ tex-common (1.10~1) unstable; urgency=low
 
   * l10n updates + additions [hilmar-guest]
     - Basque (Closes: #448485)
+    - Catalan
     - Czech (Closes: #449263)
+    - Danish
+    - Dutch
     - Finnish (Closes: 448291)
     - French (Closes: #450704)
     - Galician (Closes: #448232)
@@ -40,8 +43,13 @@ tex-common (1.10~1) unstable; urgency=low
     - Lithuanian (Closes: #448705)
     - Norwegian Bokmål (Closes: #450911)
     - Portuguese (Closes: #449234)
+    - Portuguese/Brazil
     - Russian (Closes: #450726)
+    - Romanian
     - Spanish (Closes: #448541)
+    - Swedish
+    - Turkish
+    - Vietnamese
 
  -- Norbert Preining <preining@debian.org>  Tue, 13 Nov 2007 08:45:21 +0100
 

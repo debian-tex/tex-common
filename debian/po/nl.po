@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 0.25.1\n"
 "Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2006-10-28 19:21+0200\n"
+"POT-Creation-Date: 2007-10-27 09:09+0200\n"
 "PO-Revision-Date: 2006-10-28 19:28+0200\n"
 "Last-Translator: Vincent Zweije <zweije@xs4all.nl>\n"
 "Language-Team: Debian-Dutch <debian-l10n-dutch@lists.debian.org>\n"
@@ -18,56 +18,73 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "Essential entry missing in ${filename}"
 msgstr "Essentieel element ontbreekt in ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "An essential entry is missing in ${filename}:"
 msgstr "Een essentieel element ontbreekt in ${filename}:"
 
 #. Type: error
 #. Description
-#: ../templates:3
+#: ../templates:2001
 msgid "No setting of ${variable}."
 msgstr "Geen instelling van ${variable}"
 
 #. Type: error
 #. Description
-#: ../templates:16
-msgid "Essential entry wrong in ${filename}"
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "TeX will not work without it, you need to fix your configuration files.  "
+#| "The version of ${filename} that is provided by the package should be "
+#| "available as ${filename}.ucf-dist."
+msgid ""
+"TeX will not work until the configuration files are fixed. The version of "
+"${filename} that is provided by the package should be available as "
+"${filename}.ucf-dist."
+msgstr ""
+"TeX werkt niet zonder: u dient uw configuratiebestanden te repareren. Het "
+"pakket zou een versie van ${filename} aanleveren onder de naam ${filename}."
+"ucf-dist."
+
+#. Type: error
+#. Description
+#. Type: error
+#. Description
+#: ../templates:2001 ../templates:3001
+msgid "The configuration process has been aborted."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid "Essential entry wrong in ${filename}"
+msgid "Invalid essential entry in ${filename}"
 msgstr "Essentieel element onjuist in ${filename}"
 
 #. Type: error
 #. Description
-#: ../templates:16
+#: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgid ""
-"An essential entry is wrong in ${filename}: ${variable} does not contain"
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr ""
 "Een essentieel element is onjuist in ${filename}: ${variable} bevat niet"
 
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "${pattern}"
-msgstr "${pattern}"
+#~ msgid "Exiting."
+#~ msgstr "Afgesloten."
 
-#. Type: error
-#. Description
-#: ../templates:16
-msgid ""
-"TeX will not work without it, you need to fix your configuration files.  The "
-"version of ${filename} that is provided by the package should be available "
-"as ${filename}.ucf-dist."
-msgstr "TeX werkt niet zonder: u dient uw configuratiebestanden te repareren. Het pakket zou een versie van ${filename} aanleveren onder de naam ${filename}.ucf-dist."
-
-#. Type: error
-#. Description
-#: ../templates:16
-msgid "Exiting."
-msgstr "Afgesloten."
+#~ msgid "${pattern}"
+#~ msgstr "${pattern}"
 
 #~ msgid "Change of name of files in /etc/texmf/texmf.d/"
 #~ msgstr "Naamswijziging van bestanden in /etc/texmf/texmf.d/"

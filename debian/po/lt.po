@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #. Type: error
 #. Description
@@ -39,18 +39,14 @@ msgstr "Kintamasis ${variable} nenustatomas."
 #. Type: error
 #. Description
 #: ../templates:2001 ../templates:3001
-#| msgid ""
-#| "TeX will not work without it, you need to fix your configuration files.  "
-#| "The version of ${filename} that is provided by the package should be "
-#| "available as ${filename}.ucf-dist."
 msgid ""
 "TeX will not work until the configuration files are fixed. The version of "
 "${filename} that is provided by the package should be available as "
 "${filename}.ucf-dist."
 msgstr ""
-"TeX nedirbs, kol konfigūracijos failas nebus pataisytas. Failo "
-"${filename} versija pateikiama kartu su paketu turi būti prieinama kaip "
-"${filename}.ucf-dist."
+"TeX nedirbs, kol konfigūracijos failas nebus pataisytas. Failo ${filename} "
+"versija pateikiama kartu su paketu turi būti prieinama kaip ${filename}.ucf-"
+"dist."
 
 #. Type: error
 #. Description
@@ -63,17 +59,12 @@ msgstr "Konfigūravimo procesas nutrauktas."
 #. Type: error
 #. Description
 #: ../templates:3001
-#| msgid "Essential entry wrong in ${filename}"
 msgid "Invalid essential entry in ${filename}"
 msgstr "Faile·${filename}·yra neteisingas esminis·elementas"
 
 #. Type: error
 #. Description
 #: ../templates:3001
-#| msgid ""
-#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgid ""
 "An essential entry is invalid in ${filename}: ${variable} does not contain:"
-msgstr ""
-"Faile ${filename} neteisingas·esminis elementas: ${variable} neturi:"
-
+msgstr "Faile ${filename} neteisingas·esminis elementas: ${variable} neturi:"

@@ -46,18 +46,14 @@ msgstr "Proměnná ${variable} není nastavena."
 #. Type: error
 #. Description
 #: ../templates:2001 ../templates:3001
-#| msgid ""
-#| "TeX will not work without it, you need to fix your configuration files.  "
-#| "The version of ${filename} that is provided by the package should be "
-#| "available as ${filename}.ucf-dist."
 msgid ""
 "TeX will not work until the configuration files are fixed. The version of "
 "${filename} that is provided by the package should be available as "
 "${filename}.ucf-dist."
 msgstr ""
 "Než své konfigurační soubory opravíte, TeX nebude fungovat. Verze souboru "
-"${filename} poskytovaná balíkem by měla být k dispozici jako "
-"${filename}.ucf-dist."
+"${filename} poskytovaná balíkem by měla být k dispozici jako ${filename}.ucf-"
+"dist."
 
 #. Type: error
 #. Description
@@ -70,15 +66,12 @@ msgstr "Konfigurace byla přerušena."
 #. Type: error
 #. Description
 #: ../templates:3001
-#| msgid "Essential entry wrong in ${filename}"
 msgid "Invalid essential entry in ${filename}"
 msgstr "Chybný nezbytný záznam v ${filename}"
 
 #. Type: error
 #. Description
 #: ../templates:3001
-#| msgid ""
-#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgid ""
 "An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr "V ${filename} je chybný nezbytný záznam: ${variable} neobsahuje:"
