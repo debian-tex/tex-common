@@ -1,4 +1,4 @@
-tex-common (1.10~1) unstable; urgency=low
+tex-common (1.10) unstable; urgency=low
 
   * update-fontlang:
        - properly handle file paths containing spaces;
@@ -51,7 +51,7 @@ tex-common (1.10~1) unstable; urgency=low
     - Turkish
     - Vietnamese
 
- -- Norbert Preining <preining@debian.org>  Tue, 13 Nov 2007 08:45:21 +0100
+ -- Norbert Preining <preining@debian.org>  Wed, 21 Nov 2007 09:26:01 +0100
 
 tex-common (1.9) unstable; urgency=low
 
