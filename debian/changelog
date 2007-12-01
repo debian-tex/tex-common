@@ -1,3 +1,10 @@
+tex-common (1.11) unstable; urgency=low
+
+  * Another update run for debconf translations [hilmar-guest]
+    - Vietnamese (Closes: #453780)
+
+ -- Hilmar Preusse <hille42@web.de>  Sat, 01 Dec 2007 15:06:39 +0100
+
 tex-common (1.10) unstable; urgency=low
 
   * update-fontlang:
