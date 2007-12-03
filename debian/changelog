@@ -1,4 +1,4 @@
-tex-common (1.11) unstable; urgency=low
+tex-common (1.11~1) unstable; urgency=low
 
   * Another update run for debconf translations [hilmar-guest]
     - Vietnamese (Closes: #453780)
