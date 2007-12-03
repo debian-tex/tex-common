@@ -2,8 +2,11 @@ tex-common (1.11~1) unstable; urgency=low
 
   * Another update run for debconf translations [hilmar-guest]
     - Vietnamese (Closes: #453780)
+  * change the definition of TEXFORMATS to prohibit the finding of wrong
+    formats (and be in sync with upstream TeX Live), and remove the trailing
+    // of MFBASES and MPMEMS. [np]
 
- -- Hilmar Preusse <hille42@web.de>  Sat, 01 Dec 2007 15:06:39 +0100
+ -- Norbert Preining <preining@debian.org>  Mon, 03 Dec 2007 11:29:57 +0100
 
 tex-common (1.10) unstable; urgency=low
 
