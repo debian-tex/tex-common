@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.10\n"
-"Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2007-10-27 09:09+0200\n"
+"Report-Msgid-Bugs-To: tex-common@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-20 09:09+0100\n"
 "PO-Revision-Date: 2007-10-28 09:14+0300\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Type: error
 #. Description
@@ -60,15 +61,12 @@ msgstr "Процесс настройки был отменён."
 #. Type: error
 #. Description
 #: ../templates:3001
-#| msgid "Essential entry wrong in ${filename}"
 msgid "Invalid essential entry in ${filename}"
 msgstr "Неправильная обязательная запись в ${filename}"
 
 #. Type: error
 #. Description
 #: ../templates:3001
-#| msgid ""
-#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
-msgid "An essential entry is invalid in ${filename}: ${variable} does not contain:"
+msgid ""
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr "Ошибки в обязательной записи в ${filename}: ${variable} не содержит:"
-

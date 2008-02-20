@@ -2,12 +2,12 @@
 # Copyright (C) 2006 Software in the Public Interest
 # This file is distributed under the same license as the tex-common package.
 # Luca Monducci <luca.mo@tiscali.it>, 2004-2006.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 1.10 italian debconf templates\n"
-"Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2007-10-27 09:09+0200\n"
+"Report-Msgid-Bugs-To: tex-common@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-20 09:09+0100\n"
 "PO-Revision-Date: 2007-10-28 11:58+0100\n"
 "Last-Translator: Luca Monducci <luca.mo@tiscali.it>\n"
 "Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"

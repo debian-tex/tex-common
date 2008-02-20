@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tex-common 0.25.1\n"
-"Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2007-10-27 09:09+0200\n"
+"Report-Msgid-Bugs-To: tex-common@packages.debian.org\n"
+"POT-Creation-Date: 2008-02-20 09:09+0100\n"
 "PO-Revision-Date: 2007-10-27 10:42+0100\n"
 "Last-Translator: Jean-Baka Domelevo-Entfellner <domelevo@gmail.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -35,6 +35,8 @@ msgstr "Pas d'affectation pour la variable ${variable}."
 
 #. Type: error
 #. Description
+#. Type: error
+#. Description
 #: ../templates:2001 ../templates:3001
 msgid ""
 "TeX will not work until the configuration files are fixed. The version of "
@@ -45,6 +47,8 @@ msgstr ""
 "configuration. La version du fichier ${filename} fournie par le paquet "
 "devrait être disponible sous le nom ${filename}.ucf-dist."
 
+#. Type: error
+#. Description
 #. Type: error
 #. Description
 #: ../templates:2001 ../templates:3001
