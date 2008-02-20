@@ -1,6 +1,6 @@
 tex-common (1.8) unstable; urgency=low
 
-  * Manually reinstalling removed conffiles
+  * Manually reinstalling removed conffiles 
   
     Due to a bug in the postrm script of tetex-base in etch, purging this
     package removes essential configuration files of texlive
@@ -9,7 +9,7 @@ tex-common (1.8) unstable; urgency=low
     is very much recommended that you reinstall it.  You can find a copy
     in /usr/share/tex-common/.
   
- -- Frank Küster <frank@debian.org>  Thu, 31 May 2007 10:32:21 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Thu, 31 May 2007 10:32:21 +0200
 
 tex-common (1.4) unstable; urgency=low
 
@@ -33,7 +33,7 @@ tex-common (1.4) unstable; urgency=low
     allow MetaPost to call TeX with different formats.  Only when invoked
     as "teX" it is disabled to remain Knuth-compatible.
   
- -- Frank Küster <frank@debian.org>  Mon,  2 Apr 2007 13:42:06 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Mon,  2 Apr 2007 13:42:06 +0200
 
 tex-common (0.26) unstable; urgency=low
   
@@ -52,4 +52,4 @@ tex-common (0.26) unstable; urgency=low
     document processing in some configurations. Simply create the
     directory $HOME/.texmf-var manually to fix this.
   
- -- Frank Küster <frank@debian.org>  Mon,  3 Jul 2006 15:25:26 +0200
+ -- Frank KÃ¼ster <frank@debian.org>  Mon,  3 Jul 2006 15:25:26 +0200
