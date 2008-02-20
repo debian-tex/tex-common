@@ -642,7 +642,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		}
 	}
 
-	addsubstvar($package, "misc:Depends", "tex-common", ">= 0.7");
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 1.10");
 }
 
 =head1 SEE ALSO
