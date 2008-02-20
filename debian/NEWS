@@ -1,6 +1,6 @@
 tex-common (1.8) unstable; urgency=low
 
-  * Manually reinstalling removed conffiles 
+  * Manually reinstalling removed conffiles
   
     Due to a bug in the postrm script of tetex-base in etch, purging this
     package removes essential configuration files of texlive
