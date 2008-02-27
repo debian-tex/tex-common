@@ -1,4 +1,4 @@
-tex-common (1.11) unstable; urgency=low
+tex-common (1.11~1) unstable; urgency=low
 
   * Another update run for debconf translations [hilmar-guest]
     - Vietnamese (Closes: #453780)
@@ -6,12 +6,15 @@ tex-common (1.11) unstable; urgency=low
     formats (and be in sync with upstream TeX Live), and remove the trailing
     // of MFBASES and MPMEMS. [np]
   * bump version of tex-common packages built with dh_installtex to 1.10
-    since it is the version that removes the tetex part [np]
+    since it is the version that removes the tetex part (see #466036) [np]
+  * And Conflict with tetex-base (<< 2007), in order to force a /complete/
+    transition to texlive in lenny. At the same time, drop the conflict
+    with tetex-bin, since tetex-base already does that (closes #467330) [fk]
   * update po files [np]
   * bump standards version to 3.7.3, no changes necessary [np]
   * move the build stuff to binary-indep, the package is arch=all [np]
 
- -- Norbert Preining <preining@debian.org>  Wed, 20 Feb 2008 09:18:42 +0100
+ -- Frank Küster <frank@debian.org>  Wed, 27 Feb 2008 22:28:16 +0100
 
 tex-common (1.10) unstable; urgency=low
 

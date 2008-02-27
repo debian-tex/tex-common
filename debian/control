@@ -14,7 +14,7 @@ Architecture: all
 Depends: ucf, debconf (>= 1.4.69) | cdebconf (>= 0.39)
 Suggests: debhelper (>= 4.0)
 Replaces: tetex-base (<= 3.0-10)
-Conflicts: tetex-bin (<= 3.0-4), tetex-base (<= 3.0-3)
+Conflicts: tetex-base (<< 2007)
 Description: common infrastructure for building and installing TeX
  This package contains a number of scripts and common configuration
  files that are needed to install a TeX System.
