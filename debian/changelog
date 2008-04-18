@@ -1,10 +1,16 @@
-tex-common (1.12~1) unstable; urgency=medium
+tex-common (1.12~1) unstable; urgency=normal
 
   * bump version of tex-common packages built with dh_installtex to 1.11
-    otherwise the conflict with tetex-base is not included. This really
-    closes: #467330, thus also setting urgency to medium
+    otherwise the conflict with tetex-base is not included properly. This really
+    would close #467330, but due to the disappearance of  1.10 the last
+    version is also sufficient [np]
+  * Create empty /usr/local/share/texmf in postinst, remove in prerm if
+    empty, with code taken from the Policy manual. The decision whether
+    local documentation should be in the texmf tree or in
+    /usr/local/share/doc and accessed via a symlink is left to the local
+    admin (closes: 475077) [fk]
 
- -- Norbert Preining <preining@debian.org>  Thu, 17 Apr 2008 08:16:42 +0200
+ -- Frank Küster <frank@debian.org>  Fri, 18 Apr 2008 21:17:51 +0200
 
 tex-common (1.11) unstable; urgency=medium
 

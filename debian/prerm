@@ -1,0 +1,8 @@
+#!/bin/sh -e
+# 
+# postinst maintainer script for the Debian tex-common package.
+# $Id$
+
+# remove dirs in /usr/local if empty
+
+rmdir /usr/local/share/texmf 2>/dev/null || true

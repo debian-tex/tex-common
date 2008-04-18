@@ -202,6 +202,16 @@ EOF
     # first pass, it sets a special flag, which must now be reset.
 #     db_fset tex-common/managecache firstrundone false || true
 
+# create empty dirs in /usr/local/share/
+    if [ ! -e /usr/local/share/texmf ]
+    then
+      if mkdir -p /usr/local/share/texmf 2>/dev/null
+      then
+        chown root:staff /usr/local/texmf/emacs
+        chmod 2775 /usr/local/share/texmf
+      fi
+    fi
+
     ;;
   *)
     ;;
