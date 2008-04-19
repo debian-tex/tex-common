@@ -5,4 +5,8 @@
 
 # remove dirs in /usr/local if empty
 
-rmdir /usr/local/share/texmf 2>/dev/null || true
+case $1 in
+  remove)
+    rmdir /usr/local/share/texmf 2>/dev/null || true
+    ;;
+esac
