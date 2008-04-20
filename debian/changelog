@@ -9,8 +9,10 @@ tex-common (1.12~1) unstable; urgency=normal
     local documentation should be in the texmf tree or in
     /usr/local/share/doc and accessed via a symlink is left to the local
     admin (closes: 475077) [fk]
+  * Removed the tetex-bin-upgrade script from the source, it is not needed
+    nor installed, anyway [fk]
 
- -- Frank Küster <frank@debian.org>  Fri, 18 Apr 2008 21:17:51 +0200
+ -- Frank Küster <frank@debian.org>  Sun, 20 Apr 2008 19:08:09 +0200
 
 tex-common (1.11) unstable; urgency=medium
 
