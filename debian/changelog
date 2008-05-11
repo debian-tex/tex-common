@@ -12,8 +12,9 @@ tex-common (1.12~1) unstable; urgency=normal
   * Removed the tetex-bin-upgrade script from the source, it is not needed
     nor installed, anyway [fk]
   * register TeX on Debian and the Policy in section Debian [hp, np]
+  * remove double definition of OPENTYPEFONTS in texmf.d [np]
 
- -- Norbert Preining <preining@debian.org>  Mon, 21 Apr 2008 19:38:07 +0200
+ -- Norbert Preining <preining@debian.org>  Fri, 09 May 2008 17:44:57 +0200
 
 tex-common (1.11) unstable; urgency=medium
 

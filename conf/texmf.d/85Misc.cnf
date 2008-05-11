@@ -10,9 +10,6 @@ CMAPFONTS = .;$TEXMF/fonts/cmap//
 % Subfont definition files.
 SFDFONTS = .;$TEXMF/fonts/sfd//
 
-% OpenType outline fonts.
-OPENTYPEFONTS = .;$TEXMF/fonts/opentype//
-
 % pdftex config files:
 PDFTEXCONFIG = .;$TEXMF/pdftex/{$progname,}//
 
