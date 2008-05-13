@@ -223,7 +223,7 @@
         File locations must follow the TeX Directory Structure, TDS.
         The TDS specification is available as
 	<url id="file:///usr/share/doc/tex-common/tds.pdf" name="tds.pdf">
-	and <url id="file:///usr/share/doc/tex-common/tdbs.html"
+	and <url id="file:///usr/share/doc/tex-common/tds.html"
         name="tds.html">, and the latest version of the TDS is
         available at <tt><url name="http://www.tug.org/twg/tds/"
         id="http://www.tug.org/twg/tds/"></tt>.  It is a bug if a
