@@ -13,8 +13,9 @@ tex-common (1.12~1) unstable; urgency=normal
     nor installed, anyway [fk]
   * register TeX on Debian and the Policy in section Debian [hp, np]
   * remove double definition of OPENTYPEFONTS in texmf.d [np]
+  * fix wrong file link in Debian-TeX-Policy.sgml (Closes: #481038) 
 
- -- Norbert Preining <preining@debian.org>  Fri, 09 May 2008 17:44:57 +0200
+ -- Norbert Preining <preining@debian.org>  Tue, 13 May 2008 13:33:42 +0200
 
 tex-common (1.11) unstable; urgency=medium
 
