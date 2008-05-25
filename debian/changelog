@@ -14,8 +14,10 @@ tex-common (1.12~1) unstable; urgency=normal
   * register TeX on Debian and the Policy in section Debian [hp, np]
   * remove double definition of OPENTYPEFONTS in texmf.d [np]
   * fix wrong file link in Debian-TeX-Policy.sgml (Closes: #481038) 
+  * Again install the README file for tpm2licenses in
+    /usr/share/tex-common/ [fk]
 
- -- Norbert Preining <preining@debian.org>  Tue, 13 May 2008 13:33:42 +0200
+ -- Frank Küster <frank@debian.org>  Sun, 25 May 2008 22:20:33 +0200
 
 tex-common (1.11) unstable; urgency=medium
 

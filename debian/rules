@@ -7,7 +7,7 @@ INSTDIR=$(CURDIR)/debian/tex-common
 
 bin_scripts=dh_installtex update-fontlang
 sbin_scripts=update-texmf
-nonbin_scripts=tpm2licenses Tpm.pm FileUtils.pm debianize-updmap
+nonbin_scripts=tpm2licenses tpm2licenses.README Tpm.pm FileUtils.pm debianize-updmap
 
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))
 sbin_manpages=$(foreach script,$(sbin_scripts), scripts/$(script).8) 
