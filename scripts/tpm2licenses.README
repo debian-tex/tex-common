@@ -12,23 +12,23 @@ and how it can be used.
 1. Purpose
 ===========
 
-Both teTeX and TeXlive are big collections, itself distributions put
-together from individual packages on CTAN
-(ftp://cam.ctan.org/tex-archive/).  Upstream (Thomas Esser who put
-together teTeX, and the TeXLive team) do share Debian's view on Free
-Software (except maybe for documentation issues), but there might
-still be files included that are non-free or are intended to be free,
-but don't have a proper license statement.  The reason is mostly
-historical - in the old days, both upstream and individual package
-authors didn't care about these things as they should have.  And TeX
-has grown for a long time...
+TeXlive is a big collection, itself a distribution put together from
+individual packages on CTAN (ftp://cam.ctan.org/tex-archive/).
+Upstream (the TeXLive team) do share Debian's view on Free Software
+(except maybe for documentation issues), but there might still be
+files included that are non-free or are intended to be free, but don't
+have a proper license statement.  The reason is mostly historical - in
+the old days, both upstream and individual package authors didn't care
+about these things as they should have.  And TeX has grown for a long
+time...
 
-In the past, the Debian teTeX packages have been audited for license
-freeness at least once.  However, this has been done on a per-CTAN-
-package basis (and even that, perhaps, not too systematically), not on
-a per-file basis.  Furthermore, the process of auditing has not been
-documented.  Therefore, it is not possible today to check which parts
-were included and checked back then.
+In the past, the Debian teTeX packages (the predecessor of TeXLive)
+have been audited for license freeness at least once.  However, this
+has been done on a per-CTAN- package basis (and even that, perhaps,
+not too systematically), not on a per-file basis.  Furthermore, the
+process of auditing has not been documented.  Therefore, it is not
+possible today to check which parts were included and checked back
+then.
 
 As a consequence, we have decided to do it systematically this time,
 and to keep information about which files are associated with a
@@ -40,8 +40,8 @@ condensed form.  For maintaining the information, we use different,
 more structured files at different locations, re-using already
 existing infrastructure in the TeXlive package building mechanisms and
 the TeX Catalogue.  This script is used to verify whether this
-existing information is correct and applies to teTeX, and to merge the
-information into the copyright file.
+existing information is correct and applies to the current TeXLive
+packages, and to merge the information into the copyright file.
 
 2. Requirements
 ======================
@@ -77,7 +77,8 @@ SYNTAX:
   /usr/share/tex-common/tpm2licenses [ options ] [ tpm file(s) ]
 
 The script must be run from the root directory of an unpacked source
-package (e.g. tetex-base-3.0/) and understands the following options:
+package (e.g. tetex-base-3.0/) [FIXME: texlive runs it on installed
+files?] and understands the following options:
 
    --catalogue <directory>
    --catalogue file:<file>
