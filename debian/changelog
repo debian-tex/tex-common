@@ -1,4 +1,4 @@
-tex-common (1.12~1) unstable; urgency=normal
+tex-common (1.11.1~1) unstable; urgency=normal
 
   * bump version of tex-common packages built with dh_installtex to 1.11
     otherwise the conflict with tetex-base is not included properly. This really
@@ -17,7 +17,7 @@ tex-common (1.12~1) unstable; urgency=normal
   * Again install the README file for tpm2licenses in
     /usr/share/tex-common/ [fk]
 
- -- Frank Küster <frank@debian.org>  Sun, 25 May 2008 22:20:33 +0200
+ -- Norbert Preining <preining@debian.org>  Mon, 02 Jun 2008 16:36:59 +0200
 
 tex-common (1.11) unstable; urgency=medium
 
