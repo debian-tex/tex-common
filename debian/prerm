@@ -10,3 +10,7 @@ case $1 in
     rmdir /usr/local/share/texmf 2>/dev/null || true
     ;;
 esac
+
+#DEBHELPER#
+
+
