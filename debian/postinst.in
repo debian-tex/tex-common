@@ -281,7 +281,7 @@ EOF
     then
       if mkdir -p /usr/local/share/texmf 2>/dev/null
       then
-        chown root:staff /usr/local/texmf/emacs
+        chown root:staff /usr/local/share/texmf
         chmod 2775 /usr/local/share/texmf
       fi
     fi
