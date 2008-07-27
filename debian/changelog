@@ -1,3 +1,9 @@
+tex-common (1.13~1) experimental; urgency=low
+
+  * bump standards version to 3.8.0, no changes necessary [np]
+
+ -- Norbert Preining <preining@debian.org>  Sun, 27 Jul 2008 20:06:57 +0200
+
 tex-common (1.12) experimental; urgency=low
 
   * bump version of tex-common packages built with dh_installtex to 1.11
