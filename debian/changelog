@@ -1,8 +1,9 @@
 tex-common (1.13~1) experimental; urgency=low
 
   * bump standards version to 3.8.0, no changes necessary [np]
+  * use the local keyword in policy compliant way [np]
 
- -- Norbert Preining <preining@debian.org>  Sun, 27 Jul 2008 20:06:57 +0200
+ -- Norbert Preining <preining@debian.org>  Sun, 27 Jul 2008 20:15:52 +0200
 
 tex-common (1.12) experimental; urgency=low
 
