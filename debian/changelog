@@ -3,6 +3,7 @@ tex-common (1.13~1) experimental; urgency=low
   * bump standards version to 3.8.0, no changes necessary [np]
   * use the local keyword in policy compliant way [np]
   * replace emacs with share/texmf in postinst.in [np]
+  * add updated version of sv.po (Closes: #491426) [hilmar-guest]
 
  -- Norbert Preining <preining@debian.org>  Mon, 28 Jul 2008 00:57:27 +0200
 
