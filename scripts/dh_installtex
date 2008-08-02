@@ -220,6 +220,8 @@ message, even if this option is not given.
 using triggers. Use this only if other postinst code requires that the
 hyphenation patterns are properly installed.
 
+=back
+
 =head1 NOTES
 
 Note that this command is not idempotent. "dh_clean -k" should be called
@@ -707,4 +709,4 @@ and both are licensed under the GNU General Public License Version 2 or later.
 ### tab-width: 4
 ### indent-tabs-mode: t
 ### End:
-# vim:set tabstop=4 termencoding=iso8859-15 encoding=utf-8 fileencoding=utf-8: #
+# vim:set tabstop=4 fileencoding=utf-8: #

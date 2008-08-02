@@ -1,3 +1,9 @@
+tex-common (1.14~1) experimental; urgency=low
+
+  * fix coding error in dh_installtex's pod documentation [np]
+
+ -- Norbert Preining <preining@debian.org>  Sat, 02 Aug 2008 13:16:48 +0200
+
 tex-common (1.13) experimental; urgency=low
 
   * bump standards version to 3.8.0, no changes necessary [np]
