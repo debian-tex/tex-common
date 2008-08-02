@@ -1021,4 +1021,4 @@ tex-common (0.1) unstable; urgency=low
 ;; Local Variables:
 ;; coding: utf-8
 ;; End:
-# vim:set termencoding=iso8859-15 encoding=utf-8 fileencoding=utf-8: #
+# vim:set fileencoding=utf-8: #
