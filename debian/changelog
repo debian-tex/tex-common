@@ -1,4 +1,4 @@
-tex-common (1.13~1) experimental; urgency=low
+tex-common (1.13) experimental; urgency=low
 
   * bump standards version to 3.8.0, no changes necessary [np]
   * use the local keyword in policy compliant way [np]
@@ -7,7 +7,7 @@ tex-common (1.13~1) experimental; urgency=low
   * Fix dh_installtex compatibility with debhelper version >= 6
     (Closes: #492604) [np]
 
- -- Norbert Preining <preining@debian.org>  Sat, 02 Aug 2008 13:02:08 +0200
+ -- Norbert Preining <preining@debian.org>  Sat, 02 Aug 2008 13:04:18 +0200
 
 tex-common (1.12) experimental; urgency=low
 
