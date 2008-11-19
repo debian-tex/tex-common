@@ -1,8 +1,10 @@
 tex-common (1.14~1) experimental; urgency=low
 
   * fix coding error in dh_installtex's pod documentation [np]
+  * updated Romanian translation (ro.po) (Closes: #506038)
+    [hilmar-guest]
 
- -- Norbert Preining <preining@debian.org>  Sat, 02 Aug 2008 13:16:48 +0200
+ -- Norbert Preining <preining@debian.org>  Wed, 19 Nov 2008 20:16:48 +0200
 
 tex-common (1.13) experimental; urgency=low
 
