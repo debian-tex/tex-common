@@ -1,17 +1,16 @@
 # translation of ro.po to Romanian
-# Romanian translations for PACKAGE package
-# Traducerea în limba română pentru pachetul PACKAGE.
+# Romanian translations for tex-common package
+# Traducerea în limba română pentru pachetul tex-common.
 # Copyright (C) 2007 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the tex-common package.
 #
-# Eddy Petrisor <eddy.petrisor@gmail.com>, 2007.
-# Eddy Petrișor <eddy.petrisor@gmail.com>, 2007.
+# Eddy Petrișor <eddy.petrisor@gmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: tex-common@packages.debian.org\n"
-"POT-Creation-Date: 2008-02-20 09:09+0100\n"
-"PO-Revision-Date: 2007-01-31 19:06+0200\n"
+"POT-Creation-Date: 2008-07-28 00:52+0200\n"
+"PO-Revision-Date: 2008-11-13 11:04+0200\n"
 "Last-Translator: Eddy Petrișor <eddy.petrisor@gmail.com>\n"
 "Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,13 +24,13 @@ msgstr ""
 #. Description
 #: ../templates:2001
 msgid "Essential entry missing in ${filename}"
-msgstr "Înregistrare esenţială lipsă în ${filename}"
+msgstr "Înregistrare esențială lipsă din ${filename}"
 
 #. Type: error
 #. Description
 #: ../templates:2001
 msgid "An essential entry is missing in ${filename}:"
-msgstr "O înregistrare esenţială lipseşte din ${filename}:"
+msgstr "O înregistrare esențială lipsește din ${filename}:"
 
 #. Type: error
 #. Description
@@ -44,18 +43,13 @@ msgstr "Nici o configurare pentru ${variable}."
 #. Type: error
 #. Description
 #: ../templates:2001 ../templates:3001
-#, fuzzy
-#| msgid ""
-#| "TeX will not work without it, you need to fix your configuration files.  "
-#| "The version of ${filename} that is provided by the package should be "
-#| "available as ${filename}.ucf-dist."
 msgid ""
 "TeX will not work until the configuration files are fixed. The version of "
 "${filename} that is provided by the package should be available as "
 "${filename}.ucf-dist."
 msgstr ""
-"TeX nu va funcţiona fără ea, trebuie să reparaţi fişierele de configurare. "
-"Versiunea fişierului ${filename} distribuită cu pachetul ar trebui să fie "
+"TeX nu va funcționa dacă nu reparați fișierele de configurare. Versiunea "
+"fișierului ${filename}, distribuită cu pachetul, ar trebui să fie "
 "disponibilă ca ${filename}.ucf-dist."
 
 #. Type: error
@@ -64,26 +58,22 @@ msgstr ""
 #. Description
 #: ../templates:2001 ../templates:3001
 msgid "The configuration process has been aborted."
-msgstr ""
+msgstr "Procesul de configurare a fost abandonat."
 
 #. Type: error
 #. Description
 #: ../templates:3001
-#, fuzzy
-#| msgid "Essential entry wrong in ${filename}"
 msgid "Invalid essential entry in ${filename}"
-msgstr "Înregistrare esenţială greşită în ${filename}"
+msgstr "Înregistrare esențială nevalidă în ${filename}"
 
 #. Type: error
 #. Description
 #: ../templates:3001
-#, fuzzy
-#| msgid ""
-#| "An essential entry is wrong in ${filename}: ${variable} does not contain"
 msgid ""
 "An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr ""
-"O înregistrare esenţială e greşită în ${filename}: ${variable} nu conţine"
+"O înregistrare esențială nu este validă în ${filename}: ${variable} nu "
+"conține:"
 
 #~ msgid "Exiting."
 #~ msgstr "Se iese."
