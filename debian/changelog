@@ -1,4 +1,4 @@
-tex-common (1.14~1) experimental; urgency=low
+tex-common (1.14) experimental; urgency=low
 
   * fix coding error in dh_installtex's pod documentation [np]
   * updated Romanian translation (ro.po) (Closes: #506038)
@@ -6,7 +6,7 @@ tex-common (1.14~1) experimental; urgency=low
   * add a fix for dh_installtex to work with debhelper >= 7.1.0 (experimental)
     (Closes: #507365) (patch from Roderich Schupp) [np]
 
- -- Norbert Preining <preining@debian.org>  Mon, 01 Dec 2008 17:27:24 +0100
+ -- Norbert Preining <preining@debian.org>  Mon, 01 Dec 2008 17:31:26 +0100
 
 tex-common (1.13) experimental; urgency=low
 
