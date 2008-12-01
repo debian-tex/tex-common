@@ -235,7 +235,8 @@ for TeX by Debian packages.
 
 =cut
 
-init();
+init(options => { "flavor=s" => \$dh{FLAVOR} });
+
 
 
 
