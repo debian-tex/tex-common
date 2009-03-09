@@ -1,3 +1,11 @@
+tex-common (1.15) unstable; urgency=low
+
+  * upload of trigger-enabled tex-common to unstable, packages should be
+    rebuild
+  * remove references to teTeX from the man pages (Closes: #486369)
+
+ -- Norbert Preining <preining@debian.org>  Mon, 09 Mar 2009 18:30:59 +0100
+
 tex-common (1.14) experimental; urgency=low
 
   * fix coding error in dh_installtex's pod documentation [np]
