@@ -16,3 +16,4 @@ var/lib/tex-common/fontmap-cfg
 var/lib/tex-common/language-cnf
 var/lib/tex-common/fmtutil-cnf
 var/cache/fonts
+usr/share/perl5/Debian/Debhelper/Sequence

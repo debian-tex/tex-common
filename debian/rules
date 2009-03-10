@@ -87,6 +87,7 @@ install: build
 	grep -v '^[ \t]*# ' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
 	grep -v '^[ \t]*# ' scripts/postrm-texlsr > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-texlsr
 	grep -v '^[ \t]*# ' scripts/postinst-texlsr > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-texlsr
+	cp scripts/tex.pm $(INSTDIR)/usr/share/perl5/Debian/Debhelper/Sequence/
 
         # fontcache stuff with proper permissions
 	install -d $(INSTDIR)/etc/texmf/web2c/

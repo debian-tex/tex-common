@@ -1,12 +1,18 @@
 tex-common (1.15) unstable; urgency=low
 
+  [ Norbert Preining ]
   * upload of trigger-enabled tex-common to unstable, packages should be
     rebuild
   * remove references to teTeX from the man pages (Closes: #486369)
   * bump dh compat level to 5, adjust debian/control
   * add ${misc:Depends} to dependencies
 
- -- Norbert Preining <preining@debian.org>  Tue, 10 Mar 2009 11:50:47 +0100
+  [ Jan Hauke Rahm ]
+  * make debhelper's '--with' option available for tex-common. dh_installtex
+    can now be integrated in debian/rules via 'dh install --with tex' when
+    using compat 7
+
+ -- Norbert Preining <preining@debian.org>  Tue, 10 Mar 2009 18:36:33 +0100
 
 tex-common (1.14) experimental; urgency=low
 
