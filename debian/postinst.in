@@ -49,10 +49,30 @@ case $action in
         update-updmap --quiet
         update-language
         update-fmtutil
+        # code from postinst-tex
+        if dhit_libkpathsea_configured; then
+            # mktexlsr may not be present
+            if which mktexlsr >/dev/null; then
+                tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+                printf "Running mktexlsr. This may take some time... "
+                if mktexlsr > $tempfile 2>&1 ; then
+                    rm -f $tempfile
+                    echo "done."
+                else
+                    exec >&2
+                    echo
+                    echo "mktexlsr failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
+                fi
+            fi
+        fi
         case " $trigger " in
             *" /etc/texmf/updmap.d "*) 
                 # do the processing
-	            # code from postinst.tex
+	            # code from postinst-tex
 	            if dhit_libkpathsea_configured; then
 	                if which updmap-sys >/dev/null; then
                         tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)

@@ -1,3 +1,11 @@
+tex-common (1.16) unstable; urgency=low
+
+  * add mktexlsr calling code from postinst-tex to the trigger action in
+    case it has never been run before. That allows fresh installations 
+    to succeed. (Closes: #519701) [np]
+
+ -- Norbert Preining <preining@debian.org>  Sat, 14 Mar 2009 16:57:24 +0100
+
 tex-common (1.15) unstable; urgency=low
 
   [ Norbert Preining ]
