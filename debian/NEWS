@@ -1,22 +1,3 @@
-tex-common (1.15) unstable; urgency=low
-
-  * This release ships support for triggers for calls to updmap-sys
-    and fmtutil-sys (when hyphenation patterns are used). If packages
-    need to install fonts/hyphenation patterns and need them active
-    in the postinst already, it should call dh_installtex with 
-      --flavor=map:notriggers
-    or
-      --flavor=language:notriggers
-    Until all packages have been rebuilt with the new dh_installtex
-    updmap-sys and fmtutil-sys will be called two times.
-
-  * This release also brings support for debhelper version 7 (thanks
-    to Jan Hauke Rahm). dh_installtex can now be integrated in 
-    debian/rules via 'dh_install --with tex' when using compat 7
-
- -- Norbert Preining <preining@debian.org>  Tue, 10 Mar 2009 11:57:55 +0100
-
-
 tex-common (1.8) unstable; urgency=low
 
   * Manually reinstalling removed conffiles
