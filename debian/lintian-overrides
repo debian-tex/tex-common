@@ -1,7 +1,3 @@
-# we use this nonstandard permissions for semi-fake-security
-tex-common: non-standard-dir-perm var/cache/fonts/pk/ 1777 != 0755
-tex-common: non-standard-dir-perm var/cache/fonts/tfm/ 1777 != 0755
-tex-common: non-standard-dir-perm var/cache/fonts/source/ 1777 != 0755
 # if we fail, we want to fail gracefully and inform the user:
 tex-common: postinst-uses-db-input
 # these lines are sed arguments used in substitutions and not shell code
