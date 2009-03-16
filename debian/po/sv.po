@@ -16,8 +16,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tex-common_1.11_sv\n"
-"Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2008-04-16 21:56+0200\n"
+"Report-Msgid-Bugs-To: tex-common@packages.debian.org\n"
+"POT-Creation-Date: 2009-03-14 16:59+0100\n"
 "PO-Revision-Date: 2008-07-19 11:51+0200\n"
 "Last-Translator: Martin Ågren <martin.agren@gmail.com>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
@@ -76,6 +76,7 @@ msgstr "Felaktig nödvändig post i ${filename}"
 #. Type: error
 #. Description
 #: ../templates:3001
-msgid "An essential entry is invalid in ${filename}: ${variable} does not contain:"
-msgstr "En nödvändig post är felaktig i ${filename}: ${variable} innehåller inte:"
-
+msgid ""
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
+msgstr ""
+"En nödvändig post är felaktig i ${filename}: ${variable} innehåller inte:"
