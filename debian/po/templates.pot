@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: debian-tex-maint@lists.debian.org\n"
-"POT-Creation-Date: 2007-10-27 09:09+0200\n"
+"Report-Msgid-Bugs-To: tex-common@packages.debian.org\n"
+"POT-Creation-Date: 2009-03-17 21:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,6 +36,8 @@ msgstr ""
 
 #. Type: error
 #. Description
+#. Type: error
+#. Description
 #: ../templates:2001 ../templates:3001
 msgid ""
 "TeX will not work until the configuration files are fixed. The version of "
@@ -43,6 +45,8 @@ msgid ""
 "${filename}.ucf-dist."
 msgstr ""
 
+#. Type: error
+#. Description
 #. Type: error
 #. Description
 #: ../templates:2001 ../templates:3001
@@ -58,5 +62,6 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../templates:3001
-msgid "An essential entry is invalid in ${filename}: ${variable} does not contain:"
+msgid ""
+"An essential entry is invalid in ${filename}: ${variable} does not contain:"
 msgstr ""
