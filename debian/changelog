@@ -2,8 +2,11 @@ tex-common (1.17) unstable; urgency=low
 
   * remove developer only information from debian/NEWS (Closes: #519964)
     and include the information in the changelog entry for 1.15.
+  * using dh_installtex --flavor formats:build_all breaks because we
+    removed the calls to update-fmtutil etc. Readd all those calls
+    (Closes: #520166)
 
- -- Norbert Preining <preining@debian.org>  Mon, 16 Mar 2009 14:47:27 +0100
+ -- Norbert Preining <preining@debian.org>  Tue, 17 Mar 2009 21:49:51 +0100
 
 tex-common (1.16) unstable; urgency=low
 

@@ -46,6 +46,13 @@ dhit_update_lsr_files ()
 
 case "$1" in
     configure|abort-upgrade|abort-remove|abort-deconfigure)
+        # These programs are all in tex-common and can be run immediately.
+	# In fact it *does* hurt not calling them since we might
+	# have formats installed and we call with --all, so not the
+	# trigger action is done, but the postinst runs the fmtutil-sys call
+        update-updmap --quiet
+        update-language
+        update-fmtutil
         # All of the following needs an installed and configured
         # basic TeX system, so check this.
         if dhit_libkpathsea_configured; then
