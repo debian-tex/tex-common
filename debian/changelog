@@ -5,8 +5,9 @@ tex-common (1.17) unstable; urgency=low
   * using dh_installtex --flavor formats:build_all breaks because we
     removed the calls to update-fmtutil etc. Readd all those calls
     (Closes: #520166)
+  * bump standards version to 3.8.1, no changes needed
 
- -- Norbert Preining <preining@debian.org>  Tue, 17 Mar 2009 21:49:51 +0100
+ -- Norbert Preining <preining@debian.org>  Tue, 17 Mar 2009 21:57:47 +0100
 
 tex-common (1.16) unstable; urgency=low
 
