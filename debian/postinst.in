@@ -264,7 +264,7 @@ EOF
     # that calls mktexlsr if possible, and update-*
     # we set the triggers updmap.d
     #
-    triggers="$triggers /etc/texmf/updmap.d "
+    trigger=/etc/texmf/updmap.d
     do_triggers
 
     # now call the equivalent of fmtutil-sys --all explicitely
