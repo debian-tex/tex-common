@@ -2,7 +2,8 @@ tex-common (1.18~1) unstable; urgency=medium
 
   * make sure that fmtutil-sys --all and updmap-sys are called on new
     installations when tex-common is configured, since new installations
-    do not trigger (Closes: #520449, #520042)
+    do not trigger. This bug fixes via rebuild of texlive-base #520042
+    and via rebuild of #520449.
 
  -- Norbert Preining <preining@debian.org>  Mon, 23 Mar 2009 19:07:41 +0100
 
