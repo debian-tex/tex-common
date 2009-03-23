@@ -4,8 +4,9 @@ tex-common (1.18) unstable; urgency=low
     installations when tex-common is configured, since new installations
     do not trigger. This bug fixes via rebuild of texlive-base #520042,
     #520410, and via rebuild of #520449.
+  * bump the dh_installtex induced dependency on tex-common to 1.18
 
- -- Norbert Preining <preining@debian.org>  Tue, 24 Mar 2009 00:23:10 +0100
+ -- Norbert Preining <preining@debian.org>  Tue, 24 Mar 2009 00:30:08 +0100
 
 tex-common (1.17) unstable; urgency=low
 
