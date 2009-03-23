@@ -32,104 +32,111 @@ db_version 2.0
 # <:open(FUNCTIONS,'debian/common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 # <:=@FUNCTIONS:>//
 
-#################################################################
-# Here starts the real action
-#################################################################
+do_triggers() 
+{
+    # currently we only support only triggers for updmap.d and
+    # language.d changes
+    # because all the other calls are quite fast 
+    # - call all the update-* scripts (it doesn't hurt)
+    # - go through all the triggers and call the respective fmtutil/updmap
+    #   calls.
 
-case $action in
-    triggered)
-        # currently we only support only triggers for updmap.d and
-        # language.d changes
-        # because all the other calls are quite fast 
-        # - call all the update-* scripts (it doesn't hurt)
-        # - go through all the triggers and call the respective fmtutil/updmap
-        #   calls.
-
-        # in any case call the update-* calls
-        update-updmap --quiet
-        update-language
-        update-fmtutil
-        # code from postinst-tex
-        if dhit_libkpathsea_configured; then
-            # mktexlsr may not be present
-            if which mktexlsr >/dev/null; then
-                tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
-                printf "Running mktexlsr. This may take some time... "
-                if mktexlsr > $tempfile 2>&1 ; then
+    # in any case call the update-* calls
+    update-updmap --quiet
+    update-language
+    update-fmtutil
+    # code from postinst-tex
+    if dhit_libkpathsea_configured; then
+        # mktexlsr may not be present
+        if which mktexlsr >/dev/null; then
+            tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+            printf "Running mktexlsr. This may take some time... "
+            if mktexlsr > $tempfile 2>&1 ; then
+                rm -f $tempfile
+                echo "done."
+            else
+                exec >&2
+                echo
+                echo "mktexlsr failed. Output has been stored in"
+                echo "$tempfile"
+                echo "Please include this file if you report a bug."
+                echo
+                exit 1
+            fi
+        fi
+    fi
+    case " $trigger " in
+        *" /etc/texmf/updmap.d "*) 
+            # do the processing
+         # code from postinst-tex
+         if dhit_libkpathsea_configured; then
+             if which updmap-sys >/dev/null; then
+                    tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
+                    printf "Running updmap-sys. This may take some time... "
+                    if updmap-sys > $tempfile 2>&1 ; then
+                        rm -f $tempfile
+                        echo "done."
+                    else
+                        exec >&2
+                        echo
+                        echo "updmap-sys failed. Output has been stored in"
+                        echo "$tempfile"
+                        echo "Please include this file if you report a bug."
+                        echo
+                        echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
+                        echo "causes updmap-sys to fail.  Please check for files with extension"
+                        echo ".dpkg-dist or .ucf-dist in this directory" 
+                        echo
+                        exit 1
+    	            fi
+                fi
+            fi
+        ;;
+    esac
+    case " $trigger " in
+        *" /etc/texmf/language.d "*) 
+            # do the processing
+         # code from postinst.tex
+            v=$(kpsewhich -var-value TEXMFSYSVAR)
+            c=$(kpsewhich -var-value TEXMFSYSCONFIG)
+            TEXMFVAR="$v"
+            TEXMFCONFIG="$c"
+            export TEXMFVAR TEXMFCONFIG
+            fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
+            X=$(grep "^[[:space:]]*latex[[:space:]]" $fmtcnffile || true)
+            if [ -n "$X" ] ; then
+                # latex is installed so we can actually try to recreate
+                # formats based on language.dat
+                tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+                printf "Building formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
+                if fmtutil-sys --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                 else
                     exec >&2
                     echo
-                    echo "mktexlsr failed. Output has been stored in"
+                    echo "fmtutil-sys failed. Output has been stored in"
                     echo "$tempfile"
                     echo "Please include this file if you report a bug."
                     echo
                     exit 1
                 fi
             fi
-        fi
-        case " $trigger " in
-            *" /etc/texmf/updmap.d "*) 
-                # do the processing
-	            # code from postinst-tex
-	            if dhit_libkpathsea_configured; then
-	                if which updmap-sys >/dev/null; then
-                        tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
-                        printf "Running updmap-sys. This may take some time... "
-                        if updmap-sys > $tempfile 2>&1 ; then
-                            rm -f $tempfile
-                            echo "done."
-                        else
-                            exec >&2
-                            echo
-                            echo "updmap-sys failed. Output has been stored in"
-                            echo "$tempfile"
-                            echo "Please include this file if you report a bug."
-                            echo
-                            echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
-                            echo "causes updmap-sys to fail.  Please check for files with extension"
-                            echo ".dpkg-dist or .ucf-dist in this directory" 
-                            echo
-                            exit 1
-        	            fi
-                    fi
-                fi
-            ;;
-        esac
-        case " $trigger " in
-            *" /etc/texmf/language.d "*) 
-                # do the processing
-	            # code from postinst.tex
-                v=$(kpsewhich -var-value TEXMFSYSVAR)
-                c=$(kpsewhich -var-value TEXMFSYSCONFIG)
-                TEXMFVAR="$v"
-                TEXMFCONFIG="$c"
-                export TEXMFVAR TEXMFCONFIG
-                fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
-                X=$(grep "^[[:space:]]*latex[[:space:]]" $fmtcnffile || true)
-                if [ -n "$X" ] ; then
-                    # latex is installed so we can actually try to recreate
-                    # formats based on language.dat
-                    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-                    printf "Building formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
-                    if fmtutil-sys --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
-                        rm -f $tempfile
-                        echo "done."
-                    else
-                        exec >&2
-                        echo
-                        echo "fmtutil-sys failed. Output has been stored in"
-                        echo "$tempfile"
-                        echo "Please include this file if you report a bug."
-                        echo
-                        exit 1
-                    fi
-                fi
-            ;;
-        esac
-    ;;
-      
+        ;;
+    esac
+}
+
+
+#################################################################
+# Here starts the real action
+#################################################################
+
+
+case $action in
+    triggered)
+        do_triggers
+        ;;
+
     configure|reconfigure)
 
 # is there a file /etc/texmf/language.dat already? Move it out of the way
@@ -252,51 +259,21 @@ EOF
     fi
 
 
-# run our scripts - this way we ensure that the generated files are
-# corrected, should one of the scripts have produced buggy output in 
-# a prior version
-    update-fmtutil
-    update-updmap
-    update-language
+    #
+    # call trigger action
+    # that calls mktexlsr if possible, and update-*
+    # we set the triggers updmap.d
+    #
+    triggers="$triggers /etc/texmf/updmap.d "
+    do_triggers
 
-# if available, run mktexlsr - this is needed for upgrades from versions
-# prior to 0.26, which is the first to install a file in a TEXMF tree
-
+    # now call the equivalent of fmtutil-sys --all explicitely
     if dhit_libkpathsea_configured; then
-      if which mktexlsr >/dev/null; then
-        mktexlsr /usr/share/texmf/
-      fi
+        dhit_build_format --all
     fi
 
-    #
-    # do the config stuff
-#     db_get tex-common/managecache || true
-#     if [ $RET = true ] ; then
-#       db_get tex-common/singleuser || true
-#       if [ "$RET" = true ]; then
-# 	db_get tex-common/groupname_single || true
-#       else
-# 	db_get tex-common/groupname_multi || true
-#       fi
-#       GROUP="$RET"
-#       if [ -n "$GROUP" ] ; then
-# 	echo -n "Adjusting permissions of TeX font cache... "
-#         find /var/cache/fonts -type d -print0 | xargs -0r chmod $FONTCACHE_PERMS
-# 	find /var/cache/fonts -type d -print0 | xargs -0r chown "root:$GROUP"
-# 	if [ -f /var/cache/fonts/ls-R ]; then
-# 	  chmod 664 /var/cache/fonts/ls-R
-# 	  chown "root:$GROUP" /var/cache/fonts/ls-R
-# 	fi
-# 	echo "done."
-#       fi
-#     fi
 
-    # the config script may be run twice: Once by dpkg-preconfigure, once
-    # again by debconf when it is sourced in the postinst script.  On the
-    # first pass, it sets a special flag, which must now be reset.
-#     db_fset tex-common/managecache firstrundone false || true
-
-# create empty dirs in /usr/local/share/
+    # create empty dirs in /usr/local/share/
     if [ ! -e /usr/local/share/texmf ]
     then
       if mkdir -p /usr/local/share/texmf 2>/dev/null

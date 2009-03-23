@@ -62,6 +62,26 @@ dhit_libkpathsea_configured ()
     kpsewhich --version >/dev/null 2>&1
 }
 
+dhit_build_format ()
+{
+
+    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+    printf "Building format(s) $*.\n\tThis may take some time... "
+    if fmtutil-sys "$@" > $tempfile 2>&1 ; then
+        rm -f $tempfile
+        echo "done."
+    else
+        exec >&2
+        echo
+        echo "fmtutil-sys failed. Output has been stored in"
+        echo "$tempfile"
+        echo "Please include this file if you report a bug."
+        echo
+        exit 1
+    fi
+}
+
+
 #################################################################
 ##  End of function definitions from file postinst.functions
 #################################################################
