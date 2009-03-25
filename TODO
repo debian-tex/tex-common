@@ -1,1 +1,3 @@
 - Manually build acl2, find out why "/usr/bin/make mini-proveall" fails.
+- remove old tetex-packages from reportbug-control as soon as the
+  migration packages have disappeared
