@@ -1,2 +1,2 @@
-interest /etc/texmf/updmap.d
-interest /etc/texmf/language.d
+interest texmf-language
+interest texmf-updmap

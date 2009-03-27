@@ -50,8 +50,9 @@ case "$1" in
     remove|disappear)
         for i in #WHATTODO# ; do
             if [ "$i" = map ] ; then
-                dhit_libkpathsea_configured && \
-                    dhit_check_run_without_errors updmap-sys
+                update-texmf-config updmap
+                #dhit_libkpathsea_configured && \
+                #    dhit_check_run_without_errors updmap-sys
             fi
             if [ "$i" = allformats ] ; then
                 for fmt in #FORMATS# ; do
@@ -65,11 +66,12 @@ case "$1" in
                 done
             fi
             if [ "$i" = language ] ; then
-                if dhit_libkpathsea_configured && \
-                    which fmtutil-sys >/dev/null; then
-                    dhit_build_hyphen_format_if_format_exists \
-                        latex $(kpsewhich language.dat)
-                fi
+                update-texmf-config language
+                #if dhit_libkpathsea_configured && \
+                #    which fmtutil-sys >/dev/null; then
+                #    dhit_build_hyphen_format_if_format_exists \
+                #        latex $(kpsewhich language.dat)
+                #fi
             fi
         done
     ;;

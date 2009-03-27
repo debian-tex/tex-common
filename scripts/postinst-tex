@@ -82,9 +82,10 @@ case "$1" in
         if dhit_libkpathsea_configured; then
             for i in #WHATTODO# ; do
                 if [ "$i" = map ] ; then
-                    if which updmap-sys >/dev/null; then
-                        dhit_create_fontmaps
-                    fi
+                    update-texmf-config updmap
+                    #if which updmap-sys >/dev/null; then
+                    #   dhit_create_fontmaps
+                    #fi
                 fi
                 if [ "$i" = allformats ] ; then
                     dhit_build_format --all
@@ -95,8 +96,9 @@ case "$1" in
                     done
                 fi
                 if [ "$i" = language ] ; then
-                    dhit_build_hyphen_format_if_format_exists \
-                        latex $(kpsewhich language.dat)
+                    update-texmf-config language
+                    #dhit_build_hyphen_format_if_format_exists \
+                    #    latex $(kpsewhich language.dat)
                 fi
             done
         fi

@@ -66,8 +66,7 @@ do_triggers()
         fi
     fi
     case " $trigger " in
-        *" /etc/texmf/updmap.d "*) 
-            # do the processing
+        *" texmf-updmap "*) 
          # code from postinst-tex
          if dhit_libkpathsea_configured; then
              if which updmap-sys >/dev/null; then
@@ -92,10 +91,7 @@ do_triggers()
                 fi
             fi
         ;;
-    esac
-    case " $trigger " in
-        *" /etc/texmf/language.d "*) 
-            # do the processing
+        *" texmf-language "*) 
          # code from postinst.tex
             v=$(kpsewhich -var-value TEXMFSYSVAR)
             c=$(kpsewhich -var-value TEXMFSYSCONFIG)
@@ -264,7 +260,7 @@ EOF
     # that calls mktexlsr if possible, and update-*
     # we set the triggers updmap.d
     #
-    trigger=/etc/texmf/updmap.d
+    trigger=texmf-updmap
     do_triggers
 
     # now call the equivalent of fmtutil-sys --all explicitely
