@@ -91,6 +91,11 @@ do_triggers()
                 fi
             fi
         ;;
+    esac
+    # do NOT merge these two cases into one, from dpkg's trigger.txt:
+    # Generally each trigger name should be tested for separately, as the
+    # postinst will often be called for several triggers at once.
+    case " $trigger " in
         *" texmf-language "*) 
          # code from postinst.tex
             v=$(kpsewhich -var-value TEXMFSYSVAR)
