@@ -12,7 +12,7 @@ tex-common (1.18) unstable; urgency=low
     the options map:notriggers and language:notriggers were removed
     from the possible options of dh_installtex.
 
- -- Norbert Preining <preining@debian.org>  Fri, 27 Mar 2009 16:25:07 +0100
+ -- Norbert Preining <preining@debian.org>  Mon, 13 Apr 2009 22:33:23 +0200
 
 tex-common (1.17) unstable; urgency=low
 
