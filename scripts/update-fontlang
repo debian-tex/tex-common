@@ -4,7 +4,7 @@
 #                     from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
 # Copyright (C) 2004, 2005, 2006, 2007 Florent Rougon
-# Copyright (C) 2005, 2006 Norbert Preining
+# Copyright (C) 2005, 2006, 2009 Norbert Preining
 # Copyright (C) 2007 Frank Küster
 #
 # This program is free software; you can redistribute it and/or modify
@@ -26,8 +26,31 @@ progname=$(basename "$0")
 
 SYSPATH_BASE=/var/lib/texmf
 
+HYPHENMODE=nohyphen
+
 if [ "$progname" = "update-language" ] ; then
-    CNFDIR=language.d
+    update-language-dat
+    update-language-def
+    exit 0
+elif [ "$progname" = "update-language-def" ] ; then
+    CNFDIR=hyphen.d
+    HYPHENMODE=etex
+    # System-wide configuration directory
+    SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
+    EXT="cnf"
+    MEMORY_DIR=/var/lib/tex-common/hyphen-cnf
+    PATH_COMPONENT=tex/generic/config
+    SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
+    DEFAULT_OUTPUTFILE_BASENAME=language.def
+    SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+    CC="%"                      # for COMMENTCHAR
+    # in printf, %% is one %
+    PCC="%%"                    # for printfCOMMENTCHAR
+    SHORT_DESC="Generate language.def, the hyphenation configuration file for eTeX and friends"
+elif [ "$progname" = "update-language-dat" ] ; then
+    CNFDIR=hyphen.d
+    HYPHENMODE=latex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
     CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
@@ -106,6 +129,70 @@ cleanup()
     exit $rc
 }
 
+do_one_hyphen_line()
+{
+    line="$1"
+    case "$line" in
+        ${CC}*) echo "$line" >> "$tempfile" ; return ;;
+    esac
+    set -- $line
+    name=""
+    lhm=""
+    rhm=""
+    synonyms=""
+    f=""
+    while [ ! "$1" = "" ] ; do
+        case "$1" in
+            name=*) name="${1/#name=/}" ;;
+            lefthyphenmin=*) lhm="${1/#lefthyphenmin=/}" ;;
+            righthyphenmin=*) rhm="${1/#righthyphenmin=/}" ;;
+            synonyms=*) synonyms="${1/#synonyms=/}" ;;
+            file=*) f="${1/#file=/}" ;;
+            *) echo "Unknown AddHypen directive ==$line==!" >&2 ; return ;;
+        esac
+        shift
+    done
+    if [ "$name$lhm$rhm$synonyms$f" = "" ] ; then
+        return
+    fi
+    if [ ! "$lhm$rhm$synonyms$f" = "" ] ; then
+        if [ "$name" = "" ] ; then
+            echo "the line $line does not contain a name= directive, ignored!" >&2
+            return
+        fi
+    fi
+    if [ ! "$name$lhm$rhm$synonyms" = "" ] ; then
+        if [ "$f" = "" ] ; then
+            echo "the line $line does not contain a file= directive, ignored!" >&2
+            return
+        fi
+    fi
+    if [ "$HYPHENMODE" = "etex" ] ; then
+        echo "\\addlanguage{$name}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
+    else
+        echo "$name $f" >> "$tempfile"
+    fi
+    if [ ! "$synonyms" = "" ] ; then
+        {
+            IFS=",$IFS"
+            for s in $synonyms ; do
+                if [ "$HYPHENMODE" = "etex" ] ; then
+                    echo "\\addlanguage{$s}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
+                else
+                    echo "=$s" >> "$tempfile"
+                fi
+            done
+        }
+    fi
+}
+
+include_hyphen_file_core()
+{
+    file="$1"
+    cat "$1" | while read line ; do
+        do_one_hyphen_line "$line"
+    done
+}
 
 # include_file <file path>
 include_file()
@@ -113,7 +200,11 @@ include_file()
     file="$1"
 
     printf "\n${PCC}${PCC}${PCC} From file: $file\n" >>"$tempfile"
-    cat "$file" >>"$tempfile"
+    if [ $HYPHENMODE = "nohyphen" ] ; then
+        cat "$file" >>"$tempfile"
+    else
+        include_hyphen_file_core "$file"
+    fi
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
     case "$file" in
       */10texlive-latex-base.cnf)

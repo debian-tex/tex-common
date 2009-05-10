@@ -1,3 +1,15 @@
+tex-common (2.00) experimental; urgency=low
+
+  * new experimental branch for changes necessary to support TeX Live 2008
+    and later that introduced hyphenation pattern support for etex based
+    formats. language.def is not managed like language.dat.
+    - add support for generating language.def to update-fontlang
+    - install those scripts as update-language-def and update-language-dat
+    - make update-language work as calling both of the above
+    - adjust dh_installtex to accept new syntax
+
+ -- Norbert Preining <preining@debian.org>  Sun, 10 May 2009 16:03:38 +0200
+
 tex-common (1.18) unstable; urgency=low
 
   * make sure that fmtutil-sys --all and updmap-sys are called on new
