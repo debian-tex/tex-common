@@ -368,7 +368,7 @@ sub build_line {
 		$ret .= " lefthyphenmin=$lhm" if defined($lhm);
 		$ret .= " righthyphenmin=$rhm" if defined($rhm);
 		if ($#synonyms >= 0) {
-			$ret .= " synonyms=" . join(".",@synonyms);
+			$ret .= " synonyms=" . join(",",@synonyms);
 		}
 		return($ret);
 	}
