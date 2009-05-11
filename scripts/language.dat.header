@@ -1,8 +1,7 @@
-% 00tex.cnf: header of the configuration file for language.dat
+% header of the configuration file for language.dat
 %
 % In Debian, language.dat is a file that is generated from
-% configuration files in /etc/texmf/language.d/.  This file, 00tex.cnf, 
-% contains only some comments on how to edit these files.
+% configuration files in /etc/texmf/hyphen.d/.  
 %
 % The text of the comments is Copyright 1998, 1999 by Thomas Esser, it
 % is in the Public domain.

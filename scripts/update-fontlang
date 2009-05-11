@@ -134,6 +134,26 @@ do_one_hyphen_line()
     line="$1"
     case "$line" in
         ${CC}*) echo "$line" >> "$tempfile" ; return ;;
+        USEFILE*) 
+            set -- $line
+            shift
+            datfile="$1"
+            deffile="$2"
+            if [ "$HYPHENMODE" = "etex" ] ; then
+                if [ -r "$deffile" ] ; then
+                    cat "$deffile" >> "$tempfile"
+                else 
+                    echo "${CC} USEFILE $deffile not found" >> "$tempfile"
+                fi
+            else
+                if [ -r "$datfile" ] ; then
+                    cat "$datfile" >> "$tempfile"
+                else 
+                    echo "${CC} USEFILE $datfile not found" >> "$tempfile"
+                fi
+            fi
+            return
+            ;;
     esac
     set -- $line
     name=""
@@ -764,4 +784,4 @@ if [ $quiet = 0 ]; then
     fi
 fi
 
-# vim:set expandtab: #
+# vim:set expandtab tabstop=4: #
