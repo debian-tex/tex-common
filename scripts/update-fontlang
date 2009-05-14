@@ -29,9 +29,34 @@ SYSPATH_BASE=/var/lib/texmf
 HYPHENMODE=nohyphen
 
 if [ "$progname" = "update-language" ] ; then
-    update-language-dat
-    update-language-def
-    exit 0
+    CNFDIR=hyphen.d
+    HYPHENMODE=etex
+    # System-wide configuration directory
+    SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
+    if [ -r "$CHECKFILE" ] ; then
+        update-language-dat
+	update-language-def
+	exit 0
+    else
+    # no hyphen.d yet.
+    # Missing: we need to properly check whether we are upgrading, or something is amiss.
+        HYPHENMODE="nohyphen"
+        CNFDIR=language.d
+	# System-wide configuration directory
+	SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
+        CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
+        EXT="cnf"
+        MEMORY_DIR=/var/lib/tex-common/language-cnf
+        PATH_COMPONENT=tex/generic/config
+        SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
+        DEFAULT_OUTPUTFILE_BASENAME=language.dat
+        SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+        CC="%"                      # for COMMENTCHAR
+        # in printf, %% is one %
+        PCC="%%"                    # for printfCOMMENTCHAR
+        SHORT_DESC="Generate language.dat, the hyphenation configuration file for LaTeX"
+    fi
 elif [ "$progname" = "update-language-def" ] ; then
     CNFDIR=hyphen.d
     HYPHENMODE=etex
@@ -326,7 +351,6 @@ check_special_jadetex_xmltex()
 handle_file()
 {
     file="$1"
-
     # Does the file have a dpkg-new sister?
     if [ -f "${file}.dpkg-new" ]; then
       do_not_include_file "$file"
@@ -438,7 +462,6 @@ perform_sanity_checks()
     fi
 
     if ! [ -r "$CHECKFILE" ] ; then
-        echo "$progname: cannot read $CHECKFILE" >&2
         exit 1
     fi
 
