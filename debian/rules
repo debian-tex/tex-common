@@ -75,6 +75,7 @@ install: build
         # Add here commands to install the package into debian/tex-common.
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
 	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
+	cp conf/language.d/00tex.cnf $(INSTDIR)/etc/texmf/language.d/
         # ucf files
 	cp conf/texmf.d/*cnf $(INSTDIR)/usr/share/tex-common/
 	cp conf/updmap.d/00updmap.cfg $(INSTDIR)/usr/share/tex-common/
