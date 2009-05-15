@@ -1,8 +1,15 @@
+tex-common (2.01~1) experimental; urgency=low
+
+  * Bring back old update-language functionality - this is needed for
+    upgrades, and also for installing tex-common on an empty system?
+
+ -- Frank Küster <frank@debian.org>  Fri, 15 May 2009 10:22:38 +0200
+
 tex-common (2.00) experimental; urgency=low
 
   * new experimental branch for changes necessary to support TeX Live 2008
     and later that introduced hyphenation pattern support for etex based
-    formats. language.def is not managed like language.dat.
+    formats. language.def is now managed like language.dat.
     - add support for generating language.def to update-fontlang
     - install those scripts as update-language-def and update-language-dat
     - make update-language work as calling both of the above
