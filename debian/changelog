@@ -1,3 +1,9 @@
+tex-common (2.01~2) experimental; urgency=low
+
+  * Actually install hyphen.d/00tex.cnf
+
+ -- Frank Küster <frank@debian.org>  Wed, 20 May 2009 17:09:26 +0200
+
 tex-common (2.01~1) experimental; urgency=low
 
   * Bring back old update-language functionality - this is needed for
