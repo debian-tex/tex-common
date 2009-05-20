@@ -95,7 +95,7 @@ case "$1" in
                         dhit_build_format --all --cnffile "/etc/texmf/fmt.d/$fmt.cnf"
                     done
                 fi
-                if [ "$i" = language ] ; then
+                if [ "$i" = hyphen ] ; then
                     update-texmf-config language
                     #dhit_build_hyphen_format_if_format_exists \
                     #    latex $(kpsewhich language.dat)

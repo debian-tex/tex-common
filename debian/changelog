@@ -1,3 +1,9 @@
+tex-common (2.01~3) experimental; urgency=low
+
+  * switch dh_installtex from language to hyphen
+
+ -- Frank Küster <frank@debian.org>  Wed, 20 May 2009 19:51:30 +0200
+
 tex-common (2.01~2) experimental; urgency=low
 
   * Actually install hyphen.d/00tex.cnf
