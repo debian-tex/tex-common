@@ -249,6 +249,7 @@ include_file()
         cat "$file" >>"$tempfile"
     else
         include_hyphen_file_core "$file"
+	at_least_one_hyphen_file_included=1
     fi
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
     case "$file" in
@@ -786,6 +787,7 @@ ${PCC}${PCC}${PCC}\n" >> "$tempfile"
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
 
+at_least_one_hyphen_file_included=0
 if [ $syswide_mode = 1 ]; then
     find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}
 else
@@ -793,8 +795,11 @@ else
 fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
 
 #
-# for language.def we have to select the right language at the end
-if [ "$HYPHENMODE" = "etex" ] ; then
+# for language.def we have to select the right language at the
+# end. But we may only include this if it also has been defined. Since
+# our dependencies make sure that USenglish patterns will be installed
+# first, checking whether anything has been included is sufficient.
+if [ "$HYPHENMODE" = "etex" ] && [ $at_least_one_hyphen_file_included -eq 1 ] ; then
     printf "
 ${PCC}${PCC}${PCC} No changes may be made beyond this point.
 

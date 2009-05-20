@@ -1,3 +1,9 @@
+tex-common (2.01~4) experimental; urgency=low
+
+  * fix hyphenation handling 
+
+ -- Frank Küster <frank@debian.org>  Wed, 20 May 2009 20:36:44 +0200
+
 tex-common (2.01~3) experimental; urgency=low
 
   * switch dh_installtex from language to hyphen
