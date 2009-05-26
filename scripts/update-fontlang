@@ -29,34 +29,9 @@ SYSPATH_BASE=/var/lib/texmf
 HYPHENMODE=nohyphen
 
 if [ "$progname" = "update-language" ] ; then
-    CNFDIR=hyphen.d
-    HYPHENMODE=etex
-    # System-wide configuration directory
-    SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
-    CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
-    if [ -r "$CHECKFILE" ] ; then
-        update-language-dat
-	update-language-def
-	exit 0
-    else
-    # no hyphen.d yet.
-    # Missing: we need to properly check whether we are upgrading, or something is amiss.
-        HYPHENMODE="nohyphen"
-        CNFDIR=language.d
-	# System-wide configuration directory
-	SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
-        CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
-        EXT="cnf"
-        MEMORY_DIR=/var/lib/tex-common/language-cnf
-        PATH_COMPONENT=tex/generic/config
-        SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
-        DEFAULT_OUTPUTFILE_BASENAME=language.dat
-        SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-        CC="%"                      # for COMMENTCHAR
-        # in printf, %% is one %
-        PCC="%%"                    # for printfCOMMENTCHAR
-        SHORT_DESC="Generate language.dat, the hyphenation configuration file for LaTeX"
-    fi
+    update-language-dat
+    update-language-def
+    exit 0
 elif [ "$progname" = "update-language-def" ] ; then
     CNFDIR=hyphen.d
     HYPHENMODE=etex
@@ -249,7 +224,6 @@ include_file()
         cat "$file" >>"$tempfile"
     else
         include_hyphen_file_core "$file"
-	at_least_one_hyphen_file_included=1
     fi
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
     case "$file" in
@@ -352,6 +326,7 @@ check_special_jadetex_xmltex()
 handle_file()
 {
     file="$1"
+
     # Does the file have a dpkg-new sister?
     if [ -f "${file}.dpkg-new" ]; then
       do_not_include_file "$file"
@@ -463,6 +438,7 @@ perform_sanity_checks()
     fi
 
     if ! [ -r "$CHECKFILE" ] ; then
+        echo "$progname: cannot read $CHECKFILE" >&2
         exit 1
     fi
 
@@ -787,7 +763,6 @@ ${PCC}${PCC}${PCC}\n" >> "$tempfile"
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
 
-at_least_one_hyphen_file_included=0
 if [ $syswide_mode = 1 ]; then
     find "$SYSWIDE_CONFDIR"             -maxdepth 1 -type f -name '*.'${EXT}
 else
@@ -795,11 +770,8 @@ else
 fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
 
 #
-# for language.def we have to select the right language at the
-# end. But we may only include this if it also has been defined. Since
-# our dependencies make sure that USenglish patterns will be installed
-# first, checking whether anything has been included is sufficient.
-if [ "$HYPHENMODE" = "etex" ] && [ $at_least_one_hyphen_file_included -eq 1 ] ; then
+# for language.def we have to select the right language at the end
+if [ "$HYPHENMODE" = "etex" ] ; then
     printf "
 ${PCC}${PCC}${PCC} No changes may be made beyond this point.
 

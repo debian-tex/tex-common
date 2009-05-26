@@ -1,3 +1,10 @@
+tex-common (2.01~5) experimental; urgency=low
+
+  * Revert the changes made in ~1; we don't want that type of upgrading
+    path 
+
+ -- Frank Küster <frank@debian.org>  Tue, 26 May 2009 11:21:37 +0200
+
 tex-common (2.01~4) experimental; urgency=low
 
   * fix hyphenation handling 
