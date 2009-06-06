@@ -1,3 +1,17 @@
+tex-common (1.19) unstable; urgency=low
+
+  * UNRELEASED
+  * change dh_installtex generated postrm code to call update-texmf-config
+    only if it is present. That should be due to the policy, but it still
+    might happen that tex-common is not installed bug another package
+    depending on it is tried to be removed (see bug #531581).
+    (Closes: #530832)
+  * Remove the code in postrm that removes /usr/local/share/texmf/ls-R,
+    we are not allowed to do that (policy), but we try to remove that 
+    directory if it is empty. (Closes: #528021)
+
+ -- Norbert Preining <preining@debian.org>  Sat, 06 Jun 2009 17:54:52 +0200
+
 tex-common (1.18) unstable; urgency=low
 
   * make sure that fmtutil-sys --all and updmap-sys are called on new
