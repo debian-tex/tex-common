@@ -1,5 +1,6 @@
 tex-common (1.19) unstable; urgency=low
 
+  [ Norbert Preining ]
   * UNRELEASED
   * change dh_installtex generated postrm code to call update-texmf-config
     only if it is present. That should be due to the policy, but it still
@@ -10,7 +11,11 @@ tex-common (1.19) unstable; urgency=low
     we are not allowed to do that (policy), but we try to remove that 
     directory if it is empty. (Closes: #528021)
 
- -- Norbert Preining <preining@debian.org>  Sat, 06 Jun 2009 17:54:52 +0200
+  [ Frank Küster ]
+  * Make sure that tex-common's own postinst script does not create
+    /usr/local/share/texmf/ls-R (closes: #528021)
+
+ -- Frank Küster <frank@debian.org>  Sun, 07 Jun 2009 21:53:07 +0200
 
 tex-common (1.18) unstable; urgency=low
 
