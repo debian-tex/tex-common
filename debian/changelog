@@ -1,7 +1,6 @@
 tex-common (1.19) unstable; urgency=low
 
   [ Norbert Preining ]
-  * UNRELEASED
   * change dh_installtex generated postrm code to call update-texmf-config
     only if it is present. That should be due to the policy, but it still
     might happen that tex-common is not installed bug another package
