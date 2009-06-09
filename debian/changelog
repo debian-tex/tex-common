@@ -1,3 +1,11 @@
+tex-common (1.20) unstable; urgency=low
+
+  * after the change to tex-common's postinst script the ls-R file for
+    /var/lib/texmf was not recreated, which breaks installation.
+    Add this tree to the trigger call to mktexlsr (Closes: #532525)
+
+ -- Norbert Preining <preining@debian.org>  Tue, 09 Jun 2009 22:37:03 +0200
+
 tex-common (1.19) unstable; urgency=low
 
   [ Norbert Preining ]
