@@ -1,3 +1,10 @@
+tex-common (2.01~6) experimental; urgency=low
+
+  * Add a Conflicts on old texlive-common, in order to force an upgrade of
+    all the packages in one bunch.  Or rather to try to force, let's see.
+
+ -- Frank Küster <frank@debian.org>  Tue, 11 Aug 2009 22:04:20 +0200
+
 tex-common (2.01~5) experimental; urgency=low
 
   * Revert the changes made in ~1; we don't want that type of upgrading
