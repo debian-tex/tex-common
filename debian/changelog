@@ -1,3 +1,9 @@
+tex-common (2.01~7) experimental; urgency=low
+
+  * Remove bashisms and unsafe echo use from update-fontlang
+
+ -- Frank Küster <frank@debian.org>  Thu, 24 Sep 2009 11:20:29 +0200
+
 tex-common (2.01~6) experimental; urgency=low
 
   * Add a Conflicts on old texlive-common, in order to force an upgrade of

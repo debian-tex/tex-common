@@ -163,11 +163,11 @@ do_one_hyphen_line()
     f=""
     while [ ! "$1" = "" ] ; do
         case "$1" in
-            name=*) name="${1/#name=/}" ;;
-            lefthyphenmin=*) lhm="${1/#lefthyphenmin=/}" ;;
-            righthyphenmin=*) rhm="${1/#righthyphenmin=/}" ;;
-            synonyms=*) synonyms="${1/#synonyms=/}" ;;
-            file=*) f="${1/#file=/}" ;;
+            name=*) name="${1#name=}" ;;
+            lefthyphenmin=*) lhm="${1#lefthyphenmin=}" ;;
+            righthyphenmin=*) rhm="${1#righthyphenmin=}" ;;
+            synonyms=*) synonyms="${1#synonyms=}" ;;
+            file=*) f="${1#file=}" ;;
             *) echo "Unknown AddHypen directive ==$line==!" >&2 ; return ;;
         esac
         shift
@@ -188,7 +188,7 @@ do_one_hyphen_line()
         fi
     fi
     if [ "$HYPHENMODE" = "etex" ] ; then
-        echo "\\addlanguage{$name}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
+        printf '\\'"addlanguage{$name}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
     else
         echo "$name $f" >> "$tempfile"
     fi
@@ -197,7 +197,7 @@ do_one_hyphen_line()
             IFS=",$IFS"
             for s in $synonyms ; do
                 if [ "$HYPHENMODE" = "etex" ] ; then
-                    echo "\\addlanguage{$s}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
+                    printf '\\'"addlanguage{$s}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
                 else
                     echo "=$s" >> "$tempfile"
                 fi
