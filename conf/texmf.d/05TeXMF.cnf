@@ -17,6 +17,8 @@
 % (However, %'s and @'s can be edited into texmf.cnf or put in envvar values.)
 % $foo (or ${foo}) in a value expands to the envvar or cnf value of foo.
 % 
+% Long lines can be continued with a \.
+%
 % Earlier entries (in the same or another file) override later ones, and
 % an environment variable foo overrides any texmf.cnf definition of foo.
 % 

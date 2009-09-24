@@ -1,8 +1,13 @@
 tex-common (2.01~7) experimental; urgency=low
 
+  [ Frank Küster ]
   * Remove bashisms and unsafe echo use from update-fontlang
+  * Make the wording of the warning message in postrm-texlsr broader,
+    since there are a couple of reasons why this can fail
+  * Update some texmf.cnf settings. Before uploading to unstable, this
+    needs a closer inspection
 
- -- Frank Küster <frank@debian.org>  Thu, 24 Sep 2009 11:20:29 +0200
+ -- Frank Küster <frank@debian.org>  Thu, 24 Sep 2009 19:26:53 +0200
 
 tex-common (2.01~6) experimental; urgency=low
 

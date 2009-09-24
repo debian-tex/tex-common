@@ -44,9 +44,8 @@ dhit_check_run_without_errors ()
             echo
             echo "$* failed. Output has been stored in"
             echo "$tempfile"
-            echo "If tex-common is not configured you can ignore this error" \
-                 "message!"
-            echo "Otherwise, please include this file if you report a bug."
+            echo "This is probably not a bug. But if you encounter problems, report a bug" \
+            echo "and include this file in the bug report."
             echo
         fi
         set -e

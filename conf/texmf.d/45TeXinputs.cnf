@@ -8,9 +8,6 @@ TEXINPUTS.latex = .;$TEXMF/tex/{latex,generic,}//
 TEXINPUTS.olatex = .;$TEXMF/tex/{latex,generic,}//
 TEXINPUTS.latex209 = .;$TEXMF/tex/{latex209,generic,latex,}//
 
-% Fontinst needs to read afm files.
-TEXINPUTS.fontinst = .;$TEXMF/{tex,fonts/afm}//
-
 % MLTeX.
 TEXINPUTS.frlatex = .;$TEXMF/tex/{french,latex,generic,}//
 TEXINPUTS.frtex   = .;$TEXMF/tex/{french,plain,generic,}//
