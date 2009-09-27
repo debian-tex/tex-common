@@ -1,52 +1,15 @@
 tex-common (2.01~7) experimental; urgency=low
 
   [ Frank Küster ]
-  * Remove bashisms and unsafe echo use from update-fontlang
   * Make the wording of the warning message in postrm-texlsr broader,
     since there are a couple of reasons why this can fail
-  * Update some texmf.cnf settings. Before uploading to unstable, this
-    needs a closer inspection
-
- -- Frank Küster <frank@debian.org>  Thu, 24 Sep 2009 19:26:53 +0200
-
-tex-common (2.01~6) experimental; urgency=low
-
+  * Update some texmf.cnf settings for TeXLive 2009. Before uploading to
+    unstable, this needs a closer inspection (in particular, comment
+    changes possibly cluttering diffs.
   * Add a Conflicts on old texlive-common, in order to force an upgrade of
-    all the packages in one bunch.  Or rather to try to force, let's see.
+    all the packages in one bunch.
 
- -- Frank Küster <frank@debian.org>  Tue, 11 Aug 2009 22:04:20 +0200
-
-tex-common (2.01~5) experimental; urgency=low
-
-  * Revert the changes made in ~1; we don't want that type of upgrading
-    path 
-
- -- Frank Küster <frank@debian.org>  Tue, 26 May 2009 11:21:37 +0200
-
-tex-common (2.01~4) experimental; urgency=low
-
-  * fix hyphenation handling 
-
- -- Frank Küster <frank@debian.org>  Wed, 20 May 2009 20:36:44 +0200
-
-tex-common (2.01~3) experimental; urgency=low
-
-  * switch dh_installtex from language to hyphen
-
- -- Frank Küster <frank@debian.org>  Wed, 20 May 2009 19:51:30 +0200
-
-tex-common (2.01~2) experimental; urgency=low
-
-  * Actually install hyphen.d/00tex.cnf
-
- -- Frank Küster <frank@debian.org>  Wed, 20 May 2009 17:09:26 +0200
-
-tex-common (2.01~1) experimental; urgency=low
-
-  * Bring back old update-language functionality - this is needed for
-    upgrades, and also for installing tex-common on an empty system?
-
- -- Frank Küster <frank@debian.org>  Fri, 15 May 2009 10:22:38 +0200
+ -- Frank Küster <frank@debian.org>  Sun, 27 Sep 2009 21:19:12 +0200
 
 tex-common (2.00) experimental; urgency=low
 
