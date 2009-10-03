@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 # update-fontlang --- Generate updmap.cfg, language.dat, fmtutil.cnf
 #                     from a set of files

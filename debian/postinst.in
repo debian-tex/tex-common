@@ -51,7 +51,7 @@ do_triggers()
         if which mktexlsr >/dev/null; then
             tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
             printf "Running mktexlsr. This may take some time... "
-            if mktexlsr > $tempfile 2>&1 ; then
+            if mktexlsr /usr/share/texmf/ /usr/share/texmf-texlive/ /var/lib/texmf/ > $tempfile 2>&1 ; then
                 rm -f $tempfile
                 echo "done."
             else

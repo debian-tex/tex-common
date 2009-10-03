@@ -50,7 +50,15 @@ case "$1" in
     remove|disappear)
         for i in #WHATTODO# ; do
             if [ "$i" = map ] ; then
-                update-texmf-config updmap
+                # it might happen that tex-common is not installed and
+                # still the postrm of a package is tried to be uninstalled
+                # so don't call update-texmf-config if not present
+                # See bug report #531581
+                if which update-texmf-config >/dev/null; then
+                    update-texmf-config updmap
+                else
+                    echo "update-texmf-config not present: is tex-common installed?" >&2
+                fi
                 #dhit_libkpathsea_configured && \
                 #    dhit_check_run_without_errors updmap-sys
             fi
@@ -65,8 +73,12 @@ case "$1" in
                     rm -f /var/lib/texmf/web2c/$fmt.*
                 done
             fi
-            if [ "$i" = language ] ; then
-                update-texmf-config language
+            if [ "$i" = hyphen ] ; then
+                if which update-texmf-config >/dev/null; then
+                    update-texmf-config language
+                else
+                    echo "update-texmf-config not present: is tex-common installed?" >&2
+                fi
                 #if dhit_libkpathsea_configured && \
                 #    which fmtutil-sys >/dev/null; then
                 #    dhit_build_hyphen_format_if_format_exists \
