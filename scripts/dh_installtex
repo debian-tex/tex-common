@@ -42,7 +42,6 @@ B<dh_installtex>
 [B<hyphenfile=>I<file.cnf>[=I<n>]]
 [B<format=>I<format>,I<engine>,I<hyphenfile>,I<rest args>]
 [B<formatfile=>I<file.cnf>[=I<n>]]
-[B<texmftrees=>I<tree>[,I<tree>]]
 
 =head1 DESCRIPTION
 
@@ -67,20 +66,6 @@ mktexlsr is called in a correct way (e.g., also
 in the postrm script when there is no functional mktexlsr), simply call
 
 	dh_installtex
-
-The ls-R databases are [B<only>] updated for the following
-trees: /usr/share/texmf and /var/lib/texmf. Normal TeX related packages
-following the Debian TeX Policy should only install files into these 
-directories and /etc/texmf (which does not need a ls-R DB), so this is
-a sensible choice. If you need to rehash the ls-R database of some other
-trees (e.g., because an old version of your package had files in
-/usr/share/texmf-tetex), please specify these additional trees on the
-command line via the texmftrees option:
-
-	dh_installtex texmftrees=tree1,tree2,...
-
-This will update the ls-R databases for /usr/share/texmf, /var/lib/texmf, and
-in addition tree1 and tree2.
 
 =head1 COMPLEX USAGE: Registering fonts, hyphenation patterns and formats
 
@@ -244,8 +229,6 @@ my %cmdlinefiles;
 my %cmdlinefilespriority;
 my @cmdlinetexmftrees;
 
-my @defaulttexmftrees = qw,/usr/share/texmf /var/lib/texmf,;
-	
 #
 # definitions for the different flavors
 #
@@ -409,8 +392,6 @@ foreach (@ARGV) {
 		$cmdlinefilespriority{$type}{$fn}=$pr;
 	} elsif (m/^(map|hyphen|format)=(.*)$/) {
 		push @{$cmdlineargs{$1}}, $2;
-	} elsif (m/^texmftrees=(.*)$/) {
-		@cmdlinetexmftrees = split /,/, $1;
 	} else {
 		error("Unrecognized argument: $_\n");
 	}
@@ -647,38 +628,16 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		$dothefullstuff = 1;
 	}
 	if (! $dh{NOSCRIPTS}) {
-		my %uniq;
-		foreach (@cmdlinetexmftrees, @defaulttexmftrees) { 
-			$uniq{$_} = 1; 
-		}
-		my @foo = keys(%uniq);
-		# we should NOT check whether files are actually installed
-		# because we have to update the ls-R db for disappearing files, too.
-		autoscript($package, "postinst", "postinst-texlsr", "s|#TEXMFTREES#|@foo|");
 		if ($dothefullstuff) {
 			autoscript($package, "postinst", "postinst-tex", "s|#FORMATSFILES#|@fmtconffiles|; s|#WHATTODO#|@whattodo|");
-		}
-
-		# postrm stuff
-		# we have to take care for the debhelper compat level. With
-		# debhelper >= 6 the different parts are reverse ordered.
-		if (compat(5)) {
-			# for compat level <= 5 do the texlsr stuff now
-			autoscript($package, "postrm",   "postrm-texlsr", "s|#TEXMFTREES#|@foo|");
-		}
-		if ($dothefullstuff) {
 			# map entries have already been filtered out
 			autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodo|");
-		}
-		if (!compat(5)) {
-			# for compat level >> 5 do it now
-			autoscript($package, "postrm",   "postrm-texlsr", "s|#TEXMFTREES#|@foo|");
 		}
 	}
 
 	# for trigger support
 	addsubstvar($package, "misc:Depends", "dpkg", ">= 1.14.18");
-	addsubstvar($package, "misc:Depends", "tex-common", ">= 1.18");
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 2.00");
 }
 
 =head1 SEE ALSO

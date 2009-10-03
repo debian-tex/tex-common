@@ -16,19 +16,24 @@ because the original script was designed for Debian packaging system.
 .PP
 .B update-texmf-config
 is a shell script that is called from maintainer scripts shipping new
-map files or hyphenation patterns for TeX, and dropping files into
-/etc/texmf/updmap.d and /etc/texmf/language.d, respectively.
+map files, hyphenation patterns, or any other TeX input
+file.
 .PP
-The script simply activates the respective trigger, namely texmf-updmap
-for font map files, and texmf-language for hyphenation patterns. All
+The script simply activates the respective trigger, namely texmf-map
+for font map files, texmf-hyphen for hyphenation patterns, and 
+texmf-lsr for updates to the lsr database. All
 the necessary action will then be carried out by the tex-common package.
 .SH OPTIONS
 .TP
-.B updmap
-Activate the texmf-updmap trigger.
+.B map
+Activate the texmf-map trigger.
 .TP
-.B language
-Activate the texmf-language trigger.
+.B hyphen
+Activate the texmf-hyphen trigger.
+.TP
+.B lsr
+Activate the texmf-lsr trigger.
+
 .SH SEE ALSO
 .PP
 Further information can be found in

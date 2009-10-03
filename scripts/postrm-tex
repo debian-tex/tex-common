@@ -13,38 +13,6 @@
 # So please be careful if you add stuff here!
 #
 
-dhit_build_format ()
-{
-
-    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-    printf "Building format(s) $1 $(basename "$2"). This may take some time..."
-    if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
-        rm -f $tempfile
-        echo " done."
-    else
-        echo
-        echo "fmtutil-sys failed. Output has been stored in"
-        echo "$tempfile"
-        echo "Please include this file if you report a bug."
-        echo
-        exit 1
-    fi
-}
-
-dhit_build_hyphen_format_if_format_exists ()
-{
-    v=$(kpsewhich -var-value TEXMFSYSVAR)
-    c=$(kpsewhich -var-value TEXMFSYSCONFIG)
-    TEXMFVAR="$v"
-    TEXMFCONFIG="$c"
-    export TEXMFVAR TEXMFCONFIG
-    fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
-    X=$(grep "^[[:space:]]*$1[[:space:]]" "$fmtcnffile" || true)
-    if [ -n "$X" ] ; then
-        dhit_build_format --byhyphen "$2"
-    fi
-}
-
 
 case "$1" in
     remove|disappear)
@@ -59,14 +27,11 @@ case "$1" in
                 else
                     echo "update-texmf-config not present: is tex-common installed?" >&2
                 fi
-                #dhit_libkpathsea_configured && \
-                #    dhit_check_run_without_errors updmap-sys
             fi
             if [ "$i" = allformats ] ; then
                 for fmt in #FORMATS# ; do
                     rm -f /var/lib/texmf/web2c/$fmt.*
                 done
-                dhit_check_run_without_errors fmtutil-sys --all
             fi
             if [ "$i" = format ] ; then
                 for fmt in #FORMATS# ; do
@@ -79,11 +44,6 @@ case "$1" in
                 else
                     echo "update-texmf-config not present: is tex-common installed?" >&2
                 fi
-                #if dhit_libkpathsea_configured && \
-                #    which fmtutil-sys >/dev/null; then
-                #    dhit_build_hyphen_format_if_format_exists \
-                #        latex $(kpsewhich language.dat)
-                #fi
             fi
         done
     ;;

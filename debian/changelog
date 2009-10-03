@@ -14,8 +14,9 @@ tex-common (2.00) experimental; urgency=low
     changes possibly cluttering diffs.
   * Add a Conflicts on old texlive-common, in order to force an upgrade of
     all the packages in one bunch.
+  * implement trigger support for mktexlsr
 
- -- Norbert Preining <preining@debian.org>  Sun, 10 May 2009 16:03:38 +0200
+ -- Norbert Preining <preining@debian.org>  Sat, 03 Oct 2009 21:35:22 +0900
 
 tex-common (1.20) unstable; urgency=low
 

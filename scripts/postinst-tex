@@ -1,8 +1,8 @@
 ##
 ## postinst-tex
 ##
-## postinst snippets for registering hyphenation patterns, font maps, 
-## and formats
+## postinst snippets for everything TeX related (mktlsr, hyphenation
+## patterns, formats, font maps)
 ##
 ## Authors:
 ##       Florent Rougon <f.rougon@free.fr>
@@ -14,23 +14,30 @@
 # So please be careful if you add stuff here!
 #
 
-dhit_create_fontmaps ()
+
+# Tell if kpsewhich works. If this is the case:
+#
+#   1. kpsewhich is installed and;
+#
+#   2. libkpathsea is configured.
+dhit_libkpathsea_configured ()
 {
-    tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
-    printf "Running updmap-sys. This may take some time... "
-    if updmap-sys > $tempfile 2>&1 ; then
+    kpsewhich --version >/dev/null 2>&1
+}
+
+dhit_update_lsr_files ()
+{
+    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+    printf "Running mktexlsr. This may take some time... "
+    if mktexlsr #TEXMFTREES# > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
     else
         exec >&2
         echo
-        echo "updmap-sys failed. Output has been stored in"
+        echo "mktexlsr failed. Output has been stored in"
         echo "$tempfile"
         echo "Please include this file if you report a bug."
-	echo
-	echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
-	echo "causes updmap-sys to fail.  Please check for files with extension"
-	echo ".dpkg-dist or .ucf-dist in this directory" 
         echo
         exit 1
     fi
@@ -80,12 +87,28 @@ case "$1" in
         # All of the following needs an installed and configured
         # basic TeX system, so check this.
         if dhit_libkpathsea_configured; then
+            # if we are doing something with formats we have to update
+            # the lsr database first
+            do_lsr=0
+            for i in #WHATTODO# ; do
+                if [ "$i" = allformats ] ; then
+                    do_lsr=1
+                fi
+                if [ "$i" = format ] ; then
+                    do_lsr=1
+                fi
+            done
+            if [ $do_lsr = 1 ] ; then
+                # mktexlsr may not be present
+                if which mktexlsr >/dev/null; then
+                    dhit_update_lsr_files
+                    # can we "close" or "delete" a trigger, i.e. say
+                    # that it has been dealt with?
+                fi
+            fi
             for i in #WHATTODO# ; do
                 if [ "$i" = map ] ; then
-                    update-texmf-config updmap
-                    #if which updmap-sys >/dev/null; then
-                    #   dhit_create_fontmaps
-                    #fi
+                    update-texmf-config map
                 fi
                 if [ "$i" = allformats ] ; then
                     dhit_build_format --all
@@ -96,9 +119,7 @@ case "$1" in
                     done
                 fi
                 if [ "$i" = hyphen ] ; then
-                    update-texmf-config language
-                    #dhit_build_hyphen_format_if_format_exists \
-                    #    latex $(kpsewhich language.dat)
+                    update-texmf-config hyphen
                 fi
             done
         fi
@@ -111,4 +132,4 @@ case "$1" in
 esac
 
 # Let vim know that we don't want tabs
-# vim:set expandtab: #
+# vim:set expandtab tabstop=4: #

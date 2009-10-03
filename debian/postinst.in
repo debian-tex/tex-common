@@ -45,28 +45,41 @@ do_triggers()
     update-updmap --quiet
     update-language
     update-fmtutil
-    # code from postinst-tex
-    if dhit_libkpathsea_configured; then
-        # mktexlsr may not be present
-        if which mktexlsr >/dev/null; then
-            tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
-            printf "Running mktexlsr. This may take some time... "
-            if mktexlsr /usr/share/texmf/ /usr/share/texmf-texlive/ /var/lib/texmf/ > $tempfile 2>&1 ; then
-                rm -f $tempfile
-                echo "done."
-            else
-                exec >&2
-                echo
-                echo "mktexlsr failed. Output has been stored in"
-                echo "$tempfile"
-                echo "Please include this file if you report a bug."
-                echo
-                exit 1
-            fi
-        fi
-    fi
+    #
+    # the following triggers are reacted upon and in that order:
+    # - texmf-lsr: call mktexlsr if present
+    # - texmf-map: call updmap-sys
+    # - texmf-hyphen: if texmf-format hasn't been triggered call 
+    #                 fmtutil-sys --byhyphen ...
     case " $trigger " in
-        *" texmf-updmap "*) 
+        *" texmf-lsr "*)
+            # code from postinst-tex
+            if dhit_libkpathsea_configured; then
+                # mktexlsr may not be present
+                if which mktexlsr >/dev/null; then
+                    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+                    printf "Running mktexlsr. This may take some time... "
+                    if mktexlsr > $tempfile 2>&1 ; then
+                        rm -f $tempfile
+                        echo "done."
+                    else
+                        exec >&2
+                        echo
+                        echo "mktexlsr failed. Output has been stored in"
+                        echo "$tempfile"
+                        echo "Please include this file if you report a bug."
+                        echo
+                        exit 1
+                    fi
+                fi
+            fi
+        ;;
+    esac
+    # do NOT merge these two cases into one, from dpkg's trigger.txt:
+    # Generally each trigger name should be tested for separately, as the
+    # postinst will often be called for several triggers at once.
+    case " $trigger " in
+        *" texmf-map "*) 
          # code from postinst-tex
          if dhit_libkpathsea_configured; then
              if which updmap-sys >/dev/null; then
@@ -96,7 +109,7 @@ do_triggers()
     # Generally each trigger name should be tested for separately, as the
     # postinst will often be called for several triggers at once.
     case " $trigger " in
-        *" texmf-language "*) 
+        *" texmf-hyphen "*) 
          # code from postinst.tex
             v=$(kpsewhich -var-value TEXMFSYSVAR)
             c=$(kpsewhich -var-value TEXMFSYSCONFIG)
@@ -265,7 +278,7 @@ EOF
     # that calls mktexlsr if possible, and update-*
     # we set the triggers updmap.d
     #
-    trigger=texmf-updmap
+    trigger="texmf-lsr texmf-map"
     do_triggers
 
     # now call the equivalent of fmtutil-sys --all explicitely
