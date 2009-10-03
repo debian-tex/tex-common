@@ -14,6 +14,8 @@
 # So please be careful if you add stuff here!
 #
 
+TEXMFTREES="/usr/share/texmf /var/lib/texmf"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texmf-texlive"
 
 # Tell if kpsewhich works. If this is the case:
 #
@@ -29,13 +31,13 @@ dhit_update_lsr_files ()
 {
     tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
     printf "Running mktexlsr. This may take some time... "
-    if mktexlsr #TEXMFTREES# > $tempfile 2>&1 ; then
+    if mktexlsr $* > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
     else
         exec >&2
         echo
-        echo "mktexlsr failed. Output has been stored in"
+        echo "mktexlsr $* failed. Output has been stored in"
         echo "$tempfile"
         echo "Please include this file if you report a bug."
         echo
@@ -91,6 +93,9 @@ case "$1" in
             # the lsr database first
             do_lsr=0
             for i in #WHATTODO# ; do
+                if [ "$i" = lsrfull ] ; then
+                    TEXMFTREES=$FULLTEXMFTREES
+                fi
                 if [ "$i" = allformats ] ; then
                     do_lsr=1
                 fi
@@ -101,12 +106,22 @@ case "$1" in
             if [ $do_lsr = 1 ] ; then
                 # mktexlsr may not be present
                 if which mktexlsr >/dev/null; then
-                    dhit_update_lsr_files
+                    dhit_update_lsr_files $TEXMFTREES
                     # can we "close" or "delete" a trigger, i.e. say
                     # that it has been dealt with?
                 fi
             fi
             for i in #WHATTODO# ; do
+                if [ "$i" = lsr ] ; then
+                    if [ $do_lsr = 0 ] ; then
+                        update-texmf-config lsr
+                    fi
+                fi
+                if [ "$i" = lsrfull ] ; then
+                    if [ $do_lsr = 0 ] ; then
+                        update-texmf-config lsrfull
+                    fi
+                fi
                 if [ "$i" = map ] ; then
                     update-texmf-config map
                 fi

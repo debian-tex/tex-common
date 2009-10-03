@@ -7,6 +7,9 @@
 #include variables
 <:=@COPYRIGHT:>//
 
+TEXMFTREES="/usr/share/texmf /var/lib/texmf"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texmf-texlive"
+
 ## Define static variables we need
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
 TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
@@ -34,6 +37,7 @@ db_version 2.0
 
 do_triggers() 
 {
+    DONE_FULL_LSR=0
     # currently we only support only triggers for updmap.d and
     # language.d changes
     # because all the other calls are quite fast 
@@ -48,11 +52,42 @@ do_triggers()
     #
     # the following triggers are reacted upon and in that order:
     # - texmf-lsr: call mktexlsr if present
+    # - texmf-lsrfull: call mktexlsr if present
     # - texmf-map: call updmap-sys
     # - texmf-hyphen: if texmf-format hasn't been triggered call 
     #                 fmtutil-sys --byhyphen ...
     case " $trigger " in
+        *" texmf-lsrfull "*)
+            # code from postinst-tex
+            if dhit_libkpathsea_configured; then
+                # mktexlsr may not be present
+                if which mktexlsr >/dev/null; then
+                    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+                    printf "Running mktexlsr. This may take some time... "
+                    if mktexlsr $FULLTEXMFTREES > $tempfile 2>&1 ; then
+                        DONE_FULL_LSR=1
+                        rm -f $tempfile
+                        echo "done."
+                    else
+                        exec >&2
+                        echo
+                        echo "mktexlsr $FULLTEXMFTREES failed. Output has been stored in"
+                        echo "$tempfile"
+                        echo "Please include this file if you report a bug."
+                        echo
+                        exit 1
+                    fi
+                fi
+            fi
+        ;;
+    esac
+    # do NOT merge these two cases into one, from dpkg's trigger.txt:
+    # Generally each trigger name should be tested for separately, as the
+    # postinst will often be called for several triggers at once.
+    case " $trigger " in
         *" texmf-lsr "*)
+          # only to lsr if we haven't done lsrfull
+          if [ $DONE_FULL_LSR = 0 ] ; then
             # code from postinst-tex
             if dhit_libkpathsea_configured; then
                 # mktexlsr may not be present
@@ -73,6 +108,7 @@ do_triggers()
                     fi
                 fi
             fi
+          fi
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
