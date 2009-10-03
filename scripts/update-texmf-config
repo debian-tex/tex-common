@@ -22,6 +22,7 @@
 # Boston, MA  02110-1301 USA.
 
 DOLSR=off
+DOLSRFULL=off
 DOHYPHEN=off
 DOUPDMAP=off
 
@@ -36,6 +37,10 @@ while [ $# -ne 0 ]; do
     lsr)
       DOLSR=on
       shift;;
+    lsrfull)
+      DOLSR=off
+      DOLSRFULL=on
+      shift;;
     *)
       echo "unknown option: $1"
       exit 1
@@ -45,6 +50,9 @@ done
 
 if [ $DOLSR = on ] ; then
   dpkg-trigger texmf-lsr
+fi
+if [ $DOLSRFULL = on ] ; then
+  dpkg-trigger texmf-lsrfull
 fi
 if [ $DOHYPHEN = on ] ; then
   dpkg-trigger texmf-hyphen
