@@ -16,7 +16,7 @@ tex-common (2.00) experimental; urgency=low
     all the packages in one bunch.
   * implement trigger support for mktexlsr
 
- -- Norbert Preining <preining@debian.org>  Sat, 03 Oct 2009 21:35:22 +0900
+ -- Norbert Preining <preining@debian.org>  Sun, 04 Oct 2009 20:20:11 +0900
 
 tex-common (1.20) unstable; urgency=low
 
