@@ -13,20 +13,31 @@
 # So please be careful if you add stuff here!
 #
 
+# it might happen that tex-common is not installed and
+# still the postrm of a package is tried to be uninstalled
+# so don't call update-texmf-config if not present
+# See bug report #531581
+dhit_call_update_texmf_config ()
+{
+    if which update-texmf-config >/dev/null; then
+        update-texmf-config $*
+    else
+        echo "update-texmf-config not present: is tex-common installed?" >&2
+    fi
+}
+
 
 case "$1" in
     remove|disappear)
         for i in #WHATTODO# ; do
+            if [ "$i" = lsr ] ; then
+                dhit_call_update_texmf_config lsr
+            fi
+            if [ "$i" = lsrfull ] ; then
+                dhit_call_update_texmf_config lsrfull
+            fi
             if [ "$i" = map ] ; then
-                # it might happen that tex-common is not installed and
-                # still the postrm of a package is tried to be uninstalled
-                # so don't call update-texmf-config if not present
-                # See bug report #531581
-                if which update-texmf-config >/dev/null; then
-                    update-texmf-config updmap
-                else
-                    echo "update-texmf-config not present: is tex-common installed?" >&2
-                fi
+                dhit_call_update_texmf_config map
             fi
             if [ "$i" = allformats ] ; then
                 for fmt in #FORMATS# ; do
@@ -39,11 +50,7 @@ case "$1" in
                 done
             fi
             if [ "$i" = hyphen ] ; then
-                if which update-texmf-config >/dev/null; then
-                    update-texmf-config language
-                else
-                    echo "update-texmf-config not present: is tex-common installed?" >&2
-                fi
+                dhit_call_update_texmf_config hyphen
             fi
         done
     ;;
@@ -58,4 +65,4 @@ case "$1" in
 esac
 
 # Let vim know that we don't want tabs
-# vim:set expandtab: #
+# vim:set expandtab tabstop=4: #
