@@ -26,12 +26,14 @@ DOLSRFULL=off
 DOHYPHEN=off
 DOUPDMAP=off
 
+# for upgrading purpose we accept language as synonym for hyphen, and
+# updmap for map
 while [ $# -ne 0 ]; do
   case $1 in
-    hyphen)
+    hyphen|language)
       DOHYPHEN=on
       shift;;
-    map)
+    map|updmap)
       DOUPDMAP=on
       shift;;
     lsr)
