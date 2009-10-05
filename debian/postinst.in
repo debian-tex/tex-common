@@ -146,23 +146,26 @@ do_triggers()
     # postinst will often be called for several triggers at once.
     case " $trigger " in
         *" texmf-hyphen "*) 
-         # code from postinst.tex
-            v=$(kpsewhich -var-value TEXMFSYSVAR)
-            c=$(kpsewhich -var-value TEXMFSYSCONFIG)
-            TEXMFVAR="$v"
-            TEXMFCONFIG="$c"
-            export TEXMFVAR TEXMFCONFIG
-            fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
-            X=$(grep "^[[:space:]]*latex[[:space:]]" $fmtcnffile || true)
-            if [ -n "$X" ] ; then
-                # latex is installed so we can actually try to recreate
-                # formats based on language.dat
-                tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-                printf "Building formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
-                if fmtutil-sys --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
+          if dhit_libkpathsea_configured; then
+            if which kpsewhich >/dev/null; then
+              if which fmtutil-sys >/dev/null; then
+                # code from postinst.tex
+                v=$(kpsewhich -var-value TEXMFSYSVAR)
+                c=$(kpsewhich -var-value TEXMFSYSCONFIG)
+                TEXMFVAR="$v"
+                TEXMFCONFIG="$c"
+                export TEXMFVAR TEXMFCONFIG
+                fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
+                X=$(grep "^[[:space:]]*latex[[:space:]]" $fmtcnffile || true)
+                if [ -n "$X" ] ; then
+                  # latex is installed so we can actually try to recreate
+                  # formats based on language.dat
+                  tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+                  printf "Building formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
+                  if fmtutil-sys --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
-                else
+                  else
                     exec >&2
                     echo
                     echo "fmtutil-sys failed. Output has been stored in"
@@ -170,8 +173,11 @@ do_triggers()
                     echo "Please include this file if you report a bug."
                     echo
                     exit 1
+                  fi
                 fi
+              fi
             fi
+          fi
         ;;
     esac
 }
