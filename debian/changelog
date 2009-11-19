@@ -1,3 +1,10 @@
+tex-common (2.01~1) experimental; urgency=low
+
+  * Remove setting of MPXCOMMAND. MetaPost in TeXLive 2009 no longer needs
+    it, and is broken when it is set.
+
+ -- Frank Küster <frank@debian.org>  Thu, 19 Nov 2009 22:32:15 +0100
+
 tex-common (2.00) experimental; urgency=low
 
   * new experimental branch for changes necessary to support TeX Live 2008
