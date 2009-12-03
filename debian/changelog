@@ -4,8 +4,10 @@ tex-common (2.01) experimental; urgency=low
     it, and is broken when it is set. [fk]
   * postinst trigger action: run updmap sys action only if texlive-base
     installed since otherwise updmap-sys will break
+  * bump standards version to 3.8.3
+  * bump depends to << 2009 (there was no 2008 anyway)
 
- -- Norbert Preining <preining@debian.org>  Thu, 03 Dec 2009 22:29:40 +0900
+ -- Norbert Preining <preining@debian.org>  Thu, 03 Dec 2009 22:32:27 +0900
 
 tex-common (2.00) experimental; urgency=low
 
