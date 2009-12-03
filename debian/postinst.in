@@ -119,24 +119,40 @@ do_triggers()
          # code from postinst-tex
          if dhit_libkpathsea_configured; then
              if which updmap-sys >/dev/null; then
-                    tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
-                    printf "Running updmap-sys. This may take some time... "
-                    if updmap-sys > $tempfile 2>&1 ; then
-                        rm -f $tempfile
-                        echo "done."
+                    # we also have to check that texlive-base is installed
+                    # and configured, otherwise we cannot be sure that
+                    # all necessary basic files are present
+                    stat=$(dpkg-query -f='${Status}' texlive-base)
+                    case "$stat" in
+                        "install ok install")
+                            do_it=1
+                            ;;
+                        *)
+                            do_it=0
+                            ;;
+                    esac
+                    if [ "$do_it" = 0 ] ; then
+                        echo "texlive-base is not ready, delaying updmap-sys call" >&2
                     else
-                        exec >&2
-                        echo
-                        echo "updmap-sys failed. Output has been stored in"
-                        echo "$tempfile"
-                        echo "Please include this file if you report a bug."
-                        echo
-                        echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
-                        echo "causes updmap-sys to fail.  Please check for files with extension"
-                        echo ".dpkg-dist or .ucf-dist in this directory" 
-                        echo
-                        exit 1
-    	            fi
+                        tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
+                        printf "Running updmap-sys. This may take some time... "
+                        if updmap-sys > $tempfile 2>&1 ; then
+                            rm -f $tempfile
+                            echo "done."
+                        else
+                            exec >&2
+                            echo
+                            echo "updmap-sys failed. Output has been stored in"
+                            echo "$tempfile"
+                            echo "Please include this file if you report a bug."
+                            echo
+                            echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
+                            echo "causes updmap-sys to fail.  Please check for files with extension"
+                            echo ".dpkg-dist or .ucf-dist in this directory" 
+                            echo
+                            exit 1
+    	                fi
+                    fi
                 fi
             fi
         ;;

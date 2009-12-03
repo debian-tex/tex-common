@@ -1,9 +1,11 @@
-tex-common (2.01~1) experimental; urgency=low
+tex-common (2.01) experimental; urgency=low
 
   * Remove setting of MPXCOMMAND. MetaPost in TeXLive 2009 no longer needs
-    it, and is broken when it is set.
+    it, and is broken when it is set. [fk]
+  * postinst trigger action: run updmap sys action only if texlive-base
+    installed since otherwise updmap-sys will break
 
- -- Frank Küster <frank@debian.org>  Thu, 19 Nov 2009 22:32:15 +0100
+ -- Norbert Preining <preining@debian.org>  Thu, 03 Dec 2009 22:29:40 +0900
 
 tex-common (2.00) experimental; urgency=low
 
