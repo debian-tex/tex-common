@@ -125,7 +125,7 @@ do_triggers()
                     stat=$(dpkg-query -W -f='${Status}' texlive-base)
                     echo "texlive-base status = ...$stat..."
                     case "$stat" in
-                        "install ok install")
+                        "install ok installed")
                             do_it=1
                             ;;
                         *)
