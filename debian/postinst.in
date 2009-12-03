@@ -122,7 +122,8 @@ do_triggers()
                     # we also have to check that texlive-base is installed
                     # and configured, otherwise we cannot be sure that
                     # all necessary basic files are present
-                    stat=$(dpkg-query -f='${Status}' texlive-base)
+                    stat=$(dpkg-query -W -f='${Status}' texlive-base)
+                    echo "texlive-base status = ...$stat..."
                     case "$stat" in
                         "install ok install")
                             do_it=1
