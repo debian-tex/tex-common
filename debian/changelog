@@ -1,3 +1,9 @@
+tex-common (2.02) unstable; urgency=low
+
+  * upload to unstable
+
+ -- Norbert Preining <preining@debian.org>  Wed, 09 Dec 2009 23:44:02 +0900
+
 tex-common (2.01) experimental; urgency=low
 
   * Remove setting of MPXCOMMAND. MetaPost in TeXLive 2009 no longer needs
