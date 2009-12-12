@@ -339,9 +339,26 @@ EOF
     trigger="texmf-lsr texmf-map"
     do_triggers
 
+
     # now call the equivalent of fmtutil-sys --all explicitely
+    # we also have to check that texlive-base is installed
+    # and configured, otherwise we cannot be sure that
+    # all necessary basic files are present
     if dhit_libkpathsea_configured; then
-        dhit_build_format --all
+        stat=$(dpkg-query -W -f='${Status}' texlive-base)
+        case "$stat" in
+        "install ok installed")
+            do_it=1
+            ;;
+        *)
+            do_it=0
+            ;;
+        esac
+        if [ "$do_it" = 0 ] ; then
+            echo "texlive-base is not ready, skipping fmtutil-sys --all call" >&2
+        else
+            dhit_build_format --all
+        fi
     fi
 
 
