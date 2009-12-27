@@ -337,7 +337,7 @@ sub build_line {
 		return($ret);
 	} elsif ($type eq "hyphen") {
 		my ($lang,$pat,@rest) = split(",",$line);
-		my $ret="name=$lang file=$pat\n";
+		my $ret="name=$lang file=$pat";
 		my @synonyms = ();
 		my $lhm;
 		my $rhm;
@@ -358,6 +358,7 @@ sub build_line {
 		if ($#synonyms >= 0) {
 			$ret .= " synonyms=" . join(",",@synonyms);
 		}
+		$ret .= "\n";
 		return($ret);
 	}
 }
