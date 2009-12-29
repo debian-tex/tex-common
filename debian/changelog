@@ -1,3 +1,11 @@
+tex-common (2.05) unstable; urgency=low
+
+  * update language.def based formats in the texmf-hyphen trigger option,
+    otherwise updating hyphenation patterns does not have any effect on
+    those formats (Closes: #NNNNNNN)
+
+ -- Norbert Preining <preining@debian.org>  Tue, 29 Dec 2009 17:04:40 +0900
+
 tex-common (2.04) unstable; urgency=low
 
   * fix bug in dh_installtex that added a rogue newline in hyphenation
