@@ -94,13 +94,13 @@ do_triggers()
                 if which mktexlsr >/dev/null; then
                     tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
                     printf "Running mktexlsr. This may take some time... "
-                    if mktexlsr > $tempfile 2>&1 ; then
+                    if mktexlsr $TEXMFTREES > $tempfile 2>&1 ; then
                         rm -f $tempfile
                         echo "done."
                     else
                         exec >&2
                         echo
-                        echo "mktexlsr failed. Output has been stored in"
+                        echo "mktexlsr $TEXMFTREES failed. Output has been stored in"
                         echo "$tempfile"
                         echo "Please include this file if you report a bug."
                         echo

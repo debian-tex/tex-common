@@ -1,3 +1,9 @@
+tex-common (2.06) unstable; urgency=high
+
+  * call mktexlsr with list of trees in lsr trigger action (Closes: #564457)
+
+ -- Norbert Preining <preining@debian.org>  Tue, 12 Jan 2010 20:32:14 +0900
+
 tex-common (2.05) unstable; urgency=low
 
   * update language.def based formats in the texmf-hyphen trigger option,
