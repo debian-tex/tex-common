@@ -1,10 +1,10 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 # update-fontlang --- Generate updmap.cfg, language.dat, fmtutil.cnf
 #                     from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
 # Copyright (C) 2004, 2005, 2006, 2007 Florent Rougon
-# Copyright (C) 2005, 2006 Norbert Preining
+# Copyright (C) 2005, 2006, 2009 Norbert Preining
 # Copyright (C) 2007 Frank Küster
 #
 # This program is free software; you can redistribute it and/or modify
@@ -26,13 +26,36 @@ progname=$(basename "$0")
 
 SYSPATH_BASE=/var/lib/texmf
 
+HYPHENMODE=nohyphen
+
 if [ "$progname" = "update-language" ] ; then
-    CNFDIR=language.d
+    update-language-dat
+    update-language-def
+    exit 0
+elif [ "$progname" = "update-language-def" ] ; then
+    CNFDIR=hyphen.d
+    HYPHENMODE=etex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
     CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
     EXT="cnf"
-    MEMORY_DIR=/var/lib/tex-common/language-cnf
+    MEMORY_DIR=/var/lib/tex-common/hyphen-cnf
+    PATH_COMPONENT=tex/generic/config
+    SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
+    DEFAULT_OUTPUTFILE_BASENAME=language.def
+    SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+    CC="%"                      # for COMMENTCHAR
+    # in printf, %% is one %
+    PCC="%%"                    # for printfCOMMENTCHAR
+    SHORT_DESC="Generate language.def, the hyphenation configuration file for eTeX and friends"
+elif [ "$progname" = "update-language-dat" ] ; then
+    CNFDIR=hyphen.d
+    HYPHENMODE=latex
+    # System-wide configuration directory
+    SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
+    EXT="cnf"
+    MEMORY_DIR=/var/lib/tex-common/hyphen-cnf
     PATH_COMPONENT=tex/generic/config
     SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=language.dat
@@ -106,6 +129,90 @@ cleanup()
     exit $rc
 }
 
+do_one_hyphen_line()
+{
+    line="$1"
+    case "$line" in
+        ${CC}*) echo "$line" >> "$tempfile" ; return ;;
+        USEFILE*) 
+            set -- $line
+            shift
+            datfile="$1"
+            deffile="$2"
+            if [ "$HYPHENMODE" = "etex" ] ; then
+                if [ -r "$deffile" ] ; then
+                    cat "$deffile" >> "$tempfile"
+                else 
+                    echo "${CC} USEFILE $deffile not found" >> "$tempfile"
+                fi
+            else
+                if [ -r "$datfile" ] ; then
+                    cat "$datfile" >> "$tempfile"
+                else 
+                    echo "${CC} USEFILE $datfile not found" >> "$tempfile"
+                fi
+            fi
+            return
+            ;;
+    esac
+    set -- $line
+    name=""
+    lhm=""
+    rhm=""
+    synonyms=""
+    f=""
+    while [ ! "$1" = "" ] ; do
+        case "$1" in
+            name=*) name="${1#name=}" ;;
+            lefthyphenmin=*) lhm="${1#lefthyphenmin=}" ;;
+            righthyphenmin=*) rhm="${1#righthyphenmin=}" ;;
+            synonyms=*) synonyms="${1#synonyms=}" ;;
+            file=*) f="${1#file=}" ;;
+            *) echo "Unknown AddHypen directive ==$line==!" >&2 ; return ;;
+        esac
+        shift
+    done
+    if [ "$name$lhm$rhm$synonyms$f" = "" ] ; then
+        return
+    fi
+    if [ ! "$lhm$rhm$synonyms$f" = "" ] ; then
+        if [ "$name" = "" ] ; then
+            echo "the line $line does not contain a name= directive, ignored!" >&2
+            return
+        fi
+    fi
+    if [ ! "$name$lhm$rhm$synonyms" = "" ] ; then
+        if [ "$f" = "" ] ; then
+            echo "the line $line does not contain a file= directive, ignored!" >&2
+            return
+        fi
+    fi
+    if [ "$HYPHENMODE" = "etex" ] ; then
+        printf '\\'"addlanguage{$name}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
+    else
+        echo "$name $f" >> "$tempfile"
+    fi
+    if [ ! "$synonyms" = "" ] ; then
+        {
+            IFS=",$IFS"
+            for s in $synonyms ; do
+                if [ "$HYPHENMODE" = "etex" ] ; then
+                    printf '\\'"addlanguage{$s}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
+                else
+                    echo "=$s" >> "$tempfile"
+                fi
+            done
+        }
+    fi
+}
+
+include_hyphen_file_core()
+{
+    file="$1"
+    cat "$1" | while read line ; do
+        do_one_hyphen_line "$line"
+    done
+}
 
 # include_file <file path>
 include_file()
@@ -113,7 +220,11 @@ include_file()
     file="$1"
 
     printf "\n${PCC}${PCC}${PCC} From file: $file\n" >>"$tempfile"
-    cat "$file" >>"$tempfile"
+    if [ $HYPHENMODE = "nohyphen" ] ; then
+        cat "$file" >>"$tempfile"
+    else
+        include_hyphen_file_core "$file"
+    fi
     echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
     case "$file" in
       */10texlive-latex-base.cnf)
@@ -621,7 +732,23 @@ tempfile="${output_file}.new"
 confdirs="${SYSWIDE_CONFDIR}/"
 [ $syswide_mode = 0 ] && confdirs="${confdirs}\n#    ${conf_dir}/"
 
-if ! printf "\
+if ! printf "" > "$tempfile" ; then
+    echo "$progname: cannot write to the temporary file '$tempfile'" >&2
+    exit 1
+fi
+
+#
+# we have to make sure that language.def starts out the right way!
+if [ "$HYPHENMODE" = "etex" ] ; then
+    printf "\
+${PCC}${PCC} e-TeX V2.0;2
+
+${PCC} Note: the first line of this file must match the corresponding line
+${PCC} in \"etex.src\" and \"etexdefs.lib\", otherwise fallback will be used.
+\n" >> "$tempfile"
+fi
+
+printf "\
 ${PCC}${PCC}${PCC} This file was automatically generated by ${progname}.
 ${PCC}
 ${PCC} Please do not edit it directly. If you want to add or change
@@ -631,10 +758,7 @@ ${PCC}    $confdirs
 ${PCC}
 ${PCC} and invoke ${progname}.
 ${PCC}
-${PCC}${PCC}${PCC}\n" >"$tempfile"; then
-    echo "$progname: cannot write to the temporary file '$tempfile'" >&2
-    exit 1
-fi
+${PCC}${PCC}${PCC}\n" >> "$tempfile"
 
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
@@ -644,6 +768,16 @@ if [ $syswide_mode = 1 ]; then
 else
     find "$SYSWIDE_CONFDIR" "$conf_dir" -maxdepth 1 -type f -name '*.'${EXT}
 fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
+
+#
+# for language.def we have to select the right language at the end
+if [ "$HYPHENMODE" = "etex" ] ; then
+    printf "
+${PCC}${PCC}${PCC} No changes may be made beyond this point.
+
+\uselanguage {USenglish}             ${PCC}${PCC}${PCC} This MUST be the last line of the file.
+" >> "$tempfile"
+fi
 
 # This is atomic.
 mv "$tempfile" "$output_file"
@@ -673,4 +807,4 @@ if [ $quiet = 0 ]; then
     fi
 fi
 
-# vim:set expandtab: #
+# vim:set expandtab tabstop=4: #

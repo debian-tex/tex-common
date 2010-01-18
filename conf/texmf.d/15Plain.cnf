@@ -11,13 +11,17 @@ WEB2C = $TEXMF/web2c
 
 % Plain TeX.  Have the command tex check all directories as a last
 % resort, we may have plain-compatible stuff anywhere.
-TEXINPUTS.tex = .;$TEXMF/tex/{plain,generic,}//
+TEXINPUTS.tex           = .;$TEXMF/tex/{plain,generic,}//
+
+% Fontinst needs to read afm files.
+TEXINPUTS.fontinst      = .;$TEXMF/{tex,fonts/afm}//
+
 
 % Other plain-based formats.
-TEXINPUTS.amstex = .;$TEXMF/tex/{amstex,plain,generic,}//
-TEXINPUTS.csplain = .;$TEXMF/tex/{csplain,plain,generic,}//
-TEXINPUTS.eplain  = .;$TEXMF/tex/{eplain,plain,generic,}//
-TEXINPUTS.ftex = .;$TEXMF/tex/{formate,plain,generic,}//
-TEXINPUTS.mex = .;$TEXMF/tex/{mex,plain,generic,}//
-TEXINPUTS.texinfo = .;$TEXMF/tex/{texinfo,plain,generic,}//
+TEXINPUTS.amstex        = .;$TEXMF/tex/{amstex,plain,generic,}//
+TEXINPUTS.csplain       = .;$TEXMF/tex/{csplain,plain,generic,}//
+TEXINPUTS.eplain        = .;$TEXMF/tex/{eplain,plain,generic,}//
+TEXINPUTS.ftex          = .;$TEXMF/tex/{formate,plain,generic,}//
+TEXINPUTS.mex           = .;$TEXMF/tex/{mex,plain,generic,}//
+TEXINPUTS.texinfo       = .;$TEXMF/tex/{texinfo,plain,generic,}//
 

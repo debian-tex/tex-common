@@ -13,77 +13,79 @@
 # So please be careful if you add stuff here!
 #
 
-dhit_build_format ()
+# it might happen that tex-common is not installed and
+# still the postrm of a package is tried to be uninstalled
+# so don't call update-texmf-config if not present
+# See bug report #531581
+dhit_call_update_texmf_config ()
 {
-
-    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-    printf "Building format(s) $1 $(basename "$2"). This may take some time..."
-    if fmtutil-sys "$1" "$2" > $tempfile 2>&1 ; then
-        rm -f $tempfile
-        echo " done."
+    if which update-texmf-config >/dev/null; then
+        update-texmf-config $*
     else
-        echo
-        echo "fmtutil-sys failed. Output has been stored in"
-        echo "$tempfile"
-        echo "Please include this file if you report a bug."
-        echo
-        exit 1
+        echo "update-texmf-config not present: is tex-common installed?" >&2
     fi
 }
 
-dhit_build_hyphen_format_if_format_exists ()
+dhit_check_run_without_errors ()
 {
-    v=$(kpsewhich -var-value TEXMFSYSVAR)
-    c=$(kpsewhich -var-value TEXMFSYSCONFIG)
-    TEXMFVAR="$v"
-    TEXMFCONFIG="$c"
-    export TEXMFVAR TEXMFCONFIG
-    fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
-    X=$(grep "^[[:space:]]*$1[[:space:]]" "$fmtcnffile" || true)
-    if [ -n "$X" ] ; then
-        dhit_build_format --byhyphen "$2"
+    silent=0
+    if [ "$1" = "-silent" ] ; then
+        silent=1
+        shift
     fi
+    if which "$1" >/dev/null; then
+        tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
+        if [ $silent = 0 ] ; then
+            printf "Running '$*'.\nThis may take some time..."
+        fi
+        set +e
+        if "$@" > $tempfile 2>&1 ; then
+            rm -f $tempfile
+            [ $silent = 0 ] && echo " done."
+        else
+            echo
+            echo "$* failed. Output has been stored in"
+            echo "$tempfile"
+            echo "If tex-common is not configured you can ignore this error" \
+                 "message!"
+            echo "Otherwise, please include this file if you report a bug."
+            echo
+        fi
+        set -e
+    fi
+
+    return 0
 }
 
 
 case "$1" in
     remove|disappear)
+        # It doesn't hurt to call all of them.
+        dhit_check_run_without_errors -silent update-updmap --quiet
+        dhit_check_run_without_errors -silent update-language
+        dhit_check_run_without_errors -silent update-fmtutil
         for i in #WHATTODO# ; do
+            if [ "$i" = lsr ] ; then
+                dhit_call_update_texmf_config lsr
+            fi
+            if [ "$i" = lsrfull ] ; then
+                dhit_call_update_texmf_config lsrfull
+            fi
             if [ "$i" = map ] ; then
-                # it might happen that tex-common is not installed and
-                # still the postrm of a package is tried to be uninstalled
-                # so don't call update-texmf-config if not present
-                # See bug report #531581
-                if which update-texmf-config >/dev/null; then
-                    update-texmf-config updmap
-                else
-                    echo "update-texmf-config not present: is tex-common installed?" >&2
-                fi
-                #dhit_libkpathsea_configured && \
-                #    dhit_check_run_without_errors updmap-sys
+                dhit_call_update_texmf_config map
             fi
             if [ "$i" = allformats ] ; then
                 for fmt in #FORMATS# ; do
                     rm -f /var/lib/texmf/web2c/$fmt.*
                 done
-                dhit_check_run_without_errors fmtutil-sys --all
             fi
             if [ "$i" = format ] ; then
                 for fmt in #FORMATS# ; do
                     rm -f /var/lib/texmf/web2c/$fmt.*
                 done
             fi
-            if [ "$i" = language ] ; then
-                if which update-texmf-config >/dev/null; then
-                    update-texmf-config language
-                else
-                    echo "update-texmf-config not present: is tex-common installed?" >&2
-                fi
-                #if dhit_libkpathsea_configured && \
-                #    which fmtutil-sys >/dev/null; then
-                #    dhit_build_hyphen_format_if_format_exists \
-                #        latex $(kpsewhich language.dat)
-                #fi
+            if [ "$i" = hyphen ] ; then
+                dhit_call_update_texmf_config hyphen
             fi
         done
     ;;
@@ -98,4 +100,4 @@ case "$1" in
 esac
 
 # Let vim know that we don't want tabs
-# vim:set expandtab: #
+# vim:set expandtab tabstop=4: #

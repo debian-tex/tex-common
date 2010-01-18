@@ -9,6 +9,23 @@ engine = unset
 
 %  Part 2: Non-path options.
 
+% If this option is set to true, `tex a.b' will look first for a.b.tex
+% (within each path element), and then for a.b, i.e., we try standard
+% extensions first.  If this is false, we first look for a.b and then
+% a.b.tex, i.e., we try the name as-is first.
+%
+% Both names are always tried; the difference is the order in which they
+% are tried.  The setting applies to all searches, not just .tex.
+%
+% This setting only affects names being looked up which *already* have
+% an extension.  A name without an extension (e.g., `tex story') will
+% always have an extension added first.
+%
+% The default is true, because we already avoid adding the standard
+% extension(s) in the usual cases.  E.g., babel.sty will only look for
+% babel.sty, not babel.sty.tex, regardless of this setting.
+try_std_extension_first = t
+
 % Write .log/.dvi/etc. files here, if the current directory is unwritable.
 % TEXMFOUTPUT = /tmp
 
@@ -23,8 +40,27 @@ MISSFONT_LOG = missfont.log
 % To suppress nothing, use TEX_HUSH = none or do not set the variable at all.
 TEX_HUSH = none
 
-% Enable system commands via \write18{...}?
-shell_escape = f
+% Enable system commands via \write18{...}.  When enabled fully (set to
+% 1), obviously insecure.  When enabled partially (set to p), only the
+% commands listed in shell_escape_commands are allowed.  Although this
+% is not fully secure either, it is much better, and so useful that we
+% enable it for everything but bare tex.
+shell_escape = p
+
+% Special: convert is the standard command name for ImageMagick, but it
+% is also the name of a dangerous filesystem-changing command on
+% Windows.  So enable imgconvert (used in w32tex), but not convert.
+
+% No spaces in this command list.
+shell_escape_commands = \
+bibtex,bibtex8,dvips,epstopdf,epspdf,etex,fc-match,\
+imgconvert,\
+kpsewhich,makeindex,mkgrkindex,\
+pdfluatex,ps2pdf,ps4pdf,pstopdf,pygmentize,\
+rpdfcrop,texindy,xindy,ulqda\
+
+% plain TeX should remain unenhanced.
+shell_escape.tex = f
 
 % Allow TeX \openin, \openout, or \input on filenames starting with `.'
 % (e.g., .rhosts) or outside the current tree (e.g., /etc/passwd)?
@@ -35,13 +71,14 @@ shell_escape = f
 openout_any = p
 openin_any = a
 
-% Disable search on multiple suffixes filenames. In many case, when `foo.bar'
-% is looked for, you do not want to look for `foo.bar.tex' before. This flag
-% disables searching for standard suffixes if the file name has already an
-% extension of 3 characters. Default value is true (old behaviour).
-allow_multiple_suffixes =                       f
+%% Deprecated option
+%% % Disable search on multiple suffixes filenames. In many case, when `foo.bar'
+%% % is looked for, you do not want to look for `foo.bar.tex' before. This flag
+%% % disables searching for standard suffixes if the file name has already an
+%% % extension of 3 characters. Default value is true (old behaviour).
+%% allow_multiple_suffixes =                       f
 
-% Allow TeX, MF, and MP to parse the first line of an input file for
+% Allow TeX and MF to parse the first line of an input file for
 % the %&format construct.
 parse_first_line = t
 
@@ -71,13 +108,17 @@ file_line_error_style = f
 % MKOCP = 0
 % MKOFM = 0
 
-% What MetaPost runs to make MPX files.  This is passed an option -troff
-% if MP is in troff mode.  Set to `0' to disable this feature.
-MPXCOMMAND = makempx
-
 % Used by makempx to run TeX.  We use "etex" because MetaPost is
 % expecting DVI, and not "tex" because we want first line parsing.
 TEX = etex
+
+% These variables specify the external program called for the
+% interactive `e' option.  %d is replaced by the line number and %s by
+% the current filename.  The default is specified at compile-time, and
+% we let that stay in place since different platforms like different values.
+%TEXEDIT = vi +%d "%s"
+%MFEDIT = ${TEXEDIT}
+%MPEDIT = ${TEXEDIT}
 
 
 %  Part 3: Array and other sizes for TeX (and Metafont and MetaPost).
@@ -103,7 +144,7 @@ TEX = etex
 % For some xy-pic samples, you may need as much as 700000 words of memory.
 % For the vast majority of documents, 60000 or less will do.
 % 
-main_memory = 1500000 % words of inimemory available; also applies to inimf&mp
+main_memory = 3000000 % words of inimemory available; also applies to inimf&mp
 extra_mem_top = 0     % extra high memory for chars, tokens, etc.
 extra_mem_bot = 0     % extra low memory for boxes, glue, breakpoints, etc.
 
@@ -116,10 +157,10 @@ main_memory.lambda = 2200000
 
 % Words of font info for TeX (total size of all TFM files, approximately). 
 % Must be >= 20000 and <= 4000000 (without tex.ch changes).
-font_mem_size = 1200000
+font_mem_size = 3000000
 
-% Total number of fonts. Must be >= 50 and <= 2000 (without tex.ch changes).
-font_max = 2000
+% Total number of fonts. Must be >= 50 and <= 9000 (without tex.ch changes).
+font_max = 9000
 
 % Extra space for the hash table of control sequences (which allows 10K
 % names as distributed).
@@ -132,7 +173,7 @@ pool_size = 1250000
 % 25000 less than pool_size, but doesn't need to be nearly that large.
 string_vacancies = 90000
 % Maximum number of strings.
-max_strings = 100000
+max_strings = 500000
 % min pool space left after loading .fmt
 pool_free = 47500
 
@@ -147,25 +188,25 @@ buf_size = 200000
 % for all known free hyphenation patterns to be loaded simultaneously
 % (as TeX Live does).
 % 
-trie_size = 400000
+trie_size = 700000
 
-hyph_size = 8191        % prime number of hyphenation exceptions, >610, <32767.
-                        % http://primes.utm.edu/curios/page.php/8191.html
-nest_size = 500		% simultaneous semantic levels (e.g., groups)
-max_in_open = 15	% simultaneous input files and error insertions
-param_size = 10000	% simultaneous macro parameters
-save_size = 5000	% for saving values outside current group
-stack_size = 5000	% simultaneous input sources
+hyph_size = 8191         % prime number of hyphenation exceptions, >610, <32767.
+                         % http://primes.utm.edu/curios/page.php/8191.html
+nest_size = 500		 % simultaneous semantic levels (e.g., groups)
+max_in_open = 15	 % simultaneous input files and error insertions
++                        % also applies to MetaPost
+param_size = 10000	 % simultaneous macro parameters
+save_size = 50000	 % for saving values outside current group
+stack_size = 5000	 % simultaneous input sources
 
 % These are Omega-specific.
-ocp_buf_size = 500000	% character buffers for ocp filters.
-ocp_stack_size = 10000	% stacks for ocp computations.
-ocp_list_size = 1000	% control for multiple ocps.
+ocp_buf_size = 500000	 % character buffers for ocp filters.
+ocp_stack_size = 10000	 % stacks for ocp computations.
+ocp_list_size = 1000	 % control for multiple ocps.
 
 % Parameter specific to MetaPost.
-% Maximum number of knots between breakpoints of a path.
-% Set to 2000 by default.
-% path_size.mpost = 10000
+% Size of the hash table for control sequences, default 65536.
+% hash_size.mpost = 65536
 
 % These work best if they are the same as the I/O buffer size, but it
 % doesn't matter much.  Must be a multiple of 8.

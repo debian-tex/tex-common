@@ -1,2 +1,4 @@
-interest texmf-language
-interest texmf-updmap
+interest texmf-hyphen
+interest texmf-map
+interest texmf-lsr
+interest texmf-lsrfull

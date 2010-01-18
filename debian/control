@@ -5,7 +5,7 @@ Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, C.M. Connelly <cmc@debian.org>, Atsuhito KOHDA <kohda@debian.org>, Frank Küster <frank@debian.org>, Florent Rougon <frn@debian.org>, Norbert Preining <preining@debian.org>
 Build-Depends: debhelper (>= 5.0.0), po-debconf
 Build-Depends-Indep: debiandoc-sgml, eperl
-Standards-Version: 3.8.1
+Standards-Version: 3.8.3
 Vcs-Svn: svn://svn.debian.org/svn/debian-tex/tex-common/trunk
 Vcs-Browser: http://svn.debian.org/wsvn/debian-tex/tex-common/trunk/
 
@@ -14,7 +14,7 @@ Architecture: all
 Depends: ${misc:Depends}, ucf, debconf (>= 1.4.69) | cdebconf (>= 0.39), dpkg (>= 1.14.18)
 Suggests: debhelper (>= 7.0.8)
 Replaces: tetex-base (<= 3.0-10)
-Conflicts: tetex-base (<< 2007)
+Conflicts: tetex-base (<< 2007), texlive-common (<< 2009)
 Description: common infrastructure for building and installing TeX
  This package contains a number of scripts and common configuration
  files that are needed to install a TeX System.

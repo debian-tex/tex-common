@@ -21,16 +21,27 @@
 # Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301 USA.
 
-DOLANGUAGE=off
+DOLSR=off
+DOLSRFULL=off
+DOHYPHEN=off
 DOUPDMAP=off
 
+# for upgrading purpose we accept language as synonym for hyphen, and
+# updmap for map
 while [ $# -ne 0 ]; do
   case $1 in
-    language)
-      DOLANGUAGE=on
+    hyphen|language)
+      DOHYPHEN=on
       shift;;
-    updmap)
+    map|updmap)
       DOUPDMAP=on
+      shift;;
+    lsr)
+      DOLSR=on
+      shift;;
+    lsrfull)
+      DOLSR=off
+      DOLSRFULL=on
       shift;;
     *)
       echo "unknown option: $1"
@@ -39,16 +50,17 @@ while [ $# -ne 0 ]; do
   esac
 done
 
- 
-if [ $DOLANGUAGE = on ] ; then
-  # done in the trigger action of tex-common
-  # update-language
-  dpkg-trigger texmf-language
+if [ $DOLSR = on ] ; then
+  dpkg-trigger texmf-lsr
+fi
+if [ $DOLSRFULL = on ] ; then
+  dpkg-trigger texmf-lsrfull
+fi
+if [ $DOHYPHEN = on ] ; then
+  dpkg-trigger texmf-hyphen
 fi
 if [ $DOUPDMAP = on ] ; then
-  # done in the trigger action of tex-common
-  # update-updmap
-  dpkg-trigger texmf-updmap
+  dpkg-trigger texmf-map
 fi
 
 # vim:set expandtab tabstop=2: #
