@@ -1,3 +1,12 @@
+tex-common (2.07) unstable; urgency=low
+
+  * UNRELEASED
+  * reword the language.{dat,def} trigger action's message to include
+    the name of the base format (Closes: #566915)
+  * convert some files to UTF8
+
+ -- Norbert Preining <preining@debian.org>  Wed, 27 Jan 2010 09:08:46 +0900
+
 tex-common (2.06) unstable; urgency=high
 
   * call mktexlsr with list of trees in lsr trigger action (Closes: #564457)

@@ -1,6 +1,6 @@
 <:
 # Copyright (C) 1999, 2000, 01, 02 by Davide Giovanni Maria Salvetti <salve@debian.org>.
-# Copyright (C) 2004, 05, 06 by Frank Küster <frank@debian.org>.
+# Copyright (C) 2004, 05, 06 by Frank KÃ¼ster <frank@debian.org>.
 # Copyright (C) 2006 by Julian Gilbey <jdg@debian.org>.
 # $Id$
 # this list is from dpkg-1.10.9/include/dpkg.h.in:

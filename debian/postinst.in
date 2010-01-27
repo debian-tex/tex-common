@@ -177,7 +177,7 @@ do_triggers()
                   # latex is installed so we can actually try to recreate
                   # formats based on language.dat
                   tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-                  printf "Building formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
+                  printf "Building latex-based formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
                   if fmtutil-sys --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
@@ -196,7 +196,7 @@ do_triggers()
                   # tex is installed so we can actually try to recreate
                   # formats based on language.def
                   tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-                  printf "Building formats --byhyphen $(kpsewhich language.def).\n\tThis may take some time... "
+                  printf "Building e-tex based formats --byhyphen $(kpsewhich language.def).\n\tThis may take some time... "
                   if fmtutil-sys --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
