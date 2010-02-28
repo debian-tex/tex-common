@@ -122,7 +122,12 @@ do_triggers()
                     # we also have to check that texlive-base is installed
                     # and configured, otherwise we cannot be sure that
                     # all necessary basic files are present
-                    stat=$(dpkg-query -W -f='${Status}' texlive-base)
+                    #
+                    # dpkg-query has two defects wrt not existing packages
+                    # - it is noisy to stderr
+                    # - it returns 1
+                    # so shut both errors up
+                    stat=$(dpkg-query -W -f='${Status}' texlive-base 2>/dev/null || true)
                     case "$stat" in
                         "install ok installed")
                             do_it=1
@@ -364,7 +369,8 @@ EOF
     # and configured, otherwise we cannot be sure that
     # all necessary basic files are present
     if dhit_libkpathsea_configured; then
-        stat=$(dpkg-query -W -f='${Status}' texlive-base)
+        # see above for information on dpkg-query usage
+        stat=$(dpkg-query -W -f='${Status}' texlive-base  2>/dev/null || true)
         case "$stat" in
         "install ok installed")
             do_it=1

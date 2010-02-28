@@ -1,11 +1,13 @@
-tex-common (2.07) unstable; urgency=low
+tex-common (2.07) unstable; urgency=high
 
-  * UNRELEASED
   * reword the language.{dat,def} trigger action's message to include
     the name of the base format (Closes: #566915)
   * convert some files to UTF8
+  * work around an under-specification of dpkg-query that makes the calls
+    to it in the configure script break configuration, and thus creates
+    FTBFS of unrelated packages (Closes: #571334)
 
- -- Norbert Preining <preining@debian.org>  Wed, 27 Jan 2010 09:08:46 +0900
+ -- Norbert Preining <preining@debian.org>  Sun, 28 Feb 2010 13:05:40 +0900
 
 tex-common (2.06) unstable; urgency=high
 
