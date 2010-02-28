@@ -6,8 +6,9 @@ tex-common (2.07) unstable; urgency=high
   * work around an under-specification of dpkg-query that makes the calls
     to it in the configure script break configuration, and thus creates
     FTBFS of unrelated packages (Closes: #571334)
+  * bump standards version to 3.8.4, no changes necessary
 
- -- Norbert Preining <preining@debian.org>  Sun, 28 Feb 2010 13:05:40 +0900
+ -- Norbert Preining <preining@debian.org>  Sun, 28 Feb 2010 13:13:35 +0900
 
 tex-common (2.06) unstable; urgency=high
 
