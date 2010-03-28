@@ -26,7 +26,7 @@ $LDAT_PATTERNS=<<EOL;
 EOL
 $TEXMF_CNF="/etc/texmf/texmf.cnf";
 @TEXMF_PARTS=qw(05TeXMF 15Plain 45TeXinputs 55Fonts 65BibTeX 75DviPS
-		85Misc 90TeXDoc 95NonPath);
+		80DVIPDFMx 85Misc 90TeXDoc 95NonPath);
 @TEXMF_PARTS_FULLNAME = map { "texmf.d/$_.cnf"; } @TEXMF_PARTS;
 $TEX_COMMON_UCF_FILES="@TEXMF_PARTS_FULLNAME updmap.d/00updmap.cfg";
 #$confstatedir="/var/lib/tetex";
