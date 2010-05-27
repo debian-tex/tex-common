@@ -4,9 +4,8 @@ tex-common (2.08) unstable; urgency=low
   * include again 80DVIPDFMx.cnf and replace dvipdfmx (if it is still there)
     to make it search for cmaps (Closes: #572921)
     (patch by YOSHINO Yoshihito)
-  * use proper comment chars in 95NonPath.cnf (Closes: #583362)
 
- -- Norbert Preining <preining@debian.org>  Thu, 27 May 2010 20:03:49 +0900
+ -- Norbert Preining <preining@debian.org>  Fri, 28 May 2010 03:48:11 +0900
 
 tex-common (2.07) unstable; urgency=high
 
