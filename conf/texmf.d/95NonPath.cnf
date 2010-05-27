@@ -1,8 +1,8 @@
 
-# $progname: kpathsea v. 3.5.3 or later overwrites this at runtime. To
-# avoid empty expansions from binaries linked against an earlier
-# version of the library, we set $progname and $engine to something
-# non-empty:
+% $progname: kpathsea v. 3.5.3 or later overwrites this at runtime. To
+% avoid empty expansions from binaries linked against an earlier
+% version of the library, we set $progname and $engine to something
+% non-empty:
 progname = unset
 engine = unset
 
