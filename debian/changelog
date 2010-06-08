@@ -1,11 +1,11 @@
 tex-common (2.08) unstable; urgency=low
 
-  * UNRELEASED
   * include again 80DVIPDFMx.cnf and replace dvipdfmx (if it is still there)
     to make it search for cmaps (Closes: #572921)
     (patch by YOSHINO Yoshihito)
+  * put TeX-on-Debian into doc-base section Typesetting (Closes: #536343)
 
- -- Norbert Preining <preining@debian.org>  Fri, 28 May 2010 03:48:11 +0900
+ -- Norbert Preining <preining@debian.org>  Wed, 09 Jun 2010 01:32:21 +0900
 
 tex-common (2.07) unstable; urgency=high
 
