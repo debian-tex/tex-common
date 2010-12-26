@@ -141,9 +141,31 @@ do_triggers()
                     else
                         tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
                         printf "Running updmap-sys. This may take some time... "
-                        if updmap-sys > $tempfile 2>&1 ; then
+                        # call updmap with --nohash so that no ls-R files
+                        # are created in /usr/local/share/texmf/
+                        # see bug report #607857
+                        # instead of that we call mktexlsr /var/lib/texmf
+                        # afterwards. This can be done without checks as
+                        # we know that dhit_libkpathsea_configured and
+                        # since mktexlsr and updmap are in the same package
+                        # and we checked for updmap already
+                        if updmap-sys --nohash > $tempfile 2>&1 ; then
                             rm -f $tempfile
                             echo "done."
+                            tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+                            printf "Running mktexlsr /var/lib/texmf ... "
+                            if mktexlsr /var/lib/texmf > $tempfile 2>&1 ; then
+                                rm -f $tempfile
+                                echo "done."
+                            else
+                                exec >&2
+                                echo
+                                echo "mktexlsr /var/lib/texmf failed. Output has been stored in"
+                                echo "$tempfile"
+                                echo "Please include this file if you report a bug."
+                                echo
+                                exit 1
+                            fi
                         else
                             exec >&2
                             echo
