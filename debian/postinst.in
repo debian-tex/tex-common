@@ -7,8 +7,6 @@
 #include variables
 <:=@COPYRIGHT:>//
 
-TEXMFTREES="/usr/share/texmf /var/lib/texmf"
-FULLTEXMFTREES="$TEXMFTREES /usr/share/texmf-texlive"
 
 ## Define static variables we need
 UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
@@ -18,6 +16,9 @@ UCF="ucf --debconf-ok"
 OLD_LDAT=/etc/texmf/language.dat
 POSTINST_MOVE_EXT="<:=$POSTINST_MOVE_EXT:>"
 FONTCACHE_PERMS=<:=$FONTCACHE_PERMS:>
+
+TEXMFTREES="/usr/share/texmf $TEXMFSYSVARDIR"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texmf-texlive"
 
 
 umask 022
@@ -144,7 +145,7 @@ do_triggers()
                         # call updmap with --nohash so that no ls-R files
                         # are created in /usr/local/share/texmf/
                         # see bug report #607857
-                        # instead of that we call mktexlsr /var/lib/texmf
+                        # instead of that we call mktexlsr $TEXMFSYSVARDIR 
                         # afterwards. This can be done without checks as
                         # we know that dhit_libkpathsea_configured and
                         # since mktexlsr and updmap are in the same package
@@ -153,14 +154,14 @@ do_triggers()
                             rm -f $tempfile
                             echo "done."
                             tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
-                            printf "Running mktexlsr /var/lib/texmf ... "
-                            if mktexlsr /var/lib/texmf > $tempfile 2>&1 ; then
+                            printf "Running mktexlsr $TEXMFSYSVARDIR ... "
+                            if mktexlsr $TEXMFSYSVARDIR > $tempfile 2>&1 ; then
                                 rm -f $tempfile
                                 echo "done."
                             else
                                 exec >&2
                                 echo
-                                echo "mktexlsr /var/lib/texmf failed. Output has been stored in"
+                                echo "mktexlsr $TEXMFSYSVARDIR failed. Output has been stored in"
                                 echo "$tempfile"
                                 echo "Please include this file if you report a bug."
                                 echo
