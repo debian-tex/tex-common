@@ -1,4 +1,4 @@
-tex-common (2.09) unstable; urgency=low
+tex-common (2.09) unstable; urgency=high
 
   * fix creation of ls-R files in /usr/local/share/texmf by updmap-sys
     which is called in the trigger section of tex-common's postinst.
