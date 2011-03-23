@@ -1,3 +1,11 @@
+tex-common (2.10) unstable; urgency=low
+
+  * generated postrm code does not remove metapost format since the engine
+    was not rewritten, fix that with a special case in dh_installtex 
+    (needs rebuild of texlive-metapost, context) (Closes: #619358)
+
+ -- Norbert Preining <preining@debian.org>  Wed, 23 Mar 2011 15:20:39 +0900
+
 tex-common (2.09) unstable; urgency=high
 
   * fix creation of ls-R files in /usr/local/share/texmf by updmap-sys
