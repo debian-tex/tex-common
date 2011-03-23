@@ -45,19 +45,11 @@ TEX_HUSH = none
 % commands listed in shell_escape_commands are allowed.  Although this
 % is not fully secure either, it is much better, and so useful that we
 % enable it for everything but bare tex.
-shell_escape = p
-
-% Special: convert is the standard command name for ImageMagick, but it
-% is also the name of a dangerous filesystem-changing command on
-% Windows.  So enable imgconvert (used in w32tex), but not convert.
+shell_escape = f
 
 % No spaces in this command list.
 shell_escape_commands = \
-bibtex,bibtex8,dvips,epstopdf,epspdf,etex,fc-match,\
-imgconvert,\
-kpsewhich,makeindex,mkgrkindex,\
-pdfluatex,ps2pdf,ps4pdf,pstopdf,pygmentize,\
-rpdfcrop,texindy,xindy,ulqda\
+false
 
 % plain TeX should remain unenhanced.
 shell_escape.tex = f

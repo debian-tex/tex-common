@@ -1,12 +1,13 @@
 tex-common (2.09) unstable; urgency=low
 
-  * UNRELEASED
   * fix creation of ls-R files in /usr/local/share/texmf by updmap-sys
     which is called in the trigger section of tex-common's postinst.
     This fixes a policy violation. (Closes: #607857)
   * update Danish translation (Closes: #608423)
+  * disable shell escape completely (fix for CVE-2011-1400, DSA-2198-1)
+  * bump standards version to 3.9.1, no changes necessary
 
- -- Norbert Preining <preining@debian.org>  Sun, 02 Jan 2011 16:57:39 +0900
+ -- Norbert Preining <preining@debian.org>  Wed, 23 Mar 2011 09:42:02 +0900
 
 tex-common (2.08) unstable; urgency=low
 
