@@ -1,3 +1,9 @@
+tex-common (2.08.1) stable-security; urgency=high
+
+  * disable shell_escape completely
+
+ -- Norbert Preining <preining@debian.org>  Fri, 18 Feb 2011 02:12:16 +0900
+
 tex-common (2.08) unstable; urgency=low
 
   * include again 80DVIPDFMx.cnf and replace dvipdfmx (if it is still there)
