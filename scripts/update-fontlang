@@ -775,7 +775,7 @@ if [ "$HYPHENMODE" = "etex" ] ; then
     printf "
 ${PCC}${PCC}${PCC} No changes may be made beyond this point.
 
-\uselanguage {USenglish}             ${PCC}${PCC}${PCC} This MUST be the last line of the file.
+\\\\uselanguage {USenglish}             ${PCC}${PCC}${PCC} This MUST be the last line of the file.
 " >> "$tempfile"
 fi
 
