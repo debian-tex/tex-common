@@ -4,12 +4,13 @@ tex-common (2.10) unstable; urgency=low
   * generated postrm code does not remove metapost format since the engine
     was not rewritten, fix that with a special case in dh_installtex 
     (needs rebuild of texlive-metapost, context) (Closes: #619358)
+  * bump standards version to 3.9.2, no changes needed
 
   [ Frank Küster ]
   * double-escape backslash in a printf string, thanks to Steve Langasek
     <vorlon@debian.org> (closes: #622938)
 
- -- Frank Küster <frank@debian.org>  Tue, 24 May 2011 12:21:33 +0200
+ -- Norbert Preining <preining@debian.org>  Sun, 26 Jun 2011 09:00:08 +0900
 
 tex-common (2.09) unstable; urgency=high
 
