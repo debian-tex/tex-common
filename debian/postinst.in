@@ -59,9 +59,7 @@ run_mtxrun_if_possible()
                     do_it=0
                     ;;
             esac
-            if [ "$do_it" = 0 ] ; then
-                : don't do anything here, we do not want to be noisy
-            else
+            if [ "$do_it" = 1 ] ; then
                 tempfile=$(mktemp -p /tmp mtxrun.XXXXXXXX)
                 printf "Running mtxrun --generate. This may take some time... "
                 if mtxrun --generate > $tempfile 2>&1 ; then
