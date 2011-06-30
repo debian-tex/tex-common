@@ -1,3 +1,11 @@
+tex-common (2.11~1) unstable; urgency=low
+
+  * UNRELEASED
+  * add calls to mtxrun --generate to the mktexlsr trigger action
+    in case context is installed
+
+ -- Norbert Preining <preining@debian.org>  Fri, 01 Jul 2011 08:23:17 +0900
+
 tex-common (2.10) unstable; urgency=low
 
   [ Norbert Preining ]

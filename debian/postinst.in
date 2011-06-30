@@ -36,6 +36,51 @@ db_version 2.0
 # <:open(FUNCTIONS,'debian/common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
 # <:=@FUNCTIONS:>//
 
+
+run_mtxrun_if_possible()
+{
+    # code from postinst-tex
+    if dhit_libkpathsea_configured; then
+        if which mtxrun >/dev/null; then
+            # we also have to check that texlive-base is installed
+            # and configured, otherwise we cannot be sure that
+            # all necessary basic files are present
+            #
+            # dpkg-query has two defects wrt not existing packages
+            # - it is noisy to stderr
+            # - it returns 1
+            # so shut both errors up
+            stat=$(dpkg-query -W -f='${Status}' context 2>/dev/null || true)
+            case "$stat" in
+                "install ok installed")
+                    do_it=1
+                    ;;
+                *)
+                    do_it=0
+                    ;;
+            esac
+            if [ "$do_it" = 0 ] ; then
+                : don't do anything here, we do not want to be noisy
+            else
+                tempfile=$(mktemp -p /tmp mtxrun.XXXXXXXX)
+                printf "Running mtxrun --generate. This may take some time... "
+                if mtxrun --generate > $tempfile 2>&1 ; then
+                    rm -f $tempfile
+                    echo "done."
+                else
+                    exec >&2
+                    echo
+                    echo "mtxrun --generate failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
+    	        fi
+            fi
+        fi
+    fi
+}
+
 do_triggers() 
 {
     DONE_FULL_LSR=0
@@ -80,6 +125,7 @@ do_triggers()
                     fi
                 fi
             fi
+            run_mtxrun_if_possible
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
@@ -110,6 +156,7 @@ do_triggers()
                 fi
             fi
           fi
+          run_mtxrun_if_possible
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
