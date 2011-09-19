@@ -14,7 +14,7 @@ Architecture: all
 Depends: ${misc:Depends}, ucf, debconf (>= 1.4.69) | cdebconf (>= 0.39), dpkg (>= 1.14.18)
 Suggests: debhelper (>= 7.0.8)
 Replaces: tetex-base (<= 3.0-10), dvipdfmx
-Conflicts: tetex-base (<< 2007), texlive-common (<< 2009)
+Conflicts: tetex-base (<< 2007), texlive-common (<< 2009), context (<< 2011.05.18.20110627-1)
 Description: common infrastructure for building and installing TeX
  This package contains a number of scripts and common configuration
  files that are needed to install a TeX System.
