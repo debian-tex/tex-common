@@ -3,6 +3,7 @@ tex-common (2.11~1) unstable; urgency=low
   * UNRELEASED
   * add calls to mtxrun --generate to the mktexlsr trigger action
     in case context is installed
+  * add new Dutch translation (Closes: #652627)
 
  -- Norbert Preining <preining@debian.org>  Fri, 01 Jul 2011 08:23:17 +0900
 
