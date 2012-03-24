@@ -15,18 +15,11 @@ This manual page was written for the Debian GNU/Linux distribution
 because the original script was designed for Debian packaging system.
 .PP
 .B update-texmf
-is a shell script to generate /etc/texmf/texmf.cnf from files in 
+is a shell script to generate /etc/texmf/web2c/texmf.cnf from files in 
 /etc/texmf/texmf.d/*.cnf
 .PP
-The tex-common provides 05TeXMF.cnf to 95NonPath.cnf and we assume
-that other TeX related packages should use the name only with the lower cases.
-The two digit numeral determines the order in which update-texmf read a file.
-.PP
-A user who wants to customize /etc/texmf/texmf.cnf should add, 
+A user who wants to customize /etc/texmf/web2c/texmf.cnf should add, 
 for example, 22mymacro.cnf in /etc/texmf/texmf.d/ and run 'update-texmf'.
-Thanks to ucf(1) update-texmf will regard manual changes of
-/etc/texmf/texmf.cnf, however it is recommended to change the files in
-/etc/texmf/texmf.d/ and to generate /etc/texmf/texmf.cnf.
 .SH OPTIONS
 .TP
 .B \-v, --verbose

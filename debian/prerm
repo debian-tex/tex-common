@@ -1,7 +1,6 @@
 #!/bin/sh -e
 # 
-# postinst maintainer script for the Debian tex-common package.
-# $Id$
+# prerm maintainer script for the Debian tex-common package.
 
 # remove dirs in /usr/local if empty
 

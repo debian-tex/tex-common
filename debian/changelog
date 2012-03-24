@@ -1,11 +1,66 @@
-tex-common (2.11~1) unstable; urgency=low
+tex-common (3.4) unstable; urgency=low
 
-  * UNRELEASED
+  * implement support for generation of language.dat.lua for luatex
+    based formats:
+    - extended update-fmtlang
+    - change and extended the format of files in hyphen.d (needs rebuild
+      of all providing packages!)
+    - adapt dh_installtex for new format
+  * start fixing the TeX-Debian-Policy document
+  * do not add a universal fail clause in the debhelper generated
+    maintainer scripts parts if the script is called with an
+    unknown argument (scripts/post{inst,rm}-tex)
+  * lintian warning: add addition makefile targets
+  * doc: first run on updated documentation
+
+ -- Norbert Preining <preining@debian.org>  Thu, 22 Mar 2012 18:08:18 +0900
+
+tex-common (3.3) experimental; urgency=low
+
+  [ Norbert Preining ]
+  * remove tpm2licenses, Tpm.pm, FileUtils.pm, this script is hopelessly
+    useless now that we don't have tpm files. 
+  * fix report-bug script configuration
+
+  [ Hilmar Preuße ]
+  * add new Polish debconf translation (Closes: #662094)
+
+ -- Norbert Preining <preining@debian.org>  Wed, 14 Mar 2012 16:55:00 +0900
+
+tex-common (3.2) experimental; urgency=low
+
+  * clean up 3.1 changelog entry
+  * don't run upgrade code on new install
+  * don't create and remove texmf.cnf if no texmf.d conffiles are present
+
+ -- Norbert Preining <preining@debian.org>  Sat, 10 Mar 2012 10:49:30 +0900
+
+tex-common (3.1) experimental; urgency=low
+
+  * only try to remove /etc/texmf/web2c if it is still here (Closes: #663029)
+  * add missing break against tex-gyre <= 2.004.1-2.1 (Closes: #663173)
+  * remove old ucf managed files with ucf instead of dpkg-maintscript-helper
+    (Closes: #663092)
+  * clean upgrade from tex-common < 3, move settings in 00updmap.cfg over
+    to /etc/texmf/web2c/updmap.cfg
+
+ -- Norbert Preining <preining@debian.org>  Sat, 10 Mar 2012 08:48:22 +0900
+
+tex-common (3.0) experimental; urgency=low
+
+  * remove all texmf.d conf files
+  * remove /var/lib/texmf/web2c/updmap.cfg in the postinst, it is disturbing!
+  * properly treat KanjiMap entries in dh_installtex
+  * postinst-tex: don't break if a fmt.d snipped has been removed
+  * bump up to 3.0, updmap.cfg is now managed differently with multi
+    enabled updmap, so all the local adaptions are not necessary anymore
   * add calls to mtxrun --generate to the mktexlsr trigger action
     in case context is installed
   * add new Dutch translation (Closes: #652627)
+  * bump standards version, no changes necessary
+  * add Breaks against old versions of all packages shipping files in updmap.d
 
- -- Norbert Preining <preining@debian.org>  Fri, 01 Jul 2011 08:23:17 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 06 Mar 2012 20:06:47 +0900
 
 tex-common (2.10) unstable; urgency=low
 

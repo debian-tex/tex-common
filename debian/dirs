@@ -8,12 +8,10 @@ usr/share/bug/tex-common
 usr/share/lintian/overrides
 etc/texmf/fmt.d
 etc/texmf/hyphen.d
-etc/texmf/texmf.d
-etc/texmf/updmap.d
 etc/texmf/language.d
+etc/texmf/texmf.d
 var/lib/texmf/web2c
 var/lib/texmf/tex/generic/config
-var/lib/tex-common/fontmap-cfg
 var/lib/tex-common/hyphen-cnf
 var/lib/tex-common/fmtutil-cnf
 var/cache/fonts

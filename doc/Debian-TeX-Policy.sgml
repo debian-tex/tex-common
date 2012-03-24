@@ -18,7 +18,7 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 2004-2006 Frank Küster, Richard Lewis, Norbert
+	  Copyright &copy; 2004-2012 Frank Küster, Richard Lewis, Norbert
           Preining, Ralf Stubner, Florent Rougon
 	</copyrightsummary>
 	<p>
@@ -168,7 +168,7 @@
 	<item>
 	  A package that only installs TeX input files, e.g. a new
 	  LaTeX package, should install them in
-	  the <var>TEXMFMAIN</var> tree
+	  the <var>TEXMFDEBIAN</var> tree
 	  (<file>/usr/share/texmf/</file>) at the place indicated by
 	  the TDS,
 	  see <url id="file:///usr/share/doc/tex-common/tds.html"
@@ -194,7 +194,7 @@
       </p>
       <p>
 	Depending on the <package>texlive-*</package>
-	or <package>tetex-*</package> metapackages is only acceptable
+	metapackages is only acceptable
 	for editors, IDEs and other tools which handle user-generated
 	code.  TeX add-on packages, as well as automated input
 	generators etc., must instead depend on a list of individual
@@ -259,12 +259,12 @@
         The following <var>TEXMF</var> trees are defined, as outlined
         below:
         <enumlist>
-          <item><file>/usr/share/texmf-tetex/</file>, part of <var>TEXMFDIST</var></item>
-          <item><file>/usr/share/texmf-texlive/</file>, part of <var>TEXMFDIST</var></item>
-          <item><file>/usr/share/texmf/</file>, referenced as <var>TEXMFMAIN</var></item>
+          <item><file>/usr/share/texlive/texmf-dist/</file>, referenced as <var>TEXMFDIST</var></item>
+          <item><file>/usr/local/share/texmf/</file>, referenced as <var>TEXMFLOCAL</var></item>
+          <item><file>/usr/share/texlive/texmf/</file>, referenced as <var>TEXMFMAIN</var></item>
+          <item><file>/usr/share/texmf/</file>, referenced as <var>TEXMFDEBIAN</var></item>
           <item><file>/var/lib/texmf/</file>, referenced as <var>TEXMFSYSVAR</var></item>
           <item><file>/etc/texmf/</file>, referenced as <var>TEXMFSYSCONFIG</var></item>
-          <item><file>/usr/local/share/texmf/</file>, referenced as <var>TEXMFLOCAL</var></item>
           <item> Any directories listed in the <var>TEXMFHOME</var> configuration
                  variable in <file>texmf.cnf</file> or as an environment
                  variable,
@@ -281,44 +281,18 @@
 
 	  <p>
 	  The role of the trees <var>TEXMFMAIN</var> and
-          <var>TEXMFDIST</var> in Debian differ from upstream's
-          original usage.  Upstream uses <var>TEXMFMAIN</var> for the
+          <var>TEXMFDIST</var> in Debian parallels the usage in
+	  upstream TeX Live. Upstream uses <var>TEXMFMAIN</var> for the
           files that have to match the binary executables and
           <var>TEXMFDIST</var> for other TeX input files that are
-          replaced when a new texmf tarball appears; this distinction
-          is not necessary on a system with a decent package managment
-          system.  Instead, the basic TeX packages install their files
-          into their <var>TEXMFDIST</var> directories <footnote>This
-          is new, and the basic TeX packages currently transition
-          their files to the new place.</footnote> , while
-          <var>TEXMFMAIN</var> is used by TeX add-on packages for
-          their files and allows them to shadow older versions
-          provided by the basic TeX packages.
-	  A couple of files from the basic TeX packages still need to be
-	  placed in <var>TEXMFMAIN</var>
-	  <footnote>
-	    Reasons include hardcoded paths in executables as well as
-	    the need for e.g. pool files to exactly match the binaries'
-	    version, so that shadowing must be prevented.
-	  </footnote>.
+          replaced when a new texmf tarball appears; 
+	  <var>TEXMFDEBIAN</var> is an additional tree where TeX add-on
+	  packages can put their files.
 	  </p>
 
         <p>
-	The order of basic TeX packages in <var>TEXMFDIST</var> may be
-	changed by the user or by the basic TeX packages, and no
-	implementation may rely on a particular order.  This implies
-	that for a package that needs a version of a particular file
-	newer than provided by one of the basic TeX packages, it is
-	not sufficient to declare a dependency on the other basic TeX
-	package(s)<footnote>Of course this is only a problem if the
-	file is needed in the configure phase.  If it is needed only
-	at runtime, a README file to instruct the local admin should be
-	sufficient.</footnote>.
-        </p>
-
-        <p>
         Debian packages generally install files in
-        <var>TEXMFMAIN</var>, and may ship or create empty directories
+        <var>TEXMFDEBIAN</var>, and may ship or create empty directories
         in the other trees, in accordance with Debian Policy.
         Configuration file handling in <var>TEXMFSYSCONFIG</var> is
         described below in <ref id="configurationfiles">.  Packages
@@ -350,10 +324,10 @@
 	</p>
 
 	<p>An exception is the generated file
-        <file>/etc/texmf/texmf.cnf</file>.  It is not intended that
-        local administrators edit that file, but if they do, the
-        configuration update programs must respect these changes.
-        Debian packages must not alter that file.
+        <file>/etc/texmf/web2c/texmf.cnf</file>. 
+	Local administrators should not edit this file, as manual
+	changes will be overwritten later on. Instead, configuration
+	file snippets in <file>/etc/texmf/texmf.d</file> must be used.
 	</p>
 
       </sect>
@@ -382,7 +356,7 @@
 	  <p>Packages that need newer versions of a file than already
 	  supplied by a basic TeX package and installed in
 	  <var>TEXMFDIST</var> can place them into
-	  <var>TEXMFMAIN</var>.  Thus, the outdated file will be
+	  <var>TEXMFDEBIAN</var>.  Thus, the outdated file will be
 	  shadowed, and the new one is in effect.  
 	  </p>
 
@@ -495,31 +469,65 @@
 	for TeX input files and can be used by packages for
 	configuration files that are not TeX input files (e.g. the
 	files in subdirectories <file>fmt.d</file> or
-	<file>updmap.d</file>).
+	<file>hyphen.d</file>).
 	</p>
       </sect>
       <sect id="update-progs">
         <heading>Configuration update programs</heading>
 
+
 	<p>
-	The central configuration file for TeX applications is
-	<file>/etc/texmf/texmf.cnf</file>, the central font configuration
-	file is <file>/var/lib/texmf/web2c/updmap.cfg</file>, the central
-	language/hyphenation configuration 
-	<file>/var/lib/texmf/tex/generic/config/language.dat</file>,
-	and format
-	generation is determinded by
-	<file>/var/lib/texmf/web2c/fmtutil.cnf</file>.  All four files are
+	Configuration files in the TeX world come in two classes: stackable
+	and unstackable. The first class means that the respective programs
+	read <em>all</em> configuration files found, while in the later case
+	only the top or first configuration file is used.
+	</p>
+
+	<p>
+	Stackable configuration files in TeX are 
+	<file>TEXMFTREE/web2c/texmf.cnf</file> (central configuration
+	for TeX applications) and
+	<file>TEXMFTREE/web2c/updmap.cfg</file> (font configuration), 
+	while unstackable configuration files are 
+	<file>TEXMFTREE/tex/generic/config/language.dat</file> (language
+	support/hyphenation patterns for latex based formats),
+	<file>TEXMFTREE/tex/generic/config/language.def</file> (the same
+	for etex based formats),
+	<file>TEXMFTREE/tex/generic/config/language.dat.lua</file> (the
+	same for luatex based formats), and
+	<file>TEXMFTREE/web2c/fmtutil.cnf</file> (for format definitions).
+	</p>
+
+	<p>
+	In Debian, by default the respective configuration files of the
+	following trees are used: For <file>texmf.cnf</file>: TEXMFDEBIAN
+	(the texmf.cnf file is a link to the one in TEXMFMAIN).
+	For <file>updmap.cfg</file>:TEXMFDIST, TEXMFDEBIAN.
+	For the unstackable configuration files the respective copies
+	in TEXMFSYSVAR are used.
+	</p>
+
+	<p>
+	The stackable configuration files are either static (texmf.cnf)
+	or generated automatically in the background without any
+	need for configuration, since changes can be included in a
+	higher order configuration file.
+	</p>
+
+	<p>
+	The non stackable configuration files plus the file
+	<file>/etc/texmf/web2c/texmf.cnf</file> are
 	generated by configuration update programs from configuration
-	files in subdirectories of <file>/etc/texmf</file>.  For
-	<file>updmap.cfg</file>, <file>language.dat</file> and 
-	<file>fmtutil.cnf</file>, this is the only
-	method of configuration.  <file>texmf.cnf</file> can be edited
+	files in subdirectories of <file>/etc/texmf</file>.  For all
+	of them this is the only method of configuration.
+	<!--
+	<file>texmf.cnf</file> can be edited
 	manually by local system administrators, and changes will be
 	handled by ucf.  Package installation scripts, however, must
 	not change this file, but use the <prgn>update-texmf</prgn>
 	mechanism.  Local administrators are encouraged to use the
 	<prgn>update-texmf</prgn> mechanism, too.
+	-->
 	</p> 
 
 	<p>
@@ -540,8 +548,7 @@
         </p>
 
 	<p>
-	Maintainer scripts should call <prgn>update-updmap</prgn> with
-	the option <tt>--quiet</tt>.  Besides that, the configuration
+	The configuration
 	update programs should be called without any options to allow
 	for internal changes, e.g. of the directories where the
 	generated files are placed.

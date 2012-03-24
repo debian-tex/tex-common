@@ -15,7 +15,7 @@
 #
 
 TEXMFTREES="/usr/share/texmf /var/lib/texmf"
-FULLTEXMFTREES="$TEXMFTREES /usr/share/texmf-texlive"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf /usr/share/texlive/texmf-dist"
 
 # Tell if kpsewhich works. If this is the case:
 #
@@ -138,7 +138,11 @@ case "$1" in
                 fi
                 if [ "$i" = format ] ; then
                     for fmt in #FORMATSFILES# ; do
-                        dhit_build_format --all --cnffile "/etc/texmf/fmt.d/$fmt.cnf"
+                        if [ -r "/etc/texmf/fmt.d/$fmt.cnf" ] ; then
+                            dhit_build_format --all --cnffile "/etc/texmf/fmt.d/$fmt.cnf"
+                        else
+                            echo "config file /etc/texmf/fmt.d/$fmt.cnf not available"
+                        fi
                     done
                 fi
                 if [ "$i" = hyphen ] ; then
@@ -148,10 +152,6 @@ case "$1" in
         fi
     ;;
 
-    *)
-        echo "postinst called with unknown argument '$1'" >&2
-        exit 1
-    ;;
 esac
 
 # Let vim know that we don't want tabs

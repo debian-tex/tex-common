@@ -93,10 +93,6 @@ case "$1" in
     purge|upgrade|failed-upgrade|abort-upgrade|abort-install)
     ;;
 
-    *)
-        echo "postrm called with unknown argument '$1'" >&2
-        exit 1
-    ;;
 esac
 
 # Let vim know that we don't want tabs

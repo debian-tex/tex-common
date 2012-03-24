@@ -1,24 +1,33 @@
-#include variables
 #!/bin/sh -e
 # 
-# config maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id: config.in 114 2005-08-04 15:04:01Z frn $
-<:=@COPYRIGHT:>//
+# config maintainer script for the Debian tex-common package.
+#
+# Copyright (C) 2004 by Frank Küster <frank@kuesterei.ch>. 
+# Copyright (C) 2012 by Norbert Preining <preining@debian.org>.
+#
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+#
+# This file is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to: The Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# On Debian GNU/Linux System you can find a copy of the GNU General Public
+# License in "/usr/share/common-licenses/GPL".
 
 # Give names to the commandline arguments
 action=$1
 installed_version=$2
 
-# common variables
-FONTCACHE_PERMS=<:=$FONTCACHE_PERMS:>
-
-
-
-. <:=${CONFMODULE}:>
+. /usr/share/debconf/confmodule
 db_version 2.0
-
-<:open(FUNCTIONS,'common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
-<:=@FUNCTIONS:>//
 
 ## do the things we have to do for upgraders from old versions
 # it does not harm to do the checks also when $action is reconfigure.

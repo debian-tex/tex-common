@@ -1,10 +1,10 @@
 #!/bin/bash -e
 #
-# update-fontlang --- Generate updmap.cfg, language.dat, fmtutil.cnf
+# update-fmtlang --- Generate updmap.cfg, language.dat, fmtutil.cnf etc
 #                     from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
 # Copyright (C) 2004, 2005, 2006, 2007 Florent Rougon
-# Copyright (C) 2005, 2006, 2009 Norbert Preining
+# Copyright (C) 2005, 2006, 2009, 2010, 2011, 2012 Norbert Preining
 # Copyright (C) 2007 Frank Küster
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,13 +27,34 @@ progname=$(basename "$0")
 SYSPATH_BASE=/var/lib/texmf
 
 HYPHENMODE=nohyphen
+HEADFILE=/not/a/real/file/we/ever/will/see/on/a/system
 
 if [ "$progname" = "update-language" ] ; then
     update-language-dat
     update-language-def
+    update-language-lua
     exit 0
+elif [ "$progname" = "update-language-lua" ] ; then
+    CNFDIR=hyphen.d
+    HEADFILE=/usr/share/texlive/texmf/tex/generic/config/language.us.lua
+    HYPHENMODE=luatex
+    # System-wide configuration directory
+    SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
+    CHECKFILE="$SYSWIDE_CONFDIR/00tex.cnf"
+    EXT="cnf"
+    MEMORY_DIR=/var/lib/tex-common/hyphen-cnf
+    PATH_COMPONENT=tex/generic/config
+    SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
+    DEFAULT_OUTPUTFILE_BASENAME=language.dat.lua
+    SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
+    READCC="%"                      # for COMMENTCHAR
+    WRITECC="--"
+    # in printf, %% is one %
+    PCC="\055\055"                    # for printfCOMMENTCHAR
+    SHORT_DESC="Generate language.dat.lua, the hyphenation configuration file for luaTeX and friends"
 elif [ "$progname" = "update-language-def" ] ; then
     CNFDIR=hyphen.d
+    HEADFILE=/usr/share/texlive/texmf/tex/generic/config/language.us.def
     HYPHENMODE=etex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
@@ -44,12 +65,14 @@ elif [ "$progname" = "update-language-def" ] ; then
     SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=language.def
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-    CC="%"                      # for COMMENTCHAR
+    READCC="%"                      # for COMMENTCHAR
+    WRITECC="%"
     # in printf, %% is one %
     PCC="%%"                    # for printfCOMMENTCHAR
     SHORT_DESC="Generate language.def, the hyphenation configuration file for eTeX and friends"
 elif [ "$progname" = "update-language-dat" ] ; then
     CNFDIR=hyphen.d
+    HEADFILE=/usr/share/texlive/texmf/tex/generic/config/language.us
     HYPHENMODE=latex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
@@ -60,11 +83,14 @@ elif [ "$progname" = "update-language-dat" ] ; then
     SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=language.dat
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-    CC="%"                      # for COMMENTCHAR
+    READCC="%"                      # for COMMENTCHAR
+    WRITECC="%"
     # in printf, %% is one %
     PCC="%%"                    # for printfCOMMENTCHAR
     SHORT_DESC="Generate language.dat, the hyphenation configuration file for LaTeX"
 elif [ "$progname" = "update-updmap" ] ; then
+    echo "I should NOT be called this way, there is something wrong!!! ... good bye!" >&2
+    exit 1
     CNFDIR=updmap.d
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
@@ -75,7 +101,8 @@ elif [ "$progname" = "update-updmap" ] ; then
     SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=updmap.cfg
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-    CC="#"
+    READCC="#"
+    WRITECC="#"
     PCC="#"                     # for printfCOMMENTCHAR
     SHORT_DESC="Generate an updmap configuration file"
 elif [ "$progname" = "update-fmtutil" ] ; then
@@ -89,7 +116,8 @@ elif [ "$progname" = "update-fmtutil" ] ; then
     SYSWIDE_VARD="$SYSPATH_BASE/$PATH_COMPONENT"
     DEFAULT_OUTPUTFILE_BASENAME=fmtutil.cnf
     SYSWIDE_DEFAULT_OUTPUTFILE="$SYSWIDE_VARD/$DEFAULT_OUTPUTFILE_BASENAME"
-    CC="#"
+    READCC="#"
+    WRITECC="#"
     PCC="#"                     # for printfCOMMENTCHAR
     SHORT_DESC="Generate an fmtutil configuration file"
 else
@@ -133,27 +161,7 @@ do_one_hyphen_line()
 {
     line="$1"
     case "$line" in
-        ${CC}*) echo "$line" >> "$tempfile" ; return ;;
-        USEFILE*) 
-            set -- $line
-            shift
-            datfile="$1"
-            deffile="$2"
-            if [ "$HYPHENMODE" = "etex" ] ; then
-                if [ -r "$deffile" ] ; then
-                    cat "$deffile" >> "$tempfile"
-                else 
-                    echo "${CC} USEFILE $deffile not found" >> "$tempfile"
-                fi
-            else
-                if [ -r "$datfile" ] ; then
-                    cat "$datfile" >> "$tempfile"
-                else 
-                    echo "${CC} USEFILE $datfile not found" >> "$tempfile"
-                fi
-            fi
-            return
-            ;;
+        ${READCC}*) echo "$line" | sed -e "s!^$READCC!$WRITECC !" >> "$tempfile" ; return ;;
     esac
     set -- $line
     name=""
@@ -166,43 +174,58 @@ do_one_hyphen_line()
             name=*) name="${1#name=}" ;;
             lefthyphenmin=*) lhm="${1#lefthyphenmin=}" ;;
             righthyphenmin=*) rhm="${1#righthyphenmin=}" ;;
+            patterns=*) patterns="${1#patterns=}" ;;
             synonyms=*) synonyms="${1#synonyms=}" ;;
+            exceptions=*) exceptions="${1#exceptions=}" ;;
             file=*) f="${1#file=}" ;;
-            *) echo "Unknown AddHypen directive ==$line==!" >&2 ; return ;;
+            *) echo "Unknown AddHypen directive $1 in line: ==$line==!" >&2 ; return ;;
         esac
         shift
     done
-    if [ "$name$lhm$rhm$synonyms$f" = "" ] ; then
+    if [ "$name$lhm$rhm$synonyms$f$exceptions$patterns" = "" ] ; then
         return
     fi
-    if [ ! "$lhm$rhm$synonyms$f" = "" ] ; then
+    if [ ! "$lhm$rhm$synonyms$f$exceptions$patterns" = "" ] ; then
         if [ "$name" = "" ] ; then
             echo "the line $line does not contain a name= directive, ignored!" >&2
             return
         fi
     fi
-    if [ ! "$name$lhm$rhm$synonyms" = "" ] ; then
+    if [ ! "$name$lhm$rhm$synonyms$exceptions$patterns" = "" ] ; then
         if [ "$f" = "" ] ; then
             echo "the line $line does not contain a file= directive, ignored!" >&2
             return
         fi
     fi
     if [ "$HYPHENMODE" = "etex" ] ; then
-        printf '\\'"addlanguage{$name}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
-    else
+        printf '\\'"addlanguage{$name}{$f}{}{$lhm}{$rhm}\n" >> "$tempfile"
+    elif [ "$HYPHENMODE" = "latex" ] ; then
         echo "$name $f" >> "$tempfile"
+    elif [ "$HYPHENMODE" = "luatex" ] ; then
+       printf "\t[\' $name \'] = {\n\t\tloader = \'$f\',\n\t\tlefthyphenmin = $lhm,\n\t\trighthyphenmin = $rhm,\n\t\tpatterns = \'$patterns\',\n\t\thyphenation = \'$exceptions\',\n\t\tsynonyms = { " >> "$tempfile"
     fi
     if [ ! "$synonyms" = "" ] ; then
         {
+            first=1
             IFS=",$IFS"
             for s in $synonyms ; do
                 if [ "$HYPHENMODE" = "etex" ] ; then
-                    printf '\\'"addlanguage{$s}{$f}{}{$lhm}{$rhm}" >> "$tempfile"
-                else
+                    printf '\\'"addlanguage{$s}{$f}{}{$lhm}{$rhm}\n" >> "$tempfile"
+                elif [ "$HYPHENMODE" = "latex" ] ; then
                     echo "=$s" >> "$tempfile"
+                elif [ "$HYPHENMODE" = "luatex" ] ; then
+                    if [ $first = 0 ] ; then
+                        printf ", " >> "$tempfile"
+                    else 
+                        first=0
+                    fi
+                    printf "\'$s\'" >> "$tempfile"
                 fi
             done
         }
+    fi
+    if [ "$HYPHENMODE" = "luatex" ] ; then
+        printf " }\n\t},\n"  >> "$tempfile"
     fi
 }
 
@@ -219,13 +242,13 @@ include_file()
 {
     file="$1"
 
-    printf "\n${PCC}${PCC}${PCC} From file: $file\n" >>"$tempfile"
+    printf "\n${PCC} ${PCC}${PCC} From file: $file\n" >>"$tempfile"
     if [ $HYPHENMODE = "nohyphen" ] ; then
         cat "$file" >>"$tempfile"
     else
         include_hyphen_file_core "$file"
     fi
-    echo "${CC}${CC}${CC} End of file: $file" >>"$tempfile"
+    echo "${WRITECC} End of file: $file" >>"$tempfile"
     case "$file" in
       */10texlive-latex-base.cnf)
 	seen_latex=1
@@ -240,12 +263,12 @@ do_not_include_file()
 
     cat >>"$tempfile" <<EOF
 
-$CC$CC
-$CC$CC$CC $file not included because either it wasn't
-$CC$CC$CC up-to-date (conffile update pending) or the package shipping it was
-$CC$CC$CC apparently removed (no corresponding .list file in
-$CC$CC$CC $MEMORY_DIR/).
-$CC$CC
+$WRITECC
+$WRITECC $file not included because either it wasn't
+$WRITECC up-to-date (conffile update pending) or the package shipping it was
+$WRITECC apparently removed (no corresponding .list file in
+$WRITECC $MEMORY_DIR/).
+$WRITECC
 EOF
 }
 
@@ -256,13 +279,13 @@ do_not_include_snippet_that_depends_on_a_not_included_snippet()
 
     cat >>"$tempfile" <<EOF
 
-$CC$CC
-$CC$CC$CC $file not included because it depends
-$CC$CC$CC on another file that is not included here. For instance, jadetex and
-$CC$CC$CC xmltex snippets are not included in fmtutil.cnf when the snippet for
-$CC$CC$CC LaTeX isn't included itself. This is because the jadetex and xmltex
-$CC$CC$CC formats need the LaTeX format when being built (see bug #427562).
-$CC$CC
+$WRITECC
+$WRITECC $file not included because it depends
+$WRITECC on another file that is not included here. For instance, jadetex and
+$WRITECC xmltex snippets are not included in fmtutil.cnf when the snippet for
+$WRITECC LaTeX isn't included itself. This is because the jadetex and xmltex
+$WRITECC formats need the LaTeX format when being built (see bug #427562).
+$WRITECC
 EOF
 }
 
@@ -749,7 +772,7 @@ ${PCC} in \"etex.src\" and \"etexdefs.lib\", otherwise fallback will be used.
 fi
 
 printf "\
-${PCC}${PCC}${PCC} This file was automatically generated by ${progname}.
+${PCC} ${PCC}${PCC} This file was automatically generated by ${progname}.
 ${PCC}
 ${PCC} Please do not edit it directly. If you want to add or change
 ${PCC} anything here, please have a look at the files in:
@@ -758,7 +781,18 @@ ${PCC}    $confdirs
 ${PCC}
 ${PCC} and invoke ${progname}.
 ${PCC}
-${PCC}${PCC}${PCC}\n" >> "$tempfile"
+${PCC} ${PCC}${PCC}\n" >> "$tempfile"
+
+#
+# include the necessary files
+if [ ! "$HYPHENMODE" = "nohyphen" ] ; then
+    # we are creating a hyphenation file, include the head file
+    if [ -r "$HEADFILE" ] ; then
+        cat "$HEADFILE" >> "$tempfile"
+    else
+        echo "${WRITECC} HEADFILE $deffile not found" >> "$tempfile"
+    fi
+fi
 
 # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
 # be used.
@@ -773,10 +807,13 @@ fi | swap_basename_and_dirname | LC_COLLATE=C sort | merge_files
 # for language.def we have to select the right language at the end
 if [ "$HYPHENMODE" = "etex" ] ; then
     printf "
-${PCC}${PCC}${PCC} No changes may be made beyond this point.
+${PCC} ${PCC}${PCC} No changes may be made beyond this point.
 
-\\\\uselanguage {USenglish}             ${PCC}${PCC}${PCC} This MUST be the last line of the file.
+\\\\uselanguage {USenglish}             ${PCC} This MUST be the last line of the file.
 " >> "$tempfile"
+elif [ "$HYPHENMODE" = "luatex" ] ; then
+    # for luatex we need the closing brace!
+    echo "}" >> "$tempfile"
 fi
 
 # This is atomic.
@@ -807,4 +844,4 @@ if [ $quiet = 0 ]; then
     fi
 fi
 
-# vim:set expandtab tabstop=4: #
+# vim:set expandtab tabstop=4 autoindent: #

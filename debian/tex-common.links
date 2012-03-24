@@ -1,20 +1,12 @@
-usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-updmap.1
-usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-fmtutil.1
-usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-language.1
-usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-language-def.1
-usr/share/man/man1/update-fontlang.1 usr/share/man/man1/update-language-dat.1
-usr/bin/update-fontlang usr/bin/update-updmap
-usr/bin/update-fontlang usr/bin/update-fmtutil
-usr/bin/update-fontlang usr/bin/update-language
-usr/bin/update-fontlang usr/bin/update-language-def
-usr/bin/update-fontlang usr/bin/update-language-dat
-usr/bin/update-fontlang usr/sbin/update-updmap
-usr/bin/update-fontlang usr/sbin/update-fmtutil
-usr/bin/update-fontlang usr/sbin/update-language
-usr/bin/update-fontlang usr/sbin/update-language-def
-usr/bin/update-fontlang usr/sbin/update-language-dat
-etc/texmf/texmf.cnf usr/share/texmf/web2c/texmf.cnf
+usr/share/man/man8/update-fmtlang.8 usr/share/man/man8/update-fmtutil.8
+usr/share/man/man8/update-fmtlang.8 usr/share/man/man8/update-language.8
+usr/share/man/man8/update-fmtlang.8 usr/share/man/man8/update-language-def.8
+usr/share/man/man8/update-fmtlang.8 usr/share/man/man8/update-language-dat.8
+usr/share/man/man8/update-fmtlang.8 usr/share/man/man8/update-language-lua.8
+usr/sbin/update-fmtlang usr/sbin/update-fmtutil
+usr/sbin/update-fmtlang usr/sbin/update-language
+usr/sbin/update-fmtlang usr/sbin/update-language-def
+usr/sbin/update-fmtlang usr/sbin/update-language-dat
+usr/sbin/update-fmtlang usr/sbin/update-language-lua
 var/lib/texmf/ls-R-TEXMFMAIN usr/share/texmf/ls-R
 usr/share/doc/texmf usr/share/texmf/doc
-
-

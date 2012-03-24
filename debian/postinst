@@ -1,41 +1,76 @@
-<::>//
 #!/bin/sh -e
 # 
-# postinst maintainer script for the Debian <:=${PACKAGE}:> package.
-# $Id$
-
-#include variables
-<:=@COPYRIGHT:>//
-
-
-## Define static variables we need
-UCF_FILES="<:=$TEX_COMMON_UCF_FILES:>"
-TEXMFSYSVARDIR="<:=$TEXMFSYSVARDIR:>"
-UCF="ucf --debconf-ok"
-#UCF="ucf -d --debconf-ok --verbose"
-OLD_LDAT=/etc/texmf/language.dat
-POSTINST_MOVE_EXT="<:=$POSTINST_MOVE_EXT:>"
-FONTCACHE_PERMS=<:=$FONTCACHE_PERMS:>
-
-TEXMFTREES="/usr/share/texmf $TEXMFSYSVARDIR"
-FULLTEXMFTREES="$TEXMFTREES /usr/share/texmf-texlive"
-
+# postinst maintainer script for the Debian tex-common package.
+#
+# Copyright (C) 2004 by Frank Küster <frank@kuesterei.ch>. 
+# Copyright (C) 2012 by Norbert Preining <preining@debian.org>
+#
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+#
+# This file is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to: The Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# On Debian GNU/Linux System you can find a copy of the GNU General Public
+# License in "/usr/share/common-licenses/GPL".
 
 umask 022
+
+# summary of how this script can be called:
+#        * <postinst> `configure' <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade' <new version>
+#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#          <new-version>
+#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
+#          <failed-install-package> <version> `removing'
+#          <conflicting-package> <version>
+
 
 # Give a name to the first commandline argument
 action=$1
 trigger=$2
 
-. <:=${CONFMODULE}:>
+. /usr/share/debconf/confmodule
 db_version 2.0
 
-<:open(FUNCTIONS,'debian/postinst.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
-<:=@FUNCTIONS:>//
+cleanup()
+{
+  rc=$?
+  [ -n "$tempdir" ] && rm -rf "$tempdir"
+  exit $rc
+}
 
-# <:open(FUNCTIONS,'debian/common.functions');@FUNCTIONS=<FUNCTIONS>;close(FUNCTIONS):>//
-# <:=@FUNCTIONS:>//
+dhit_libkpathsea_configured ()
+{
+    kpsewhich --version >/dev/null 2>&1
+}
 
+dhit_build_format ()
+{
+
+    tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+    printf "Building format(s) $*.\n\tThis may take some time... "
+    if fmtutil-sys "$@" > $tempfile 2>&1 ; then
+        rm -f $tempfile
+        echo "done."
+    else
+        exec >&2
+        echo
+        echo "fmtutil-sys failed. Output has been stored in"
+        echo "$tempfile"
+        echo "Please include this file if you report a bug."
+        echo
+        exit 1
+    fi
+}
 
 run_mtxrun_if_possible()
 {
@@ -81,7 +116,10 @@ run_mtxrun_if_possible()
 
 do_triggers() 
 {
+    # vars used to record what we have done already, not to make
+    # it two times
     DONE_FULL_LSR=0
+    DONE_MTXRUN=0
     # currently we only support only triggers for updmap.d and
     # language.d changes
     # because all the other calls are quite fast 
@@ -90,7 +128,6 @@ do_triggers()
     #   calls.
 
     # in any case call the update-* calls
-    update-updmap --quiet
     update-language
     update-fmtutil
     #
@@ -123,7 +160,10 @@ do_triggers()
                     fi
                 fi
             fi
-            run_mtxrun_if_possible
+            if [ $DONE_MTXRUN = 0 ] ; then
+                run_mtxrun_if_possible
+                DONE_MTXRUN=1
+            fi
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
@@ -154,7 +194,10 @@ do_triggers()
                 fi
             fi
           fi
-          run_mtxrun_if_possible
+          if [ $DONE_MTXRUN = 0 ] ; then
+              run_mtxrun_if_possible
+              DONE_MTXRUN=1
+          fi
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
@@ -290,6 +333,23 @@ do_triggers()
     esac
 }
 
+ucf_is_changed() {
+  file=$1
+  if  [ "$(ucfq --with-colons $file | cut -f 4 --delimiter=:)" = "Yes" ] ; then
+    # shell return codes are reverted!
+    return 0
+  else
+    return 1
+  fi
+}
+
+cfgval()
+{
+  cnfFile="$1"
+  opt="$2"
+  cat "$cnfFile" | sed -n 's/^'"$opt"'[  =][     =]*//p' | sed q
+}
+
 
 #################################################################
 # Here starts the real action
@@ -303,125 +363,131 @@ case $action in
 
     configure|reconfigure)
 
-# is there a file /etc/texmf/language.dat already? Move it out of the way
-    if [ -f $OLD_LDAT ]; then
-      old_ldat_md5sum=`md5sum $OLD_LDAT`
-      # do nothing if the md5sum matches sarge's or woody's default:
-      if [ ! "$old_ldat_md5sum" = fe9baf0768ade79a585a9df568dac5f6 ] && \
-	[ ! "$old_ldat_md5sum" = 1d2d9b25a41ab1cec892bd3382af7645 ]; then
-	cat > $OLD_LDAT.$POSTINST_MOVE_EXT <<EOF
+    # remove old language.dat file, it is not used anymore
+    if [ -f /etc/texmf/language.dat ] ; then
+        old_ldat_md5sum=`md5sum /etc/texmf/language.dat`
+        if [ ! "$old_ldat_md5sum" = fe9baf0768ade79a585a9df568dac5f6 ] && \
+            [ ! "$old_ldat_md5sum" = 1d2d9b25a41ab1cec892bd3382af7645 ]; then
+            cat > /etc/texmf/language.dat.postinst-bak <<EOF
 This file is no longer used and has therefore been renamed by the postinst 
-script of the tetex-base package.
+script of the tex-common package.
 
 Please use the mechanism described in update-language(8) instead.
 
 EOF
-	cat $OLD_LDAT >> $OLD_LDAT.$POSTINST_MOVE_EXT 
-      fi
-      rm $OLD_LDAT
+            cat /etc/texmf/language.dat >> /etc/texmf/language.dat.postinst-bak
+        fi
+        rm /etc/texmf/language.dat
     fi
 
+    # if we are upgrading from a 1 < version < 3 we do the full upgrade stuff
+    # we saved the second argument into $trigger, which contains now 
+    # the version
+    # using the double check also guarantees that the code is NOT executed
+    # on new installs, where $trigger is empty
+    if dpkg --compare-versions "$trigger" lt "3" && dpkg --compare-versions "$trigger" gt 1 ; then
+        #
+        # whatever we do, we remove the updmap.cfg file in /var/lib/texmf/web2c!!
+        # it was created by former versions of update-updmap and disturbs the 
+        # peace in the new system!
+        rm -f /var/lib/texmf/web2c/updmap.cfg
 
-# normal install    
-    # handle ucf-managed configuration files
-    for file in $UCF_FILES; do
-      $UCF /usr/share/tex-common/`basename $file` /etc/texmf/$file
-      if test -x "`which ucfr`" ; then
-        ucfr tex-common /etc/texmf/$file
-      fi
-    done
+        # purge the old texmf.cnf file
+        ucf --purge /etc/texmf/texmf.cnf
+        if test -x "`which ucfr`" ; then
+            ucfr --purge tex-common /etc/texmf/texmf.cnf
+        fi
+        rm /etc/texmf/texmf.cnf
+        rm -f /etc/texmf/texmf.cnf.ucf-new
+        rm -f /etc/texmf/texmf.cnf.ucf-old
+        rm -f /etc/texmf/texmf.cnf.ucf-dist
 
-# remove left over fmt/efmt/log files in /usr/share/texmf/web2c/.  If they are
-# there, it's because of an old bug or user misconfiguration, and they are
-# never registered to dpkg.
-#
-# move out of the way old config files
-# 
-    if [ -d /usr/share/texmf/web2c ] ; then
-      rm -rf /usr/share/texmf/web2c/*.fmt
-      rm -rf /usr/share/texmf/web2c/*.efmt
-      rm -rf /usr/share/texmf/web2c/*.base
-      rm -rf /usr/share/texmf/web2c/*.log
-      for cfgfile in fmtutil.cnf updmap.cfg ; do
-        oldname=/usr/share/texmf/web2c/$cfgfile
-	newname=/usr/share/texmf/web2c/$cfgfile.pre-upgrade
-        if [ -r $oldname ] ; then
-	  cat - > $newname <<EOF
-# This file conflicts with the new configuration location.
-# Please merge your changes to the correct location.
-
+        #
+        # ucf files that will be removed
+        UCF_REMOVE="texmf.d/05TeXMF.cnf texmf.d/15Plain.cnf texmf.d/45TeXinputs.cnf texmf.d/55Fonts.cnf texmf.d/65BibTeX.cnf texmf.d/75DviPS.cnf texmf.d/80DVIPDFMx.cnf texmf.d/85Misc.cnf texmf.d/90TeXDoc.cnf texmf.d/95NonPath.cnf"
+        for i in $UCF_REMOVE ; do
+            file=/etc/texmf/$i
+            if [ -r $file ] ; then
+                if ucf_is_changed $file ; then
+                    cat > $file.postinst-bak <<EOF
+This file is no longer used and has therefore been renamed by the postinst 
+script of the tex-common package.
 EOF
-	  cat $oldname >> $newname
-	  rm $oldname
-	fi
-      done
-    fi
+                    cat $file >> $file.postinst-bak
+                fi
+                rm $file
+                rm -f $file.ucf-old
+                rm -f $file.ucf-new
+                rm -f $file.ucf-dist
+            fi
+            ucf --purge $file
+            if test -x "`which ucfr`" ; then
+                ucfr --purge tex-common $file
+            fi
+        done
 
-# if the machine was originally upgraded from woody to sarge, and now
-# to etch, it will have a bogus generated configuration file.  This
-# will break with TeXlive, therefore we remove it
-    bogusfile=/etc/texmf/fmt.d/99postinst.cnf
-    if [ -f $bogusfile ]; then
-      tmpfile=`mktemp`
-      egrep -v \
-	"mf[[:space:]]*mf[[:space:]]*-[[:space:]]*mf.ini|\
-mfw[[:space:]]*mfw[[:space:]]*-[[:space:]]*mf.ini|\
-pdftex[[:space:]]*pdftex[[:space:]]*language.dat[[:space:]]*pdftex.ini|\
-omega[[:space:]]*omega[[:space:]]*language.dat*[[:space:]]*omega.ini" \
-	$bogusfile > $tmpfile
-      if !  egrep -v '^#|^[[:space:]]*$' $tmpfile >/dev/null; then
-	# only comments in tmpfile
-	cat >> $bogusfile.bak <<EOF
+        # move changed settings from 00updmap.cfg to /etc/texmf/web2c/updmap.cfg
+        if [ -r /etc/texmf/updmap.d/00updmap.cfg ]; then
+            if [ ! -r /etc/texmf/web2c/updmap.cfg ] ; then
+                # these are the defaults in tex-common < 3 
+                dflt_dvipsPreferOutline=true
+                dflt_LW35=URWkb
+                dflt_dvipsDownloadBase35=false
+                dflt_pdftexDownloadBase14=true
+                dflt_dvipdfmDownloadBase14=true
+                options="dvipsPreferOutline LW35 pdftexDownloadBase14 dvipdfmDownloadBase14 dvipsDownloadBase35"
+                SETTING_CHANGED=false
+                tempdir=`mktemp -d`
+                tempfile=`mktemp -p $tempdir`
+                trap 'cleanup' HUP INT QUIT BUS PIPE TERM
+                for option in $options; do
+                    eval $option=`cfgval /etc/texmf/updmap.d/00updmap.cfg $option`
+                    if eval [ ! "\$$option" = "\$dflt_$option" ]; then
+                        # the defaults in tex-common < 3 and TL2012 are the
+                        # same with one exception: dvipsDownloadBase35
+                        # it was false in tex-common and true in TL2012
+                        #
+                        if [ ! $option = dvipsDownloadBase35 ] ; then
+                            # options agree between TL2012 and tex-common < 3
+                            # so move the change over!
+                            SETTING_CHANGED=true
+                            eval optvalue=\$$option
+                            echo "$option = $optvalue" >> $tempfile
+                        else
+                            # dvipsDownloadBase35 case
+                            # in tex-common the default was false
+                            # now it is true
+                            # since the admin changed it from false -> true
+                            # and now it is true anyway, we don't write
+                            # anything for this case
+                            :
+                        fi
 
-This file has been renamed by the post-installation script of
-tex-common.  It is unused and contains only lines that were
-erroneously detected as being a local configuration file change.
+                    fi
+                done
+                if [ "$SETTING_CHANGED" = "true" ]; then
+                    mkdir -p /etc/texmf/web2c/
+                    mv $tempfile /etc/texmf/web2c/updmap.cfg
+                fi
+            fi
+            rm /etc/texmf/updmap.d/00updmap.cfg
+            rm -f /etc/texmf/updmap.d/00updmap.cfg.ucf-old
+            rm -f /etc/texmf/updmap.d/00updmap.cfg.ucf-new
+            rm -f /etc/texmf/updmap.d/00updmap.cfg.ucf-dist
+            ucf --purge /etc/texmf/updmap.d/00updmap.cfg
+            if test -x "`which ucfr`" ; then
+                ucfr --purge tex-common /etc/texmf/updmap.d/00updmap.cfg
+            fi
+            # try to remove the now hopefully empty dir
+            rmdir --ignore-fail-on-non-empty /etc/texmf/updmap.d 
+        fi
 
+    # end of upgrade from versions < 3
+    fi    
 
-EOF
-	cat $bogusfile >> $bogusfile.bak
-	chmod 664 $bogusfile.bak
-	chown root:root $bogusfile.bak
-	rm $bogusfile
-      fi
-      rm $tmpfile
-    fi
-
-
-
+    # after we have removed the left overs from old times
+    # create/update texmf.cnf
     update-texmf
-# Now we check for some essential settings
-    checkfailed=false
-    check_texmf /etc/texmf/texmf.d/55Fonts.cnf TEXFONTMAPS \
-'\$TEXMF/{fonts/,}map//;\$TEXMF/dvips//|\.;\$TEXMF{/fonts/map,}{/\$progname,/pdftex,/dvips,}//'
-    check_texmf /etc/texmf/texmf.cnf TEXFONTMAPS \
-'\$TEXMF/{fonts/,}map//;\$TEXMF/dvips//|\.;\$TEXMF{/fonts/map,}{/\$progname,/pdftex,/dvips,}//'
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFMAIN '/usr/share/texmf'
-    check_texmf /etc/texmf/texmf.cnf TEXMFMAIN '/usr/share/texmf'
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf TEXMFDIST \
-          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}|/usr/share/texmf-texlive'
-    check_texmf /etc/texmf/texmf.cnf TEXMFDIST \
-          '/usr/share/texmf-{tetex,texlive}|/usr/share/texmf-{texlive,tetex}|/usr/share/texmf-texlive'
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFSYSCONFIG
-    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFSYSCONFIG
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFSYSVAR
-    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFSYSVAR
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFMAIN
-    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFMAIN
-    check_texmf /etc/texmf/texmf.d/05TeXMF.cnf 'TEXMF( |=)' TEXMFDIST
-    check_texmf /etc/texmf/texmf.cnf 'TEXMF( |=)' TEXMFDIST
-
-    if [ $checkfailed = true ]; then
-      echo "Unrecoverable errors in your configuration have been detected" >&2
-      echo "in configuration files in /etc/texmf/." >&2
-      echo "If you've not seen debconf error messages,  see your mail for details" >&2
-      echo "or use an interactive debconf frontend." >&2
-      echo >&2
-      echo "Exiting" >&2
-
-      exit 1
-    fi
-
 
     #
     # call trigger action

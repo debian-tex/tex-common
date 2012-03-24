@@ -1,3 +1,6 @@
-- Manually build acl2, find out why "/usr/bin/make mini-proveall" fails.
-- remove old tetex-packages from reportbug-control as soon as the
-  migration packages have disappeared
+* rewrite policy and user documentation!!!
+  - updmap.d handling has disappeared
+  - texmf.d handling has changed, changes to /etc/texmf/web2c/texmf.cnf
+    are NOT USER EDITABLE ANYMORE
+    exclusive use of /etc/texmf/texmf.d
+
