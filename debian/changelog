@@ -1,8 +1,10 @@
 tex-common (3.5) unstable; urgency=low
 
   * fix bashism in update-texmf (Closes: #665438, #665457)
+  * rebuild the pdfs, so that at package build time no tex system
+    is necessary (Closes: #665633)
 
- -- Norbert Preining <preining@debian.org>  Sun, 25 Mar 2012 09:36:32 +0900
+ -- Norbert Preining <preining@debian.org>  Sun, 25 Mar 2012 09:43:32 +0900
 
 tex-common (3.4) unstable; urgency=low
 
