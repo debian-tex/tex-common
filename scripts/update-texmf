@@ -74,16 +74,16 @@ cat > ${TMPTXMF} <<EOF
 EOF
 
 for i in ${CNFFILES}; do
-    if [ $i == "/etc/texmf/texmf.d/05TeXMF.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/15Plain.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/45TeXinputs.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/55Fonts.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/65BibTeX.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/75DviPS.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/80DVIPDFMx.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/85Misc.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/90TeXDoc.cnf" ] ||
-       [ $i == "/etc/texmf/texmf.d/95NonPath.cnf" ] ; then
+    if [ $i = "/etc/texmf/texmf.d/05TeXMF.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/15Plain.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/45TeXinputs.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/55Fonts.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/65BibTeX.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/75DviPS.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/80DVIPDFMx.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/85Misc.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/90TeXDoc.cnf" ] ||
+       [ $i = "/etc/texmf/texmf.d/95NonPath.cnf" ] ; then
        echo "Ignoring $i during generation of texmf.cnf, please remove manually!" >&2
        echo "%%% IGNORED: $i" >> ${TMPTXMF}
        continue
