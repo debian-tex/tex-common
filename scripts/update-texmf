@@ -36,7 +36,7 @@ else
   exit 1
 fi
 
-CNFFILES=`find ${CNFDIR} -name \*.cnf -print`
+CNFFILES=`find ${CNFDIR} -name \*.cnf -print | sort`
 if [ $DEBUG = true ]; then
   echo "Using the following files:"
   for file in $CNFFILES; do
