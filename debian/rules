@@ -62,6 +62,7 @@ install: build
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
 	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
 	cp conf/hyphen.d/00tex.cnf $(INSTDIR)/etc/texmf/hyphen.d/
+	cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
 	cp $(nonbin_installfiles) $(INSTDIR)/usr/share/tex-common/
