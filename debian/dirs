@@ -8,7 +8,6 @@ usr/share/bug/tex-common
 usr/share/lintian/overrides
 etc/texmf/fmt.d
 etc/texmf/hyphen.d
-etc/texmf/language.d
 etc/texmf/texmf.d
 var/lib/texmf/web2c
 var/lib/texmf/tex/generic/config

@@ -1,3 +1,10 @@
+tex-common (3.7) unstable; urgency=low
+
+  * UNRELEASED
+  * do not create /etc/texmf/language.d
+
+ -- Norbert Preining <preining@debian.org>  Mon, 09 Apr 2012 23:20:05 +0900
+
 tex-common (3.6) unstable; urgency=low
 
   * update-texmf: sort list of files to be included (Closes: #665767)
