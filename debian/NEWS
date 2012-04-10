@@ -1,3 +1,21 @@
+tex-common (3.7) unstable; urgency=low
+
+  * updmap file handling changed
+
+    Since version 3 of tex-common, which conincides and requires
+    TeX Live 2011 and upward, updmap now behaves differently then
+    before: It reads *all* available updmap.cfg files. That means
+    that the handling of updmap.d snippets in /etc/texmf/updmap.d
+    has changed. Packages rebuild with tex-common >= 3 will not
+    install anything in this directory.
+
+    Old, especially Debian external, font packages that still use
+    the old (updmap.d) mechanism are (as of 3.7) still supported,
+    but with warnings. Please rebuild these packages with a newer
+    tex-common.
+
+ -- Norbert Preining <preining@debian.org>  Wed, 11 Apr 2012 08:52:50 +0900
+
 tex-common (1.8) unstable; urgency=low
 
   * Manually reinstalling removed conffiles
