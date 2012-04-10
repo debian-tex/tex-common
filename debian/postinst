@@ -531,6 +531,9 @@ EOF
       fi
     fi
 
+    # remove out dated dir /etc/texmf/language.d
+    rmdir --ignore-fail-on-non-empty /etc/texmf/language.d/
+
     ;;
   *)
     ;;

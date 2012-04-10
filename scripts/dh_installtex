@@ -551,12 +551,14 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			open(CFGFILE, ">$dofilen") || 
 				error("Cannot open $dofilen for writing!");
 			verbose_print("Writing $dofilen");
-			if (($pkgprovidedfile && ($type ne "map") && 
-				 !magic_comment_present($pkgfilename)) ||
-				(!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
-				print CFGFILE "$commentchar{$type} $basefile\n";
-				foreach (@magicheader) {
-					print CFGFILE "$commentchar{$type} $_\n";
+			if ($type ne "map") {
+				if (($pkgprovidedfile &&  
+					 !magic_comment_present($pkgfilename)) ||
+					(!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
+					print CFGFILE "$commentchar{$type} $basefile\n";
+					foreach (@magicheader) {
+						print CFGFILE "$commentchar{$type} $_\n";
+					}
 				}
 			}
 			foreach (@{$pkgprovidedfilecontents{$type}}) {

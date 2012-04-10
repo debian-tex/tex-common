@@ -67,6 +67,73 @@ EOF
     done
 }
 
+
+####################################################
+#
+# STUFF THAT IS ONLY HERE TO KEEP COMPATIBILITY WITH
+# PACKAGES OUTSIDE DEBIAN THAT SHIP OLD updmap.d 
+# FILES AND WE CANNOT BREAK AGAINST THEM
+#
+####################################################
+
+# include_file <file path>
+include_file()
+{
+    file="$1"
+    printf "\n# ## From file: $file\n"
+    cat "$file"
+    echo "# End of file: $file"
+}
+
+# do_not_include_file <file path>
+do_not_include_file()
+{
+    file="$1"
+
+    cat <<EOF
+
+#
+# $file not included because either it wasn't
+# up-to-date (conffile update pending) or the package shipping it was
+# apparently removed (no corresponding .list file in
+# $SNIPPET_BASE/).
+#
+EOF
+}
+
+handle_file()
+{
+    file="$1"
+    DebPkgProvidedMaps_magic_comment="^[#%] -_- DebPkgProvidedMaps -_-"
+    # Does the file have a dpkg-new sister?
+    if [ -f "${file}.dpkg-new" ]; then
+      do_not_include_file "$file"
+    else
+      # Does the file have the magic comment?
+      if grep -E "$DebPkgProvidedMaps_magic_comment" "$file" >/dev/null; then
+        # Is the package "$file" comes from still installed?
+        if [ -d "$SNIPPET_BASE" ] \
+            && find "$SNIPPET_BASE" -type f -name '*.list' -print0 \
+            | xargs -0r cat \
+            | grep -E "^$(basename "$file" .cfg)\$" >/dev/null;
+        then
+            include_file "$file"
+        else
+            do_not_include_file "$file"
+        fi
+      else
+        include_file "$file"
+      fi
+    fi
+}
+
+#######################################################
+#
+# end of backward compatibility stuff
+#
+#######################################################
+
+
 # The list of signals to trap is taken from teTeX 3's updmap script, but they
 # have been converted to signal names because we can only rely on these on
 # POSIX systems.
@@ -153,10 +220,11 @@ for tree in $COMPONENTS ; do
         fi
     fi
 
-    # Creating the temporary file in the output directory gives it automatically
-    # the default permissions appropriate for that directory, according to the
-    # user's umask. When it is complete, we'll be able to rename it atomically to
-    # the desired output file, which will therefore have the right permissions.
+    # Creating the temporary file in the output directory gives it 
+    # automatically the default permissions appropriate for that 
+    # directory, according to the user's umask. When it is complete, 
+    # we'll be able to rename it atomically to the desired output 
+    # file, which will therefore have the right permissions.
     tempfile="updmap.$tree.new"
 
     if ! printf "" > "$tempfile" ; then
@@ -178,6 +246,33 @@ for tree in $COMPONENTS ; do
     find "$SNIPPET_BASE/$tree"  -maxdepth 1 -type f -name '*.cfg' \
         -exec cat '{}' \; >> "$tempfile"
 
+    if [ $tree = "texmf" ] ; then
+        #
+        # also include snippets in /etc/texmf/updmap.d but give
+        # big fat warnings that this might create problems!!!
+        if [ -d $SNIPPET_OLD_BASE ] ; then
+            old_files=$(find $SNIPPET_OLD_BASE -maxdepth 1 -type f -name '*.cfg' | LC_COLLATE=C sort)
+            if [ -n "$old_files" ] ; then
+                cat >&2 <<EOF
+
+
+Warning: Old configuration style found in $SNIPPET_OLD_BASE
+Warning: For now these files have been included, 
+Warning: but expect inconsistencies.
+Warning: These packages should be rebuild with tex-common.
+EOF
+                for file in $old_files ; do
+                    echo "Warning: found file: $file" >&2
+                done
+                echo "" >&2
+            fi
+
+            for file in $old_files  ; do
+                handle_file $file >> "$tempfile"
+            done
+        fi
+    fi
+
     # This is atomic.
     mv "$tempfile" "$output_file"
     updated_files="$updated_files\t$output_file\n";
@@ -192,18 +287,6 @@ for tree in $COMPONENTS ; do
     fi
 
 done
-
-#
-# check for old files
-if [ -d $SNIPPET_OLD_BASE ] ; then
-  old_files=$(find $SNIPPET_OLD_BASE -name \*.cfg)
-  if [ -n "$old_files" ] ; then
-      echo ""
-      echo "Warning: old configuration style found in $SNIPPET_OLD_BASE" >&2
-      echo "Warning: these packages should be rebuild with tex-common >= 3" >&2
-      echo ""
-  fi
-fi
 
 if [ $quiet = 0 ] && [ -n "$updated_files" ] ; then
     echo "$progname has updated the following file(s):"

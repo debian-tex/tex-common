@@ -1,9 +1,14 @@
 tex-common (3.7) unstable; urgency=low
 
-  * UNRELEASED
-  * do not create /etc/texmf/language.d
+  * do not create /etc/texmf/language.d, and try to remove it in postinst
+  * update-updmap now includes snippets from /etc/texmf/updmap.d
+    which might be installed by Debian-external packages, but gives
+    big warnings
+  * dh_installtex: fix an error in the logic when to add a (magic)
+    header to the snippets, which resulted in all the updmap snippets
+    still containing the magic header (no harm done, though!)
 
- -- Norbert Preining <preining@debian.org>  Mon, 09 Apr 2012 23:20:05 +0900
+ -- Norbert Preining <preining@debian.org>  Wed, 11 Apr 2012 08:46:18 +0900
 
 tex-common (3.6) unstable; urgency=low
 
