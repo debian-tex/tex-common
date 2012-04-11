@@ -121,7 +121,7 @@ do_triggers()
     DONE_FULL_LSR=0
     DONE_MTXRUN=0
     # currently we only support only triggers for updmap.d and
-    # language.d changes
+    # hyphen.d changes
     # because all the other calls are quite fast 
     # - call all the update-* scripts (it doesn't hurt)
     # - go through all the triggers and call the respective fmtutil/updmap
@@ -532,7 +532,9 @@ EOF
     fi
 
     # remove out dated dir /etc/texmf/language.d
-    rmdir --ignore-fail-on-non-empty /etc/texmf/language.d/
+    if [ -d /etc/texmf/language.d ] ; then 
+        rmdir --ignore-fail-on-non-empty /etc/texmf/language.d/
+    fi
 
     ;;
   *)
