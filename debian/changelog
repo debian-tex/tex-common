@@ -1,11 +1,13 @@
 tex-common (3.8) unstable; urgency=low
 
-  * UNRELEASED
   * update NEWS to include a paragraph for users
   * add a warning if one of the update-* fails due to missing checkfile,
     that the package has to be reinstalled with --force-confmiss
+  * add lost definitions of TEXMFTREES, FULLTEXMFTREES, TEXMFSYSVAR
+    to postinst, which made run mktexlsr *always* in unprotected mode
+    (Closes: #668661)
 
- -- Norbert Preining <preining@debian.org>  Fri, 13 Apr 2012 08:59:58 +0900
+ -- Norbert Preining <preining@debian.org>  Sat, 14 Apr 2012 08:41:08 +0900
 
 tex-common (3.7) unstable; urgency=low
 

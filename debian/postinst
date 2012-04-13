@@ -24,6 +24,12 @@
 
 umask 022
 
+#
+# definitions of necessary trees
+TEXMFSYSVARDIR=/var/lib/texmf
+TEXMFTREES="/usr/share/texmf $TEXMFSYSVARDIR"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf /usr/share/texlive/texmf-dist"
+
 # summary of how this script can be called:
 #        * <postinst> `configure' <most-recently-configured-version>
 #        * <old-postinst> `abort-upgrade' <new version>
