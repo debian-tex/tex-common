@@ -1,3 +1,12 @@
+tex-common (3.8) unstable; urgency=low
+
+  * UNRELEASED
+  * update NEWS to include a paragraph for users
+  * add a warning if one of the update-* fails due to missing checkfile,
+    that the package has to be reinstalled with --force-confmiss
+
+ -- Norbert Preining <preining@debian.org>  Fri, 13 Apr 2012 08:59:58 +0900
+
 tex-common (3.7) unstable; urgency=low
 
   * do not create /etc/texmf/language.d, and try to remove it in postinst

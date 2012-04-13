@@ -462,6 +462,16 @@ perform_sanity_checks()
 
     if ! [ -r "$CHECKFILE" ] ; then
         echo "$progname: cannot read $CHECKFILE" >&2
+        echo "$progname: if it was removed by accident, it has to be reinstalled with" >&2
+        # the following command does not work due to a IMNSHO stupid 
+        # apt* behaviour, it seems that Apt first wants to configure the
+        # broken package, but that will not work, so it breaks.
+        # Instead it should *first* unpack and reinstall new conffiles,
+        # and then try to configure ... so what, let everyone feel the pain!
+        # echo "$progname:   apt-get install --reinstall -o DPkg::Options::=\"--force-confmiss\" tex-common" >&2
+        echo "$progname:   t=\$(mktemp -d); cd "\$t"; apt-get download tex-common ; dpkg -i --force-confmiss tex-common*.deb" >&2
+        # this is what I want to ship out to the terminal, though ...
+        # echo "$progname: (sorry, but due to Apt stupidity there is no simple way to do that!)" >&2
         exit 1
     fi
 
