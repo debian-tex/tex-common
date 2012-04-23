@@ -207,6 +207,7 @@ do_one_hyphen_line()
     if [ ! "$synonyms" = "" ] ; then
         {
             first=1
+            OLDIFS="$IFS"
             IFS=",$IFS"
             for s in $synonyms ; do
                 if [ "$HYPHENMODE" = "etex" ] ; then
@@ -222,6 +223,7 @@ do_one_hyphen_line()
                     printf "\'$s\'" >> "$tempfile"
                 fi
             done
+            IFS="$OLDIFS"
         }
     fi
     if [ "$HYPHENMODE" = "luatex" ] ; then

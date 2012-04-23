@@ -1,3 +1,9 @@
+tex-common (3.10) unstable; urgency=low
+
+  * fix IFS error that prevents newer hyph-utf8 to get configured
+
+ -- Norbert Preining <preining@debian.org>  Mon, 23 Apr 2012 23:03:22 +0900
+
 tex-common (3.9) unstable; urgency=low
 
   * break against old version of jadetex that contains wrong and outdated
