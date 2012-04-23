@@ -1,10 +1,9 @@
 tex-common (3.9) unstable; urgency=low
 
-  * UNRELEASED
   * break against old version of jadetex that contains wrong and outdated
     format definitions (Closes: #668762)
 
- -- Norbert Preining <preining@debian.org>  Sun, 15 Apr 2012 21:04:21 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 23 Apr 2012 12:00:23 +0900
 
 tex-common (3.8) unstable; urgency=low
 
