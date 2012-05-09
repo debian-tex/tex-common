@@ -403,7 +403,8 @@ EOF
         if test -x "`which ucfr`" ; then
             ucfr --purge tex-common /etc/texmf/texmf.cnf
         fi
-        rm /etc/texmf/texmf.cnf
+        # we might have already removed this file on a failed upgrade trial
+        rm -f /etc/texmf/texmf.cnf
         rm -f /etc/texmf/texmf.cnf.ucf-new
         rm -f /etc/texmf/texmf.cnf.ucf-old
         rm -f /etc/texmf/texmf.cnf.ucf-dist
