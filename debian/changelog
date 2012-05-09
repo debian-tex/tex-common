@@ -1,4 +1,4 @@
-tex-common (3.11) UNRELEASED; urgency=low
+tex-common (3.11) unstable; urgency=low
 
   * don't break if texmf.cnf is already removed (Closes: #671610, #672269)
   * ship a html redirect file as README.Debian.html instead of a link
