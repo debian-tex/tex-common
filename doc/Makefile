@@ -52,7 +52,10 @@ install:
 	cp -R TeX-on-Debian.html $(DESTDIR)/
 	ln -s TeX-on-Debian.txt $(DESTDIR)/README.Debian.txt
 	ln -s TeX-on-Debian.pdf $(DESTDIR)/README.Debian.pdf
-	ln -s TeX-on-Debian.html/index.html $(DESTDIR)/README.Debian.html
+	# replace the link with a redirect html document, so that
+	# the links within the file actually work
+	cp README.Debian.html $(DESTDIR)/
+	#ln -s TeX-on-Debian.html/index.html $(DESTDIR)/README.Debian.html
 	cp obsolete-tex-files.txt $(DESTDIR)/
 
 	cp tds-$(TDS_VERSION)/tds.pdf $(DESTDIR)/
