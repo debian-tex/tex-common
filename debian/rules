@@ -46,8 +46,8 @@ clean:
 
         # Add here commands to clean up after the build process.
 	cd doc; $(MAKE) clean
-	-rm scripts/dh_installtex.1
-	-rm $(EPERL_FILES)
+	-rm -f scripts/dh_installtex.1
+	-rm -f $(EPERL_FILES)
 	debconf-updatepo
 
 	dh_clean 
