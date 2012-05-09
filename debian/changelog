@@ -3,6 +3,7 @@ tex-common (3.11) UNRELEASED; urgency=low
   * don't break if texmf.cnf is already removed (Closes: #671610, #672269)
   * ship a html redirect file as README.Debian.html instead of a link
     so that hrefs work (Closes: #657677)
+  * remove references to teTeX in all relevant places (Closes: #511710)
 
  -- Norbert Preining <preining@debian.org>  Thu, 10 May 2012 07:11:07 +0900
 

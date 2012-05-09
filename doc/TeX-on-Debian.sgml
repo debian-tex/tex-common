@@ -609,16 +609,6 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
       <sect>
         <heading>Note on <prgn>dvipdfm</prgn></heading>
 
-<!--
-        <p>
-          In Debian teTeX packages, <prgn>dvipdfm</prgn> uses the settings in
-          <file>/etc/papersize</file> to determine the default papersize. This
-          only takes effect if the paper geometry is not set explicitly in the
-          (La)TeX source, e.g. using the packages <tt>geometry</tt> or
-          <tt>hyperref</tt>.
-        </p>
--->
-
 	<p>
 	  The Debian TeX Live packages do evaluate the
           settings of <file>/etc/papersize</file>, please configure
@@ -965,22 +955,6 @@ kpsewhich --format=cnf texmf
 <example>
 ls /etc/texmf/texmf.d/*
 </example>
-          </item>
-
-          <item>
-            If you see something like:
-
-<example>
-Unpacking replacement tetex-base ...
-dpkg: error processing /var/cache/../tetex-base_*_all.deb (--unpack): trying to overwrite `/usr/share/texmf/dvips/config', which is also in package foo
-</example>
-
-            then the problem should be of package <package>foo</package>, not
-            of <package>tetex-base</package>.
-
-          <item>
-            The Debian maintainers will not include anything in the TeX Live
-            packages that is not already in TeX Live upstream.
           </item>
         </list>
       </p>

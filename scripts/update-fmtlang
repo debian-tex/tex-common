@@ -345,7 +345,7 @@ check_special_jadetex_xmltex()
 # handle_file <file path>
 #
 # <file path> must point to an update-fontlang configuration file (such as
-# /etc/texmf/updmap.d/05tetex-extra.cfg). The function decides whether the file
+# /etc/texmf/updmap.d/20lmodern.cfg). The function decides whether the file
 # should be included in $output_file and outputs the corresponding snippet if
 # yes, or a comment explaining why if no.
 handle_file()
@@ -382,13 +382,13 @@ handle_file()
 # merge_files
 #
 # This function expects on the standard input a sorted list of update-updmap
-# configuration files (such as /etc/texmf/updmap.d/05tetex-extra.cfg). Each of
+# configuration files (such as /etc/texmf/updmap.d/20lmodern.cfg). Each of
 # them should be listed on a line by itself with the basename being the
 # *first* component of the path, e.g.:
 #
-#   05tetex-extra.cfg/etc/texmf/updmap.d
+#   20lmodern.cfg/etc/texmf/updmap.d
 #
-# (where 05 should be at the beginning of the line, with no leading spaces, of
+# (where 20 should be at the beginning of the line, with no leading spaces, of
 # course). This is so because the sort operation presumably performed by the
 # caller of this function should sort on the basenames of the files,
 # regardless of the directories they come from.
@@ -487,9 +487,9 @@ perform_sanity_checks()
         if [ -e "$badly_located_cfg_file" ]; then
             printf "\
 Error: '$badly_located_cfg_file' should not exist when using the
-       Debian teTeX or TeX Live packages. Presumably, you used ${badly_used_prg} 
+       Debian TeX Live packages. Presumably, you used ${badly_used_prg} 
        in maintainance mode (options ${bad_options}).
-       This shouldn't be done with the Debian teTeX or TeX Live packages.
+       This shouldn't be done with the Debian TeX Live packages.
        Instead, you should edit the files in ${SYSWIDE_CONFDIR}/ and run
        ${progname}, mktexlsr and ${badly_used_prg}.
        Please remove '$badly_located_cfg_file' and try again.\n" >&2
@@ -642,8 +642,8 @@ output_file_specified=0
 if [ $syswide_mode = 1 ]; then
     output_file="$SYSWIDE_DEFAULT_OUTPUTFILE"
 else
-    # If tetex-bin is not installed, kpsewhich is not available, and we cannot 
-    # do anything
+    # If texlive-binaries is not installed, kpsewhich is not available, 
+    # and we cannot do anything
     if ! which kpsewhich >/dev/null; then
 	echo "kpsewhich isn't available. Cannot create" \
              "$DEFAULT_OUTPUTFILE_BASENAME in user-specific mode." >&2
