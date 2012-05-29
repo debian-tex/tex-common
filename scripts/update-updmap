@@ -260,6 +260,7 @@ Warning: Old configuration style found in $SNIPPET_OLD_BASE
 Warning: For now these files have been included, 
 Warning: but expect inconsistencies.
 Warning: These packages should be rebuild with tex-common.
+Warning: Please see /usr/share/doc/tex-common/NEWS.Debian.gz
 EOF
                 for file in $old_files ; do
                     echo "Warning: found file: $file" >&2

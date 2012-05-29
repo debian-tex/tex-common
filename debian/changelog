@@ -1,3 +1,9 @@
+tex-common (3.12) UNRELEASED; urgency=low
+
+  * mention NEWS.Debian in the update-updmap warning
+
+ -- Norbert Preining <preining@debian.org>  Wed, 30 May 2012 07:38:16 +0900
+
 tex-common (3.11) unstable; urgency=low
 
   * don't break if texmf.cnf is already removed (Closes: #671610, #672269)
