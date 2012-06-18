@@ -1,3 +1,14 @@
+tex-common (3.13) unstable; urgency=high
+
+  * rebuild all updmap.cfg files regardless of presence of snippets
+    this is necessary to make sure that after the last package in
+    TEXFMDEBIAN has disappeared, the updmap.cfg file is empty
+    (Closes: #677698) (urgency high, as this is actually a critical
+    bug since users cannot easily fix the updmap.cfg file without
+    manual intervention)
+
+ -- Norbert Preining <preining@debian.org>  Mon, 18 Jun 2012 10:19:41 +0900
+
 tex-common (3.12) unstable; urgency=low
 
   * mention NEWS.Debian in the update-updmap warning

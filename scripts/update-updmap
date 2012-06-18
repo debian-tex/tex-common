@@ -191,12 +191,6 @@ fi
 
 updated_files=""
 for tree in $COMPONENTS ; do
-    if [ ! -d "$SNIPPET_BASE/$tree" ] ; then
-        if [ $quiet = 0 ]; then
-            printf "$progname: skipping $tree\n";
-        fi
-        continue;
-    fi
     if [ $tree = "texmf" ] ; then
         # output_file=/usr/share/texmf/web2c/updmap.cfg
         output_file=/var/lib/texmf/updmap.cfg-DEBIAN
@@ -207,7 +201,7 @@ for tree in $COMPONENTS ; do
         echo "$progname: that cannot happen!" >&2
         exit 1
     fi
-    # TODO TODO
+
     # create output dir in any case ...
     mkdir -p $(dirname $output_file)
 
@@ -243,8 +237,10 @@ for tree in $COMPONENTS ; do
     # From now on, $tempfile must be deleted on exit; therefore, cleanup() should
     # be used.
 
-    find "$SNIPPET_BASE/$tree"  -maxdepth 1 -type f -name '*.cfg' \
-        -exec cat '{}' \; >> "$tempfile"
+    if [ -d "$SNIPPET_BASE/$tree" ] ; then
+        find "$SNIPPET_BASE/$tree"  -maxdepth 1 -type f -name '*.cfg' \
+            -exec cat '{}' \; >> "$tempfile"
+    fi
 
     if [ $tree = "texmf" ] ; then
         #
@@ -284,14 +280,14 @@ EOF
         perform_contents_check "$output_file"
     fi
     if [ $quiet = 0 ]; then
-        printf "done.\n\n"
+        printf "done.\n"
     fi
 
 done
 
 if [ $quiet = 0 ] && [ -n "$updated_files" ] ; then
     echo "$progname has updated the following file(s):"
-    printf "$updated_files\n"
+    printf "$updated_files"
     echo "If you want to enable the map files with this new file,"
     echo "you should run updmap-sys or updmap."
 fi
