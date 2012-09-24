@@ -369,23 +369,6 @@ case $action in
 
     configure|reconfigure)
 
-    # remove old language.dat file, it is not used anymore
-    if [ -f /etc/texmf/language.dat ] ; then
-        old_ldat_md5sum=`md5sum /etc/texmf/language.dat`
-        if [ ! "$old_ldat_md5sum" = fe9baf0768ade79a585a9df568dac5f6 ] && \
-            [ ! "$old_ldat_md5sum" = 1d2d9b25a41ab1cec892bd3382af7645 ]; then
-            cat > /etc/texmf/language.dat.postinst-bak <<EOF
-This file is no longer used and has therefore been renamed by the postinst 
-script of the tex-common package.
-
-Please use the mechanism described in update-language(8) instead.
-
-EOF
-            cat /etc/texmf/language.dat >> /etc/texmf/language.dat.postinst-bak
-        fi
-        rm /etc/texmf/language.dat
-    fi
-
     # if we are upgrading from a 1 < version < 3 we do the full upgrade stuff
     # we saved the second argument into $trigger, which contains now 
     # the version
