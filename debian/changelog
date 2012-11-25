@@ -1,3 +1,10 @@
+tex-common (3.14) unstable; urgency=low
+
+  * breaks texlive-lang-arab to ensure its removal during upgrades from
+    lenny -> squeeze -> wheezy (Closes: #694258) (thanks Andreas Beckmann)
+
+ -- Norbert Preining <preining@debian.org>  Sun, 25 Nov 2012 11:16:02 +0900
+
 tex-common (3.13) unstable; urgency=high
 
   * rebuild all updmap.cfg files regardless of presence of snippets
