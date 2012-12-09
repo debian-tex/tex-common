@@ -9,4 +9,3 @@ usr/sbin/update-fmtlang usr/sbin/update-language-def
 usr/sbin/update-fmtlang usr/sbin/update-language-dat
 usr/sbin/update-fmtlang usr/sbin/update-language-lua
 var/lib/texmf/ls-R-TEXMFMAIN usr/share/texmf/ls-R
-usr/share/doc/texmf usr/share/texmf/doc

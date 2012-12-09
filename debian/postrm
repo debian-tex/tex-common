@@ -27,6 +27,15 @@ action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade
 
 ## do the things we have to do always
 case $action in
+  abort-install|abort-upgrade)
+    syml=/usr/share/texmf/doc
+    if [ -n "$2" ] && dpkg --compare-versions "$2" lt "4" ; then
+      if [ -L $syml.dpkg-remove ] && [ ! -e $syml ] ; then
+        echo "Reinstatiating $syml"
+        mv $syml.dpkg-remove $syml
+      fi
+    fi
+  ;;
   remove)
     # remove TEXMFSYSVARDIR: All files and dirs are created either by
     # us, or by packages depending on us.
@@ -35,6 +44,10 @@ case $action in
     rm -rf /var/cache/fonts
     ;;
   purge)
+    if [ -L /usr/share/texmf/doc.dpkg-remove ] ; then
+      rm -f /usr/share/texmf/doc.dpkg-remove
+    fi
+
     # TODO purge ucf files
 
     # remove texmf.cnf

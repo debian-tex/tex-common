@@ -352,6 +352,14 @@ case $action in
 
     configure|reconfigure)
 
+    # if we are upgrading from before 4, remove the preinst created
+    # backup of the symlink
+    if dpkg --compare-versions "$trigger" lt "4" ; then
+      if [ -L /usr/share/texmf/doc.dpkg-remove ] ; then
+        rm -f /usr/share/texmf/doc.dpkg-remove
+      fi
+    fi
+
     # create/update texmf.cnf
     update-texmf
 
