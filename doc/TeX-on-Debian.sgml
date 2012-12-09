@@ -17,9 +17,7 @@
        packages named <package>texlive-something</package>). 
        Further information, especially for
        <em>developers</em>, can be found in the Debian TeX Policy draft in
-       <file>/usr/share/doc/tex-common/</file>. Information for people
-       upgrading from teTeX 2.0.2 in sarge is in the <file>NEWS.Debian</file>
-       file.
+       <file>/usr/share/doc/tex-common/</file>.
       </abstract>
 
       <copyright>
@@ -343,15 +341,6 @@
 	  generated files (see <ref id="sec-core-config-files">).
         </p>
 
-<!--
-        <p>
-          For users of the ukranian language,
-          the right pattern file depends on the output encoding 
-          (see <file>/usr/share/texmf-texlive/tex/generic/ukrhyph/ukrhyph.tex</file>);
-          you can also choose different rule sets in the file.
-        </p>
--->
-
       <sect id="sec-core-config-files">
         <heading>
           The files <file>texmf.cnf</file>, <file>fmtutil.cnf</file>,
@@ -607,7 +596,7 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
       </sect>
 
       <sect>
-        <heading>Note on <prgn>dvipdfm</prgn></heading>
+        <heading>Note on <prgn>dvipdfmx</prgn></heading>
 
 	<p>
 	  The Debian TeX Live packages do evaluate the
@@ -633,7 +622,8 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
           The package documentation, the Google archive, or TeX-related
           mailing-lists or newsgroups will be helpful to find out which
           parameter needs to be changed in <file>/etc/texmf/texmf.cnf</file>
-          (or rather in <file>/etc/texmf/texmf.d/95NonPath.cnf</file>, (see
+          (or rather in one of the files under 
+	  <file>/etc/texmf/texmf.d/</file>, (see
           <ref id="sec-texmfcnf-and-update-texmf">)).
         </p>
      </sect>
