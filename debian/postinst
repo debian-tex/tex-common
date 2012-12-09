@@ -339,23 +339,6 @@ do_triggers()
     esac
 }
 
-ucf_is_changed() {
-  file=$1
-  if  [ "$(ucfq --with-colons $file | cut -f 4 --delimiter=:)" = "Yes" ] ; then
-    # shell return codes are reverted!
-    return 0
-  else
-    return 1
-  fi
-}
-
-cfgval()
-{
-  cnfFile="$1"
-  opt="$2"
-  cat "$cnfFile" | sed -n 's/^'"$opt"'[  =][     =]*//p' | sed q
-}
-
 
 #################################################################
 # Here starts the real action
@@ -369,113 +352,6 @@ case $action in
 
     configure|reconfigure)
 
-    # if we are upgrading from a 1 < version < 3 we do the full upgrade stuff
-    # we saved the second argument into $trigger, which contains now 
-    # the version
-    # using the double check also guarantees that the code is NOT executed
-    # on new installs, where $trigger is empty
-    if dpkg --compare-versions "$trigger" lt "3" && dpkg --compare-versions "$trigger" gt 1 ; then
-        #
-        # whatever we do, we remove the updmap.cfg file in /var/lib/texmf/web2c!!
-        # it was created by former versions of update-updmap and disturbs the 
-        # peace in the new system!
-        rm -f /var/lib/texmf/web2c/updmap.cfg
-
-        # purge the old texmf.cnf file
-        ucf --purge /etc/texmf/texmf.cnf
-        if test -x "`which ucfr`" ; then
-            ucfr --purge tex-common /etc/texmf/texmf.cnf
-        fi
-        # we might have already removed this file on a failed upgrade trial
-        rm -f /etc/texmf/texmf.cnf
-        rm -f /etc/texmf/texmf.cnf.ucf-new
-        rm -f /etc/texmf/texmf.cnf.ucf-old
-        rm -f /etc/texmf/texmf.cnf.ucf-dist
-
-        #
-        # ucf files that will be removed
-        UCF_REMOVE="texmf.d/05TeXMF.cnf texmf.d/15Plain.cnf texmf.d/45TeXinputs.cnf texmf.d/55Fonts.cnf texmf.d/65BibTeX.cnf texmf.d/75DviPS.cnf texmf.d/80DVIPDFMx.cnf texmf.d/85Misc.cnf texmf.d/90TeXDoc.cnf texmf.d/95NonPath.cnf"
-        for i in $UCF_REMOVE ; do
-            file=/etc/texmf/$i
-            if [ -r $file ] ; then
-                if ucf_is_changed $file ; then
-                    cat > $file.postinst-bak <<EOF
-This file is no longer used and has therefore been renamed by the postinst 
-script of the tex-common package.
-EOF
-                    cat $file >> $file.postinst-bak
-                fi
-                rm $file
-                rm -f $file.ucf-old
-                rm -f $file.ucf-new
-                rm -f $file.ucf-dist
-            fi
-            ucf --purge $file
-            if test -x "`which ucfr`" ; then
-                ucfr --purge tex-common $file
-            fi
-        done
-
-        # move changed settings from 00updmap.cfg to /etc/texmf/web2c/updmap.cfg
-        if [ -r /etc/texmf/updmap.d/00updmap.cfg ]; then
-            if [ ! -r /etc/texmf/web2c/updmap.cfg ] ; then
-                # these are the defaults in tex-common < 3 
-                dflt_dvipsPreferOutline=true
-                dflt_LW35=URWkb
-                dflt_dvipsDownloadBase35=false
-                dflt_pdftexDownloadBase14=true
-                dflt_dvipdfmDownloadBase14=true
-                options="dvipsPreferOutline LW35 pdftexDownloadBase14 dvipdfmDownloadBase14 dvipsDownloadBase35"
-                SETTING_CHANGED=false
-                tempdir=`mktemp -d`
-                tempfile=`mktemp -p $tempdir`
-                trap 'cleanup' HUP INT QUIT BUS PIPE TERM
-                for option in $options; do
-                    eval $option=`cfgval /etc/texmf/updmap.d/00updmap.cfg $option`
-                    if eval [ ! "\$$option" = "\$dflt_$option" ]; then
-                        # the defaults in tex-common < 3 and TL2012 are the
-                        # same with one exception: dvipsDownloadBase35
-                        # it was false in tex-common and true in TL2012
-                        #
-                        if [ ! $option = dvipsDownloadBase35 ] ; then
-                            # options agree between TL2012 and tex-common < 3
-                            # so move the change over!
-                            SETTING_CHANGED=true
-                            eval optvalue=\$$option
-                            echo "$option = $optvalue" >> $tempfile
-                        else
-                            # dvipsDownloadBase35 case
-                            # in tex-common the default was false
-                            # now it is true
-                            # since the admin changed it from false -> true
-                            # and now it is true anyway, we don't write
-                            # anything for this case
-                            :
-                        fi
-
-                    fi
-                done
-                if [ "$SETTING_CHANGED" = "true" ]; then
-                    mkdir -p /etc/texmf/web2c/
-                    mv $tempfile /etc/texmf/web2c/updmap.cfg
-                fi
-            fi
-            rm /etc/texmf/updmap.d/00updmap.cfg
-            rm -f /etc/texmf/updmap.d/00updmap.cfg.ucf-old
-            rm -f /etc/texmf/updmap.d/00updmap.cfg.ucf-new
-            rm -f /etc/texmf/updmap.d/00updmap.cfg.ucf-dist
-            ucf --purge /etc/texmf/updmap.d/00updmap.cfg
-            if test -x "`which ucfr`" ; then
-                ucfr --purge tex-common /etc/texmf/updmap.d/00updmap.cfg
-            fi
-            # try to remove the now hopefully empty dir
-            rmdir --ignore-fail-on-non-empty /etc/texmf/updmap.d 
-        fi
-
-    # end of upgrade from versions < 3
-    fi    
-
-    # after we have removed the left overs from old times
     # create/update texmf.cnf
     update-texmf
 

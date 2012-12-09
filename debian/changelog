@@ -1,3 +1,10 @@
+tex-common (3.15) UNRELEASED; urgency=low
+
+  * UNRELEASED
+  * remove stale code that deals with upgrades from versions < 3
+
+ -- Norbert Preining <preining@debian.org>  Sun, 09 Dec 2012 10:39:56 +0900
+
 tex-common (3.14) unstable; urgency=low
 
   * breaks texlive-lang-arab to ensure its removal during upgrades from
