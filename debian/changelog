@@ -1,20 +1,13 @@
-tex-common (4.00~) UNRELEASED; urgency=low
+tex-common (4.00) experimental; urgency=low
 
-  * UNRELEASED
   * drop the link from /u/s/texmf/doc -> /u/s/doc/texmf
     here was never a need for having /usr/share/doc/texmf at all
   * break with all packages having installed files into 
     /usr/share/texmf/doc
-
- -- Norbert Preining <preining@debian.org>  Sun, 09 Dec 2012 10:49:35 +0900
-
-tex-common (3.15) UNRELEASED; urgency=low
-
-  * UNRELEASED
   * remove stale code that deals with upgrades from versions < 3
   * adapt documentation a bit to reality
 
- -- Norbert Preining <preining@debian.org>  Sun, 09 Dec 2012 10:44:26 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 17 Dec 2012 22:42:13 +0900
 
 tex-common (3.14) unstable; urgency=low
 

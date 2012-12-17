@@ -1,13 +1,15 @@
-tex-common (4.00) UNRELEASED; urgency=low
+tex-common (4.00) experimental; urgency=low
 
   * documentation file changes:
     the link from /usr/share/texmf/doc to /usr/share/doc/texmf
     is dropped. That means that the documentation of packages putting
     them into /usr/share/doc/texmf will not be found by texdoc
     anymore. Package should be rebuild with an added dependency
-    on tex-common (>= 4~)
+    on tex-common (>= 4~) and put documentation to be found by texdoc
+    into /usr/share/texmf/doc (according to TDS standard), and other
+    docs into /usr/share/doc/$package, but nothing into /usr/share/doc/texmf
 
- -- Norbert Preining <preining@debian.org>  Mon, 12 Nov 2012 14:08:41 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 17 Dec 2012 22:43:14 +0900
 
 tex-common (3.7) unstable; urgency=low
 
