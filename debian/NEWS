@@ -1,3 +1,15 @@
+tex-common (4.01) experimental; urgency=low
+
+  * moving files from /usr/share/doc/texmf to /usr/share/texmf/doc
+    when using dh_installtex:
+    - please Build-depend on tex-common (>= 4.01)
+    - install the files in /usr/share/texmf/doc
+    no further steps are necessary, dh_installtex automatically adds
+    the necessary dependencies (either >= 4 if /usr/share/texmf/doc
+    is present in the package, otherwise >= 3)
+
+ -- Norbert Preining <preining@debian.org>  Wed, 19 Dec 2012 13:09:07 +0900
+
 tex-common (4.00) experimental; urgency=low
 
   * documentation file changes:

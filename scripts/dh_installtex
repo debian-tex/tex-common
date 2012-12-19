@@ -210,6 +210,10 @@ C</usr/share/texlive/texmf-dist>.
 
 =head1 NOTES
 
+"dh_installtex" adds a dependency relation onto tex-common to misc:Depends.
+If files are installed into /usr/share/texmf/doc, the version is >=4,
+otherwise >=3.
+
 Note that this command is not idempotent. "dh_clean -k" should be called
 between invocations of this command, unless using the B<-n> option.
 Otherwise, it may cause multiple instances of the same text to be added
@@ -668,9 +672,19 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodo|");
 	}
 
+	# deduce dependency level
+	# from v3 to v4 we removed the link 
+	# /usr/share/texmf/doc -> /usr/share/doc/texmf
+	# thus, if packages are installing files into /usr/share/texmf/doc
+	# then it should depend on tex-common >= 4, otherwise >=3 is enough
+	my $tcvers = ">= 3";
+	if (-d "$tmp/usr/share/texmf/doc") {
+		$tcvers = ">= 4";
+	}
+
 	# for trigger support
 	addsubstvar($package, "misc:Depends", "dpkg", ">= 1.14.18");
-	addsubstvar($package, "misc:Depends", "tex-common", ">= 3");
+	addsubstvar($package, "misc:Depends", "tex-common", $tcvers);
 }
 
 =head1 SEE ALSO
