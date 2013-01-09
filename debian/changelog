@@ -16,6 +16,13 @@ tex-common (4.00) experimental; urgency=low
 
  -- Norbert Preining <preining@debian.org>  Mon, 17 Dec 2012 22:42:13 +0900
 
+tex-common (3.15) unstable; urgency=high
+
+  * break against old latex-cjk-chinese shipping not working hyphenation
+    definitons (Closes: #697669)
+
+ -- Norbert Preining <preining@debian.org>  Thu, 10 Jan 2013 07:45:09 +0900
+
 tex-common (3.14) unstable; urgency=low
 
   * breaks texlive-lang-arab to ensure its removal during upgrades from
