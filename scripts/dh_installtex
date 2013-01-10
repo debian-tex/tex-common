@@ -638,8 +638,17 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			push @fmtdata, "$format";
 			if ($doformatlinks && ($format ne $engine)) {
 				my $formatlink = "$tmp/usr/bin/$format";
-				if ( -e $formatlink ) {
-					warning("/usr/bin/$format already exists, skipping");
+				if ( -l $formatlink ) {
+					if (readlink($formatlink) eq $engine) {
+						# correct link generated, only give message
+						warning ("/usr/bin/$format link already correctly created, skipping recreation");
+					} else {
+						# it is a link but pointing to something different
+						# error out
+						error ("/usr/bin/$format link points to something different but $engine!");
+					}
+				} elsif ( -e $formatlink ) {
+					error ("/usr/bin/$format already exists and not a link, exiting");
 				} else {
 					doit("mkdir","-p","$tmp/usr/bin");
 					doit("ln","-s","$engine","$formatlink");
