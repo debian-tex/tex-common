@@ -1,9 +1,9 @@
-tex-common (4.02) UNRELEASED; urgency=low
+tex-common (4.02) unstable; urgency=low
 
   * dh_installtex: properly deal with already existing format links
     (error out if present and not agreeing)
 
- -- Norbert Preining <preining@debian.org>  Fri, 11 Jan 2013 08:27:42 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 07 May 2013 11:21:54 +0900
 
 tex-common (4.01) experimental; urgency=low
 
