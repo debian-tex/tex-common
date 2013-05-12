@@ -28,6 +28,7 @@ SYSPATH_BASE=/var/lib/texmf
 
 HYPHENMODE=nohyphen
 HEADFILE=/not/a/real/file/we/ever/will/see/on/a/system
+HEADBACK=/not/a/real/file/we/ever/will/see/on/a/system
 
 if [ "$progname" = "update-language" ] ; then
     update-language-dat
@@ -36,7 +37,8 @@ if [ "$progname" = "update-language" ] ; then
     exit 0
 elif [ "$progname" = "update-language-lua" ] ; then
     CNFDIR=hyphen.d
-    HEADFILE=/usr/share/texlive/texmf/tex/generic/config/language.us.lua
+    HEADFILE=/usr/share/texlive/texmf-dist/tex/generic/config/language.us.lua
+    HEADBACK=/usr/share/texlive/texmf/tex/generic/config/language.us.lua
     HYPHENMODE=luatex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
@@ -54,7 +56,8 @@ elif [ "$progname" = "update-language-lua" ] ; then
     SHORT_DESC="Generate language.dat.lua, the hyphenation configuration file for luaTeX and friends"
 elif [ "$progname" = "update-language-def" ] ; then
     CNFDIR=hyphen.d
-    HEADFILE=/usr/share/texlive/texmf/tex/generic/config/language.us.def
+    HEADFILE=/usr/share/texlive/texmf-dist/tex/generic/config/language.us.def
+    HEADBACK=/usr/share/texlive/texmf/tex/generic/config/language.us.def
     HYPHENMODE=etex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
@@ -72,7 +75,8 @@ elif [ "$progname" = "update-language-def" ] ; then
     SHORT_DESC="Generate language.def, the hyphenation configuration file for eTeX and friends"
 elif [ "$progname" = "update-language-dat" ] ; then
     CNFDIR=hyphen.d
-    HEADFILE=/usr/share/texlive/texmf/tex/generic/config/language.us
+    HEADFILE=/usr/share/texlive/texmf-dist/tex/generic/config/language.us
+    HEADBACK=/usr/share/texlive/texmf/tex/generic/config/language.us
     HYPHENMODE=latex
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
@@ -801,6 +805,8 @@ if [ ! "$HYPHENMODE" = "nohyphen" ] ; then
     # we are creating a hyphenation file, include the head file
     if [ -r "$HEADFILE" ] ; then
         cat "$HEADFILE" >> "$tempfile"
+    elif [ -r "$HEADBACK" ] ; then
+        cat "$HEADBACK" >> "$tempfile"
     else
         echo "${WRITECC} HEADFILE $deffile not found" >> "$tempfile"
     fi

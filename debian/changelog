@@ -1,3 +1,10 @@
+tex-common (4.03) unstable; urgency=low
+
+  * update-fmtlang: make sure we find the head files in both the old
+    (<= TL2012, ie texlive/texmf/) and new (>= TL2013, ie texlive/texmf-dist)
+
+ -- Norbert Preining <preining@debian.org>  Sun, 12 May 2013 19:09:17 +0900
+
 tex-common (4.02) unstable; urgency=low
 
   * dh_installtex: properly deal with already existing format links
