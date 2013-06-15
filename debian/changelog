@@ -3,8 +3,9 @@ tex-common (4.04) unstable; urgency=low
   * remove thailatex's patched version of babel.sty (Closes: #712297)
   * break against thailatex versions older than 2013 to make sure that
     no patching of babel.sty occurs.
+  * bump standards version to 3.9.4, no changes necessary
 
- -- Norbert Preining <preining@debian.org>  Sat, 15 Jun 2013 16:58:45 +0900
+ -- Norbert Preining <preining@debian.org>  Sat, 15 Jun 2013 17:00:51 +0900
 
 tex-common (4.03) unstable; urgency=low
 
