@@ -363,6 +363,15 @@ case $action in
     # create/update texmf.cnf
     update-texmf
 
+    # remove outdated thailatex babel.sty
+    if [ -f $TEXMFSYSVARDIR/tex/generic/babel/babel.sty ] ; then
+        echo "Removing outdated babel.sty from thailatex."
+        rm $TEXMFSYSVARDIR/tex/generic/babel/babel.sty
+        rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex/generic/babel
+        rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex/generic
+        rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex
+    fi
+
     #
     # call trigger action
     # that calls mktexlsr if possible, and update-*
@@ -409,6 +418,7 @@ case $action in
     if [ -d /etc/texmf/language.d ] ; then 
         rmdir --ignore-fail-on-non-empty /etc/texmf/language.d/
     fi
+
 
     ;;
   *)
