@@ -1,3 +1,9 @@
+tex-common (4.05) UNRELEASED; urgency=low
+
+  * fix man page of update-updmap (Closes: #717070)
+
+ -- Norbert Preining <preining@debian.org>  Wed, 17 Jul 2013 12:40:37 +0900
+
 tex-common (4.04) unstable; urgency=low
 
   * remove thailatex's patched version of babel.sty (Closes: #712297)
