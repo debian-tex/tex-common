@@ -4,8 +4,9 @@ tex-common (5.00) experimental; urgency=low
   * check for proper installation of texlive-binaries before calling
     mtxrun, otherwise we might have a broken luatex
   * only call mktexlsr for tl/texmf-dist tree, the tl/texmf tree is gone
+  * bump standards to 3.9.5, no changes necessary
 
- -- Norbert Preining <preining@debian.org>  Thu, 22 May 2014 10:23:09 +0900
+ -- Norbert Preining <preining@debian.org>  Thu, 22 May 2014 10:25:31 +0900
 
 tex-common (4.04) unstable; urgency=low
 
