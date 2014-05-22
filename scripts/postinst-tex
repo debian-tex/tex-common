@@ -15,7 +15,7 @@
 #
 
 TEXMFTREES="/usr/share/texmf /var/lib/texmf"
-FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf /usr/share/texlive/texmf-dist"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf-dist"
 
 # Tell if kpsewhich works. If this is the case:
 #
