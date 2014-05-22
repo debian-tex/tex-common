@@ -22,9 +22,21 @@ FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf-dist"
 #   1. kpsewhich is installed and;
 #
 #   2. libkpathsea is configured.
-dhit_libkpathsea_configured ()
+dhit_texlive_binaries_configured ()
 {
-    kpsewhich --version >/dev/null 2>&1
+    # unfortunately this seems not to work anymore, we have to make
+    # sure that texlive-binaries is properly configured, otherwise
+    # a squeeze in libkpathsea and engines might occur
+    # kpsewhich --version >/dev/null 2>&1
+    stat=$(dpkg-query -W -f='${Status}' texlive-binaries 2>/dev/null || true)
+    case "$stat" in
+        "install ok installed")
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }
 
 dhit_update_lsr_files ()
@@ -95,7 +107,7 @@ case "$1" in
         update-fmtutil
         # All of the following needs an installed and configured
         # basic TeX system, so check this.
-        if dhit_libkpathsea_configured; then
+        if dhit_texlive_binaries_configured; then
             #
             # if we are doing something with formats we have to update
             # the lsr database first

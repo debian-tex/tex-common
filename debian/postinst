@@ -28,7 +28,7 @@ umask 022
 # definitions of necessary trees
 TEXMFSYSVARDIR=/var/lib/texmf
 TEXMFTREES="/usr/share/texmf $TEXMFSYSVARDIR"
-FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf /usr/share/texlive/texmf-dist"
+FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf-dist"
 
 # summary of how this script can be called:
 #        * <postinst> `configure' <most-recently-configured-version>
@@ -54,9 +54,21 @@ cleanup()
   exit $rc
 }
 
-dhit_libkpathsea_configured ()
+dhit_texlive_binaries_configured ()
 {
-    kpsewhich --version >/dev/null 2>&1
+    # unfortunately this seems not to work anymore, we have to make
+    # sure that texlive-binaries is properly configured, otherwise
+    # a squeeze in libkpathsea and engines might occur
+    # kpsewhich --version >/dev/null 2>&1
+    stat=$(dpkg-query -W -f='${Status}' texlive-binaries 2>/dev/null || true)
+    case "$stat" in
+        "install ok installed")
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }
 
 dhit_build_format ()
@@ -81,7 +93,7 @@ dhit_build_format ()
 run_mtxrun_if_possible()
 {
     # code from postinst-tex
-    if dhit_libkpathsea_configured; then
+    if dhit_texlive_binaries_configured; then
         if which mtxrun >/dev/null; then
             # we also have to check that texlive-base is installed
             # and configured, otherwise we cannot be sure that
@@ -92,17 +104,6 @@ run_mtxrun_if_possible()
             # - it returns 1
             # so shut both errors up
             stat=$(dpkg-query -W -f='${Status}' context 2>/dev/null || true)
-            case "$stat" in
-                "install ok installed")
-                    do_it=1
-                    ;;
-                *)
-                    do_it=0
-                    ;;
-            esac
-            # we also need to make sure that texlive-binaries are correctly
-            # installed, otherwise luatex (called by mtxrun) might not work
-            stat=$(dpkg-query -W -f='${Status}' texlive-binaries 2>/dev/null || true)
             case "$stat" in
                 "install ok installed")
                     do_it=1
@@ -157,7 +158,7 @@ do_triggers()
     case " $trigger " in
         *" texmf-lsrfull "*)
             # code from postinst-tex
-            if dhit_libkpathsea_configured; then
+            if dhit_texlive_binaries_configured; then
                 # mktexlsr may not be present
                 if which mktexlsr >/dev/null; then
                     tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
@@ -191,7 +192,7 @@ do_triggers()
           # only to lsr if we haven't done lsrfull
           if [ $DONE_FULL_LSR = 0 ] ; then
             # code from postinst-tex
-            if dhit_libkpathsea_configured; then
+            if dhit_texlive_binaries_configured; then
                 # mktexlsr may not be present
                 if which mktexlsr >/dev/null; then
                     tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
@@ -223,7 +224,7 @@ do_triggers()
     case " $trigger " in
         *" texmf-map "*) 
          # code from postinst-tex
-         if dhit_libkpathsea_configured; then
+         if dhit_texlive_binaries_configured; then
              if which updmap-sys >/dev/null; then
                     # we also have to check that texlive-base is installed
                     # and configured, otherwise we cannot be sure that
@@ -252,7 +253,7 @@ do_triggers()
                         # see bug report #607857
                         # instead of that we call mktexlsr $TEXMFSYSVARDIR 
                         # afterwards. This can be done without checks as
-                        # we know that dhit_libkpathsea_configured and
+                        # we know that dhit_texlive_binaries_configured and
                         # since mktexlsr and updmap are in the same package
                         # and we checked for updmap already
                         if updmap-sys --nohash > $tempfile 2>&1 ; then
@@ -295,7 +296,7 @@ do_triggers()
     # postinst will often be called for several triggers at once.
     case " $trigger " in
         *" texmf-hyphen "*) 
-          if dhit_libkpathsea_configured; then
+          if dhit_texlive_binaries_configured; then
             if which kpsewhich >/dev/null; then
               if which fmtutil-sys >/dev/null; then
                 # code from postinst.tex
@@ -396,7 +397,7 @@ case $action in
     # we also have to check that texlive-base is installed
     # and configured, otherwise we cannot be sure that
     # all necessary basic files are present
-    if dhit_libkpathsea_configured; then
+    if dhit_texlive_binaries_configured; then
         # see above for information on dpkg-query usage
         stat=$(dpkg-query -W -f='${Status}' texlive-base  2>/dev/null || true)
         case "$stat" in

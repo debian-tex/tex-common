@@ -1,12 +1,15 @@
 tex-common (5.00) experimental; urgency=low
 
   * fix man page of update-updmap (Closes: #717070)
-  * check for proper installation of texlive-binaries before calling
-    mtxrun, otherwise we might have a broken luatex
+  * exchange the check for kpsewhich running with a check for
+    texlive-binaries being installed/configured. Otherwise we might
+    run into library upgrade problems (missing symbols due to missing
+    so bump upstream). This is done both in the debian/postinst as
+    well as the postinst-tex code for dh_installtex.
   * only call mktexlsr for tl/texmf-dist tree, the tl/texmf tree is gone
   * bump standards to 3.9.5, no changes necessary
 
- -- Norbert Preining <preining@debian.org>  Thu, 22 May 2014 10:25:31 +0900
+ -- Norbert Preining <preining@debian.org>  Thu, 22 May 2014 10:53:13 +0900
 
 tex-common (4.04) unstable; urgency=low
 
