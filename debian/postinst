@@ -100,6 +100,17 @@ run_mtxrun_if_possible()
                     do_it=0
                     ;;
             esac
+            # we also need to make sure that texlive-binaries are correctly
+            # installed, otherwise luatex (called by mtxrun) might not work
+            stat=$(dpkg-query -W -f='${Status}' texlive-binaries 2>/dev/null || true)
+            case "$stat" in
+                "install ok installed")
+                    do_it=1
+                    ;;
+                *)
+                    do_it=0
+                    ;;
+            esac
             if [ "$do_it" = 1 ] ; then
                 tempfile=$(mktemp -p /tmp mtxrun.XXXXXXXX)
                 printf "Running mtxrun --generate. This may take some time... "

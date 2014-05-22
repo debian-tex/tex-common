@@ -1,8 +1,10 @@
-tex-common (4.05) UNRELEASED; urgency=low
+tex-common (5.00) experimental; urgency=low
 
   * fix man page of update-updmap (Closes: #717070)
+  * check for proper installation of texlive-binaries before calling
+    mtxrun, otherwise we might have a broken luatex
 
- -- Norbert Preining <preining@debian.org>  Wed, 17 Jul 2013 12:40:37 +0900
+ -- Norbert Preining <preining@debian.org>  Thu, 22 May 2014 10:21:09 +0900
 
 tex-common (4.04) unstable; urgency=low
 
