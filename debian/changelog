@@ -1,3 +1,11 @@
+tex-common (5.02) unstable; urgency=medium
+
+  * call fmtutil-sys with --no-error-if-no-engine=luajittex following
+    upstream, as there are some architectures that do not support
+    luajittex
+
+ -- Norbert Preining <preining@debian.org>  Fri, 30 May 2014 17:58:17 +0900
+
 tex-common (5.01) unstable; urgency=medium
 
   * upload to unstable
