@@ -81,7 +81,7 @@ dhit_build_format ()
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
     printf "Building format(s) $*.\n\tThis may take some time... "
-    if fmtutil-sys --no-error-if-no-engine=luajittex "$@" > $tempfile 2>&1 ; then
+    if fmtutil-sys "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
     else
