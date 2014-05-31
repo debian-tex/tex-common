@@ -17,11 +17,6 @@
 TEXMFTREES="/usr/share/texmf /var/lib/texmf"
 FULLTEXMFTREES="$TEXMFTREES /usr/share/texlive/texmf-dist"
 
-# Tell if kpsewhich works. If this is the case:
-#
-#   1. kpsewhich is installed and;
-#
-#   2. libkpathsea is configured.
 dhit_texlive_binaries_configured ()
 {
     # unfortunately this seems not to work anymore, we have to make
@@ -57,24 +52,6 @@ dhit_update_lsr_files ()
     fi
 }
 
-
-dhit_build_hyphen_format_if_format_exists ()
-{
-    v=$(kpsewhich -var-value TEXMFSYSVAR)
-    c=$(kpsewhich -var-value TEXMFSYSCONFIG)
-    TEXMFVAR="$v"
-    TEXMFCONFIG="$c"
-    export TEXMFVAR TEXMFCONFIG
-    fmtcnffile=$(kpsewhich --format='web2c files' fmtutil.cnf)
-    # this is slow, and since we hope/assure that all ini files
-    # are installed if the format is active, we don't need the
-    # extra check fmtutil does when called with catcfg
-    # X=$(fmtutil-sys --catcfg | grep "^$1[[:space:]]" || true)
-    X=$(grep "^[[:space:]]*$1[[:space:]]" $fmtcnffile || true)
-    if [ -n "$X" ] ; then
-        dhit_build_format --byhyphen "$2"
-    fi
-}
 
 dhit_build_format ()
 {
