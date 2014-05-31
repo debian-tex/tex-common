@@ -1,3 +1,11 @@
+* remove all the luajittex bla bla from tex-common
+* disable luajittex format in texlive-base
+
+
+* move all the trigger code into update-texmf-conf
+* make distinction between trigger call and normal clal
+
+
 * rewrite policy and user documentation!!!
   - updmap.d handling has disappeared
   - texmf.d handling has changed, changes to /etc/texmf/web2c/texmf.cnf
