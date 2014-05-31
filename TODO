@@ -1,3 +1,8 @@
+* long term aim: fully trigger supported
+  - fmtutil must go multi
+  - move fmtutil.cnf snippets to /var/lib/tex-common
+  - is this good? if we do this we always have to call fmtutil-sys --all
+    ... which might be a pain ...
 * rewrite policy and user documentation!!!
   - updmap.d handling has disappeared
   - texmf.d handling has changed, changes to /etc/texmf/web2c/texmf.cnf
