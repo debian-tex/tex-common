@@ -2,8 +2,9 @@ tex-common (5.03) unstable; urgency=medium
 
   * simplify hyphen trigger action with --no-error-if-no-format
   * two new triggers: refresh formats and rebuild all formats
+  * move the texmf-map trigger to a file trigger
 
- -- Norbert Preining <preining@debian.org>  Sat, 31 May 2014 13:20:00 +0900
+ -- Norbert Preining <preining@debian.org>  Sat, 31 May 2014 14:59:22 +0900
 
 tex-common (5.02) unstable; urgency=medium
 

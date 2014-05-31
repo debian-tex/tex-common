@@ -1,6 +1,6 @@
 interest texmf-hyphen
-interest texmf-map
 interest texmf-lsr
 interest texmf-lsrfull
 interest texmf-fmtrefresh
 interest texmf-fmtall
+interest /var/lib/tex-common/fontmap-cfg

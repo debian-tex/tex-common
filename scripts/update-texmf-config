@@ -59,8 +59,12 @@ fi
 if [ $DOHYPHEN = on ] ; then
   dpkg-trigger texmf-hyphen
 fi
-if [ $DOUPDMAP = on ] ; then
-  dpkg-trigger texmf-map
-fi
+#
+# not needed anymore, we are using a file trigger
+# we probably should warn during build time that
+# update-texmf-conf map is not needed anymore
+#if [ $DOUPDMAP = on ] ; then
+#  dpkg-trigger texmf-map
+#fi
 
 # vim:set expandtab tabstop=2: #

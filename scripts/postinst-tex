@@ -102,7 +102,6 @@ case "$1" in
         # In fact it *does* hurt not calling them since we might
         # have formats installed and we call with --all, so not the
         # trigger action is done, but the postinst runs the fmtutil-sys call
-        update-updmap --quiet
         update-language
         update-fmtutil
         # All of the following needs an installed and configured
@@ -111,6 +110,9 @@ case "$1" in
             #
             # if we are doing something with formats we have to update
             # the lsr database first
+            #
+            # As soon as fmtutil has gone multi, we can drop all of
+            # that at move it completely to tex-common with file triggers!
             do_lsr=0
             for i in #WHATTODO# ; do
                 if [ "$i" = lsrfull ] ; then
@@ -141,9 +143,6 @@ case "$1" in
                     if [ $do_lsr = 0 ] ; then
                         update-texmf-config lsrfull
                     fi
-                fi
-                if [ "$i" = map ] ; then
-                    update-texmf-config map
                 fi
                 if [ "$i" = allformats ] ; then
                     dhit_build_format --all

@@ -134,12 +134,6 @@ do_triggers()
     update-language
     update-fmtutil
     #
-    # the following triggers are reacted upon and in that order:
-    # - texmf-lsr: call mktexlsr if present
-    # - texmf-lsrfull: call mktexlsr if present
-    # - texmf-map: call updmap-sys
-    # - texmf-hyphen: if texmf-format hasn't been triggered call 
-    #                 fmtutil-sys --byhyphen ...
     case " $trigger " in
         *" texmf-lsrfull "*)
             if dhit_base_bin_configured ; then
@@ -199,7 +193,8 @@ do_triggers()
     # Generally each trigger name should be tested for separately, as the
     # postinst will often be called for several triggers at once.
     case " $trigger " in
-        *" texmf-map "*) 
+        *" /var/lib/tex-common/fontmap-cfg "*) 
+            update-updmap --quiet
             if dhit_base_bin_configured; then
                 tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
                 printf "Running updmap-sys. This may take some time... "
