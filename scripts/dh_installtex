@@ -681,19 +681,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodo|");
 	}
 
-	# deduce dependency level
-	# from v3 to v4 we removed the link 
-	# /usr/share/texmf/doc -> /usr/share/doc/texmf
-	# thus, if packages are installing files into /usr/share/texmf/doc
-	# then it should depend on tex-common >= 4, otherwise >=3 is enough
-	my $tcvers = ">= 3";
-	if (-d "$tmp/usr/share/texmf/doc") {
-		$tcvers = ">= 4";
-	}
-
 	# for trigger support
 	addsubstvar($package, "misc:Depends", "dpkg", ">= 1.14.18");
-	addsubstvar($package, "misc:Depends", "tex-common", $tcvers);
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 5");
 }
 
 =head1 SEE ALSO
