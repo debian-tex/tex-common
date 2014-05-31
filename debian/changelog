@@ -1,3 +1,9 @@
+tex-common (5.03) UNRELEASED; urgency=medium
+
+  * simplify hyphen trigger action with --no-error-if-no-format
+
+ -- Norbert Preining <preining@debian.org>  Sat, 31 May 2014 13:15:16 +0900
+
 tex-common (5.02) unstable; urgency=medium
 
   * call fmtutil-sys with --no-error-if-no-engine=luajittex following
