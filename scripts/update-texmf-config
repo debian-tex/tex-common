@@ -5,7 +5,7 @@
 # updmap.cfg, language.dat, fmtutil.cnf, and calling the respective
 # triggers to allow tex-common trigger action to be run.
 #
-# Copyright (C) 2009 Norbert Preining
+# Copyright (C) 2009-2014 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ DOLSR=off
 DOLSRFULL=off
 DOHYPHEN=off
 DOUPDMAP=off
+DOFMTALL=off
+DOFMTREFRESH=off
 
 # for upgrading purpose we accept language as synonym for hyphen, and
 # updmap for map
@@ -40,8 +42,13 @@ while [ $# -ne 0 ]; do
       DOLSR=on
       shift;;
     lsrfull)
-      DOLSR=off
       DOLSRFULL=on
+      shift;;
+    fmtrefresh)
+      DOFMTREFRESH=on
+      shift;;
+    fmtall)
+      DOFMTALL=on
       shift;;
     *)
       echo "unknown option: $1"
@@ -50,11 +57,24 @@ while [ $# -ne 0 ]; do
   esac
 done
 
+# call the resepctive triggers, make sure that
+# we turn of superficial things on the way
+# thus, the order here is important!
+if [ $DOLSRFULL = on ] ; then
+  DOLSR=off
+  dpkg-trigger texmf-lsrfull
+fi
 if [ $DOLSR = on ] ; then
   dpkg-trigger texmf-lsr
 fi
-if [ $DOLSRFULL = on ] ; then
-  dpkg-trigger texmf-lsrfull
+if [ $DOFMTALL = on ] ; then
+  DOFMTREFRESH=off
+  DOHYPHEN=off
+  dpkg-trigger texmf-fmtall
+fi
+if [ $DOFMTREFRESH = on ] ; then
+  DOHYPHEN=off
+  dpkg-trigger texmf-fmtrefresh
 fi
 if [ $DOHYPHEN = on ] ; then
   dpkg-trigger texmf-hyphen
