@@ -54,13 +54,12 @@ cleanup()
   exit $rc
 }
 
-dhit_texlive_binaries_configured ()
+#
+# dpkg-query returns 1 if the package is not installed or not
+# present, and echos out strange things, we have to override this.
+dhit_package_configured()
 {
-    # unfortunately this seems not to work anymore, we have to make
-    # sure that texlive-binaries is properly configured, otherwise
-    # a squeeze in libkpathsea and engines might occur
-    # kpsewhich --version >/dev/null 2>&1
-    stat=$(dpkg-query -W -f='${Status}' texlive-binaries 2>/dev/null || true)
+    stat=$(dpkg-query -W -f='${Status}' $1 2>/dev/null || true)
     case "$stat" in
         "install ok installed")
             return 0
@@ -71,9 +70,17 @@ dhit_texlive_binaries_configured ()
     esac
 }
 
+dhit_base_bin_configured ()
+{
+    we_are_ready=0
+    if ! dhit_package_configured texlive-binaries ; then
+        return 1
+    fi
+    dhit_package_configured texlive-base
+}
+
 dhit_build_format ()
 {
-
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
     printf "Building format(s) $*.\n\tThis may take some time... "
     if fmtutil-sys --no-error-if-no-engine=luajittex "$@" > $tempfile 2>&1 ; then
@@ -92,43 +99,21 @@ dhit_build_format ()
 
 run_mtxrun_if_possible()
 {
-    # code from postinst-tex
-    if dhit_texlive_binaries_configured; then
-        if which mtxrun >/dev/null; then
-            # we also have to check that texlive-base is installed
-            # and configured, otherwise we cannot be sure that
-            # all necessary basic files are present
-            #
-            # dpkg-query has two defects wrt not existing packages
-            # - it is noisy to stderr
-            # - it returns 1
-            # so shut both errors up
-            stat=$(dpkg-query -W -f='${Status}' context 2>/dev/null || true)
-            case "$stat" in
-                "install ok installed")
-                    do_it=1
-                    ;;
-                *)
-                    do_it=0
-                    ;;
-            esac
-            if [ "$do_it" = 1 ] ; then
-                tempfile=$(mktemp -p /tmp mtxrun.XXXXXXXX)
-                printf "Running mtxrun --generate. This may take some time... "
-                if mtxrun --generate > $tempfile 2>&1 ; then
-                    rm -f $tempfile
-                    echo "done."
-                else
-                    exec >&2
-                    echo
-                    echo "mtxrun --generate failed. Output has been stored in"
-                    echo "$tempfile"
-                    echo "Please include this file if you report a bug."
-                    echo
-                    exit 1
-    	        fi
-            fi
-        fi
+    if dhit_package_configured context ; then
+        tempfile=$(mktemp -p /tmp mtxrun.XXXXXXXX)
+        printf "Running mtxrun --generate. This may take some time... "
+        if mtxrun --generate > $tempfile 2>&1 ; then
+            rm -f $tempfile
+            echo "done."
+        else
+            exec >&2
+            echo
+            echo "mtxrun --generate failed. Output has been stored in"
+            echo "$tempfile"
+            echo "Please include this file if you report a bug."
+            echo
+            exit 1
+	    fi
     fi
 }
 
@@ -157,30 +142,26 @@ do_triggers()
     #                 fmtutil-sys --byhyphen ...
     case " $trigger " in
         *" texmf-lsrfull "*)
-            # code from postinst-tex
-            if dhit_texlive_binaries_configured; then
-                # mktexlsr may not be present
-                if which mktexlsr >/dev/null; then
-                    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
-                    printf "Running mktexlsr. This may take some time... "
-                    if mktexlsr $FULLTEXMFTREES > $tempfile 2>&1 ; then
-                        DONE_FULL_LSR=1
-                        rm -f $tempfile
-                        echo "done."
-                    else
-                        exec >&2
-                        echo
-                        echo "mktexlsr $FULLTEXMFTREES failed. Output has been stored in"
-                        echo "$tempfile"
-                        echo "Please include this file if you report a bug."
-                        echo
-                        exit 1
-                    fi
+            if dhit_base_bin_configured ; then
+                tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+                printf "Running mktexlsr. This may take some time... "
+                if mktexlsr $FULLTEXMFTREES > $tempfile 2>&1 ; then
+                    DONE_FULL_LSR=1
+                    rm -f $tempfile
+                    echo "done."
+                else
+                    exec >&2
+                    echo
+                    echo "mktexlsr $FULLTEXMFTREES failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
                 fi
-            fi
-            if [ $DONE_MTXRUN = 0 ] ; then
-                run_mtxrun_if_possible
-                DONE_MTXRUN=1
+                if [ $DONE_MTXRUN = 0 ] ; then
+                    run_mtxrun_if_possible
+                    DONE_MTXRUN=1
+                fi
             fi
         ;;
     esac
@@ -189,12 +170,9 @@ do_triggers()
     # postinst will often be called for several triggers at once.
     case " $trigger " in
         *" texmf-lsr "*)
-          # only to lsr if we haven't done lsrfull
-          if [ $DONE_FULL_LSR = 0 ] ; then
-            # code from postinst-tex
-            if dhit_texlive_binaries_configured; then
-                # mktexlsr may not be present
-                if which mktexlsr >/dev/null; then
+            # only to lsr if we haven't done lsrfull
+            if [ $DONE_FULL_LSR = 0 ] ; then
+                if dhit_base_bin_configured; then
                     tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
                     printf "Running mktexlsr. This may take some time... "
                     if mktexlsr $TEXMFTREES > $tempfile 2>&1 ; then
@@ -209,83 +187,9 @@ do_triggers()
                         echo
                         exit 1
                     fi
-                fi
-            fi
-          fi
-          if [ $DONE_MTXRUN = 0 ] ; then
-              run_mtxrun_if_possible
-              DONE_MTXRUN=1
-          fi
-        ;;
-    esac
-    # do NOT merge these two cases into one, from dpkg's trigger.txt:
-    # Generally each trigger name should be tested for separately, as the
-    # postinst will often be called for several triggers at once.
-    case " $trigger " in
-        *" texmf-map "*) 
-         # code from postinst-tex
-         if dhit_texlive_binaries_configured; then
-             if which updmap-sys >/dev/null; then
-                    # we also have to check that texlive-base is installed
-                    # and configured, otherwise we cannot be sure that
-                    # all necessary basic files are present
-                    #
-                    # dpkg-query has two defects wrt not existing packages
-                    # - it is noisy to stderr
-                    # - it returns 1
-                    # so shut both errors up
-                    stat=$(dpkg-query -W -f='${Status}' texlive-base 2>/dev/null || true)
-                    case "$stat" in
-                        "install ok installed")
-                            do_it=1
-                            ;;
-                        *)
-                            do_it=0
-                            ;;
-                    esac
-                    if [ "$do_it" = 0 ] ; then
-                        echo "texlive-base is not ready, delaying updmap-sys call" >&2
-                    else
-                        tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
-                        printf "Running updmap-sys. This may take some time... "
-                        # call updmap with --nohash so that no ls-R files
-                        # are created in /usr/local/share/texmf/
-                        # see bug report #607857
-                        # instead of that we call mktexlsr $TEXMFSYSVARDIR 
-                        # afterwards. This can be done without checks as
-                        # we know that dhit_texlive_binaries_configured and
-                        # since mktexlsr and updmap are in the same package
-                        # and we checked for updmap already
-                        if updmap-sys --nohash > $tempfile 2>&1 ; then
-                            rm -f $tempfile
-                            echo "done."
-                            tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
-                            printf "Running mktexlsr $TEXMFSYSVARDIR ... "
-                            if mktexlsr $TEXMFSYSVARDIR > $tempfile 2>&1 ; then
-                                rm -f $tempfile
-                                echo "done."
-                            else
-                                exec >&2
-                                echo
-                                echo "mktexlsr $TEXMFSYSVARDIR failed. Output has been stored in"
-                                echo "$tempfile"
-                                echo "Please include this file if you report a bug."
-                                echo
-                                exit 1
-                            fi
-                        else
-                            exec >&2
-                            echo
-                            echo "updmap-sys failed. Output has been stored in"
-                            echo "$tempfile"
-                            echo "Please include this file if you report a bug."
-                            echo
-                            echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
-                            echo "causes updmap-sys to fail.  Please check for files with extension"
-                            echo ".dpkg-dist or .ucf-dist in this directory" 
-                            echo
-                            exit 1
-    	                fi
+                    if [ $DONE_MTXRUN = 0 ] ; then
+                        run_mtxrun_if_possible
+                        DONE_MTXRUN=1
                     fi
                 fi
             fi
@@ -295,41 +199,86 @@ do_triggers()
     # Generally each trigger name should be tested for separately, as the
     # postinst will often be called for several triggers at once.
     case " $trigger " in
+        *" texmf-map "*) 
+            if dhit_base_bin_configured; then
+                tempfile=$(mktemp -p /tmp updmap.XXXXXXXX)
+                printf "Running updmap-sys. This may take some time... "
+                # call updmap with --nohash so that no ls-R files
+                # are created in /usr/local/share/texmf/
+                # see bug report #607857
+                # instead of that we call mktexlsr $TEXMFSYSVARDIR 
+                # afterwards. This can be done without checks as
+                # we know that dhit_texlive_binaries_configured and
+                # since mktexlsr and updmap are in the same package
+                # and we checked for updmap already
+                if updmap-sys --nohash > $tempfile 2>&1 ; then
+                    rm -f $tempfile
+                    echo "done."
+                    tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
+                    printf "Running mktexlsr $TEXMFSYSVARDIR ... "
+                    if mktexlsr $TEXMFSYSVARDIR > $tempfile 2>&1 ; then
+                        rm -f $tempfile
+                        echo "done."
+                    else
+                        exec >&2
+                        echo
+                        echo "mktexlsr $TEXMFSYSVARDIR failed. Output has been stored in"
+                        echo "$tempfile"
+                        echo "Please include this file if you report a bug."
+                        echo
+                        exit 1
+                    fi
+                else
+                    exec >&2
+                    echo
+                    echo "updmap-sys failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    echo "Sometimes, not accepting conffile updates in /etc/texmf/updmap.d"
+                    echo "causes updmap-sys to fail.  Please check for files with extension"
+                    echo ".dpkg-dist or .ucf-dist in this directory" 
+                    echo
+                    exit 1
+        	    fi
+            fi
+        ;;
+    esac
+    # do NOT merge these two cases into one, from dpkg's trigger.txt:
+    # Generally each trigger name should be tested for separately, as the
+    # postinst will often be called for several triggers at once.
+    case " $trigger " in
         *" texmf-hyphen "*) 
-          if dhit_texlive_binaries_configured; then
-            if which kpsewhich >/dev/null; then
-              if which fmtutil-sys >/dev/null; then
+            if dhit_base_bin_configured; then
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Building latex-based formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
                 if fmtutil-sys --no-error-if-no-format --no-error-if-no-engine=luajittex --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
-                  rm -f $tempfile
-                  echo "done."
+                    rm -f $tempfile
+                    echo "done."
                 else
-                  exec >&2
-                  echo
-                  echo "fmtutil-sys failed. Output has been stored in"
-                  echo "$tempfile"
-                  echo "Please include this file if you report a bug."
-                  echo
-                  exit 1
+                    exec >&2
+                    echo
+                    echo "fmtutil-sys failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
                 fi
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Building e-tex based formats --byhyphen $(kpsewhich language.def).\n\tThis may take some time... "
                 if fmtutil-sys --no-error-if-no-format --no-error-if-no-engine=luajittex --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
-                  rm -f $tempfile
-                  echo "done."
+                    rm -f $tempfile
+                    echo "done."
                 else
-                  exec >&2
-                  echo
-                  echo "fmtutil-sys failed. Output has been stored in"
-                  echo "$tempfile"
-                  echo "Please include this file if you report a bug."
-                  echo
-                  exit 1
+                    exec >&2
+                    echo
+                    echo "fmtutil-sys failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
                 fi
-              fi
             fi
-          fi
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
@@ -337,26 +286,22 @@ do_triggers()
     # postinst will often be called for several triggers at once.
     case " $trigger " in
         *" texmf-fmtrefresh "*) 
-          if dhit_texlive_binaries_configured; then
-            if which kpsewhich >/dev/null; then
-              if which fmtutil-sys >/dev/null; then
+            if dhit_base_bin_configured; then
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Refreshing all formats.\n\tThis may take some time... "
                 if fmtutil-sys --no-error-if-no-format --no-error-if-no-engine=luajittex --refresh > $tempfile 2>&1 ; then
-                  rm -f $tempfile
-                  echo "done."
+                    rm -f $tempfile
+                    echo "done."
                 else
-                  exec >&2
-                  echo
-                  echo "fmtutil-sys failed. Output has been stored in"
-                  echo "$tempfile"
-                  echo "Please include this file if you report a bug."
-                  echo
-                  exit 1
+                    exec >&2
+                    echo
+                    echo "fmtutil-sys failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
                 fi
-              fi
             fi
-          fi
         ;;
     esac
     # do NOT merge these two cases into one, from dpkg's trigger.txt:
@@ -364,26 +309,22 @@ do_triggers()
     # postinst will often be called for several triggers at once.
     case " $trigger " in
         *" texmf-fmtall "*) 
-          if dhit_texlive_binaries_configured; then
-            if which kpsewhich >/dev/null; then
-              if which fmtutil-sys >/dev/null; then
+            if dhit_base_bin_configured; then
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Rebuilding all formats.\n\tThis may take some time... "
                 if fmtutil-sys --no-error-if-no-format --no-error-if-no-engine=luajittex --all > $tempfile 2>&1 ; then
-                  rm -f $tempfile
-                  echo "done."
+                    rm -f $tempfile
+                    echo "done."
                 else
-                  exec >&2
-                  echo
-                  echo "fmtutil-sys failed. Output has been stored in"
-                  echo "$tempfile"
-                  echo "Please include this file if you report a bug."
-                  echo
-                  exit 1
+                    exec >&2
+                    echo
+                    echo "fmtutil-sys failed. Output has been stored in"
+                    echo "$tempfile"
+                    echo "Please include this file if you report a bug."
+                    echo
+                    exit 1
                 fi
-              fi
             fi
-          fi
         ;;
     esac
 }
@@ -401,77 +342,49 @@ case $action in
 
     configure|reconfigure)
 
-    # if we are upgrading from before 4, remove the preinst created
-    # backup of the symlink
-    if dpkg --compare-versions "$trigger" lt "4" ; then
-      if [ -L /usr/share/texmf/doc.dpkg-remove ] ; then
-        rm -f /usr/share/texmf/doc.dpkg-remove
-      fi
-    fi
-
-    # create/update texmf.cnf
-    update-texmf
-
-    # remove outdated thailatex babel.sty
-    if [ -f $TEXMFSYSVARDIR/tex/generic/babel/babel.sty ] ; then
-        echo "Removing outdated babel.sty from thailatex."
-        rm $TEXMFSYSVARDIR/tex/generic/babel/babel.sty
-        rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex/generic/babel
-        rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex/generic
-        rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex
-    fi
-
-    #
-    # call trigger action
-    # that calls mktexlsr if possible, and update-*
-    # we set the triggers updmap.d
-    #
-    trigger="texmf-lsr texmf-map"
-    do_triggers
-
-
-    # now call the equivalent of fmtutil-sys --all explicitely
-    # we also have to check that texlive-base is installed
-    # and configured, otherwise we cannot be sure that
-    # all necessary basic files are present
-    if dhit_texlive_binaries_configured; then
-        # see above for information on dpkg-query usage
-        stat=$(dpkg-query -W -f='${Status}' texlive-base  2>/dev/null || true)
-        case "$stat" in
-        "install ok installed")
-            do_it=1
-            ;;
-        *)
-            do_it=0
-            ;;
-        esac
-        if [ "$do_it" = 0 ] ; then
-            echo "texlive-base is not ready, skipping fmtutil-sys --all call" >&2
-        else
-            dhit_build_format --all
+        # if we are upgrading from before 4, remove the preinst created
+        # backup of the symlink
+        if dpkg --compare-versions "$trigger" lt "4" ; then
+            if [ -L /usr/share/texmf/doc.dpkg-remove ] ; then
+                rm -f /usr/share/texmf/doc.dpkg-remove
+            fi
         fi
-    fi
 
+        # create/update texmf.cnf
+        update-texmf
 
-    # create empty dirs in /usr/local/share/
-    if [ ! -e /usr/local/share/texmf ]
-    then
-      if mkdir -p /usr/local/share/texmf 2>/dev/null
-      then
-        chown root:staff /usr/local/share/texmf
-        chmod 2775 /usr/local/share/texmf
-      fi
-    fi
+        # remove outdated thailatex babel.sty
+        if [ -f $TEXMFSYSVARDIR/tex/generic/babel/babel.sty ] ; then
+            echo "Removing outdated babel.sty from thailatex."
+            rm $TEXMFSYSVARDIR/tex/generic/babel/babel.sty
+            rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex/generic/babel
+            rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex/generic
+            rmdir --ignore-fail-on-non-empty $TEXMFSYSVARDIR/tex
+        fi
 
-    # remove out dated dir /etc/texmf/language.d
-    if [ -d /etc/texmf/language.d ] ; then 
-        rmdir --ignore-fail-on-non-empty /etc/texmf/language.d/
-    fi
+        #
+        # call trigger action
+        # that calls mktexlsr if possible, and update-*
+        # we set the triggers updmap.d
+        #
+        trigger="texmf-lsr texmf-map texmf-fmtall"
+        do_triggers
 
+        # create empty dirs in /usr/local/share/
+        if [ ! -e /usr/local/share/texmf ] ; then
+            if mkdir -p /usr/local/share/texmf 2>/dev/null ; then
+                chown root:staff /usr/local/share/texmf
+                chmod 2775 /usr/local/share/texmf
+            fi
+        fi
 
-    ;;
-  *)
-    ;;
+        # remove out dated dir /etc/texmf/language.d
+        if [ -d /etc/texmf/language.d ] ; then 
+            rmdir --ignore-fail-on-non-empty /etc/texmf/language.d/
+        fi
+        ;;
+    *)
+        ;;
 esac
 
 
