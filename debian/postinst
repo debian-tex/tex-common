@@ -76,7 +76,7 @@ dhit_build_format ()
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
     printf "Building format(s) $*.\n\tThis may take some time... "
-    if fmtutil-sys "$@" > $tempfile 2>&1 ; then
+    if fmtutil-sys --no-error-if-no-engine=luajittex "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
     else
@@ -312,7 +312,7 @@ do_triggers()
                   # formats based on language.dat
                   tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                   printf "Building latex-based formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
-                  if fmtutil-sys --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
+                  if fmtutil-sys --no-error-if-no-engine=luajittex --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                   else
@@ -331,7 +331,7 @@ do_triggers()
                   # formats based on language.def
                   tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                   printf "Building e-tex based formats --byhyphen $(kpsewhich language.def).\n\tThis may take some time... "
-                  if fmtutil-sys --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
+                  if fmtutil-sys --no-error-if-no-engine=luajittex --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                   else

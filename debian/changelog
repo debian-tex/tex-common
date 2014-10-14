@@ -1,10 +1,3 @@
-tex-common (5.03) UNRELEASED; urgency=medium
-
-  * undo the luajittex change from 5.02, luajittex will be disabled
-    per default on Debian, too much pain.
-
- -- Norbert Preining <preining@debian.org>  Sat, 31 May 2014 23:10:46 +0900
-
 tex-common (5.02) unstable; urgency=medium
 
   * call fmtutil-sys with --no-error-if-no-engine=luajittex following
