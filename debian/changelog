@@ -1,3 +1,9 @@
+tex-common (5.03) UNRELEASED; urgency=medium
+
+  * remove C.M. Connelly from uploaders, MIA (Closes: #765326)
+
+ -- Norbert Preining <preining@debian.org>  Tue, 14 Oct 2014 17:11:47 +0900
+
 tex-common (5.02) unstable; urgency=medium
 
   * call fmtutil-sys with --no-error-if-no-engine=luajittex following
