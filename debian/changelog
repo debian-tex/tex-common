@@ -1,9 +1,10 @@
-tex-common (5.03) UNRELEASED; urgency=medium
+tex-common (5.03) unstable; urgency=medium
 
   * remove C.M. Connelly from uploaders, MIA (Closes: #765326)
   * bump standards version, no changes necessary
+  * delete misleading/outdated paragraph from Debian TeX Policy
 
- -- Norbert Preining <preining@debian.org>  Tue, 21 Oct 2014 09:37:09 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 21 Oct 2014 09:44:31 +0900
 
 tex-common (5.02) unstable; urgency=medium
 

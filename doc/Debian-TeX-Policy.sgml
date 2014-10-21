@@ -417,9 +417,9 @@
 	</p>
 
 	<p>
-	A package must not install files into (subdirectories of)
-	<file>/usr/share/texmf/doc</file>, which is a symbolic link to
-	<file>/usr/share/doc/texmf</file>. 
+	Note that the previous location <file>/usr/share/doc/texmf</file>
+	is obsolete and should not be used. Files installed there
+	will not be found by <prgn>texdoc</prgn>.
 	</p>
 
 	<p>
