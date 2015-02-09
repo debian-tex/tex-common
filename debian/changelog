@@ -2,8 +2,9 @@ tex-common (5.04) UNRELEASED; urgency=medium
 
   * remove Atsuhito Kohda from uploaders, he has retired. Thanks for the
     long years of work! (Closes: #773961)
+  * remove redundant code in postinst (Closes: #777558)
 
- -- Norbert Preining <preining@debian.org>  Tue, 10 Feb 2015 07:17:11 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 10 Feb 2015 07:19:23 +0900
 
 tex-common (5.03) unstable; urgency=medium
 
