@@ -1,10 +1,12 @@
-tex-common (5.04) UNRELEASED; urgency=medium
+tex-common (6.00) UNRELEASED; urgency=medium
 
   * remove Atsuhito Kohda from uploaders, he has retired. Thanks for the
     long years of work! (Closes: #773961)
   * remove redundant code in postinst (Closes: #777558)
+  * rework fmtutil handling in the same way as updmap handling, since
+    it is treated as stacked conffile nowadays.
 
- -- Norbert Preining <preining@debian.org>  Tue, 10 Feb 2015 07:19:23 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 26 May 2015 23:46:32 +0900
 
 tex-common (5.03) unstable; urgency=medium
 

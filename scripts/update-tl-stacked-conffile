@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #
-# update-updmap --- Generate updmap.cfg for all the trees
-# Copyright (C) 2012 Norbert Preining
+# update-tl-stacked-conffile --- Generate stacked conffiles of TL for all trees
+# Copyright (C) 2012-2015 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,15 +20,28 @@
 version="1.0"
 progname=$(basename "$0")
 
-SNIPPET_BASE=/var/lib/tex-common/fontmap-cfg
-SNIPPET_OLD_BASE=/etc/texmf/updmap.d
+
+
+if [ "$progname" = "update-updmap" ] ; then
+  SNIPPET_BASE=/var/lib/tex-common/fontmap-cfg
+  SNIPPET_OLD_BASE=/etc/texmf/updmap.d
+  NAME=updmap
+elif [ "$progname" = "update-fmtutil" ] ; then
+  SNIPPET_BASE=/var/lib/tex-common/fmtutil-cnf
+  SNIPPET_OLD_BASE=/etc/texmf/fmt.d
+  NAME=fmtutil
+else
+  echo "Please call me either as update-updmap or update-fmtutil!"
+  exit 1
+fi
+
 
 # this needs to be kept in sync with dh_installtex
 COMPONENTS="texmf texlive"
 
 
 usage="Usage: $progname [OPTION...]
-Generate updmap configuration files.
+Generate $NAME configuration files.
 
 Options:
       --checks           perform sanity checks on the generated config file
@@ -53,18 +66,23 @@ cleanup()
 
 perform_contents_check ()
 {
-    fn="$1"
-    grep -i '^\W*\(Mixed\|Kanji\)\?Map' "$fn" | while read foo map ; do
-        # now check the existence of the hyphenation file
-        if [ -z $(kpsewhich -format=map $map) ] ; then
-           cat >&2 <<EOF
+    if [ $NAME = fmtutil ] ; then
+        # no checks at the moment
+        return 0
+    elif [ $NAME = updmap ] ; then
+        fn="$1"
+        grep -i '^\W*\(Mixed\|Kanji\)\?Map' "$fn" | while read foo map ; do
+            # now check the existence of the hyphenation file
+            if [ -z $(kpsewhich -format=map $map) ] ; then
+                cat >&2 <<EOF
 The config file $fn references a file not in the kpathsea database:
     $map
 Calling updmap(-sys) will break!
 This may be ok, but it could also be a typing error.
 EOF
-        fi
-    done
+            fi
+        done
+    fi
 }
 
 
@@ -193,10 +211,18 @@ updated_files=""
 for tree in $COMPONENTS ; do
     if [ $tree = "texmf" ] ; then
         # output_file=/usr/share/texmf/web2c/updmap.cfg
-        output_file=/var/lib/texmf/updmap.cfg-DEBIAN
+        if [ $NAME = "updmap" ] ; then
+            output_file=/var/lib/texmf/updmap.cfg-DEBIAN
+        else
+            output_file=/var/lib/texmf/fmtutil.cnf-DEBIAN
+        fi
     elif [ $tree = "texlive" ] ; then
         # output_file=/usr/share/texlive/texmf-dist/web2c/updmap.cfg
-        output_file=/var/lib/texmf/updmap.cfg-TEXLIVEDIST
+        if [ $NAME = "updmap" ] ; then
+            output_file=/var/lib/texmf/updmap.cfg-TEXLIVEDIST
+        else
+            output_file=/var/lib/texmf/fmtutil.cnf-TEXLIVEDIST
+        fi
     else
         echo "$progname: that cannot happen!" >&2
         exit 1
@@ -219,7 +245,7 @@ for tree in $COMPONENTS ; do
     # directory, according to the user's umask. When it is complete, 
     # we'll be able to rename it atomically to the desired output 
     # file, which will therefore have the right permissions.
-    tempfile="updmap.$tree.new"
+    tempfile="update-tl-conffile.$tree.new"
 
     if ! printf "" > "$tempfile" ; then
         echo "$progname: cannot write to the temporary file '$tempfile'" >&2

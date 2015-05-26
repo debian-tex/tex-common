@@ -1,3 +1,10 @@
+* fmtutil switch
+	- adjust man page of update-tl-stacked-conffile
+	- links for fmtutil.cnf-TEXLIVE and fmtutil.cnf-DEBIAN
+	  in texlive-base (?)
+
+
+
 * remove all the luajittex bla bla from tex-common
 * disable luajittex format in texlive-base
 

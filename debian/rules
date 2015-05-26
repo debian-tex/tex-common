@@ -6,7 +6,7 @@
 INSTDIR=$(CURDIR)/debian/tex-common
 
 bin_scripts=dh_installtex
-sbin_scripts=update-fmtlang update-texmf-config update-updmap update-texmf
+sbin_scripts=update-lang update-texmf-config update-tl-stacked-conffiles update-texmf
 nonbin_scripts=
 
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))

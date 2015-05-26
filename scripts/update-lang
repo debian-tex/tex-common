@@ -1,11 +1,10 @@
 #!/bin/bash -e
 #
-# update-fmtlang --- Generate updmap.cfg, language.dat, fmtutil.cnf etc
-#                     from a set of files
+# update-lang --- Generate language.dat* from a set of files
 # Copyright (C) 2002 Atsuhito Kohda
 # Copyright (C) 2004, 2005, 2006, 2007 Florent Rougon
-# Copyright (C) 2005, 2006, 2009, 2010, 2011, 2012 Norbert Preining
 # Copyright (C) 2007 Frank Küster
+# Copyright (C) 2005-2015 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +20,7 @@
 # Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301 USA.
 
-version="1.0"
+version="1.1"
 progname=$(basename "$0")
 
 SYSPATH_BASE=/var/lib/texmf
@@ -110,6 +109,8 @@ elif [ "$progname" = "update-updmap" ] ; then
     PCC="#"                     # for printfCOMMENTCHAR
     SHORT_DESC="Generate an updmap configuration file"
 elif [ "$progname" = "update-fmtutil" ] ; then
+    echo "I should NOT be called this way, there is something wrong!!! ... good bye!" >&2
+    exit 1
     CNFDIR=fmt.d
     # System-wide configuration directory
     SYSWIDE_CONFDIR=/etc/texmf/$CNFDIR
