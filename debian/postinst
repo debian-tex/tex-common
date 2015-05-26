@@ -140,7 +140,7 @@ do_triggers()
 
     # in any case call the update-* calls
     update-language
-    update-fmtutil
+    update-fmtutil --quiet
     #
     # the following triggers are reacted upon and in that order:
     # - texmf-lsr: call mktexlsr if present

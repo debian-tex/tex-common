@@ -1,4 +1,4 @@
-tex-common (6.00) UNRELEASED; urgency=medium
+tex-common (6.00~1) UNRELEASED; urgency=medium
 
   * remove Atsuhito Kohda from uploaders, he has retired. Thanks for the
     long years of work! (Closes: #773961)

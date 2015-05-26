@@ -501,9 +501,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			error("This call would create multiple copies of $priority$package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
 		}
 
-		my $targetdir = "$tmp/etc/texmf/$configdir{$type}";
-		if ($type eq "map") {
-			$targetdir = "$tmp/var/lib/tex-common/$managedir{$type}/$texmftree";
+		my $targetdir = "$tmp/var/lib/tex-common/$managedir{$type}/$texmftree";
+		# only hyphen config files remain in /etc/texmf
+		if ($type eq "hyphen") {
+			$targetdir = "$tmp/etc/texmf/$configdir{$type}";
 		}
 		if ( ! $dh{ONLYSCRIPTS} && ! -d $targetdir) {
 			doit("install", "-d", $targetdir);
@@ -514,10 +515,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		foreach (@cmdlineconfigfiles) {
 			$bn=basename($_);
 			$pr=$cmdlinefilespriority{$type}{$_};
-			if ($type eq "map") {
-				$dofilen = "$targetdir/$bn";
-			} else {
+			if ($type eq "hyphen") {
 				$dofilen = "$targetdir/$pr$bn";
+			} else {
+				$dofilen = "$targetdir/$bn";
 			}
 			WRITECMDLINECFGFILE: do {
 				-r $dofilen &&
@@ -525,7 +526,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				open(CFGFILE, ">$dofilen") ||
 					error("Cannot open $dofilen for writing!");
 				verbose_print("Writing $dofilen");
-				if (($type ne "map") && !magic_comment_present($_)) {
+				if (($type eq "hyphen") && !magic_comment_present($_)) {
 					print CFGFILE "$commentchar{$type} $pr$bn\n";
 					foreach $i (@magicheader) {
 						print CFGFILE "$commentchar{$type} $i\n";
@@ -547,15 +548,16 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		# merge in the cmd line arguments
 		#
 		if ( ! $dh{ONLYSCRIPTS} && ( $pkgprovidedfile || ($#cmdlinearguments >= 0) )) {
-			my $basefile = "$priority$package.$configfileext{$type}";
-			$basefile = "$package.$configfileext{$type}" if ($type eq "map");
+			my $basefile = "$package.$configfileext{$type}";
+			$basefile = "$priority$package.$configfileext{$type}"
+				if ($type eq "hyphen");
 			$dofilen = "$targetdir/$basefile";
 			-r $dofilen && 
 				error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
 			open(CFGFILE, ">$dofilen") || 
 				error("Cannot open $dofilen for writing!");
 			verbose_print("Writing $dofilen");
-			if ($type ne "map") {
+			if ($type eq "hyphen") {
 				if (($pkgprovidedfile &&  
 					 !magic_comment_present($pkgfilename)) ||
 					(!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
@@ -593,7 +595,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				@fmtconffiles = @listlines;
 			}
 			close(LISTFILE);
-		}  unless (($type eq "map") || $dh{ONLYSCRIPTS});
+		}  if (($type eq "hyphen") && !$dh{ONLYSCRIPTS});
 	}
 	
 	my @mapdata = ();

@@ -6,7 +6,7 @@
 INSTDIR=$(CURDIR)/debian/tex-common
 
 bin_scripts=dh_installtex
-sbin_scripts=update-lang update-texmf-config update-tl-stacked-conffiles update-texmf
+sbin_scripts=update-lang update-texmf-config update-tl-stacked-conffile update-texmf
 nonbin_scripts=
 
 sbin_installfiles=$(foreach script,$(sbin_scripts), scripts/$(script))
@@ -60,7 +60,6 @@ install: build
 
         # Add here commands to install the package into debian/tex-common.
 	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
-	cp conf/fmt.d/00tex.cnf $(INSTDIR)/etc/texmf/fmt.d/
 	cp conf/hyphen.d/00tex.cnf $(INSTDIR)/etc/texmf/hyphen.d/
 	cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/

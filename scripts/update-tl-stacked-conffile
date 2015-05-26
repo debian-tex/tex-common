@@ -26,10 +26,12 @@ if [ "$progname" = "update-updmap" ] ; then
   SNIPPET_BASE=/var/lib/tex-common/fontmap-cfg
   SNIPPET_OLD_BASE=/etc/texmf/updmap.d
   NAME=updmap
+  EXT=.cfg
 elif [ "$progname" = "update-fmtutil" ] ; then
   SNIPPET_BASE=/var/lib/tex-common/fmtutil-cnf
   SNIPPET_OLD_BASE=/etc/texmf/fmt.d
   NAME=fmtutil
+  EXT=.cnf
 else
   echo "Please call me either as update-updmap or update-fmtutil!"
   exit 1
@@ -133,7 +135,7 @@ handle_file()
         if [ -d "$SNIPPET_BASE" ] \
             && find "$SNIPPET_BASE" -type f -name '*.list' -print0 \
             | xargs -0r cat \
-            | grep -E "^$(basename "$file" .cfg)\$" >/dev/null;
+            | grep -E "^$(basename "$file" $EXT)\$" >/dev/null;
         then
             include_file "$file"
         else
@@ -264,7 +266,7 @@ for tree in $COMPONENTS ; do
     # be used.
 
     if [ -d "$SNIPPET_BASE/$tree" ] ; then
-        find "$SNIPPET_BASE/$tree"  -maxdepth 1 -type f -name '*.cfg' \
+        find "$SNIPPET_BASE/$tree"  -maxdepth 1 -type f -name '*'$EXT \
             -exec cat '{}' \; >> "$tempfile"
     fi
 
@@ -273,7 +275,7 @@ for tree in $COMPONENTS ; do
         # also include snippets in /etc/texmf/updmap.d but give
         # big fat warnings that this might create problems!!!
         if [ -d $SNIPPET_OLD_BASE ] ; then
-            old_files=$(find $SNIPPET_OLD_BASE -maxdepth 1 -type f -name '*.cfg' | LC_COLLATE=C sort)
+            old_files=$(find $SNIPPET_OLD_BASE -maxdepth 1 -type f -name '*'$EXT | LC_COLLATE=C sort)
             if [ -n "$old_files" ] ; then
                 cat >&2 <<EOF
 
@@ -314,8 +316,8 @@ done
 if [ $quiet = 0 ] && [ -n "$updated_files" ] ; then
     echo "$progname has updated the following file(s):"
     printf "$updated_files"
-    echo "If you want to enable the map files with this new file,"
-    echo "you should run updmap-sys or updmap."
+    echo "If you want to activate the changes in the above file(s),"
+    echo "you should run ${NAME}-sys or $NAME."
 fi
 
 

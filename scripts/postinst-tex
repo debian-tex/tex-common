@@ -104,7 +104,7 @@ case "$1" in
         # trigger action is done, but the postinst runs the fmtutil-sys call
         update-updmap --quiet
         update-language
-        update-fmtutil
+        update-fmtutil --quiet
         # All of the following needs an installed and configured
         # basic TeX system, so check this.
         if dhit_texlive_binaries_configured; then

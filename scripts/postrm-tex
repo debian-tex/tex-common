@@ -63,7 +63,7 @@ case "$1" in
         # It doesn't hurt to call all of them.
         dhit_check_run_without_errors -silent update-updmap --quiet
         dhit_check_run_without_errors -silent update-language
-        dhit_check_run_without_errors -silent update-fmtutil
+        dhit_check_run_without_errors -silent update-fmtutil --quiet
         for i in #WHATTODO# ; do
             if [ "$i" = lsr ] ; then
                 dhit_call_update_texmf_config lsr
