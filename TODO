@@ -1,7 +1,14 @@
-* fmtutil switch
-	- adjust man page of update-tl-stacked-conffile
-	- links for fmtutil.cnf-TEXLIVE and fmtutil.cnf-DEBIAN
-	  in texlive-base (?)
+* switch to full trigger
+* use file triggers instead of name triggers
+* remove all post install code for TeX packages
+* move hyphen to /var/lib/tex-common, allow only for *one* additional
+  file /etc/texmf/web2c/hyphen-changes, ignore all other files in
+  /etc/texmf/hyphen.d
+* Generate the files with a perl script that loads all default,
+  and then replaces/adds those in /etc/texmf/web2c/hyphen-changes
+  (this is newer than TL, we should incorporate this approach in TL, too)
+
+
 
 
 

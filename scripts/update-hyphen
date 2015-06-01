@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+
+$^W = 1;
+use strict
+
+BEGIN {
+  unshift (@INC, "/usr/share/texlive/tlpkg");
+}
+
+use TeXLive::TLUtils;
+
+# for each file in /var/lib/tex-common/hyphen-cnf/texmf and .../texlive
+# plus files in /etc/texmf/hyphen.d/
+
+my %data;
+
+for my $d (qw!/var/lib/tex-common/hyphen-cnf/texlive
+              /var/lib/tex-common/hyphen-cnf/texmf
+	      /etc/texmf/hyphen.d!) {
+  for my $f (<$d/*.cnf>) {
+    open FOO, "<$f" || die ("Cannot read file $f: $!");
+    while (<FOO>) {
+      next if /^\s*%/;
+      next if /^\s*$/;
+      my %r = TeXLive::TLUtils::parse_AddHyphen_line($_);
+      if (defined($r{"error"})) {
+        die ("Cannot parse $_ in $f: $r{'error'}");
+      }
+      $data{$r{'name'}}{'data'} = \%r;
+      $data{$r{'name'}}{'priority'} = $priority;
+    }
+  }
+}
