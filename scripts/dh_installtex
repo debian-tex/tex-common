@@ -501,13 +501,13 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			error("This call would create multiple copies of $priority$package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
 		}
 
-		my $targetdir = "$tmp/var/lib/tex-common/$managedir{$type}/$texmftree";
+		my $target = "/var/lib/tex-common/$managedir{$type}/$texmftree";
 		# only hyphen config files remain in /etc/texmf
 		if ($type eq "hyphen") {
-			$targetdir = "$tmp/etc/texmf/$configdir{$type}";
+			$target = "/etc/texmf/$configdir{$type}";
 		}
-		if ( ! $dh{ONLYSCRIPTS} && ! -d $targetdir) {
-			doit("install", "-d", $targetdir);
+		if ( ! $dh{ONLYSCRIPTS} && ! -d "$tmp$target") {
+			doit("install", "-d", "$tmp$target");
 		};
 		#
 		# the cmd line cfg files
@@ -516,9 +516,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			$bn=basename($_);
 			$pr=$cmdlinefilespriority{$type}{$_};
 			if ($type eq "hyphen") {
-				$dofilen = "$targetdir/$pr$bn";
+				$dofilen = "$tmp$target/$pr$bn";
 			} else {
-				$dofilen = "$targetdir/$bn";
+				$dofilen = "$tmp$target/$bn";
 			}
 			WRITECMDLINECFGFILE: do {
 				-r $dofilen &&
@@ -541,6 +541,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				close(CFGFILE);
 				$bn =~ s/\.$configfileext{$type}$//;
 				push @listlines, "$pr$bn";
+				if ($type eq "format") {
+					push @fmtconffiles, "$target/$bn.cnf";
+				}
 			} unless ($dh{ONLYSCRIPTS});
 		}
 		#
@@ -551,7 +554,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			my $basefile = "$package.$configfileext{$type}";
 			$basefile = "$priority$package.$configfileext{$type}"
 				if ($type eq "hyphen");
-			$dofilen = "$targetdir/$basefile";
+			$dofilen = "$tmp$target/$basefile";
 			-r $dofilen && 
 				error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
 			open(CFGFILE, ">$dofilen") || 
@@ -578,6 +581,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			}
 			close(CFGFILE);
 			push @listlines, "$priority$package";
+			if ($type eq "format") {
+				push @fmtconffiles, "$target/$basefile.cnf";
+			}
 		};
 
 		WRITELISTFILE: do {
@@ -590,9 +596,6 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			verbose_print("Writing $dofilen");
 			foreach (@listlines) {
 				print LISTFILE "$_\n";
-			}
-			if ($type eq "format") {
-				@fmtconffiles = @listlines;
 			}
 			close(LISTFILE);
 		}  if (($type eq "hyphen") && !$dh{ONLYSCRIPTS});

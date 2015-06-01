@@ -65,28 +65,29 @@ case "$1" in
         dhit_check_run_without_errors -silent update-language
         dhit_check_run_without_errors -silent update-fmtutil --quiet
         for i in #WHATTODO# ; do
-            if [ "$i" = lsr ] ; then
+            case "$i" in
+            lsr)
                 dhit_call_update_texmf_config lsr
-            fi
-            if [ "$i" = lsrfull ] ; then
+                ;;
+            lsrfull)
                 dhit_call_update_texmf_config lsrfull
-            fi
-            if [ "$i" = map ] ; then
+                ;;
+            map)
                 dhit_call_update_texmf_config map
-            fi
-            if [ "$i" = allformats ] ; then
+                ;;
+            allformats|format)
                 for fmt in #FORMATS# ; do
                     rm -f /var/lib/texmf/web2c/$fmt.*
+                    # try to remove empty directories of format dumps
+                    if [ `dirname $fmt` != "." ] ; then
+                        rmdir --ignore-fail-on-non-empty `dirname $fmt`
+                    fi
                 done
-            fi
-            if [ "$i" = format ] ; then
-                for fmt in #FORMATS# ; do
-                    rm -f /var/lib/texmf/web2c/$fmt.*
-                done
-            fi
-            if [ "$i" = hyphen ] ; then
+                ;;
+            hyphen)
                 dhit_call_update_texmf_config hyphen
-            fi
+                ;;
+            esac
         done
     ;;
 

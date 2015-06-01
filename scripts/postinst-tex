@@ -150,10 +150,10 @@ case "$1" in
                 fi
                 if [ "$i" = format ] ; then
                     for fmt in #FORMATSFILES# ; do
-                        if [ -r "/etc/texmf/fmt.d/$fmt.cnf" ] ; then
-                            dhit_build_format --all --cnffile "/etc/texmf/fmt.d/$fmt.cnf"
+                        if [ -r "$fmt" ] ; then
+                            dhit_build_format --all --cnffile "$fmt"
                         else
-                            echo "config file /etc/texmf/fmt.d/$fmt.cnf not available"
+                            echo "config file $fmt not available"
                         fi
                     done
                 fi
