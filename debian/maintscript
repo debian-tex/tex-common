@@ -1,1 +1,2 @@
 rm_conffile /etc/texmf/language.d/00tex.cnf 2.11
+rm_conffile /etc/texmf/fmt.d/00tex.cnf 6.00~
