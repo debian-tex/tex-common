@@ -1,22 +1,19 @@
-* switch to full trigger
-* use file triggers instead of name triggers
 * remove all post install code for TeX packages
-* move hyphen to /var/lib/tex-common, allow only for *one* additional
-  file /etc/texmf/web2c/hyphen-changes, ignore all other files in
-  /etc/texmf/hyphen.d
-* Generate the files with a perl script that loads all default,
-  and then replaces/adds those in /etc/texmf/web2c/hyphen-changes
-  (this is newer than TL, we should incorporate this approach in TL, too)
 
+	not all
+  add again: that in the postinst run 
+  	dpkg-trigger /some/things
+  especially for formats and mktexlsr is necessary
 
-
+  otherwise if there is a problem with that, then a later call
+  to dpkg --configure -a does not rerun the trigger actions!
 
 
 * remove all the luajittex bla bla from tex-common
 * disable luajittex format in texlive-base
 
-
 * move all the trigger code into update-texmf-conf
+	why? how should this work?
 * make distinction between trigger call and normal clal
 
 
@@ -25,4 +22,6 @@
   - texmf.d handling has changed, changes to /etc/texmf/web2c/texmf.cnf
     are NOT USER EDITABLE ANYMORE
     exclusive use of /etc/texmf/texmf.d
+    removed hyphen.d
+    etc etc etc
 
