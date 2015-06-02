@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# update-hyphen --- Generate language.dat* from a set of files
+# update-language --- Generate language.dat* from a set of files
 # Copyright (C) 2015 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,6 @@ use TeXLive::TLUtils;
 use File::Basename;
 use Getopt::Long;
 
-my $shortdesc = 'Generate hyphenation configuration files language.dat, .def, .dat.lua';
 my $mode = 'all';
 
 # for each file in /var/lib/tex-common/hyphen-cnf/
@@ -53,21 +52,18 @@ my %defaults = (
   'latex' => {
     'output' => 'language.dat',
     'func'   => \&make_latex_line,
-    'desc'   => 'Generate language.dat, the hyphenation configuration file for LaTeX',
     'head'   => '/usr/share/texlive/texmf-dist/tex/generic/config/language.us',
     'post'   => '',
   },
   'etex' => {
     'output' => 'language.def',
     'func'   => \&make_etex_line,
-    'desc'   => 'Generate language.def, the hyphenation configuration file for eTeX and friends',
     'head'   => '/usr/share/texlive/texmf-dist/tex/generic/config/language.us.def',
     'post'   => "\n\\uselanguage \{USenglish\}  \%\%\% This MUST be the last line of the file.\n",
   },
   'luatex' => {
     'output' => 'language.dat.lua',
     'func'   => \&make_luatex_line,
-    'desc'   => 'Generate language.dat.lua, the hyphenation configuration file for luaTeX and friends',
     'head'   => '/usr/share/texlive/texmf-dist/tex/generic/config/language.us.lua',
     'post'   => "\}\n",
   }
@@ -78,8 +74,6 @@ my %defaults = (
 # from here on only sub definitions!
 
 sub main {
-  setup_caller();
-
   GetOptions(
     "conf-file|c=s"     => \$opt_conf_file,
     "output-file|o=s"   => \$opt_output,
@@ -89,15 +83,27 @@ sub main {
     "help|h|?"          => \$opt_help,
     "version|v"         => \$opt_version) or usage();
 
+  if ($progname eq "update-language") {
+    $mode = "all";
+  } elsif ($progname eq "update-language-dat") {
+    $mode = "latex";
+  } elsif ($progname eq "update-language-def") {
+    $mode = "etex";
+  } elsif ($progname eq "update-language-lua") {
+    $mode = "luatex";
+  } else {
+    die "Please call me as update-language(-dat,-def,-lua).";
+  }
+
   if ($opt_help) {
     usage();
     exit 0;
   }
-
   if ($opt_version) {
     version();
     exit 0;
   }
+
 
   update_conffiles($mode);
 }
@@ -222,54 +228,42 @@ sub read_data {
   }
 }
 
-sub setup_caller {
-  if ($progname eq "update-language") {
-    $mode = "all";
-  } elsif ($progname eq "update-language-dat") {
-    $mode = "latex";
-  } elsif ($progname eq "update-language-def") {
-    $mode = "etex";
-  } elsif ($progname eq "update-language-lua") {
-    $mode = "luatex";
-  } else {
-    die "Please call me as update-language(-dat,-def,-lua).";
-  }
-}
-
 sub version {
   print "$progname $version\n";
 }
 
 sub usage () {
-  version();
-  if ($mode eq "all") {
-    print <<"EOF"
-Usage: $progname
-$shortdesc
+  print <<"EOF"
+Usage: $progname(-dat,-def,-lua) [OPTIONS ...]
+Generate hyphenation configuration files language.dat, .def, .dat.lua
 
-Calls the programs update-language-dat, update-language-def, and
-update-language-lua without any additional arguments.
-EOF
-;
-  } else {
-    print <<"EOF"
-
-Usage: $progname [OPTION ...]
-$defaults{$mode}{'desc'}
+When called as update-language, all three configurations files are
+generated. Otherwise only the selected one.
 
 Options:
   -c, --conf-file=FILE   file giving additional hyphen specifications
-                         ($localconf)
   -o, --output-file=FILE file to write the output to
-                         ($opt_output)
+  -d, --output-dir=DIR   directory where files are written
       --checks           perform sanity checks on the generated config file
   -q, --quiet            don't write anything to the standard output during
                          normal operation
   -h, -?, --help         display this help message and exit
       --version          output version information and exit
+
+Files:
+
+The default output directory is
+  $default_output_dir
+
+The default output files are
+  for update-language-dat  $defaults{'latex'}{'output'}
+  for update-language-def  $defaults{'etex'}{'output'}
+  for update-language-lua  $defaults{'luatex'}{'output'}
+
+If -o/--output-file is given, it overrides all defaults.
+
 EOF
 ;
-  }
 }
 
 ### Local Variables:
