@@ -1,27 +1,11 @@
-* remove all post install code for TeX packages
-
-	not all
-  add again: that in the postinst run 
-  	dpkg-trigger /some/things
-  especially for formats and mktexlsr is necessary
-
-  otherwise if there is a problem with that, then a later call
-  to dpkg --configure -a does not rerun the trigger actions!
-
-
 * remove all the luajittex bla bla from tex-common
 * disable luajittex format in texlive-base
-
 * move all the trigger code into update-texmf-conf
 	why? how should this work?
 * make distinction between trigger call and normal clal
-
-
 * rewrite policy and user documentation!!!
-  - updmap.d handling has disappeared
+  - all config files handling has changed!!!
   - texmf.d handling has changed, changes to /etc/texmf/web2c/texmf.cnf
     are NOT USER EDITABLE ANYMORE
     exclusive use of /etc/texmf/texmf.d
-    removed hyphen.d
-    etc etc etc
 
