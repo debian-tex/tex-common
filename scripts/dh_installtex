@@ -38,11 +38,11 @@ B<dh_installtex>
 [B<map=MixedMap,>I<file.map>]
 [B<map=Map,>I<file.map>]
 [B<map=KanjiMap,>I<file.map>]
-[B<mapfile=>I<file.cfg>[=I<n>]]
+[B<mapfile=>I<file.cfg>]
 [B<hyphen=>I<lang>,I<file>[,lhm=I<n>][,rhm=I<n>][,synonym=I<syn>,...]]
-[B<hyphenfile=>I<file.cnf>[=I<n>]]
+[B<hyphenfile=>I<file.cnf>]
 [B<format=>I<format>,I<engine>,I<hyphenfile>,I<rest args>]
-[B<formatfile=>I<file.cnf>[=I<n>]]
+[B<formatfile=>I<file.cnf>]
 
 =head1 DESCRIPTION
 
@@ -98,7 +98,7 @@ would install a file /var/lib/tex-common/fontmap-cfg/texmf/package.cfg containin
 
         Map foo.map
 
-and a file /var/lib/tex-common/hyphen-cnf/package.cnf containing the lines
+and a file /var/lib/tex-common/hyphen-cnf/texmf/package.cnf containing the lines
 
     name=ngerman-x-2011-07-01 file=dehyphn-x-2011-07-01.tex file_patterns=hyph-de-1996.pat.txt lefthyphenmin=2 righthyphenmin=2 synonym=ngerman-x-latest file_exceptions=hyph-de-1996.hyp.txt
 
@@ -210,7 +210,6 @@ my $doformatlinks = 1;
 my $texmftree = "texmf";
 my %cmdlineargs;
 my %cmdlinefiles;
-my @cmdlinetexmftrees;
 
 #
 # definitions for the different flavors
@@ -348,7 +347,13 @@ sub build_line {
 # parse the cmd line and fill in the various hashes
 #
 foreach (@ARGV) {
-	if (m/^(map|hyphen|format)=(.*)$/) {
+	if ((m/^(map)file=(.*\.cfg)$/) ||
+		(m/^(hyphen)file=(.*\.cnf)$/) ||
+		(m/^(format)file=(.*\.cnf)$/)) {
+		my $type=$1;
+		my $fn=$2;
+		$cmdlinefiles{$type}{$fn} = 1;
+	} elsif (m/^(map|hyphen|format)=(.*)$/) {
 		push @{$cmdlineargs{$1}}, $2;
 	} else {
 		error("Unrecognized argument: $_\n");
@@ -393,6 +398,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		# we do nothing here
 	} else {
 		# we have to clear all the cmd line arguments!
+		%cmdlinefiles = ();
 		%cmdlineargs = ();
 	}
 
@@ -410,6 +416,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			$pkgprovidedfilecontents{$type} = \@bar;
 			$pkgprovidedfile = 1;
 		}
+		if (defined($cmdlinefiles{$type})) {
+			@cmdlineconfigfiles = keys(%{$cmdlinefiles{$type}});
+		}
+
 		if (defined($cmdlineargs{$type})) {
 			@cmdlinearguments = @{$cmdlineargs{$type}};
 		}
