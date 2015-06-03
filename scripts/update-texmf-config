@@ -5,7 +5,7 @@
 # updmap.cfg, language.dat, fmtutil.cnf, and calling the respective
 # triggers to allow tex-common trigger action to be run.
 #
-# Copyright (C) 2009 Norbert Preining
+# Copyright (C) 2009-2015 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,27 +21,25 @@
 # Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 # Boston, MA  02110-1301 USA.
 
-DOLSR=off
-DOLSRFULL=off
-DOHYPHEN=off
-DOUPDMAP=off
-
 # for upgrading purpose we accept language as synonym for hyphen, and
-# updmap for map
+# updmap for map, we also keep lsr land fulllsr, although now triggered
+# implicitly via file triggers
 while [ $# -ne 0 ]; do
   case $1 in
     hyphen|language)
-      DOHYPHEN=on
+      dpkg-trigger texmf-hyphen
+      shift;;
+    format)
+      dpkg-trigger texmf-format
       shift;;
     map|updmap)
-      DOUPDMAP=on
+      dpkg-trigger texmf-map
       shift;;
     lsr)
-      DOLSR=on
+      # ignored
       shift;;
     lsrfull)
-      DOLSR=off
-      DOLSRFULL=on
+      # ignored
       shift;;
     *)
       echo "unknown option: $1"
@@ -49,18 +47,5 @@ while [ $# -ne 0 ]; do
       ;;
   esac
 done
-
-if [ $DOLSR = on ] ; then
-  dpkg-trigger texmf-lsr
-fi
-if [ $DOLSRFULL = on ] ; then
-  dpkg-trigger texmf-lsrfull
-fi
-if [ $DOHYPHEN = on ] ; then
-  dpkg-trigger texmf-hyphen
-fi
-if [ $DOUPDMAP = on ] ; then
-  dpkg-trigger texmf-map
-fi
 
 # vim:set expandtab tabstop=2: #
