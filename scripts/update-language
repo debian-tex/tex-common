@@ -22,13 +22,9 @@ use strict;
 
 my $version = "0.1";
 
-BEGIN {
-  unshift (@INC, "/usr/share/texlive/tlpkg");
-}
-
-use TeXLive::TLUtils;
 use File::Basename;
 use Getopt::Long;
+use Text::ParseWords;
 
 my $mode = 'all';
 
@@ -104,6 +100,13 @@ sub main {
     exit 0;
   }
 
+  # if texlive-base is not properly installed, we do nothing
+  my $stat = `dpkg-query -W -f=\'\${Status}\' texlive-base 2>/dev/null`;
+  if ($stat ne "install ok installed") {
+    printf "$progname: texlive-base not installed and configured, doing nothing!\n";
+    exit 0;
+  }
+
 
   update_conffiles($mode);
 }
@@ -125,7 +128,6 @@ sub update_conffiles {
     my $of = ($opt_output ? $opt_output : 
       ( $opt_outdir ? "$opt_outdir/$defaults{$t}{'output'}" :
         "$default_output_dir/$defaults{$t}{'output'}"));
-    print "writing to $of!\n";
     open(FOO, ">$of") || die "Cannot open $of: $!";
 
     if (-r $defaults{$t}{'head'}) {
@@ -193,21 +195,101 @@ EOF
   return $ret;
 }
 
+sub parse_hyphen_line {
+  my $line = shift;
+  my %ret;
+  my $default_lefthyphenmin = 2;
+  my $default_righthyphenmin = 3;
+  $ret{"lefthyphenmin"} = $default_lefthyphenmin;
+  $ret{"righthyphenmin"} = $default_righthyphenmin;
+  $ret{"synonyms"} = [];
+  my @parsed = Text::ParseWords::parse_line('\s+', 0, $line);
+  for my $p (@parsed) {
+    my ($a, $b) = split(/=/, $p);
+    if ($a eq "name") {
+      if (!$b) {
+        $ret{"error"} = "AddHyphen line needs name=something";
+        return %ret;
+      }
+      $ret{"name"} = $b;
+      next;
+    }
+    if ($a eq "lefthyphenmin") {
+      $ret{"lefthyphenmin"} = ( $b ? $b : $default_lefthyphenmin );
+      next;
+    }
+    if ($a eq "righthyphenmin") {
+      $ret{"righthyphenmin"} = ( $b ? $b : $default_righthyphenmin );
+      next;
+    }
+    if ($a eq "file") {
+      if (!$b) {
+        $ret{"error"} = "AddHyphen line needs file=something";
+        return %ret;
+      }
+      $ret{"file"} = $b;
+      next;
+    }
+    if ($a eq "file_patterns") {
+        $ret{"file_patterns"} = $b;
+        next;
+    }
+    if ($a eq "file_exceptions") {
+        $ret{"file_exceptions"} = $b;
+        next;
+    }
+    if ($a eq "luaspecial") {
+        $ret{"luaspecial"} = $b;
+        next;
+    }
+    if ($a eq "databases") {
+      @{$ret{"databases"}} = split /,/, $b;
+      next;
+    }
+    if ($a eq "synonyms") {
+      @{$ret{"synonyms"}} = split /,/, $b;
+      next;
+    }
+    if ($a eq "comment") {
+        $ret{"comment"} = $b;
+        next;
+    }
+    # should not be reached at all
+    $ret{"error"} = "Unknown language directive $a";
+    return %ret;
+  }
+  # this default value couldn't be set earlier
+  if (not defined($ret{"databases"})) {
+    if (defined $ret{"file_patterns"} or defined $ret{"file_exceptions"}
+        or defined $ret{"luaspecial"}) {
+      @{$ret{"databases"}} = qw(dat def lua);
+    } else {
+      @{$ret{"databases"}} = qw(dat def);
+    }
+  }
+  return %ret;
+}
+
 
 sub read_one_file {
   my $f = shift;
   my $do_warn = shift;
   open FOO, "<$f" || die ("Cannot read file $f: $!");
   while (<FOO>) {
+    chomp;
     next if /^\s*%/;
     next if /^\s*$/;
-    my %r = TeXLive::TLUtils::parse_AddHyphen_line($_);
+    my %r = parse_hyphen_line($_);
     if (defined($r{"error"})) {
       die ("Cannot parse $_ in $f: $r{'error'}");
     }
     my $n = $r{'name'};
-    if ($do_warn && defined($data{$n})) {
-      printf STDERR "double defined hyphenations pattern found: $n\n";
+    if (defined($data{$n})) {
+      if ($do_warn == 2) {
+        printf STDERR "TeX Live internal double defined hyphenations pattern found: $n\n";
+      } elsif ($do_warn == 1) {
+        printf STDERR "double defined hyphenations pattern found: $n\n";
+      } 
     }
     for my $k (keys %r) {
       next if ($k eq "name");
@@ -218,8 +300,13 @@ sub read_one_file {
 }
 
 sub read_data {
-  if (-d '/var/lib/tex-common/hyphen-cnf/') {
-    for my $f (</var/lib/tex-common/hyphen-cnf/*.cnf>) {
+  if (-d '/var/lib/tex-common/hyphen-cnf/texlive/') {
+    for my $f (</var/lib/tex-common/hyphen-cnf/texlive/*.cnf>) {
+      read_one_file($f, 2);
+    }
+  }
+  if (-d '/var/lib/tex-common/hyphen-cnf/texmf/') {
+    for my $f (</var/lib/tex-common/hyphen-cnf/texmf/*.cnf>) {
       read_one_file($f, 1);
     }
   }
