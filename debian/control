@@ -3,7 +3,7 @@ Section: tex
 Priority: optional
 Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, Frank Küster <frank@debian.org>, Florent Rougon <frn@debian.org>, Norbert Preining <preining@debian.org>
-Build-Depends: debhelper (>= 8.1.0~), po-debconf
+Build-Depends: debhelper (>= 8.1.0~)
 Build-Depends-Indep: debiandoc-sgml
 Standards-Version: 3.9.6
 Vcs-Git: git://anonscm.debian.org/debian-tex/tex-common.git
@@ -11,7 +11,7 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-tex/tex-common.git
 
 Package: tex-common
 Architecture: all
-Depends: ${misc:Depends}, ucf, debconf (>= 1.4.69) | cdebconf (>= 0.39), dpkg (>= 1.14.18)
+Depends: ${misc:Depends}, ucf, dpkg (>= 1.14.18)
 Suggests: debhelper (>= 7.0.8)
 Replaces: tetex-base (<= 3.0-10), dvipdfmx
 Conflicts: tetex-base (<< 2007), texlive-common (<< 2009), context (<= 2011.05.18.20110627-1)

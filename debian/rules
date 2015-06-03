@@ -22,7 +22,7 @@ build: build-arch build-indep
 build-arch: build-stamp
 build-indep: build-stamp
 
-build-stamp: $(EPERL_FILES) debian/po/templates.pot
+build-stamp:
 	dh_testdir
 	$(check-svn)
 
@@ -32,13 +32,6 @@ build-stamp: $(EPERL_FILES) debian/po/templates.pot
 
 	touch build-stamp
 
-debian/po/templates.pot: debian/templates
-	debconf-updatepo
-	grep "Last-Translator" debian/po/*.po | \
-	  sed -e 's/.*\(<.*@.*>\).*/\1, /g' | \
-	  tr "\n" " " | sed -e 's/,  $$/\n/' \
-	  > debian/recent-translators
-
 clean:
 	dh_testdir
 	dh_testroot
@@ -47,8 +40,6 @@ clean:
         # Add here commands to clean up after the build process.
 	cd doc; $(MAKE) clean
 	-rm -f scripts/dh_installtex.1
-	-rm -f $(EPERL_FILES)
-	debconf-updatepo
 
 	dh_clean 
 
@@ -83,7 +74,6 @@ install: build
 
         # Debian-specific stuff
 	install -m 644 debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
-	install -m 644 debian/lintian-overrides $(INSTDIR)/usr/share/lintian/overrides/tex-common
 
 
 # Build architecture-dependent files here.
