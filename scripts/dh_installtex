@@ -549,15 +549,11 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		push @postrmfmtdata, @addbuildformats;
 	}
 	if (! $dh{NOSCRIPTS}) {
-		$whattodoinst = "";
-		$whattodorem  = "";
-		for my $w (@whattodo) {
-			$whattodoinst .= "\tupdate-texmf-conf $w\n";
-			$whattodorem .= "\tdhit_call_update_texmf_config $w\n";
-		}
+		my $whattodoinst = "update-texmf-conf @whattodo";
+		my $whattodorem  = "dhit_call_update_texmf_config @whattodo";
 		autoscript($package, "postinst", "postinst-tex", "s|#WHATTODO#|$whattodoinst|");
 		# map entries have already been filtered out
-		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodorem|");
+		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|$whattodorem|");
 	}
 
 	# for trigger support
