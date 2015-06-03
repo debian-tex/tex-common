@@ -62,11 +62,8 @@ add ${misc:Depends} to all packages' dependencies.
 
 =head1 SIMPLE USAGE: Registering Files 
 
-If you only install files into /usr/share/texmf and want to be sure that 
-mktexlsr is called in a correct way (e.g., also
-in the postrm script when there is no functional mktexlsr), simply call
-
-	dh_installtex
+If you only install files into /usr/share/texmf, nothing has to be done,
+tex-common will automatically detect changes and run mktexlsr.
 
 =head1 COMPLEX USAGE: Registering fonts, hyphenation patterns and formats
 
@@ -75,17 +72,18 @@ additional languages, or format definitions you can use three
 different methods to specify what should be installed:
 
 1) B<Pre made config files:> These files can be specified with the
-different I<type>file= options, together with an optional priority.
+different I<type>file= options.
 I<type> can be one of map, format and hyphen, and these files will be
-installed into /etc/texmf/I<configdir>/ for the respective type (updmap.d for
-map files, hyphen.d for hyphenation pattern files, and fmt.d for format files).
+installed into /var/lib/tex-common/I<configdir>/ for the respective type 
+(fontmap-cfg for map files, hyphen-cnf for hyphenation patterns,
+and fmtutil-cnf for format definitions).
 
 Example:
 
-        dh_installtex mapfile=foo.cfg formatfile=debian/bar.cnf=42
+        dh_installtex mapfile=foo.cfg formatfile=debian/bar.cnf
 
 would install foo.cfg as /var/lib/tex-common/fontmap-cfg/texmf/foo.cfg, 
-and debian/bar.cnf as /etc/texmf/fmt.d/42bar.cnf.
+and debian/bar.cnf as /var/lib/tex-common/fmtutil-cnf/texmf/bar.cnf.
 
 
 2) B<Directly on the cmd line:>
@@ -100,7 +98,7 @@ would install a file /var/lib/tex-common/fontmap-cfg/texmf/package.cfg containin
 
         Map foo.map
 
-and a file /etc/texmf/hyphen.d/20package.cnf containing the lines
+and a file /var/lib/tex-common/hyphen-cnf/package.cnf containing the lines
 
     name=ngerman-x-2011-07-01 file=dehyphn-x-2011-07-01.tex file_patterns=hyph-de-1996.pat.txt lefthyphenmin=2 righthyphenmin=2 synonym=ngerman-x-latest file_exceptions=hyph-de-1996.hyp.txt
 
@@ -108,7 +106,7 @@ and a file /etc/texmf/hyphen.d/20package.cnf containing the lines
 You create a file debian/package.maps or debian/maps,
 debian/package.hyphens or debian/hyphens, 
 debian/package.formats or debian/formats. These files are
-installed with default priority and the name of the package. Each of these
+installed with the name of the package. Each of these
 files will be installed into the first package dh_installtex
 is told to act on. By default this is the first binary package in
 debian/control, but if you use -p, -i, or -a flags, it will be the first
@@ -119,30 +117,15 @@ Example:
         dh_installtex
 
 would install a present debian/package.formats file as
-/etc/texmf/fmt.d/20package.cnf.
+/var/lib/tex-common/fmtutil-cnf/texmf/package.cnf.
 
 
 =head2 Mixing the different variants
 
 The command line items (Variant 2) are merged into the debian/package.maps 
-(debian/package.hyphens, debian/package.formats)
-file and the merged file is installed as 20package.cfg/cnf. If you specify
-an additional package.cfg/cnf (Variant 1) without a different priority than
-the default one on the cmd line, this will raise an error since both files
-would be installed as 20package.cfg/cnf. You can only specify 
-package.cfg/cnf without
-a different priority than the default one if no debian/package.maps nor
-any command line Map files are present.
-
-=head2 The pseudo-comment
-
-If the provided cfg files do not contain the pseudo-comment as described
-in the Debian TeX Policy, Font configuration, an additional header with
-explanation, warning and the pseudo-comment is added.
-
-This program automatically generates the postinst and postrm commands needed
-to register the fonts with TeX.  See L<dh_installdeb(1)> for an explanation
-of how this works.
+(debian/package.hyphens, debian/package.formats) file. If you specify
+an additional package.cfg/cnf (Variant 1) this will raise an error since
+both files would be installed as package.cfg/cnf.
 
 =head1 OPTIONS
 
@@ -152,10 +135,6 @@ of how this works.
 
 Do not modify postinst/prerm scripts.
 
-=item B<--priority=>I<n>
-
-Set the default priority to I<n> instead of 20.
-
 =item B<--flavor=>I<flavor>[,I<flavor>]
 
 This option is used to select a different tree then the default
@@ -164,8 +143,7 @@ specify a list from flavors to be selected.
 At the moment you can select from the following list of flavors:
 B<tree:texlive>,
 B<map:config_for_active_maps>, B<map:config_for_all_maps>, 
-B<format:build_all>, B<format:add_one:I<formatname>>, and
-B<lsr:full>.
+B<format:add_one:I<formatname>>.
 
 B<tree:texlive> will select the tree /usr/share/texlive/texmf-dist and
 should only be used for files installed into this tree.
@@ -184,17 +162,13 @@ activated via the updmap(-sys) mechanism.
 
 Default is I<not> to generate any config files.
 
-B<format:build_all> will add code to the postinst script to create all
-defined formats, and to the postrm script to clean and recreate? FIXME?
-the generated formats.
-
 B<format:add_one:I<formatname>> allows to add the generation of a specific
 format without actually providing it (in a cnf file).  This is useful if a 
 package adds hyphenation patterns to an existing formats.
 
 B<format:no_links>:
-Usually, for every format that is specified in a configuration file in
-/etc/texmf/fmt.d/, dh_installtex will create a symlink
+Usually, for every format that is specified in a configuration file,
+dh_installtex will create a symlink
 /usr/bin/I<format> that points to the corresponding engine.  For
 example, /usr/bin/latex would be created as a symlink to pdftex.  
 
@@ -202,17 +176,11 @@ The flavor B<format:no_links> inhibits this. If a link already
 exists, dh_installtex will skip this format with an informational
 message, even if this option is not given.
 
-B<lsr:full>: Recreate the lsr database not only for the standard trees,
-but also the distribution tree C</usr/share/texlive/texmf> and
-C</usr/share/texlive/texmf-dist>.
-
 =back
 
 =head1 NOTES
 
 "dh_installtex" adds a dependency relation onto tex-common to misc:Depends.
-If files are installed into /usr/share/texmf/doc, the version is >=4,
-otherwise >=3.
 
 Note that this command is not idempotent. "dh_clean -k" should be called
 between invocations of this command, unless using the B<-n> option.
@@ -238,12 +206,10 @@ my $mapdoconfig =  0;	  # doconfig depending map/subflavor
 my $doallformats = 0;	  # depending on flavor format:build_all
 my $dofulllsr = 0;        # do include texmf-texlive in lsr making
 my @addbuildformats = (); # additional formats to be build
-my $priority=20;	# priority with which files are installed
 my $doformatlinks = 1;
 my $texmftree = "texmf";
 my %cmdlineargs;
 my %cmdlinefiles;
-my %cmdlinefilespriority;
 my @cmdlinetexmftrees;
 
 #
@@ -280,13 +246,6 @@ my $i;
 my $bn;
 my $pr;
 my $dofilen;
-
-# the magic header without comment chars
-my @magicheader = ( "You can change/add entries to this file and changes will be preserved", 
-"over upgrades, even if you have removed the main package prior",
-"(not if you purged it). You should leave the following pseudo comment",
-"present in the file!",
-"-_- DebPkgProvidedMaps -_-", "");
 
 #
 # collect data
@@ -380,39 +339,16 @@ sub build_line {
 }
 
 #
-# check wether a magic comment is already present
-sub magic_comment_present {
-	my ($fname) = @_;
-	my @args = ( "grep", "-q", "^[#%] -_- DebPkgProvidedMaps -_-", $fname );
-	if (system(@args) == 0) { return 1; }
-	return 0;
-}
-
-#
 #
 # START OF THE MAIN PROGRAM
 #
 #
 
-if (defined($dh{PRIORITY}) && $dh{PRIORITY} ne '') {
-	$priority=$dh{PRIORITY};
-}
-
 #
 # parse the cmd line and fill in the various hashes
 #
 foreach (@ARGV) {
-	if ((m/^(map)file=(.*\.cfg)(=([[:digit:]]+))?$/) ||
-	    (m/^(hyphen)file=(.*\.cnf)(=([[:digit:]]+))?$/) ||
-	    (m/^(format)file=(.*\.cnf)(=([[:digit:]]+))?$/)) {
-		my $type=$1;
-		my $fn=$2;
-		my $pr=$priority;
-		if (defined($4)) {
-			$pr=$4;
-		}
-		$cmdlinefilespriority{$type}{$fn}=$pr;
-	} elsif (m/^(map|hyphen|format)=(.*)$/) {
+	if (m/^(map|hyphen|format)=(.*)$/) {
 		push @{$cmdlineargs{$1}}, $2;
 	} else {
 		error("Unrecognized argument: $_\n");
@@ -452,13 +388,11 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	my %pkgprovidedfilecontents;
 	my %data;
 	my @whattodo = ();
-	my @fmtconffiles;
 
 	if (($package eq $dh{FIRSTPACKAGE} || $dh{PARAMS_ALL}) && @ARGV) {
 		# we do nothing here
 	} else {
 		# we have to clear all the cmd line arguments!
-		%cmdlinefilespriority = ();
 		%cmdlineargs = ();
 	}
 
@@ -476,16 +410,12 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 			$pkgprovidedfilecontents{$type} = \@bar;
 			$pkgprovidedfile = 1;
 		}
-		if (defined($cmdlinefilespriority{$type})) {
-			my %priorityhash = %{$cmdlinefilespriority{$type}};
-			@cmdlineconfigfiles = keys(%priorityhash);
-		}
 		if (defined($cmdlineargs{$type})) {
 			@cmdlinearguments = @{$cmdlineargs{$type}};
 		}
 		foreach my $foo (@cmdlineconfigfiles) {
 			my $bn=basename($foo);
-			if ($bn eq "$package.$configfileext{$type}" && $cmdlinefilespriority{$type}{$foo} == $priority) {
+			if ($bn eq "$package.$configfileext{$type}") {
 				$pkgfileoncmdline = 1;
 			}
 		}
@@ -498,14 +428,10 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		# do the full maintainer stuff!
 		push @whattodo, $type;
 		if ($pkgfileoncmdline && ($pkgprovidedfile || ($#cmdlinearguments >= 0))) {
-			error("This call would create multiple copies of $priority$package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
+			error("This call would create multiple copies of $package.$configfileext{$_}.\nPlease read the man page on how this should be fixed!\n");
 		}
 
 		my $target = "/var/lib/tex-common/$managedir{$type}/$texmftree";
-		# only hyphen config files remain in /etc/texmf
-		if ($type eq "hyphen") {
-			$target = "/etc/texmf/$configdir{$type}";
-		}
 		if ( ! $dh{ONLYSCRIPTS} && ! -d "$tmp$target") {
 			doit("install", "-d", "$tmp$target");
 		};
@@ -514,24 +440,13 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		#
 		foreach (@cmdlineconfigfiles) {
 			$bn=basename($_);
-			$pr=$cmdlinefilespriority{$type}{$_};
-			if ($type eq "hyphen") {
-				$dofilen = "$tmp$target/$pr$bn";
-			} else {
-				$dofilen = "$tmp$target/$bn";
-			}
+			$dofilen = "$tmp$target/$bn";
 			WRITECMDLINECFGFILE: do {
 				-r $dofilen &&
 					error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
 				open(CFGFILE, ">$dofilen") ||
 					error("Cannot open $dofilen for writing!");
 				verbose_print("Writing $dofilen");
-				if (($type eq "hyphen") && !magic_comment_present($_)) {
-					print CFGFILE "$commentchar{$type} $pr$bn\n";
-					foreach $i (@magicheader) {
-						print CFGFILE "$commentchar{$type} $i\n";
-					}
-				}
 				open(FOO,"<$_") || error("Cannot open $_ for reading!");
 				while (<FOO>) { 
 					print CFGFILE $_; 
@@ -540,10 +455,6 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				close(FOO);
 				close(CFGFILE);
 				$bn =~ s/\.$configfileext{$type}$//;
-				push @listlines, "$pr$bn";
-				if ($type eq "format") {
-					push @fmtconffiles, "$target/$bn.cnf";
-				}
 			} unless ($dh{ONLYSCRIPTS});
 		}
 		#
@@ -552,24 +463,12 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		#
 		if ( ! $dh{ONLYSCRIPTS} && ( $pkgprovidedfile || ($#cmdlinearguments >= 0) )) {
 			my $basefile = "$package.$configfileext{$type}";
-			$basefile = "$priority$package.$configfileext{$type}"
-				if ($type eq "hyphen");
 			$dofilen = "$tmp$target/$basefile";
 			-r $dofilen && 
 				error("The config file $dofilen already exists! Cannot recreate it, please call dh_clean -k!");
 			open(CFGFILE, ">$dofilen") || 
 				error("Cannot open $dofilen for writing!");
 			verbose_print("Writing $dofilen");
-			if ($type eq "hyphen") {
-				if (($pkgprovidedfile &&  
-					 !magic_comment_present($pkgfilename)) ||
-					(!$pkgprovidedfile && ($#cmdlinearguments >= 0))) {
-					print CFGFILE "$commentchar{$type} $basefile\n";
-					foreach (@magicheader) {
-						print CFGFILE "$commentchar{$type} $_\n";
-					}
-				}
-			}
 			foreach (@{$pkgprovidedfilecontents{$type}}) {
 				print CFGFILE "$_";
 				collect_data($type,\@{$data{$type}},$_);
@@ -580,25 +479,8 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 				collect_data($type,\@{$data{$type}},$foo);
 			}
 			close(CFGFILE);
-			push @listlines, "$priority$package";
-			if ($type eq "format") {
-				push @fmtconffiles, "$target/$basefile.cnf";
-			}
 		};
 
-		WRITELISTFILE: do {
-			if ( ! -d "$tmp/var/lib/tex-common/$managedir{$type}/") {
-				doit("install","-d","$tmp/var/lib/tex-common/$managedir{$type}/");
-			}		
-			$dofilen = "$tmp/var/lib/tex-common/$managedir{$type}/$package.list";
-			open(LISTFILE, ">>$dofilen") ||
-				error("Cannot open $dofilen for writing/appending!");
-			verbose_print("Writing $dofilen");
-			foreach (@listlines) {
-				print LISTFILE "$_\n";
-			}
-			close(LISTFILE);
-		}  if (($type eq "hyphen") && !$dh{ONLYSCRIPTS});
 	}
 	
 	my @mapdata = ();
@@ -666,39 +548,21 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		push @fmtdata, @addbuildformats;
 		push @postrmfmtdata, @addbuildformats;
 	}
-	if ($doallformats == 1) {
-		# in case we have allformats to do we ignore
-		# 	language and format
-		my @newwhat = ();
-		push @newwhat, "allformats";
-		foreach my $t (@whattodo) {
-			if ($t eq "map") {
-				push @newwhat, $t;
-			}
-		}
-		@whattodo = @newwhat;
-		# also include the full code
-	}
 	if (! $dh{NOSCRIPTS}) {
-		push @whattodo, ($dofulllsr ? "lsrfull" : "lsr");
-		autoscript($package, "postinst", "postinst-tex", "s|#FORMATSFILES#|@fmtconffiles|; s|#WHATTODO#|@whattodo|");
+		$whattodoinst = "";
+		$whattodorem  = "";
+		for my $w (@whattodo) {
+			$whattodoinst .= "\tupdate-texmf-conf $w\n";
+			$whattodorem .= "\tdhit_call_update_texmf_config $w\n";
+		}
+		autoscript($package, "postinst", "postinst-tex", "s|#WHATTODO#|$whattodoinst|");
 		# map entries have already been filtered out
-		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodo|");
-	}
-
-	# deduce dependency level
-	# from v3 to v4 we removed the link 
-	# /usr/share/texmf/doc -> /usr/share/doc/texmf
-	# thus, if packages are installing files into /usr/share/texmf/doc
-	# then it should depend on tex-common >= 4, otherwise >=3 is enough
-	my $tcvers = ">= 3";
-	if (-d "$tmp/usr/share/texmf/doc") {
-		$tcvers = ">= 4";
+		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|@whattodorem|");
 	}
 
 	# for trigger support
 	addsubstvar($package, "misc:Depends", "dpkg", ">= 1.14.18");
-	addsubstvar($package, "misc:Depends", "tex-common", $tcvers);
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 6");
 }
 
 =head1 SEE ALSO

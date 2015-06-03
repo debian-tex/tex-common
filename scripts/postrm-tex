@@ -1,10 +1,10 @@
 ##
 ## postrm-tex
 ##
-## postrm snippets for registering hyphenation patterns, font maps, and formats
+## postrm snippets for unregistering maps, formats, hyphens
+## and removing format dumps
 ##
 ## Authors:
-##       Florent Rougon <f.rougon@free.fr>
 ##       Norbert Preining <preining@logic.at>
 ##
 # Please note that comments in this file are stripped before installation
@@ -26,68 +26,18 @@ dhit_call_update_texmf_config ()
     fi
 }
 
-dhit_check_run_without_errors ()
-{
-    silent=0
-    if [ "$1" = "-silent" ] ; then
-        silent=1
-        shift
-    fi
-    if which "$1" >/dev/null; then
-        tempfile=$(mktemp -p /tmp checkrun.XXXXXXXX)
-        if [ $silent = 0 ] ; then
-            printf "Running '$*'.\nThis may take some time..."
-        fi
-        set +e
-        if "$@" > $tempfile 2>&1 ; then
-            rm -f $tempfile
-            [ $silent = 0 ] && echo " done."
-        else
-            echo
-            echo "$* failed. Output has been stored in"
-            echo "$tempfile"
-            echo "If tex-common is not configured you can ignore this error" \
-                 "message!"
-            echo "Otherwise, please include this file if you report a bug."
-            echo
-        fi
-        set -e
-    fi
-
-    return 0
-}
-
-
 case "$1" in
     remove|disappear)
-        # It doesn't hurt to call all of them.
-        dhit_check_run_without_errors -silent update-updmap --quiet
-        dhit_check_run_without_errors -silent update-language
-        dhit_check_run_without_errors -silent update-fmtutil --quiet
-        for i in #WHATTODO# ; do
-            case "$i" in
-            lsr)
-                dhit_call_update_texmf_config lsr
-                ;;
-            lsrfull)
-                dhit_call_update_texmf_config lsrfull
-                ;;
-            map)
-                dhit_call_update_texmf_config map
-                ;;
-            allformats|format)
-                for fmt in #FORMATS# ; do
-                    rm -f /var/lib/texmf/web2c/$fmt.*
-                    # try to remove empty directories of format dumps
-                    if [ `dirname $fmt` != "." ] ; then
-                        rmdir --ignore-fail-on-non-empty `dirname $fmt`
-                    fi
-                done
-                ;;
-            hyphen)
-                dhit_call_update_texmf_config hyphen
-                ;;
-            esac
+        #WHATTODO#
+        for fmt in #FORMATS# ; do
+            rm -f /var/lib/texmf/web2c/$fmt.*
+            # try to remove empty directories of format dumps
+            dn=`dirname $fmt`
+            if [ $dn != "." ] ; then
+                if [ -d /var/lib/texmf/web2c/$dn ] ; then
+                    rmdir --ignore-fail-on-non-empty /var/lib/texmf/web2c/$dn
+                fi
+            fi
         done
     ;;
 
