@@ -549,7 +549,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		push @postrmfmtdata, @addbuildformats;
 	}
 	if (! $dh{NOSCRIPTS}) {
-		my $whattodoinst = "update-texmf-conf @whattodo";
+		my $whattodoinst = "update-texmf-config @whattodo";
 		my $whattodorem  = "dhit_call_update_texmf_config @whattodo";
 		autoscript($package, "postinst", "postinst-tex", "s|#WHATTODO#|$whattodoinst|");
 		# map entries have already been filtered out
