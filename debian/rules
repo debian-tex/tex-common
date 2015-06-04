@@ -28,7 +28,7 @@ build-stamp:
         # Add here commands to compile the package.
 	cd doc; $(MAKE)
 	cd scripts; pod2man dh_installtex > dh_installtex.1
-	cd scripts; help2man -s 8 -S Debian  -N ./update-language > update-language.8
+	cd scripts; help2man -n "generate hyphenation configuration for TeX engines" -s 8 -S Debian  -N ./update-language > update-language.8
 
 	touch build-stamp
 
