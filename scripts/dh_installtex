@@ -559,6 +559,9 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		push @postrmfmtdata, @addbuildformats;
 	}
 	if (! $dh{NOSCRIPTS}) {
+		# reproducible builds: sort the two arrays!
+		@whattodo = sort @whattodo;
+		@postrmfmtdata = sort @postrmfmtdata;
 		my $whattodoinst = "update-texmf-config @whattodo";
 		my $whattodorem  = "dhit_call_update_texmf_config @whattodo";
 		autoscript($package, "postinst", "postinst-tex", "s|#WHATTODO#|$whattodoinst|");
