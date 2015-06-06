@@ -570,7 +570,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	}
 
 	# for trigger support
-	addsubstvar($package, "misc:Depends", "dpkg", ">= 1.14.18");
+	addsubstvar($package, "misc:Depends", "dpkg", "");
 	addsubstvar($package, "misc:Depends", "tex-common", ">= 6");
 }
 
