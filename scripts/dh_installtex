@@ -569,8 +569,6 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|$whattodorem|");
 	}
 
-	# for trigger support
-	addsubstvar($package, "misc:Depends", "dpkg", "");
 	addsubstvar($package, "misc:Depends", "tex-common", ">= 6");
 }
 
