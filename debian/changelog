@@ -1,3 +1,9 @@
+tex-common (6.01) unstable; urgency=medium
+
+  * upload to unstable
+
+ -- Norbert Preining <preining@debian.org>  Thu, 25 Jun 2015 14:41:33 +0900
+
 tex-common (6.00) experimental; urgency=medium
 
   * remove Atsuhito Kohda from uploaders, he has retired. Thanks for the
