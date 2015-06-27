@@ -1,3 +1,9 @@
+tex-common (6.02) unstable; urgency=medium
+
+  * add help2man to build-deps (Closes: #790101)
+
+ -- Norbert Preining <preining@debian.org>  Sat, 27 Jun 2015 23:05:12 +0900
+
 tex-common (6.01) unstable; urgency=medium
 
   * upload to unstable
