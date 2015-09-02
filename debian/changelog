@@ -1,3 +1,9 @@
+tex-common (6.03) UNRELEASED; urgency=medium
+
+  * do not create temp files in / (Closes: #797381)
+
+ -- Norbert Preining <preining@debian.org>  Thu, 03 Sep 2015 08:48:42 +0900
+
 tex-common (6.02) unstable; urgency=medium
 
   * add help2man to build-deps (Closes: #790101)

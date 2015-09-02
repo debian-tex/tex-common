@@ -231,7 +231,9 @@ for tree in $COMPONENTS ; do
     fi
 
     # create output dir in any case ...
-    mkdir -p $(dirname $output_file)
+    destdir=$(dirname $output_file)
+    mkdir -p "$destdir"
+    cd "$destdir"
 
     #
     if [ $quiet = 0 ]; then
