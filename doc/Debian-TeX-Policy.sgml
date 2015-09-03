@@ -8,7 +8,7 @@
 	<name>The Debian TeX mailing list</name>
 	<email>debian-tex-maint@lists.debian.org</email>
       </author>
-      <version>generated from $Id$</version>
+      <version>2015-09-03 (incomplete)</version>
 
       <abstract>
         This document provides a set of rules for the packaging of
@@ -18,7 +18,7 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 2004-2012 Frank Küster, Richard Lewis, Norbert
+	  Copyright &copy; 2004-2015 Frank Küster, Richard Lewis, Norbert
           Preining, Ralf Stubner, Florent Rougon
 	</copyrightsummary>
 	<p>
@@ -226,7 +226,7 @@
 	and <url id="file:///usr/share/doc/tex-common/tds.html"
         name="tds.html">, and the latest version of the TDS is
         available at <tt><url name="http://www.tug.org/twg/tds/"
-        id="http://www.tug.org/twg/tds/"></tt>.  It is a bug if a
+        id="http://www.tug.org/twg/tds/" /></tt>.  It is a bug if a
         package only conforms to an outdated TDS version.  It is a
         more severe bug, however, if it conforms to the current TDS
         version but does not make sure to depend on an appropriately
@@ -486,22 +486,23 @@
 	<p>
 	Stackable configuration files in TeX are 
 	<file>TEXMFTREE/web2c/texmf.cnf</file> (central configuration
-	for TeX applications) and
-	<file>TEXMFTREE/web2c/updmap.cfg</file> (font configuration), 
-	while unstackable configuration files are 
+	for TeX applications),
+	<file>TEXMFTREE/web2c/updmap.cfg</file> (font configuration), and
+	<file>TEXMFTREE/web2c/fmtutil.cnf</file> (for format definitions).
+	Unstackable configuration files are 
 	<file>TEXMFTREE/tex/generic/config/language.dat</file> (language
 	support/hyphenation patterns for latex based formats),
 	<file>TEXMFTREE/tex/generic/config/language.def</file> (the same
-	for etex based formats),
+	for etex based formats), and
 	<file>TEXMFTREE/tex/generic/config/language.dat.lua</file> (the
-	same for luatex based formats), and
-	<file>TEXMFTREE/web2c/fmtutil.cnf</file> (for format definitions).
+	same for luatex based formats).
 	</p>
 
 	<p>
 	In Debian, by default the respective configuration files of the
 	following trees are used: For <file>texmf.cnf</file>: TEXMFDEBIAN
 	(the texmf.cnf file is a link to the one in TEXMFMAIN).
+	For <file>updmap.cfg</file>:TEXMFDIST, TEXMFDEBIAN.
 	For <file>updmap.cfg</file>:TEXMFDIST, TEXMFDEBIAN.
 	For the unstackable configuration files the respective copies
 	in TEXMFSYSVAR are used.
@@ -539,760 +540,42 @@
         </p>
 
 	<p>
-	The configuration
-	update programs should be called without any options to allow
-	for internal changes, e.g. of the directories where the
-	generated files are placed.
+	The configuration update programs should be called without any
+	options to allow for internal changes, e.g. of the directories
+	where the generated files are placed.
 	</p>
 
 	<p>
-	Packages that changed <file>updmap.cfg</file> must call
-	<prgn>updmap-sys</prgn> as detailed in <ref
-	id="sec-font-configuration">. Packages that changed
-	<file>language.dat</file> or <file>fmtutil.cnf</file> must
-	call <prgn>fmtutil-sys</prgn> (see below). They must make sure
-	to issue the <prgn>mktexlsr</prgn> command before this.
+	  All package configuration related to TeX files can be done
+	  using <package>tex-common</package>'s trigger
+	  mechanism. That means that packages that
+	  changed <file>updmap.cfg</file>
+	  (via <prgn>update-updmap</prgn>) must either
+	  call <prgn>update-texmf-config map</prgn> which will pass
+	  the configuration work to <package>tex-common</package>, or
+	  call <prgn>updmap-sys</prgn>.
 	</p>
 
-	<sect1 id="sec-font-configuration">
-	  <heading>Font configuration</heading>
-
-	  <p>
-	  A package that provides PostScript Type&nbsp;1 fonts for TeX should
-          be usable with any Basic TeX Package. The recommended way to
-          implement the configuration scheme described below is to use the
-          <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
-          provided by <package>tex-common</package>. See <manref
-          name="dh_installtex" section="1"> for usage details.
-	  </p>
-	    
-	  <sect2 id="font-configuration-details">
-	    <heading>Description of manual font package setup</heading>
-
-	  <p>
-	    This section describes how <prgn>dh_installtex</prgn>
-	    manages font packages, and what packages need to do that
-	    want to do without it.
-	  </p>
-          <p>
-          For the rest of this section, we'll assume we are dealing with a
-          package named <var>package</var> that installs PostScript
-          Type&nbsp;1 fonts for TeX. <var>package</var> should fulfill the
-          following requirements:
-            <enumlist>
-              <item>
-                It should depend on <package>tex-common</package> but not on
-                any Basic TeX Package, unless needed for another task than
-                simply installing the fonts for TeX.
-              </item>
-
-              <item>
-                <p>
-                It should install the necessary map files
-                (<file>.map</file> extension) below
-                <file><var>TEXMFMAIN</var>/fonts/map</file>.  The
-                precise location must conform to the applicable TDS
-                version.
-                </p>
-              </item>
-
-              <item>
-                It should also obviously install other needed or useful files
-                provided by upstream to use the fonts with TeX-related
-                programs (<file>.pfb</file>, <file>.tfm</file>,
-                <file>.enc</file>, <file>.fd</file>, <file>.sty</file>,
-                documentation, etc.).
-              </item>
-
-              <item>
-                <p>
-                It should install one or more configuration files with names
-                following the pattern <tt>20<var>name</var>.cfg</tt> into
-                <file>/etc/texmf/updmap.d/</file><footnote> Filenames
-		  starting with <tt>10</tt> are reserved for the Basic
-		  TeX packages.  However, sorting order is actually
-		  only relevant for snippets
-		  for <file>texmf.cnf</file>, <file>fmtutil.cnf</file>
-		  and <file>language.dat</file>.
-		</footnote>. Such files will be later
-                merged by <prgn>update-updmap</prgn> to form
-                <file>/var/lib/texmf/web2c/updmap.cfg</file>, the effective
-                configuration file for <prgn>updmap-sys</prgn>.
-                </p>
-
-                <p>
-                Exactly what to put in these files is documented in <manref
-                name="update-updmap" section="1">. Basically, they should
-                contain the pseudo-comment:
-
-<example>
-# -_- DebPkgProvidedMaps -_-
-</example>
-
-                as well as the usual <tt>Map</tt> and/or <tt>MixedMap</tt>
-                lines that <var>package</var> needs to add to
-                <file>/var/lib/texmf/web2c/updmap.cfg</file>.
-                </p>
-              </item>
-
-              <item>
-                <p>
-                It should install a file named
-                <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-                that contains a reference to every <tt>.cfg</tt> file from the
-                previous step, one per line. For instance, if
-                <var>package</var> installs <file>20foo.cfg</file> and
-                <file>20bar.cfg</file> into <file>/etc/texmf/updmap.d/</file>,
-                the contents of
-                <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-                should be:
-
-<example>
-20foo
-20bar
-</example>
-
-                This <file><var>package</var>.list</file> file must be shipped
-                in the <tt>.deb</tt>, so that when <var>package</var> is
-                removed (not necessarily purged),
-                <file><var>package</var>.list</file> disappears from
-                <file>/var/lib/tex-common/fontmap-cfg/</file>.
-                </p>
-              </item>
-
-              <item>
-                <p>
-                It should run:
-                <list compact>
-                  <item>
-                    in <file><var>package</var>.postinst</file>;
-                  </item>
-                  <item>
-                    when <file><var>package</var>.postrm</file> is called with
-                    <tt>remove</tt> or <tt>disappear</tt> as its first argument
-                  </item>
-                </list>
-                the following commands in this order: <tt>update-updmap
-                --quiet</tt>, <tt>mktexlsr</tt> and <tt>updmap-sys</tt>.
-                </p>
-
-                <p>
-                Since <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn> are provided by the Basic TeX
-                Packages, <file><var>package</var>.postinst</file> has
-                to ensure that they are only called when found in
-                <tt>$PATH</tt> (unless <var>package</var> depends
-                on the Basic TeX Packages for some reason). In
-                <file><var>package</var>.postrm</file>, the same
-                considerations must be taken into account, with the
-                addition that <package>tex-common</package> (that
-                provides <prgn>update-updmap</prgn>) can be
-                unconfigured or even uninstalled.
-                </p>
-
-                <p>
-                Note that even when <package>tex-common</package> is
-                configured, it cannot be assumed that
-                <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn> can be safely run whenever available,
-                because they internally use <prgn>kpsewhich</prgn> which only
-                works after the <file>libkpathsea</file> library in a separate
-                package has been configured properly.<footnote>However,
-                <prgn>update-updmap</prgn> uses <file>libkpathsea</file> only
-                in user-specific-mode. In system-wide mode, it doesn't matter
-                whether <file>libkpathsea</file> is configured or
-                not.</footnote> The following check can be used to determine
-                whether <file>libkpathsea</file> is configured:
-
-<example>
-if kpsewhich --version >/dev/null 2>&1; then
-    echo "kpsewhich is installed and libkpathsea is configured."
-else
-    echo "Either kpsewhich is not installed, or libkpathsea is not configured."
-fi
-</example>
-
-                </p>
-              </item>
-            </enumlist>
-          </p>
-
-          <p>
-          A sample implementation of this scheme can be found in <ref
-          id="appen-sample-font">, but the recommended way to implement this
-          scheme is to use <prgn>dh_installtex</prgn>.
-          </p>
-	  </sect2>
-	  <sect2 id="font-configuration-rationale">
-	    <heading>Rationale</heading>
-          <p>
-          The rest of this section explains the rationale behind the previous
-          recommendations.
-            <list>
-              <item>
-                The dependency on <package>tex-common</package> ensures that
-                in <file><var>package</var>.postinst</file>,
-                <prgn>update-updmap</prgn> can be run and
-                <file>texmf.cnf</file> is in a sane state, so that
-                <prgn>mktexlsr</prgn> and <prgn>updmap-sys</prgn> can be run
-                safely (if present and if <file>libkpathsea</file> is
-                configured).
-              </item>
-          
-              <item>
-                The recommended order for running the programs
-                <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
-                <prgn>updmap-sys</prgn> ensures that <prgn>updmap-sys</prgn>
-                can locate the newly-installed files (in particular, the map
-                files shipped by <var>package</var>), since
-                <prgn>mktexlsr</prgn> is run before <prgn>updmap-sys</prgn>.
-                It is also run after <prgn>update-updmap</prgn>, because
-                <file>/var/lib/texmf/web2c/updmap.cfg</file> might have been
-                created by <prgn>update-updmap</prgn>, although it more
-                probably already existed. And since it would be of no use to
-                call <prgn>mktexlsr</prgn> before <prgn>update-updmap</prgn>,
-                we recommend to run it after, just in case.
-              </item>
-
-              <item>
-
-              <p>
-              Now, about the "magic comments" in
-              <file>/etc/texmf/updmap.d/*.cfg</file> and the
-              <file><var>package</var>.list</file> file in
-              <file>/var/lib/tex-common/fontmap-cfg/</file>. When that
-              <var>package</var> is removed, but not purged, it has to
-              make sure that its <prgn>update-updmap</prgn>
-              configuration files in <file>/etc/texmf/updmap.d/</file>
-              are ignored.  Otherwise, any call to
-              <prgn>updmap-sys</prgn> by an other package or the local
-              admin would fail because it cannot find
-              <var>package</var>'s map files. Besides, we want the
-              <file>/etc/texmf/updmap.d/*.cfg</file> files to be
-              conffiles (unless we really have no other choice),
-              because then <prgn>dpkg</prgn> automatically handles
-              upgrades while preserving user modifications for
-              them. As a consequence, moving the <file>.cfg</file>
-              files from <var>package</var> out of the way when it is
-              removed is not an option. Moreover, the user would
-              wonder where his configuration files have gone in such a
-              case.
-              </p>
-
-              <p>
-              The solution we chose was to add a little bit of logic into
-              <prgn>update-updmap</prgn>, so that whenever it sees a
-              <file>.cfg</file> file (let's call it <file>20foo.cfg</file>)
-              that has the "magic comment", it actually includes its contents
-              into <file>updmap.cfg</file> if, and only if:
-                <list>
-                  <item>
-                    it is up-to-date (which is assumed if
-                    <file>20foo.cfg.dpkg-new</file> doesn't exist in the same
-                    directory);
-                  </item>
-                  <item>
-                    <tt>20foo</tt> appears on a line by itself in one of the
-                    <file>.list</file> files in
-                    <file>/var/lib/tex-common/fontmap-cfg/</file>.
-                  </item>
-                </list>
-              Additionally, that <file>.list</file> file should be named
-              <file><var>package</var>.list</file> if <file>20foo.cfg</file>
-              comes from <var>package</var>, for simple reasons of tidiness.
-              </p>
-          
-              <p>
-              With this little mechanism in place, all the rest follows as
-              expected:
-              <list>
-                <item>
-                  When <var>package</var> is removed, but not purged,
-                  <file><var>package</var>.list</file> is first removed by
-                  <prgn>dpkg</prgn> from
-                  <file>/var/lib/tex-common/fontmap-cfg/</file>, thus
-                  disabling the the <file>.cfg</file> files shipped by
-                  <var>package</var> as far as <prgn>update-updmap</prgn> is
-                  concerned. Then, <file><var>package</var>.postrm</file>
-                  calls <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
-                  <prgn>updmap-sys</prgn>, with the result that
-                  <var>package</var>'s map files aren't listed anymore in the
-                  final map files (<file>psfonts.map</file>,
-                  <file>pdftex.map</file>...) generated by
-                  <prgn>updmap-sys</prgn>.
-                </item>
-
-                <item>
-                  If <var>package</var> is reinstalled later, two files are
-                  first created by <prgn>dpkg</prgn> during the unpack phase:
-                  <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-                  and <file>/etc/texmf/updmap.d/20foo.cfg.dpkg-new</file>. As
-                  long as the second one exists, the conffile
-                  <file>/etc/texmf/updmap.d/20foo.cfg</file> will be ignored
-                  by <prgn>update-updmap</prgn><footnote>An
-                  <prgn>update-updmap</prgn> call could take place if another
-                  package such as <package>texlive-*</package> is configured
-                  in the meantime. That happens sometimes with APT.</footnote>
-                  because it may be outdated. Eventually, <var>package</var>
-                  is configured; <file><var>package</var>.postinst</file> runs
-                  <prgn>update-updmap</prgn>, <prgn>mktexlsr</prgn> and
-                  <prgn>updmap-sys</prgn>, and the <file>.cfg</file> files
-                  shipped by <var>package</var> aren't ignored by
-                  <prgn>update-updmap</prgn> this time, since they are
-                  referenced in
-                  <file>/var/lib/tex-common/fontmap-cfg/<var>package</var>.list</file>
-                  and the <file>.dpkg-new</file> files don't exist anymore.
-                  Thus, the map files shipped by <var>package</var> do end up
-                  in the final map files generated by <prgn>updmap-sys</prgn>.
-                  </item> </list>
-            </p>
-          </list>
-	  </sect2>
-	</sect1>
-
-	<sect1>
-	  <heading>Language/Hyphenation configuration</heading>
-	  <p>
-	  A package that provides additional hyphenation patterns for
-	  TeX should be usable with any Basic TeX Package. The recommended 
-	  way to implement the configuration scheme described below is to 
-	  use the <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
-	  provided by <package>tex-common</package>. See 
-	  <manref name="dh_installtex" section="1"> for usage
-	  details.  Note that for <file>language.dat</file>, order is
-	  important: english should always be the first language.
-	  </p>
-	  <p>
-	  These packages 
-	  should put the actual hyphenation file into the respective
-	  places in <var>TEXMFMAIN</var>, and have them registered by
-	  putting a configuration file with extension <tt>.cnf</tt> into
-	  <file>/etc/texmf/language.d</file> and calling
-	  <tt>update-language</tt>. The file contents will then be
-	  incorporated into
-	  <file>/var/lib/texmf/tex/generic/config/language.dat</file>,
-	  the effective configuration file for TeX and friends'
-	  hyphenations.
-	  </p>
-	  <p>
-	  Hyphenation patterns present the same problem as described
-	  in the previous section for font configuration files: If the
-	  package is removed, but not purged, the patterns are
-	  deleted, but the configuration information is still in
-	  <file>/etc/texmf/language.d/</file>, and the format
-	  generation would fail if they would be included in
-	  <file>language.dat</file>.  Therefore, an analogous
-	  mechanism has been implemented as described for
-	  <prgn>update-updmap</prgn>: If a file in
-	  <file>/etc/texmf/language.d/</file> contains the "magic
-	  comment"
-<example>
-# -_- DebPkgProvidedMaps -_-
-</example>
-          it will only be used as long it is:
-          <list>
-            <item>
-              up-to-date (which is assumed if the same file with
-              <file>.dpkg-new</file> suffix doesn't exist in the same
-              directory);
-            </item>
-            <item>
-              listed in a file in
-              <file>/var/lib/tex-common/language-cnf/</file> which should have
-              the name <file><var>package</var>.list</file>.
-            </item>
-          </list>
-	  </p>
-
-	  <p>
-	  Calling update-language is *not* sufficient to be able to
-	  use the new hyphenation patterns; instead the formats that
-	  use it need to be regenerated.  This can be done by running
-	  <tt>fmtutil-sys --byhyphen `kpsewhich --progname=latex
-	  language.dat`</tt>.
-	  </p>
-
-	  <p>
-	  If a package that provides additional hyphenation patterns
-	  is removed, it must make sure the formats are properly
-	  recreated without it.  With the "magic comment" mechanism,
-	  this means to run <prgn>update-language</prgn> and
-	  <tt>fmtutil-sys --byhyphen `kpsewhich --progname=latex
-	  language.dat`</tt> in <file>postrm</file>
-	  </p>
-
-	  <p>
-	  There is currently no mechanism (i.e., no
-	  <prgn>update-language</prgn>) for automatic addition of
-	  hyphenation patterns to formats that do not use the same
-	  hyphenation configuration file as LaTeX.
-	  </p>
-
-	  <p>
-	  The recommended way for implementing this scheme is to use
-	  <prgn>dh_installtex</prgn>.
-	  </p>
-
-	</sect1>
-	
-	<sect1>
-	  <heading>Format configuration</heading>
-
-	  <p>
-	  As with font map configuration and language hyphenation patterns
-	  configuration, packages that provide additional formats should
-	  be usable with any Basic TeX Package. The recommended
-	  way to implement the configuration scheme described below is to
-	  use the <prgn>debhelper</prgn> program <prgn>dh_installtex</prgn>
-	  provided by <package>tex-common</package>. See
-	  <manref name="dh_installtex" section="1"> for usage
-	  details.  Note that for <file>fmtutil.cnf</file>, order is
-	  important:  Formats will be created for each line, and thus
-	  format files created from later lines will overwrite earlier
-	  ones. 
-	  </p>
-
-	  <p>
-	  These packages should put a
-	  configuration file according to <prgn>fmtutil.cnf(5)</prgn>
-	  into <file>/etc/texmf/fmt.d/</file>, run
-	  <prgn>update-fmtutil</prgn> and subsequently create the
-	  format with <tt>fmtutil-sys --byfmt <var>format</var></tt>.
-	  <prgn>fmtutil-sys</prgn> will only try to create the format
-	  if it can find the corresponding
-	  <file><var>format</var>.ini</file> file (the last argument
-	  in an <prgn>fmtutil.cnf</prgn> line).  Therefore the
-	  <file><var>format</var>.ini</file> file should not be a
-	  conffile.
-	  </p>
-
-	  <p>
-	  If a package needs to create formats at runtime, it should
-	  use a local <prgn>fmtutil.cnf</prgn> with the appropriate
-	  entries and specifiy its location to <prgn>fmtutil</prgn> on
-	  the command line, using the <tt>--cnffile</tt> switch.
-	  </p>
-
-	  <p>
-	  Upon package removal, <prgn>update-fmtutil</prgn> must be
-	  called in postrm, and the created formats and log files
-	  should be removed from the directory specified by
-	  <tt>`kpsewhich -var-value=TEXMFSYSVAR`/web2c</tt>.
-	  </p>
-
-	  <p>
-	  The recommended way for implementing this scheme is to use
-	  <prgn>dh_installtex</prgn>.
-	  </p>
-
-	</sect1>
-      </sect>
-
-      <sect>
-	<heading>Best practices for packages that
-	<tt>build-depend</tt> on the TeX system</heading>
-	<sect1><heading>Configuration</heading>
-	  <p>
-	    If packages that build-depend on the TeX system need a changed
-	    configuration, they should not try to provide it statically.
-	    If settings in any other configuration file are inappropriate
-	    for a package to build, this is (usually) a bug in the package
-	    that provides the file.  It should be fixed in this package,
-	    not circumvented by a workaround in the build process.  Such
-	    workarounds have proven to be problematic, because they might
-	    stop working after changes in the depended-on package, and
-	    such failure cannot be foreseen by its maintainers.  If a
-	    change is still necessary, the package should use the
-	    configuration update programs with the <tt>--outputdir</tt>
-	    and <tt>--add-file</tt> options.
-	  </p>
-	</sect1>
-	<sect1><heading>Font cache data</heading>
-	  <p>
-	    Font cache data are created each time a font in Metafont
-	    format is used, and placed by default
-	    in <var>TEXMFVAR</var>.  During package build, this has to
-	    be avoided.  In order to be able to clean up the generated
-	    files (and only those), the font cache should instead be
-	    put below the build directory.  This can be achieved by
-	    setting <var>TEXMFVAR</var> to a subdirectory of the
-	    current directory,
-	    e.g. <file><var>$(CURDIR)</var>/.texmf-var</file>, using
-	    Make's built-in variable.  Packages which do not
-	    change <var>TEXMFVAR</var> <em>must</em> not create
-	    documentation that uses Metafont fonts in
-	    the <tt>binary</tt> target.
-	  </p>
-	</sect1>
-      </sect>
-      <sect>
-        <heading>Command execution and format files</heading>
 	<p>
-	If TeX formats need to be generated before execution, this
-	should be done in the post-installation script.  Packages that
-	depend on an executable can thus simply declare
-	<tt>Depends:</tt> on the package providing the executable, and
-	<em>only</em> do that.  Any additional checks, e.g. for the
-	existence of format files, is unnecessary and harmful, causing
-	internal changes (e.g. of format file extensions) to break the
-	depending package that does this check.  Maintainer scripts or
-	programs in Debian packages should always use
-	<prgn>fmtutil</prgn> or <prgn>fmtutil-sys</prgn> for format
-	generation, and either add a <file>fmtutil.cnf</file> snippet
-	in <file>/etc/texmf/fmt.d/</file> (with
-	<prgn>fmtutil-sys</prgn>, for site-wide formats), or use
-	<prgn>fmtutil</prgn> with the <tt>--cnffile</tt> option and an
-	appropriate local <file>fmtutil.cnf</file> (for runtime
-	programs) 
+	  In a similar way, packages that changed <file>language.dat</file>
+	  or <file>fmtutil.cnf</file> must either
+	  call <prgn>update-texmf-config hyphen</prgn>
+	  (for <file>language.dat</file>) or
+	  <prgn>update-texmf-config format</prgn>
+	  (for <file>fmtutil.cnf</file>), which will pass
+	  the configuration work to <package>tex-common</package>,
+	  or call <prgn>fmtutil-sys</prgn> (see below). 
 	</p>
+
+
 	<p>
-	Local administrators can override settings from
-	<file>texmf.cnf</file> with environment variables; this has
-	sometimes lead to errors in <file>postinst</file> scripts.  It
-	is recommended that <file>postinst</file> scripts unset
-	relevant variables before format creation or other problematic
-	tasks. 
+	  The recommended way to implement the configuration scheme
+	  necessary is to use the <prgn>debhelper</prgn>
+	  program <prgn>dh_installtex</prgn> provided
+	  by <package>tex-common</package>. See <manref name="dh_installtex"
+	  section="1"> for usage details. 
 	</p>
-	<p>
-	If an add-on package generates a format upon installation that
-	needs a base format (e.g. latex.fmt), it must not load the
-	existing base format
-<footnote>
-The reason is that, in order to avoid other problems,
-<prgn>update-fmtutil</prgn> ignores files in 
-<file>/etc/texmf/fmt.d</file> that have a corresponding
-<file>.dpkg-new</file> file, and that it is necessary to recreate all
-formats when pool files or engines are updated.  Thus, some Basic TeX
-packages call <tt>fmtutil --all</tt> in their postinst scripts.  When
-Basic TeX packages are upgraded together while a package that
-loads <file>latex.fmt</file> is installed and configured, then one of
-the Basic TeX packages' postinst will call <prgn>update-fmtutil</prgn>
-and <tt>fmtutil --all</tt> while others are is still unconfigured and
-have <file>.dpkg-new</file> files.  Consequently, no format
-information for e.g. LaTeX is available, and the generation of the
-format that wants to load it would fail.  However, since all files
-needed to create e.g. <file>latex.fmt</file> are available, the
-depending format can <tt>\input</tt> <file>latex.ini</file> and create
-its own format without problems.
-</footnote>.
-Instead the <file>fmtutil.cnf</file>
-	snippet and the <file><var>format</var>.ini</file> file must
-	be changed so that the process of format creation is repeated.
-	For example, if upstream creates their format by loading
-	latex:
-<example>
-latex           pdfetex         language.dat    -translate-file=cp227.tcx *latex.ini
-jadetex         etex            language.dat    &amp;latex jadetex.ini
-</example>
-and the following <file>jadetex.ini</file> file:
-<example>
-\input jadetex.ltx
-\dump
-</example>
-        then the Debian package maintainer must
-        load <file>latex.ini</file> instead of <file>latex.fmt</file>,
-        making sure that <tt>\dump</tt> in <file>latex.ltx</file> has
-        no effect, and create the following
-        new <file>jadetex.ini</file>:
-<example>
-\let\savedump\dump
-\let\dump\relax
-\input latex.ini
-\let\dump\savedump
-
-\input jadetex.ltx
-\dump
-</example>
-        and the following snippet for <file>fmtutil.cnf</file>:
-<example>
-jadetex         etex    language.dat    -translate-file=cp227.tcx *jadetex.ini
-</example>
-	</p>
-<!-- 	<p> -->
-<!-- 	Format generation involves many configuration and input -->
-<!-- 	files.  In many cases format generation failed because of a bad -->
-<!-- 	local configuration, missing files or files added in local -->
-<!-- 	<var>TEXMF</var> trees, and consequently also the package -->
-<!-- 	post-installation script and configuration failed.  Therefore -->
-<!-- 	bug reports because of failed post-installation scripts have a -->
-<!-- 	severity of <em>important</em> unless -->
-<!-- 	<list compact> -->
-<!-- 	<item>the error occurs on a fresh install or</item> -->
-<!-- 	<item>the error occurs upon upgrade, and it has been shown -->
-<!-- 	that the post-installation script would not have failed with -->
-<!-- 	the old version of the package, </item> -->
-<!-- 	</list> -->
-<!-- 	in which cases the severity would be <em>grave</em>. -->
-<!-- 	</p> -->
       </sect>
-      <sect>
-        <heading>The Dpkg Post-Invoke Mechanism</heading>
-
-	<p>This section was intended to deal with a once-planned
-	mechanism that would allow to delay running of mktexlsr,
-	updmap and perhaps even "fmtutil --all" until all TeX-related
-	packages that want to do this are configured.  Thus, it would
-	be unnecessary to call the programs multiple times.  Coding
-	this is not hard, however it is unclear how it could be made
-	sure that failures get attributed to the correct package.
-	Therefore this plan has been dropped.</p>
-
-      </sect>
-    </chapt>
-    <appendix>
-      <heading>Sample code</heading>
-      <p>
-      This section contains sample code that implements the
-      recommodations of this document.
-      </p>
-      <sect id="appen-sample-font">
-        <heading>Sample code for font packages</heading>
-        <p>
-        Sample postinst script:
-<example>
-#
-# postinst-texfonts
-#
-# postinst snippet for installing Type 1 fonts for TeX
-#
-# Author: Florent Rougon &lt;f.rougon@free.fr&gt;
-#
-update_fontmaps()
-{
-    update-updmap --quiet
-    # All of the following needs an installed and configured
-    # basic TeX system, so check this.
-    if kpsewhich --version >/dev/null 2>&1; then
-        # mktexlsr is recommended now because updmap-sys relies 
-        # heavily on Kpathsea to locate updmap.cfg and the map files. 
-        # Also, it is slightly better not to specify a particular 
-        # directory to refresh because updmap.cfg is typically found 
-        # in TEXMFSYSVAR while the map files are in TEXMFMAIN or
-        # TEXMFDIST.
-        if which mktexlsr >/dev/null; then mktexlsr; fi
-        if which updmap-sys >/dev/null; then
-            printf "Running updmap-sys... "
-            updmap-sys --quiet
-            echo "done."
-        fi
-    fi
-
-    return 0
-}
-
-case "$1" in
-    configure|abort-upgrade|abort-remove|abort-deconfigure)
-        update_fontmaps
-    ;;
-
-    *)
-        echo "postinst called with unknown argument '$1'" >&2
-        exit 1
-    ;;
-esac
-</example>
-        </p>
-        <p>
-        Sample postrm script:
-<example>
-#
-# postrm-texfonts
-#
-# postrm snippet for installing Type 1 fonts for TeX
-#
-# Author: Florent Rougon &lt;f.rougon@free.fr&gt;
-#
-tell_that_errors_are_ok()
-{
-    # Cheap option handling...
-    if [ "$1" = -n ]; then
-        prog="$2"
-        endwith=' '
-    else
-        prog="$1"
-        endwith='\n'
-    fi
-
-    printf "\
-Trying to run '$prog' (error messages can be ignored if tex-common
-is not configured)...$endwith"
-
-    return 0
-}
-
-# The function name is *try_to*_update_fontmaps because the following
-# scenario might happen:
-#    1. this package is deconfigured
-#    2. tex-common and texlive-binaries are removed
-#    3. this package is removed or purged
-#
-# (cf. Policy § 6.5, step 2, about a conflicting package being removed due
-# to the installation of the package being discussed).
-#
-# In this case, update-updmap, mktexlsr and updmap-sys would all be gone once
-# tex-common and texlive-binaries are removed, so we must append "|| true" to 
-# their calls.
-try_to_update_fontmaps()
-{
-    # Don't print alarming error messages if the programs aren't even
-    # available.
-    if which update-updmap >/dev/null; then
-        tell_that_errors_are_ok -n update-updmap
-        update-updmap --quiet || true
-        echo "done."
-    fi
-
-    # All of the following needs an installed and configured basic TeX system.
-    # If there is one, register the fonts. Otherwise, that will be done later
-    # when the basic TeX system is configured, so we can exit without
-    # worrying.
-    kpsewhich --version >/dev/null 2>&1 || return 0
-
-    # mktexlsr is recommended now because updmap-sys relies heavily on
-    # Kpathsea to locate updmap.cfg and the map files. Also, it is slightly
-    # better not to specify a particular directory to refresh because
-    # updmap.cfg is typically found in TEXMFSYSVAR while the map files are in
-    # TEXMFMAIN.
-    if which mktexlsr >/dev/null; then
-        tell_that_errors_are_ok mktexlsr
-        mktexlsr || true
-        echo "done."
-    fi
-
-    if which updmap-sys >/dev/null; then
-        tell_that_errors_are_ok -n updmap-sys
-        updmap-sys --quiet || true
-        echo "done."
-    fi
-
-    return 0
-}
-
-case "$1" in
-    remove|disappear)
-        try_to_update_fontmaps
-    ;;
-
-    purge)
-        # Supposing updmap.cfg & Co are clean (which I think is a reasonable
-        # assumption), we don't need to call try_to_update_fontmaps().
-        # Calling it on remove _and_ on purge just for hypothetical users
-        # who would break their config before purging this package seems to
-        # be more annoying than useful (it takes a lot of time).
-    ;;
-
-    upgrade|failed-upgrade|abort-upgrade|abort-install)
-    ;;
-
-    *)
-        echo "postrm called with unknown argument '$1'" >&2
-        exit 1
-    ;;
-esac
-</example>
-        </p>
-      </sect>
-    </appendix>
   </book>
 </debiandoc>
 

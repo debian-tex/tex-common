@@ -8,7 +8,7 @@
         <name>The Debian TeX mailing list</name>
         <email>debian-tex-maint@lists.debian.org</email>
       </author>
-      <version>generated from $Id$</version>
+      <version>2015-09-03 (incomplete)</version>
 
 
       <abstract>
@@ -22,7 +22,7 @@
 
       <copyright>
         <copyrightsummary>
-          Copyright &copy; 2004-2012 Frank Küster, Florent Rougon,
+          Copyright &copy; 2004-2015 Frank Küster, Florent Rougon,
         Norbert Preining
         </copyrightsummary>
         <p>
@@ -463,30 +463,37 @@
 
          <sect1>
           <heading>
-            <file>updmap.cfg</file>
+            <file>updmap.cfg</file> and <file>fmtutil.cnf</file>
           </heading>
 	  <p>
-	    <prgn>updmap-sys(8)</prgn> reads <em>all</em> available
-	    <file>updmap.cfg</file> files found, stacking them
+	    <prgn>updmap-sys(8)</prgn> and <prgn>fmtutil-sys(8)</prgn>
+	    read <em>all</em> available <file>updmap.cfg</file> and
+	    <file>fmtutil.cnf</file> files found, stacking them
 	    on top of each other. That means that local configurations
 	    can be done by editing/adding a file in 
-	    <file>/etc/texmf/web2c/updmap.cfg</file>.
+	    <file>/etc/texmf/web2c/updmap.cfg</file> or
+	    <file>/etc/texmf/web2c/fmtutil.cnf</file>.
 	  </p>
 
 	  <p>
-	    <prgn>updmap-sys(8)</prgn> provides options for enabling
-	    or disabling font map files.  When enabling a new map file
-	    that is not mentioned, <prgn>updmap-sys</prgn> will
-	    create or edit <file>/etc/texmf/web2c/updmap.cfg</file>. Note
-	    that <prgn>updmap-sys</prgn>'s <tt>--edit</tt>
+	    Both <prgn>updmap-sys(8)</prgn>
+	    and <prgn>fmtutil-sys(8)</prgn> provide options for
+	    enabling or disabling font map files or formats.  When
+	    enabling a new map file, or a new format,
+	    that is not mentioned, <prgn>updmap-sys</prgn>
+	    and <prgn>fmtutil-sys</prgn> will
+	    create or edit <file>/etc/texmf/web2c/updmap.cfg</file>
+	    or <file>/etc/texmf/web2c/fmtutil.cnf</file>. Note
+	    that <prgn>updmap-sys</prgn>
+	    and <prgn>fmtutil-sys</prgn>'s <tt>--edit</tt> 
 	    and <tt>--syncwithtrees</tt> options cannot be used on a
 	    Debian system.
 	  </p>
 
 	  <p>
-	    For more details on how to disable map files that are
-	    enabled on a higher level, please see the man page
-	    and help output of <prgn>updmap</prgn>.
+	    For more details on how to disable map files or formats
+	    that are enabled on a higher level, please see the man pages
+	    and help output of <prgn>updmap</prgn> and <prgn>fmtutil</prgn>.
 	  </p>
 	
          <sect1 id="sec-user-config-files">
@@ -519,11 +526,10 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
 	  <p>
 	    In contrast to the above&mdash;TeX reading and merging all
 	    <file>texmf.cnf</file> files&mdash;the <em>first</em> found 
-	    occurrence of one of the files <file>language.dat</file>,
-	    <file>fmtutil.cnf</file> is used. Thus, when called by a
+	    occurrence of one of the file <file>language.dat</file>
+	    is used. Thus, when called by a
 	    user, the other configuration update programs also work
 	    with files in
-	    <tt><var>TEXMFCONFIG</var>/fmt.d</tt> or
 	    <tt><var>TEXMFCONFIG</var>/language.d</tt>, where
 	    <var>TEXMFCONFIG</var> is usually 
 	    <file><var>HOME</var>/.texmf-config</file>.  They combine
@@ -538,10 +544,12 @@ export TEXMFCNF=$HOME/.texmf-config/web2c:
 	    not be propagated to the user's files.
 	  </p>
 	  <p>
-	    <prgn>updmap(1)</prgn> provides the same options for
-	    enabling and disabling map files
-	    as <prgn>updmap-sys(8)</prgn>, see
-	    above.  <file>updmap.cfg</file> is created or edited
+	    <prgn>updmap(1)</prgn> and <prgn>fmtutil(1)</prgn> provide
+	    the same options for enabling and disabling map files and
+	    formats as <prgn>updmap-sys(8)</prgn>
+	    and <prgn>fmtutil-sys(8)</prgn>, see
+	    above.  <file>updmap.cfg</file>
+	    and <file>fmtutil.cnf</file> is created or edited  
 	    in <tt><var>TEXMFCONFIG</var>/web2c/</tt>.
 	  </p>
 
