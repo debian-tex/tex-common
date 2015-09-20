@@ -1,3 +1,9 @@
+tex-common (6.04) UNRELEASED; urgency=medium
+
+  * set Multi-Arch: foreign
+
+ -- Norbert Preining <preining@debian.org>  Sun, 20 Sep 2015 11:04:05 +0900
+
 tex-common (6.03) unstable; urgency=medium
 
   * do not create temp files in / (Closes: #797381)

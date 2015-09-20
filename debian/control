@@ -11,6 +11,7 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-tex/tex-common.git
 
 Package: tex-common
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends}, ucf, dpkg (>= 1.14.18)
 Suggests: debhelper (>= 7.0.8)
 Replaces: tetex-base (<= 3.0-10), dvipdfmx
