@@ -259,8 +259,8 @@ run_hyphen()
                 TEXMFCONFIG="$c"
                 export TEXMFVAR TEXMFCONFIG
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-                printf "Building latex-based formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
-                if $FMTUTIL --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
+                printf "Building latex-based formats --byhyphen language.dat.\n\tThis may take some time... "
+                if $FMTUTIL --byhyphen language.dat > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                 else
@@ -273,8 +273,8 @@ run_hyphen()
                     exit 1
                 fi
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-                printf "Building e-tex based formats --byhyphen $(kpsewhich language.def).\n\tThis may take some time... "
-                if $FMTUTIL --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
+                printf "Building e-tex based formats --byhyphen language.def.\n\tThis may take some time... "
+                if $FMTUTIL --byhyphen language.def > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                 else
