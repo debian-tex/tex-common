@@ -2,8 +2,9 @@ tex-common (6.05) unstable; urgency=medium
 
   * fmtutil calling convention updated, switch to --strict
   * bump standards version, no changes necessary
+  * adjust vcs-browser location
 
- -- Norbert Preining <preining@debian.org>  Mon, 22 Feb 2016 19:44:36 +0900
+ -- Norbert Preining <preining@debian.org>  Mon, 22 Feb 2016 19:46:14 +0900
 
 tex-common (6.04) unstable; urgency=medium
 
