@@ -1,3 +1,9 @@
+tex-common (6.05) unstable; urgency=medium
+
+  * fmtutil calling convention updated, switch to --strict
+
+ -- Norbert Preining <preining@debian.org>  Mon, 22 Feb 2016 19:43:07 +0900
+
 tex-common (6.04) unstable; urgency=medium
 
   * set Multi-Arch: foreign

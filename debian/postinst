@@ -28,6 +28,12 @@ umask 022
 # definitions of necessary trees
 TEXMFSYSVARDIR=/var/lib/texmf
 
+# fmtutil program and common arguments
+# --sys     we are running in fmtutil-sys mode
+# --strict  error out if a format is not build
+# --no-error-...    luajittex is not available on all archs
+FMTUTIL="fmtutil --sys --strict --no-error-if-no-engine=luajittex"
+
 # summary of how this script can be called:
 #        * <postinst> `configure' <most-recently-configured-version>
 #        * <old-postinst> `abort-upgrade' <new version>
@@ -67,13 +73,13 @@ dhit_build_format ()
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
     printf "Building format(s) $*.\n\tThis may take some time... "
-    if fmtutil-sys --no-error-if-no-engine=luajittex "$@" > $tempfile 2>&1 ; then
+    if $FMTUTIL "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
     else
         exec >&2
         echo
-        echo "fmtutil-sys failed. Output has been stored in"
+        echo "fmtutil failed. Output has been stored in"
         echo "$tempfile"
         echo "Please include this file if you report a bug."
         echo
@@ -210,7 +216,7 @@ run_fmtutil()
                 ;;
         esac
         if [ "$do_it" = 0 ] ; then
-            echo "texlive-base is not ready, skipping fmtutil-sys --all call" >&2
+            echo "texlive-base is not ready, skipping fmtutil --all call" >&2
         else
             dhit_build_format --all
         fi
@@ -245,7 +251,7 @@ run_hyphen()
 {
     if dhit_texlive_binaries_configured; then
         if which kpsewhich >/dev/null; then
-            if which fmtutil-sys >/dev/null; then
+            if which fmtutil >/dev/null; then
                 # code from postinst.tex
                 v=$(kpsewhich -var-value TEXMFSYSVAR)
                 c=$(kpsewhich -var-value TEXMFSYSCONFIG)
@@ -254,13 +260,13 @@ run_hyphen()
                 export TEXMFVAR TEXMFCONFIG
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Building latex-based formats --byhyphen $(kpsewhich language.dat).\n\tThis may take some time... "
-                if fmtutil-sys --no-error-if-no-engine=luajittex --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
+                if $FMTUTIL --byhyphen "$(kpsewhich language.dat)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                 else
                     exec >&2
                     echo
-                    echo "fmtutil-sys failed. Output has been stored in"
+                    echo "fmtutil failed. Output has been stored in"
                     echo "$tempfile"
                     echo "Please include this file if you report a bug."
                     echo
@@ -268,13 +274,13 @@ run_hyphen()
                 fi
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Building e-tex based formats --byhyphen $(kpsewhich language.def).\n\tThis may take some time... "
-                if fmtutil-sys --no-error-if-no-engine=luajittex --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
+                if $FMTUTIL --byhyphen "$(kpsewhich language.def)" > $tempfile 2>&1 ; then
                     rm -f $tempfile
                     echo "done."
                 else
                     exec >&2
                     echo
-                    echo "fmtutil-sys failed. Output has been stored in"
+                    echo "fmtutil failed. Output has been stored in"
                     echo "$tempfile"
                     echo "Please include this file if you report a bug."
                     echo
