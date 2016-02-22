@@ -5,7 +5,7 @@ Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, Frank Küster <frank@debian.org>, Florent Rougon <frn@debian.org>, Norbert Preining <preining@debian.org>
 Build-Depends: debhelper (>= 8.1.0~)
 Build-Depends-Indep: debiandoc-sgml, help2man
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Vcs-Git: git://anonscm.debian.org/debian-tex/tex-common.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-tex/tex-common.git
 
