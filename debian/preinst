@@ -39,6 +39,16 @@ case "$1" in
   ;;
 esac
 
+#
+# remove not-used-anymore /var/lib/texmf/web2c/fmtutil.cnf
+# see #851598
+
+case "$1" in
+  upgrade|install)
+    rm -f /var/lib/texmf/web2c/fmtutil.cnf
+  ;;
+esac
+
 #DEBHELPER#
 
 ### Local Variables:

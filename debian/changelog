@@ -1,8 +1,10 @@
-tex-common (6.06) UNRELEASED; urgency=medium
+tex-common (6.06) unstable; urgency=medium
 
   * add mfluajit to the no-error-if-no-engine args as with upstream
+  * remove /v/l/texmf/web2c/fmtutil.cnf, otherwise fmtutil picks
+    up old config files (Closes: #851598)
 
- -- Norbert Preining <preining@debian.org>  Tue, 14 Jun 2016 14:56:52 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 17 Jan 2017 11:41:23 +0900
 
 tex-common (6.05) unstable; urgency=medium
 
