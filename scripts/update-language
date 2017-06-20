@@ -101,7 +101,7 @@ sub main {
   }
 
   # if texlive-base is not properly installed, we do nothing
-  my $stat = `dpkg-query -W -f=\'\${Status}\' texlive-base 2>/dev/null`;
+  my $stat = `dpkg-query -W -f=\'\${Status}\' texlive-base:all 2>/dev/null`;
   if ($stat ne "install ok installed") {
     printf "$progname: texlive-base not installed and configured, doing nothing!\n";
     exit 0;
