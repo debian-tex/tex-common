@@ -1,9 +1,10 @@
-tex-common (6.07) UNRELEASED; urgency=medium
+tex-common (6.07) unstable; urgency=medium
 
   * use texlive-base:all in dpkg query, to make sure no rogue :ARCH
     package interferes with the output (Closes: #865300)
+  * switch all triggers to -noawait (Closes: #865723)
 
- -- Norbert Preining <preining@debian.org>  Tue, 20 Jun 2017 21:45:54 +0900
+ -- Norbert Preining <preining@debian.org>  Sat, 24 Jun 2017 21:20:06 +0900
 
 tex-common (6.06) unstable; urgency=medium
 

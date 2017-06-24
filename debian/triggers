@@ -1,5 +1,5 @@
-interest texmf-hyphen
-interest texmf-format
-interest texmf-map
-interest /usr/share/texmf
-interest /usr/share/texlive/texmf-dist
+interest-noawait texmf-hyphen
+interest-noawait texmf-format
+interest-noawait texmf-map
+interest-noawait /usr/share/texmf
+interest-noawait /usr/share/texlive/texmf-dist
