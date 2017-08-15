@@ -1,11 +1,11 @@
-tex-common (6.08) UNRELEASED; urgency=medium
+tex-common (6.08) unstable; urgency=medium
 
-  * remove Florent from the list of uploaders, thanks for your work
-    (Closes: #869311)
+  * remove Florent and Frank from the list of uploaders, 
+    thanks for your work (Closes: #869311)
   * add $VERSION to dh_installtex (Closes: #872168)
   * update-texmf: add -o|--output option (Closes: #267567)
 
- -- Norbert Preining <preining@debian.org>  Tue, 15 Aug 2017 11:26:00 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 15 Aug 2017 11:32:15 +0900
 
 tex-common (6.07) unstable; urgency=medium
 
