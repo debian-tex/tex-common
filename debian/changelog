@@ -2,8 +2,9 @@ tex-common (6.08) UNRELEASED; urgency=medium
 
   * remove Florent from the list of uploaders, thanks for your work
     (Closes: #869311)
+  * add $VERSION to dh_installtex (Closes: #872168)
 
- -- Norbert Preining <preining@debian.org>  Sun, 23 Jul 2017 00:00:43 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 15 Aug 2017 10:37:42 +0900
 
 tex-common (6.07) unstable; urgency=medium
 
