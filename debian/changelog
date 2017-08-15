@@ -4,8 +4,10 @@ tex-common (6.08) unstable; urgency=medium
     thanks for your work (Closes: #869311)
   * add $VERSION to dh_installtex (Closes: #872168)
   * update-texmf: add -o|--output option (Closes: #267567)
+  * remove completely outdated and wrong documentation, and remove
+    build dep on debiandoc (Closes: #663281)
 
- -- Norbert Preining <preining@debian.org>  Tue, 15 Aug 2017 11:32:15 +0900
+ -- Norbert Preining <preining@debian.org>  Tue, 15 Aug 2017 11:51:38 +0900
 
 tex-common (6.07) unstable; urgency=medium
 

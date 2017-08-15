@@ -26,7 +26,6 @@ build-stamp:
 	dh_testdir
 
         # Add here commands to compile the package.
-	cd doc; $(MAKE)
 	cd scripts; pod2man dh_installtex > dh_installtex.1
 	cd scripts; help2man -n "generate hyphenation configuration for TeX engines" -s 8 -S Debian  -N ./update-language > update-language.8
 
@@ -38,7 +37,6 @@ clean:
 	rm -f build-stamp
 
         # Add here commands to clean up after the build process.
-	cd doc; $(MAKE) clean
 	-rm -f scripts/dh_installtex.1
 	-rm -f scripts/update-language.8
 	dh_clean 
@@ -50,7 +48,6 @@ install: build
 	dh_installdirs
 
         # Add here commands to install the package into debian/tex-common.
-	cd doc; $(MAKE) install DESTDIR=$(INSTDIR)/usr/share/doc/tex-common
 	cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
