@@ -2,7 +2,7 @@
 # dh_installtex --- register Type 1 fonts, languages, or formats with TeX
 # Copyright (C) 2006, 2007 Florent Rougon
 # Copyright (C) 2006, 2007 Frank Küster
-# Copyright (C) 2006-2015 Norbert Preining
+# Copyright (C) 2006-2017 Norbert Preining
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,179 +19,9 @@
 # Boston, MA  02110-1301 USA.
 #
 
-=head1 NAME
-
-dh_installtex - register Type 1 fonts, hyphenation patterns, or formats with TeX
-
-=cut
 
 use strict;
 use Debian::Debhelper::Dh_Lib;
-
-=head1 SYNOPSIS
-
-B<dh_installtex>
-[S<I<debhelper options>>]
-[B<-n>]
-[B<--priority=>I<n>]
-[B<--flavor=>I<flavor>[,I<flavor>]]
-[B<map=MixedMap,>I<file.map>]
-[B<map=Map,>I<file.map>]
-[B<map=KanjiMap,>I<file.map>]
-[B<mapfile=>I<file.cfg>]
-[B<hyphen=>I<lang>,I<file>[,lhm=I<n>][,rhm=I<n>][,synonym=I<syn>,...]]
-[B<hyphenfile=>I<file.cnf>]
-[B<format=>I<format>,I<engine>,I<hyphenfile>,I<rest args>]
-[B<formatfile=>I<file.cnf>]
-
-=head1 DESCRIPTION
-
-dh_installtex is a debhelper program that is responsible for
-updating the ls-R databases, registering map files, new formats, 
-and new hyphenation patterns with TeX.
-
-Your package should depend on an appropriate version of tex-common so
-that the update-* commands are available. (This program adds that
-dependency to ${misc:Depends}.)
-
-B<WARNING> This program does B<not> check for the actual existence of any 
-input files in TEXMF trees. If you call it without any further specification
-on which packages to work on (using C<-p> or C<-N>) it will add calls to
-management functions to B<all> packages. In this case don't forget to 
-add ${misc:Depends} to all packages' dependencies.
-
-=head1 SIMPLE USAGE: Registering Files 
-
-If you only install files into /usr/share/texmf, nothing has to be done,
-tex-common will automatically detect changes and run mktexlsr.
-
-=head1 COMPLEX USAGE: Registering fonts, hyphenation patterns and formats
-
-If in addition, you have to install map files, hyphenation patterns for
-additional languages, or format definitions you can use three
-different methods to specify what should be installed:
-
-1) B<Pre made config files:> These files can be specified with the
-different I<type>file= options.
-I<type> can be one of map, format and hyphen, and these files will be
-installed into /var/lib/tex-common/I<configdir>/ for the respective type 
-(fontmap-cfg for map files, hyphen-cnf for hyphenation patterns,
-and fmtutil-cnf for format definitions).
-
-Example:
-
-        dh_installtex mapfile=foo.cfg formatfile=debian/bar.cnf
-
-would install foo.cfg as /var/lib/tex-common/fontmap-cfg/texmf/foo.cfg, 
-and debian/bar.cnf as /var/lib/tex-common/fmtutil-cnf/texmf/bar.cnf.
-
-
-2) B<Directly on the cmd line:>
-You can specify maps, formats, and hyphenations on the cmd line. The items
-are stored in the respective config file 20package
-
-Example:
-
-        dh_installtex map=Map,foo.map hyphen=ngerman-x-2011-07-01,dehyphn-x-2011-07-01.tex,hyph-de-1996.pat.txt,lhm=2,rhm=2,synonym=ngerman-x-latest,exceptions=hyph-de-1996.hyp.txt
-
-would install a file /var/lib/tex-common/fontmap-cfg/texmf/package.cfg containing the line
-
-        Map foo.map
-
-and a file /var/lib/tex-common/hyphen-cnf/texmf/package.cnf containing the lines
-
-    name=ngerman-x-2011-07-01 file=dehyphn-x-2011-07-01.tex file_patterns=hyph-de-1996.pat.txt lefthyphenmin=2 righthyphenmin=2 synonym=ngerman-x-latest file_exceptions=hyph-de-1996.hyp.txt
-
-3) B<Package files:>
-You create a file debian/package.maps or debian/maps,
-debian/package.hyphens or debian/hyphens, 
-debian/package.formats or debian/formats. These files are
-installed with the name of the package. Each of these
-files will be installed into the first package dh_installtex
-is told to act on. By default this is the first binary package in
-debian/control, but if you use -p, -i, or -a flags, it will be the first
-package specified by those flags.
-
-Example:
-
-        dh_installtex
-
-would install a present debian/package.formats file as
-/var/lib/tex-common/fmtutil-cnf/texmf/package.cnf.
-
-
-=head2 Mixing the different variants
-
-The command line items (Variant 2) are merged into the debian/package.maps 
-(debian/package.hyphens, debian/package.formats) file. If you specify
-an additional package.cfg/cnf (Variant 1) this will raise an error since
-both files would be installed as package.cfg/cnf.
-
-=head1 OPTIONS
-
-=over 4
-
-=item B<-n>, B<--noscripts>
-
-Do not modify postinst/prerm scripts.
-
-=item B<--flavor=>I<flavor>[,I<flavor>]
-
-This option is used to select a different tree then the default
-/usr/share/texmf, and to switch on additional options. The argument
-specify a list from flavors to be selected.
-At the moment you can select from the following list of flavors:
-B<tree:texlive>,
-B<map:config_for_active_maps>, B<map:config_for_all_maps>, 
-B<format:add_one:I<formatname>>.
-
-B<tree:texlive> will select the tree /usr/share/texlive/texmf-dist and
-should only be used for files installed into this tree.
-
-B<map:config_for_active_maps> will create a file I<config.bar> for each active
-(i.e. uncommented) map in each of the cfg file generated by one of the
-three methods described above. These files are installed in
-/usr/share/texmf/dvips/config/.
-
-If you select B<map:config_for_all_maps> the script will generate I<config.bar>
-even for those map files which are present in a cfg file, but deactivated by a comment.
-
-The file I<config.bar> is used when called by `dvips -Pbar ...'. Thus it
-allows the activation of single map files even if they are not automatically
-activated via the updmap(-sys) mechanism.
-
-Default is I<not> to generate any config files.
-
-B<format:add_one:I<formatname>> allows to add the generation of a specific
-format without actually providing it (in a cnf file).  This is useful if a 
-package adds hyphenation patterns to an existing formats.
-
-B<format:no_links>:
-Usually, for every format that is specified in a configuration file,
-dh_installtex will create a symlink
-/usr/bin/I<format> that points to the corresponding engine.  For
-example, /usr/bin/latex would be created as a symlink to pdftex.  
-
-The flavor B<format:no_links> inhibits this. If a link already
-exists, dh_installtex will skip this format with an informational
-message, even if this option is not given.
-
-=back
-
-=head1 NOTES
-
-"dh_installtex" adds a dependency relation onto tex-common to misc:Depends.
-
-Note that this command is not idempotent. "dh_clean -k" should be called
-between invocations of this command, unless using the B<-n> option.
-Otherwise, it may cause multiple instances of the same text to be added
-to maintainer scripts.
-
-Please refer to the Debian TeX policy for details about fonts configuration
-for TeX by Debian packages.
-
-
-=cut
 
 init(options => { "flavor=s" => \$dh{FLAVOR} });
 
@@ -572,6 +402,172 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 	addsubstvar($package, "misc:Depends", "tex-common", ">= 6");
 }
 
+=head1 NAME
+
+dh_installtex - register Type 1 fonts, hyphenation patterns, or formats with TeX
+
+=head1 SYNOPSIS
+
+B<dh_installtex>
+[S<I<debhelper options>>]
+[B<-n>]
+[B<--priority=>I<n>]
+[B<--flavor=>I<flavor>[,I<flavor>]]
+[B<map=MixedMap,>I<file.map>]
+[B<map=Map,>I<file.map>]
+[B<map=KanjiMap,>I<file.map>]
+[B<mapfile=>I<file.cfg>]
+[B<hyphen=>I<lang>,I<file>[,lhm=I<n>][,rhm=I<n>][,synonym=I<syn>,...]]
+[B<hyphenfile=>I<file.cnf>]
+[B<format=>I<format>,I<engine>,I<hyphenfile>,I<rest args>]
+[B<formatfile=>I<file.cnf>]
+
+=head1 DESCRIPTION
+
+dh_installtex is a debhelper program that is responsible for
+updating the ls-R databases, registering map files, new formats, 
+and new hyphenation patterns with TeX.
+
+Your package should depend on an appropriate version of tex-common so
+that the update-* commands are available. (This program adds that
+dependency to ${misc:Depends}.)
+
+B<WARNING> This program does B<not> check for the actual existence of any 
+input files in TEXMF trees. If you call it without any further specification
+on which packages to work on (using C<-p> or C<-N>) it will add calls to
+management functions to B<all> packages. In this case don't forget to 
+add ${misc:Depends} to all packages' dependencies.
+
+=head1 SIMPLE USAGE: Registering Files 
+
+If you only install files into /usr/share/texmf, nothing has to be done,
+tex-common will automatically detect changes and run mktexlsr.
+
+=head1 COMPLEX USAGE: Registering fonts, hyphenation patterns and formats
+
+If in addition, you have to install map files, hyphenation patterns for
+additional languages, or format definitions you can use three
+different methods to specify what should be installed:
+
+1) B<Pre made config files:> These files can be specified with the
+different I<type>file= options.
+I<type> can be one of map, format and hyphen, and these files will be
+installed into /var/lib/tex-common/I<configdir>/ for the respective type 
+(fontmap-cfg for map files, hyphen-cnf for hyphenation patterns,
+and fmtutil-cnf for format definitions).
+
+Example:
+
+        dh_installtex mapfile=foo.cfg formatfile=debian/bar.cnf
+
+would install foo.cfg as /var/lib/tex-common/fontmap-cfg/texmf/foo.cfg, 
+and debian/bar.cnf as /var/lib/tex-common/fmtutil-cnf/texmf/bar.cnf.
+
+
+2) B<Directly on the cmd line:>
+You can specify maps, formats, and hyphenations on the cmd line. The items
+are stored in the respective config file 20package
+
+Example:
+
+        dh_installtex map=Map,foo.map hyphen=ngerman-x-2011-07-01,dehyphn-x-2011-07-01.tex,hyph-de-1996.pat.txt,lhm=2,rhm=2,synonym=ngerman-x-latest,exceptions=hyph-de-1996.hyp.txt
+
+would install a file /var/lib/tex-common/fontmap-cfg/texmf/package.cfg containing the line
+
+        Map foo.map
+
+and a file /var/lib/tex-common/hyphen-cnf/texmf/package.cnf containing the lines
+
+    name=ngerman-x-2011-07-01 file=dehyphn-x-2011-07-01.tex file_patterns=hyph-de-1996.pat.txt lefthyphenmin=2 righthyphenmin=2 synonym=ngerman-x-latest file_exceptions=hyph-de-1996.hyp.txt
+
+3) B<Package files:>
+You create a file debian/package.maps or debian/maps,
+debian/package.hyphens or debian/hyphens, 
+debian/package.formats or debian/formats. These files are
+installed with the name of the package. Each of these
+files will be installed into the first package dh_installtex
+is told to act on. By default this is the first binary package in
+debian/control, but if you use -p, -i, or -a flags, it will be the first
+package specified by those flags.
+
+Example:
+
+        dh_installtex
+
+would install a present debian/package.formats file as
+/var/lib/tex-common/fmtutil-cnf/texmf/package.cnf.
+
+
+=head2 Mixing the different variants
+
+The command line items (Variant 2) are merged into the debian/package.maps 
+(debian/package.hyphens, debian/package.formats) file. If you specify
+an additional package.cfg/cnf (Variant 1) this will raise an error since
+both files would be installed as package.cfg/cnf.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-n>, B<--noscripts>
+
+Do not modify postinst/prerm scripts.
+
+=item B<--flavor=>I<flavor>[,I<flavor>]
+
+This option is used to select a different tree then the default
+/usr/share/texmf, and to switch on additional options. The argument
+specify a list from flavors to be selected.
+At the moment you can select from the following list of flavors:
+B<tree:texlive>,
+B<map:config_for_active_maps>, B<map:config_for_all_maps>, 
+B<format:add_one:I<formatname>>.
+
+B<tree:texlive> will select the tree /usr/share/texlive/texmf-dist and
+should only be used for files installed into this tree.
+
+B<map:config_for_active_maps> will create a file I<config.bar> for each active
+(i.e. uncommented) map in each of the cfg file generated by one of the
+three methods described above. These files are installed in
+/usr/share/texmf/dvips/config/.
+
+If you select B<map:config_for_all_maps> the script will generate I<config.bar>
+even for those map files which are present in a cfg file, but deactivated by a comment.
+
+The file I<config.bar> is used when called by `dvips -Pbar ...'. Thus it
+allows the activation of single map files even if they are not automatically
+activated via the updmap(-sys) mechanism.
+
+Default is I<not> to generate any config files.
+
+B<format:add_one:I<formatname>> allows to add the generation of a specific
+format without actually providing it (in a cnf file).  This is useful if a 
+package adds hyphenation patterns to an existing formats.
+
+B<format:no_links>:
+Usually, for every format that is specified in a configuration file,
+dh_installtex will create a symlink
+/usr/bin/I<format> that points to the corresponding engine.  For
+example, /usr/bin/latex would be created as a symlink to pdftex.  
+
+The flavor B<format:no_links> inhibits this. If a link already
+exists, dh_installtex will skip this format with an informational
+message, even if this option is not given.
+
+=back
+
+=head1 NOTES
+
+"dh_installtex" adds a dependency relation onto tex-common to misc:Depends.
+
+Note that this command is not idempotent. "dh_clean -k" should be called
+between invocations of this command, unless using the B<-n> option.
+Otherwise, it may cause multiple instances of the same text to be added
+to maintainer scripts.
+
+Please refer to the Debian TeX policy for details about fonts configuration
+for TeX by Debian packages.
+
 =head1 SEE ALSO
 
 L<debhelper(7)>
@@ -579,7 +575,7 @@ L<debhelper(7)>
 =head1 AUTHOR
 
 This program and its documentation was written by
-Norbert Preining <F<preining@logic.at>> for the Debian Operating System
+Norbert Preining for the Debian Operating System
 and both are licensed under the GNU General Public License Version 2 or later.
 
 =cut
