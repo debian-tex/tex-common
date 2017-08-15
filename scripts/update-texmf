@@ -21,6 +21,10 @@ while [ $# -ne 0 ]; do
       DEBUG=true
       VERBOSE=true
       shift;;
+    -o|--output)
+      shift
+      TXMF_CNF="$1"
+      shift;;
     *)
       echo "unknown option: $1"
       exit 1
@@ -28,11 +32,13 @@ while [ $# -ne 0 ]; do
   esac
 done
 
-# test wether /etc isn't mounted read-only
-if touch /etc/texmf/is_rw 2>/dev/null; then
-  rm -f /etc/texmf/is_rw
+# test wether destinatio is read-only
+DESTDIR=$(dirname "$TXMF_CNF")
+mkdir -p "$DESTDIR"
+if touch "$DESTDIR/is_rw" 2>/dev/null; then
+  rm -f "$DESTDIR/is_rw"
 else
-  echo "Directory /etc/texmf/ not writeable. Exiting."
+  echo "Directory \"$DESTDIR\" not writeable. Exiting."
   exit 1
 fi
 
@@ -46,7 +52,9 @@ fi
 
 if [ -z "$CNFFILES" ] ; then
   # no config files are found, remove texmf.cnf if it is there
-  rm -rf /etc/texmf/web2c/texmf.cnf
+  if [ -f "$TXMF_CNF" ] ; then
+    rm "$TXMF_CNF"
+  fi
   exit 0
 fi
 
@@ -93,7 +101,6 @@ for i in ${CNFFILES}; do
     echo "%%% End of file: $i" >> ${TMPTXMF}
 done
 
-mkdir -p ${TXMF}/web2c
 cp ${TMPTXMF} ${TXMF_CNF}
 rm -r ${TMPDIR}
 chmod 644 ${TXMF_CNF}
