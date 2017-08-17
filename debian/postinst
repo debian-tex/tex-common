@@ -72,9 +72,13 @@ dhit_build_format ()
 {
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
+    # save LANG
+    LANGSAVE=$LANG
+    LANG=C
     printf "Building format(s) $*.\n\tThis may take some time... "
     if $FMTUTIL "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
+        LANG=$LANGSAVE
         echo "done."
     else
         exec >&2
@@ -260,8 +264,11 @@ run_hyphen()
                 export TEXMFVAR TEXMFCONFIG
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
                 printf "Building latex-based formats --byhyphen language.dat.\n\tThis may take some time... "
+                LANGSAVE=$LANG
+                LANG=C
                 if $FMTUTIL --byhyphen language.dat > $tempfile 2>&1 ; then
                     rm -f $tempfile
+                    LANG=$LANGSAVE
                     echo "done."
                 else
                     exec >&2

@@ -1,3 +1,10 @@
+tex-common (6.09) unstable; urgency=medium
+
+  * set LANG to C before running fmtutil, in case it is not set, otherwise
+    luatex might not build (Closes: #872012)
+
+ -- Norbert Preining <preining@debian.org>  Thu, 17 Aug 2017 14:38:09 +0900
+
 tex-common (6.08) unstable; urgency=medium
 
   * remove Florent and Frank from the list of uploaders, 
