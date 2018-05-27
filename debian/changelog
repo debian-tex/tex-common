@@ -1,3 +1,11 @@
+tex-common (6.10) UNRELEASED; urgency=medium
+
+  [ Hilmar Preuße]
+
+  * Fix URL's of Vcs-Git & Vcs-Browser (Closes: #900185)
+
+ -- Norbert Preining <preining@debian.org>  Sun, 27 May 2018 13:00:31 +0200
+
 tex-common (6.09) unstable; urgency=medium
 
   * set LANG to C before running fmtutil, in case it is not set, otherwise
