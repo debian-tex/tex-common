@@ -413,7 +413,6 @@ dh_installtex - register Type 1 fonts, hyphenation patterns, or formats with TeX
 B<dh_installtex>
 [S<I<debhelper options>>]
 [B<-n>]
-[B<--priority=>I<n>]
 [B<--flavor=>I<flavor>[,I<flavor>]]
 [B<map=MixedMap,>I<file.map>]
 [B<map=Map,>I<file.map>]
