@@ -1,10 +1,10 @@
-tex-common (6.10) UNRELEASED; urgency=medium
-
-  [ Hilmar Preuße]
+tex-common (6.10) unstable; urgency=medium
 
   * Fix URL's of Vcs-Git & Vcs-Browser (Closes: #900185)
+  * remove priority from dh-installtex, break against old cm-super using it
+  * bump standards version, no changes necessary
 
- -- Norbert Preining <preining@debian.org>  Sun, 27 May 2018 13:00:31 +0200
+ -- Norbert Preining <preining@debian.org>  Sun, 02 Sep 2018 21:32:33 +0900
 
 tex-common (6.09) unstable; urgency=medium
 
