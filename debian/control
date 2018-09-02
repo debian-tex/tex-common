@@ -5,7 +5,7 @@ Maintainer: Debian TeX maintainers <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, Norbert Preining <preining@debian.org>
 Build-Depends: debhelper (>= 9)
 Build-Depends-Indep: help2man
-Standards-Version: 4.0.0
+Standards-Version: 4.2.1
 Vcs-Git: https://salsa.debian.org/tex-team/tex-common.git
 Vcs-Browser: https://salsa.debian.org/tex-team/tex-common
 
