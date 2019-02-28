@@ -1,3 +1,9 @@
+tex-common (6.11) unstable; urgency=medium
+
+  * update VCS fields and my email
+
+ -- Norbert Preining <norbert@preining.info>  Thu, 28 Feb 2019 23:28:40 +0900
+
 tex-common (6.10) unstable; urgency=medium
 
   * Fix URL's of Vcs-Git & Vcs-Browser (Closes: #900185)
