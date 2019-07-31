@@ -1,3 +1,10 @@
+tex-common (6.12) unstable; urgency=medium
+
+  * trigger ls-R rebuilds also for /usr/share/doc/texlive-doc which is linked
+    to /usr/share/texlive/texmf-dist/doc
+
+ -- Norbert Preining <norbert@preining.info>  Wed, 31 Jul 2019 16:21:24 +0900
+
 tex-common (6.11) unstable; urgency=medium
 
   * update VCS fields and my email
