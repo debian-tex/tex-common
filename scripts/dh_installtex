@@ -401,7 +401,7 @@ foreach my $package (@{$dh{DOPACKAGES}}) {
 		autoscript($package, "postrm",   "postrm-tex", "s|#FORMATS#|@postrmfmtdata|; s|#WHATTODO#|$whattodorem|");
 	}
 
-	addsubstvar($package, "misc:Depends", "tex-common", ">= 6");
+	addsubstvar($package, "misc:Depends", "tex-common", ">= 6.13");
 }
 
 =head1 NAME
