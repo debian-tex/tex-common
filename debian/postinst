@@ -32,7 +32,7 @@ TEXMFSYSVARDIR=/var/lib/texmf
 # --sys     we are running in fmtutil-sys mode
 # --strict  error out if a format is not build
 # --no-error-...    luajittex is not available on all archs
-FMTUTIL="fmtutil --sys --strict --no-error-if-no-engine=luajittex,mfluajit"
+FMTUTIL="fmtutil --sys --strict --no-error-if-no-engine=luahbtex,luajittex,mfluajit"
 
 # summary of how this script can be called:
 #        * <postinst> `configure' <most-recently-configured-version>
