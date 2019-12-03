@@ -1,3 +1,10 @@
+tex-common (6.13) unstable; urgency=medium
+
+  * fmtutil shouldn't fail on missing luahbtex
+  * ensure dh_installtex induced deps are on tex-common >= 6.13
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 03 Dec 2019 19:04:06 +0900
+
 tex-common (6.12) unstable; urgency=medium
 
   * trigger ls-R rebuilds also for /usr/share/doc/texlive-doc which is linked
