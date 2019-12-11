@@ -1,8 +1,10 @@
-#!/bin/sh -e
+#!/bin/sh
 # 
 # prerm maintainer script for the Debian tex-common package.
 
 # remove dirs in /usr/local if empty
+
+set -e
 
 case $1 in
   remove)
