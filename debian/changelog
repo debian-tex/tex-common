@@ -1,14 +1,18 @@
-tex-common (6.14) UNRELEASED; urgency=medium
+tex-common (6.14) unstable; urgency=medium
 
-  * Add luajithbtex to the list of TeX engines, which should not
-    cause install errors. (Closes: #956928)
+  * Add luajithbtex to the list of TeX engines where missing formats
+    are ignored. (Closes: #956928)
 
   [ Debian Janitor <janitor@jelmer.uk> ]
   * Trim trailing whitespace.
   * Use set -e rather than passing -e on the shebang-line.
   * Upgrade to newer source format.
 
- -- Norbert Preining <norbert@preining.info>  Wed, 11 Dec 2019 03:45:48 +0000
+  [ Norbert Preining ]
+  * Remove luahbtex from the list of TeX engines where missing formats
+    are ignored.
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 17 Apr 2020 10:21:49 +0900
 
 tex-common (6.13) unstable; urgency=medium
 
