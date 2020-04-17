@@ -11,8 +11,9 @@ tex-common (6.14) unstable; urgency=medium
   [ Norbert Preining ]
   * Remove luahbtex from the list of TeX engines where missing formats
     are ignored.
+  * Switch to dh compatibility level 12
 
- -- Norbert Preining <norbert@preining.info>  Fri, 17 Apr 2020 10:21:49 +0900
+ -- Norbert Preining <norbert@preining.info>  Fri, 17 Apr 2020 10:25:27 +0900
 
 tex-common (6.13) unstable; urgency=medium
 
