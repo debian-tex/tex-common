@@ -1,3 +1,9 @@
+tex-common (6.15) UNRELEASED; urgency=medium
+
+  * Wrap long lines in changelog entries: 0.5.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Thu, 07 May 2020 06:08:39 +0000
+
 tex-common (6.14) unstable; urgency=medium
 
   * Add luajithbtex to the list of TeX engines where missing formats
@@ -1537,7 +1543,8 @@ tex-common (0.5) unstable; urgency=low
 
   * Merge update-fmtutil into update-fontlang  (closes: #319651)
   * Fix installation of manpages
-  * add bibtex/csf to texmf variable BSTINPUTS in 65BibTeX.cnf  (closes: #319650)
+  * add bibtex/csf to texmf variable BSTINPUTS in 65BibTeX.cnf  (closes:
+    #319650)
   * Many thanks to Norbert Preining <preining@logic.at> for providing
     patches for these changes.
   * Increase trie_size in 95NonPath.cnf to 27000, to allow TeX-Live build
