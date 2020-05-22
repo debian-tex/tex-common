@@ -1,6 +1,10 @@
 tex-common (6.15) UNRELEASED; urgency=medium
 
+  [ Debian Janitor ]
   * Wrap long lines in changelog entries: 0.5.
+
+  [ Hilmar Preusse ]
+  * Change Maintainer field to "Debian TeX Task Force".
 
  -- Debian Janitor <janitor@jelmer.uk>  Thu, 07 May 2020 06:08:39 +0000
 
