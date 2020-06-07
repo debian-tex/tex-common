@@ -401,8 +401,11 @@ case $action in
     then
       if mkdir -p /usr/local/share/texmf 2>/dev/null
       then
-        chown root:staff /usr/local/share/texmf
-        chmod 2775 /usr/local/share/texmf
+        if [ -e /etc/staff-group-for-usr-local ]
+        then
+          chown root:staff /usr/local/share/texmf
+          chmod 2775 /usr/local/share/texmf
+        fi
       fi
     fi
 

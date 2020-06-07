@@ -6,7 +6,11 @@ tex-common (6.15) UNRELEASED; urgency=medium
   [ Hilmar Preusse ]
   * Change Maintainer field to "Debian TeX Task Force".
 
- -- Debian Janitor <janitor@jelmer.uk>  Thu, 07 May 2020 06:08:39 +0000
+  [ Norbert Preining ]
+  * Only make /u/l/s/texmf group staff if /etc/staff-group-for-usr-local is
+    present (Closes: #962419)
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 08 Jun 2020 07:37:25 +0900
 
 tex-common (6.14) unstable; urgency=medium
 
