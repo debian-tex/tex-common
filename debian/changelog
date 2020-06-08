@@ -1,4 +1,4 @@
-tex-common (6.15) UNRELEASED; urgency=medium
+tex-common (6.15) unstable; urgency=medium
 
   [ Debian Janitor ]
   * Wrap long lines in changelog entries: 0.5.
@@ -9,8 +9,9 @@ tex-common (6.15) UNRELEASED; urgency=medium
   [ Norbert Preining ]
   * Only make /u/l/s/texmf group staff if /etc/staff-group-for-usr-local is
     present (Closes: #962419)
+  * Bump standards version to 4.5.0, and dh compat to 13
 
- -- Norbert Preining <norbert@preining.info>  Mon, 08 Jun 2020 07:37:25 +0900
+ -- Norbert Preining <norbert@preining.info>  Mon, 08 Jun 2020 17:31:14 +0900
 
 tex-common (6.14) unstable; urgency=medium
 

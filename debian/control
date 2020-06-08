@@ -3,9 +3,9 @@ Section: tex
 Priority: optional
 Maintainer: Debian TeX Task Force <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>, Norbert Preining <norbert@preining.info>
-Build-Depends: debhelper-compat (= 12)
+Build-Depends: debhelper-compat (= 13)
 Build-Depends-Indep: help2man
-Standards-Version: 4.2.1
+Standards-Version: 4.5.0
 Vcs-Git: https://github.com/debian-tex/tex-common.git
 Vcs-Browser: https://github.com/debian-tex/tex-common
 
