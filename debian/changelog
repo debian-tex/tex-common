@@ -1,3 +1,9 @@
+tex-common (6.16) UNRELEASED; urgency=medium
+
+  * Add d/clean for clean target.
+
+ -- Hilmar Preusse <hille42@web.de>  Mon, 01 Feb 2021 00:08:08 +0100
+
 tex-common (6.15) unstable; urgency=medium
 
   [ Debian Janitor ]

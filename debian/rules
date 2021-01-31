@@ -37,8 +37,6 @@ clean:
 	rm -f build-stamp
 
         # Add here commands to clean up after the build process.
-	-rm -f scripts/dh_installtex.1
-	-rm -f scripts/update-language.8
 	dh_clean
 
 install: build
