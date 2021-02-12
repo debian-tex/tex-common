@@ -1,2 +1,3 @@
 scripts/dh_installtex.1
 scripts/update-language.8
+build-stamp
