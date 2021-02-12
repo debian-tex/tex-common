@@ -2,9 +2,12 @@ Source: tex-common
 Section: tex
 Priority: optional
 Maintainer: Debian TeX Task Force <debian-tex-maint@lists.debian.org>
-Uploaders: Julian Gilbey <jdg@debian.org>, Norbert Preining <norbert@preining.info>
+Uploaders: Julian Gilbey <jdg@debian.org>,
+	Norbert Preining <norbert@preining.info>,
+	Hilmar Preusse <hille42@web.de>
 Build-Depends: debhelper-compat (= 13)
 Build-Depends-Indep: help2man
+Rules-Requires-Root: no
 Standards-Version: 4.5.0
 Vcs-Git: https://github.com/debian-tex/tex-common.git
 Vcs-Browser: https://github.com/debian-tex/tex-common

@@ -33,14 +33,14 @@ build-stamp:
 
 clean:
 	dh_testdir
-	dh_testroot
+	#dh_testroot
 
         # Add here commands to clean up after the build process.
 	dh_clean
 
 install: build
 	dh_testdir
-	dh_testroot
+	#dh_testroot
 	dh_prep
 	dh_installdirs
 
