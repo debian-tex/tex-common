@@ -541,7 +541,7 @@ activated via the updmap(-sys) mechanism.
 
 Default is I<not> to generate any config files.
 
-B<format:add_one:I<formatname>> allows to add the generation of a specific
+B<format:add_one:I<formatname>> allows one to add the generation of a specific
 format without actually providing it (in a cnf file).  This is useful if a 
 package adds hyphenation patterns to an existing formats.
 
