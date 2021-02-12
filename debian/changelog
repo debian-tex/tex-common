@@ -1,4 +1,4 @@
-tex-common (6.16) UNRELEASED; urgency=medium
+tex-common (6.16) unstable; urgency=medium
 
   [ Helmut Grohne <helmut@subdivi.de> ]
   * Provide dh-sequence-tex. (Closes: #982609)
@@ -7,7 +7,7 @@ tex-common (6.16) UNRELEASED; urgency=medium
   * Add me to Uploaders.
   * Add "Rules-Requires-Root: no"
 
- -- Hilmar Preusse <hille42@web.de>  Mon, 01 Feb 2021 00:08:08 +0100
+ -- Hilmar Preusse <hille42@web.de>  Fri, 12 Feb 2021 23:13:49 +0100
 
 tex-common (6.15) unstable; urgency=medium
 
