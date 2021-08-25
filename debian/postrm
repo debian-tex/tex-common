@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 # 
 # postrm maintainer script for the Debian tex-common package.
 #
@@ -21,6 +21,8 @@
 #
 # On Debian GNU/Linux System you can find a copy of the GNU General Public
 # License in "/usr/share/common-licenses/GPL".
+
+set -e
 
 # give commandline args a name
 action=$1 # remove, purge, upgrade, failed-upgrade, abort-install, abort-upgrade, disappear
