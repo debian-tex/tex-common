@@ -9,6 +9,7 @@ tex-common (6.17) UNRELEASED; urgency=medium
       Breaks.
     + Remove 3 maintscript entries from 1 files.
   * Use set -e rather than passing -e on the shebang-line.
+  * Update standards version to 4.5.1, no changes needed.
 
  -- Debian Janitor <janitor@jelmer.uk>  Tue, 24 Aug 2021 03:58:33 -0000
 
