@@ -1,4 +1,4 @@
-tex-common (6.17) UNRELEASED; urgency=medium
+tex-common (6.17) unstable; urgency=medium
 
   [ Debian Janitor ]
   * Remove constraints unnecessary since buster:
@@ -16,7 +16,7 @@ tex-common (6.17) UNRELEASED; urgency=medium
   * Replace which with command -v
   * Update standards version to 4.6.1, no changes needed.
 
- -- Norbert Preining <norbert@preining.info>  Sat, 04 Sep 2021 18:33:23 +0900
+ -- Norbert Preining <norbert@preining.info>  Sat, 04 Sep 2021 18:34:08 +0900
 
 tex-common (6.16) unstable; urgency=medium
 
