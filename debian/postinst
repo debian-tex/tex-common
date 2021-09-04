@@ -97,7 +97,7 @@ run_mtxrun_if_possible()
 {
     # code from postinst-tex
     if dhit_texlive_binaries_configured; then
-        if which mtxrun >/dev/null; then
+        if command -v mtxrun >/dev/null; then
             # we also have to check that texlive-base is installed
             # and configured, otherwise we cannot be sure that
             # all necessary basic files are present
@@ -138,7 +138,7 @@ run_mtxrun_if_possible()
 run_updmap()
 {
     if dhit_texlive_binaries_configured; then
-        if which updmap-sys >/dev/null; then
+        if command -v updmap-sys >/dev/null; then
             # we also have to check that texlive-base is installed
             # and configured, otherwise we cannot be sure that
             # all necessary basic files are present
@@ -234,7 +234,7 @@ run_mktexlsr()
     trees=$*
     if dhit_texlive_binaries_configured; then
         # mktexlsr may not be present
-        if which mktexlsr >/dev/null; then
+        if command -v mktexlsr >/dev/null; then
             tempfile=$(mktemp -p /tmp mktexlsr.XXXXXXXX)
             printf "Running mktexlsr. This may take some time... "
             if mktexlsr $trees > $tempfile 2>&1 ; then
@@ -256,8 +256,8 @@ run_mktexlsr()
 run_hyphen()
 {
     if dhit_texlive_binaries_configured; then
-        if which kpsewhich >/dev/null; then
-            if which fmtutil >/dev/null; then
+        if command -v kpsewhich >/dev/null; then
+            if command -v fmtutil >/dev/null; then
                 # code from postinst.tex
                 v=$(kpsewhich -var-value TEXMFSYSVAR)
                 c=$(kpsewhich -var-value TEXMFSYSCONFIG)

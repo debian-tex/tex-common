@@ -19,7 +19,7 @@
 # See bug report #531581
 dhit_call_update_texmf_config ()
 {
-    if which update-texmf-config >/dev/null; then
+    if command -v update-texmf-config >/dev/null; then
         update-texmf-config $*
     else
         echo "update-texmf-config not present: is tex-common installed?" >&2
