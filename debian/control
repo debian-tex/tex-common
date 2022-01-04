@@ -17,7 +17,6 @@ Package: tex-common
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends}, ucf
-Pre-Depends: dpkg
 Suggests: debhelper
 Replaces: tetex-base (<= 3.0-10), dvipdfmx
 Conflicts: tetex-base (<< 2007), texlive-common (<< 2009)
