@@ -88,6 +88,7 @@ binary-indep: build install
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
+	dh_lintian
 	dh_md5sums
 	dh_builddeb
 
