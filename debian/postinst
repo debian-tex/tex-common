@@ -3,7 +3,7 @@
 # postinst maintainer script for the Debian tex-common package.
 #
 # Copyright (C) 2004 by Frank Küster <frank@kuesterei.ch>. 
-# Copyright (C) 2012-2016 by Norbert Preining <preining@debian.org>
+# Copyright (C) 2012-2022 by Norbert Preining <preining@debian.org>
 #
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the
@@ -76,11 +76,14 @@ dhit_build_format ()
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
     # save LANG
     LANGSAVE=$LANG
+    LCALLSAVE=$LCALLSAVE
     LANG=C
+    LC_ALL=C
     printf "Building format(s) $*.\n\tThis may take some time... "
     if $FMTUTIL "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         LANG=$LANGSAVE
+        LC_ALL=$LCALLSAVE
         echo "done."
     else
         exec >&2

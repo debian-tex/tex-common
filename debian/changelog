@@ -1,12 +1,16 @@
 tex-common (6.18) UNRELEASED; urgency=medium
 
+  [ Hilmar Preusse ]
   * Lintian:
     - E: depends-on-essential-package-without-using-version Pre-Depends: dpkg
     - I: conflicts-with-version
     - P: no-dep5-copyright
     - O: package-contains-empty-directory
 
- -- Hilmar Preusse <hille42@web.de>  Tue, 04 Jan 2022 21:07:50 +0100
+  [ Norbert Preining ]
+  * set LC_ALL=C before running fmtutil (Closes: #1021515)
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 10 Oct 2022 15:51:44 +0900
 
 tex-common (6.17) unstable; urgency=medium
 
