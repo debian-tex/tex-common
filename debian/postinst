@@ -74,16 +74,9 @@ dhit_build_format ()
 {
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-    # save LANG
-    LANGSAVE=$LANG
-    LCALLSAVE=$LCALLSAVE
-    LANG=C
-    LC_ALL=C
     printf "Building format(s) $*.\n\tThis may take some time... "
-    if $FMTUTIL "$@" > $tempfile 2>&1 ; then
+    if LANG=C LC_ALL=C $FMTUTIL "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
-        LANG=$LANGSAVE
-        LC_ALL=$LCALLSAVE
         echo "done."
     else
         exec >&2
