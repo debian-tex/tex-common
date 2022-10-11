@@ -18,31 +18,36 @@ bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1)
 nonbin_installfiles=$(foreach script,$(nonbin_scripts), scripts/$(script)) \
 	texmf/web2c/mktex.cnf
 
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
+#build: build-arch build-indep
+#build-arch: build-stamp
+#build-indep: build-stamp
 
-build-stamp:
-	dh_testdir
+%:
+	dh $@ --without autoreconf
 
+#build-stamp:
+#	dh_testdir
+
+override_dh_auto_build:
         # Add here commands to compile the package.
 	cd scripts; pod2man dh_installtex > dh_installtex.1
 	cd scripts; help2man -n "generate hyphenation configuration for TeX engines" -s 8 -S Debian  -N ./update-language > update-language.8
 
-	touch build-stamp
+#	touch build-stamp
 
-clean:
-	dh_testdir
+#clean:
+#	dh_testdir
 	#dh_testroot
 
         # Add here commands to clean up after the build process.
-	dh_clean
+#	dh_clean
 
-install: build
-	dh_testdir
+override_dh_auto_install:
+#install: build
+#	dh_testdir
 	#dh_testroot
-	dh_prep
-	dh_installdirs
+#	dh_prep
+#	dh_installdirs
 
         # Add here commands to install the package into debian/tex-common.
 	cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
@@ -50,8 +55,8 @@ install: build
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
 	cp $(nonbin_installfiles) $(INSTDIR)/usr/share/tex-common/
 
-        # debhelper stuff
-        # dh_installtex(.1) is already installed via the bin_scripts
+	# debhelper stuff
+	# dh_installtex(.1) is already installed via the bin_scripts
 	grep -v '^[ \t]*# ' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
 	grep -v '^[ \t]*# ' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
 	cp scripts/tex.pm $(INSTDIR)/usr/share/perl5/Debian/Debhelper/Sequence/
@@ -70,27 +75,33 @@ install: build
 
 
 # Build architecture-dependent files here.
-binary-arch: build install
+#binary-arch: build install
 # We have nothing to do by default.
 
 # Build architecture-independent files here.
-binary-indep: build install
-	dh_testdir
-	$(check-svn)
-	dh_testroot
-	dh_installchangelogs
-	dh_installdocs
-	dh_installexamples
-	dh_installman $(sbin_manpages) $(bin_manpages)
-	dh_link
-	dh_compress
-	dh_fixperms --exclude=var/cache/fonts
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_lintian
-	dh_md5sums
-	dh_builddeb
+#binary-indep: build install
+#	dh_testdir
+#	$(check-svn)
+#	dh_testroot
+#	dh_installchangelogs
+#	dh_installdocs
+#	dh_installexamples
 
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+override_dh_installman:
+	dh_installman $(sbin_manpages) $(bin_manpages)
+
+#	dh_link
+#	dh_compress
+
+override_dh_fixperms:
+	dh_fixperms --exclude=var/cache/fonts
+
+#	dh_installdeb
+#	dh_shlibdeps
+#	dh_gencontrol
+#	dh_lintian
+#	dh_md5sums
+#	dh_builddeb
+
+#binary: binary-indep binary-arch
+#.PHONY: build clean binary-indep binary-arch binary install configure

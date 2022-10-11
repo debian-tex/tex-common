@@ -4,6 +4,7 @@ tex-common (6.18) UNRELEASED; urgency=medium
   * Lintian:
     - E: depends-on-essential-package-without-using-version Pre-Depends: dpkg
     - I: conflicts-with-version
+    - I: no-dh-sequencer
     - P: no-dep5-copyright
     - O: package-contains-empty-directory
 
