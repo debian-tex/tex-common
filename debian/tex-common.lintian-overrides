@@ -1,1 +1,1 @@
-tex-common binary: package-contains-empty-directory usr/share/texmf/web2c/
+tex-common: package-contains-empty-directory
