@@ -71,7 +71,7 @@ override_dh_auto_install:
 	rm -f debian/$(package)/usr/share/texmf/ls-R
 
         # Debian-specific stuff
-	install -m 644 debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
+	#install -m 644 debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
 
 
 # Build architecture-dependent files here.
