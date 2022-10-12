@@ -5,6 +5,7 @@ usr/share/tex-common
 usr/share/texmf/web2c
 usr/share/bug/tex-common
 etc/texmf/texmf.d
+etc/texmf/web2c
 var/lib/texmf/web2c
 var/lib/texmf/tex/generic/config
 var/lib/tex-common/hyphen-cnf

@@ -37,7 +37,7 @@ override_dh_auto_build:
 
 #clean:
 #	dh_testdir
-	#dh_testroot
+#	dh_testroot
 
         # Add here commands to clean up after the build process.
 #	dh_clean
@@ -45,12 +45,12 @@ override_dh_auto_build:
 override_dh_auto_install:
 #install: build
 #	dh_testdir
-	#dh_testroot
+#	dh_testroot
 #	dh_prep
 #	dh_installdirs
 
         # Add here commands to install the package into debian/tex-common.
-	cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
+	#cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
 	cp $(bin_installfiles) $(INSTDIR)/usr/bin/
 	cp $(nonbin_installfiles) $(INSTDIR)/usr/share/tex-common/
@@ -59,11 +59,11 @@ override_dh_auto_install:
 	# dh_installtex(.1) is already installed via the bin_scripts
 	grep -v '^[ \t]*# ' scripts/postrm-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postrm-tex
 	grep -v '^[ \t]*# ' scripts/postinst-tex > $(INSTDIR)/usr/share/debhelper/autoscripts/postinst-tex
-	cp scripts/tex.pm $(INSTDIR)/usr/share/perl5/Debian/Debhelper/Sequence/
+	#cp scripts/tex.pm $(INSTDIR)/usr/share/perl5/Debian/Debhelper/Sequence/
 
         # fontcache stuff with proper permissions
-	install -d $(INSTDIR)/etc/texmf/web2c/
-	install -m 644 texmf/web2c/mktex.cnf $(INSTDIR)/etc/texmf/web2c/
+	#install -d $(INSTDIR)/etc/texmf/web2c/
+	#install -m 644 texmf/web2c/mktex.cnf $(INSTDIR)/etc/texmf/web2c/
 
         # Remove the out-of-date ls-R file from /usr/share/texmf and create a
         # link to one in /var/lib/texmf that we can update without violating

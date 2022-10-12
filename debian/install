@@ -1,0 +1,3 @@
+texmf/web2c/mktex.cnf etc/texmf/web2c/
+conf/texmf.d/00debian.cnf etc/texmf/texmf.d/
+scripts/tex.pm usr/share/perl5/Debian/Debhelper/Sequence/
