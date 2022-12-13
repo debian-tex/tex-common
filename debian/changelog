@@ -1,3 +1,15 @@
+tex-common (6.19) UNRELEASED; urgency=medium
+
+  * Remove constraints unnecessary since buster (oldstable):
+    + tex-common: Drop versioned constraint on cm-super-minimal, ko.tex-base,
+      ko.tex-extra, latex-cjk-chinese, latex-cjk-chinese-arphic-bkai00mp,
+      latex-cjk-chinese-arphic-bsmi00lp, latex-cjk-chinese-arphic-gbsn00lp,
+      latex-cjk-chinese-arphic-gkai00mp, latex-cjk-thai,
+      latex-fonts-sipa-arundina, scalable-cyrfonts-tex and texlive-binaries in
+      Breaks.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Thu, 17 Nov 2022 19:51:44 -0000
+
 tex-common (6.18) unstable; urgency=medium
 
   [ Hilmar Preusse ]
