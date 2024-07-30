@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian TeX Task Force <debian-tex-maint@lists.debian.org>
 Uploaders: Julian Gilbey <jdg@debian.org>,
 	Norbert Preining <norbert@preining.info>,
-	Hilmar Preusse <hille42@web.de>
+	Hilmar Preuße <hille42@debian.org>
 Build-Depends: debhelper-compat (= 13)
 Build-Depends-Indep: help2man
 Rules-Requires-Root: no
