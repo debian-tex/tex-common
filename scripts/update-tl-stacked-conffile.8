@@ -1,6 +1,6 @@
-.Dd Jul 17, 2013
-.Os Debian
+.Dd July 17, 2013
 .Dt UPDATE-UPDMAP 8 SMM
+.Os Debian
 .Sh NAME
 .Nm update-updmap
 .Nd generate
@@ -19,7 +19,7 @@ a program that was written for the Debian distribution.
 .Nm
 is used to generate
 .Xr updmap 1 Ns 's
-and 
+and
 .Xr updmap-sys 8 Ns 's
 configurations files
 .Pa /var/lib/texmf/updmap.cfg-TEXLIVEDIST ,
@@ -41,20 +41,23 @@ Any TeX package shipping map files in one of the trees
 .Pa /usr/share/texlive/texmf-dist
 or
 .Pa /usr/share/texmf
-should also provide files in one of the above 
+should also provide files in one of the above
 directories containing the respective lines for
 .Pa updmap.cfg
 file.
 .Pp
-In order to configure (enable additional entries, disable 
-system provided entries, etc), the normal 
-.Xr updmap 1 Ns 
-mechanism should be used. Please see the man page details.
+In order to configure
+(enable additional entries, disable system provided entries, etc.),
+the normal
+.Xr updmap 1
+mechanism should be used.
+Please see the man page details.
 .Sh OPTIONS
 .Bl -tag -width ".Fl -version"
 .It Fl -check
 Executes additional checks that all necessary files are present in the
-kpathsea database. Don't use this in maintainer scripts.
+kpathsea database.
+Don't use this in maintainer scripts.
 .It Fl -quiet
 don't write anything to the standard output during normal operation
 .It Fl -help
@@ -67,10 +70,15 @@ output version information and exit
 .Pp
 Note that the
 .Fl v
-option, which turns on verbose mode, is deprecated.  We are currently in a
-transition phase where quiet mode is still the default (therefore,
+option,
+which turns on verbose mode,
+is deprecated.
+We are currently in a transition phase
+where quiet mode is still the default
+(therefore,
 .Fl -quiet
-has no effect), but
+has no effect),
+but
 .Nm
 will be verbose by default as soon as enough packages use
 .Fl -quiet
@@ -91,9 +99,11 @@ KanjiMap <baz.map>
 .Pp
 The
 .Li MixedMap
-form should only be used if the font is available in both bitmap and scalable
-formats (this way, it won't be declared in the default map file for Dvips that
-is used
+form should only be used
+if the font is available in both bitmap
+and scalable formats
+(this way,
+it won't be declared in the default map file for Dvips that is used
 when
 .Li dvipsPreferOutline
 is set to
@@ -127,9 +137,10 @@ This manual page was written by
 .An Atsuhito Kohda Aq kohda@debian.org
 and updated by
 .An "Florent Rougon" Aq f.rougon@free.fr
-and 
+and
 .An "Frank Kuester" Aq frank@debian.org
-for the Debian distribution (and may be used by others).
+for the Debian distribution
+(and may be used by others).
 .\" For Emacs:
 .\" Local Variables:
 .\" fill-column: 72
