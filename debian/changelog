@@ -12,6 +12,7 @@ tex-common (6.19) UNRELEASED; urgency=medium
   * Add patches from Bjarni Ingi Gislason <bjarniig@simnet.is> for
     - update-tl-stacked-conffile.8 (Closes: #1088253)
     - update-texmf.8 (Closes: #1088249)
+    - update-texmf-config.8 (Closes: #1099137)
 
  -- Hilmar Preuße <hille42@debian.org>  Thu, 17 Nov 2022 19:51:44 -0000
 
