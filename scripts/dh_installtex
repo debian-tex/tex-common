@@ -471,7 +471,9 @@ are stored in the respective config file 20package
 
 Example:
 
-        dh_installtex map=Map,foo.map hyphen=ngerman-x-2011-07-01,dehyphn-x-2011-07-01.tex,hyph-de-1996.pat.txt,lhm=2,rhm=2,synonym=ngerman-x-latest,exceptions=hyph-de-1996.hyp.txt
+        dh_installtex map=Map,foo.map hyphen=ngerman-x-2011-07-01,\
+        dehyphn-x-2011-07-01.tex,hyph-de-1996.pat.txt,lhm=2,\
+        rhm=2,synonym=ngerman-x-latest,exceptions=hyph-de-1996.hyp.txt
 
 would install a file /var/lib/tex-common/fontmap-cfg/texmf/package.cfg containing the line
 
