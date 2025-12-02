@@ -53,6 +53,15 @@ trigger=$2
 . /usr/share/debconf/confmodule
 db_version 2.0
 
+run_fmtutil_failed ()
+{
+    echo
+    echo "fmtutil failed. Output has been stored in"
+    echo "$tempfile"
+    echo "Please include this file if you report a bug."
+    echo
+}
+
 dhit_texlive_binaries_configured ()
 {
     # unfortunately this seems not to work anymore, we have to make
@@ -80,11 +89,7 @@ dhit_build_format ()
         echo "done."
     else
         exec >&2
-        echo
-        echo "fmtutil failed. Output has been stored in"
-        echo "$tempfile"
-        echo "Please include this file if you report a bug."
-        echo
+        run_fmtutil_failed
         exit 1
     fi
 }
@@ -270,11 +275,7 @@ run_hyphen()
                     echo "done."
                 else
                     exec >&2
-                    echo
-                    echo "fmtutil failed. Output has been stored in"
-                    echo "$tempfile"
-                    echo "Please include this file if you report a bug."
-                    echo
+                    run_fmtutil_failed
                     exit 1
                 fi
                 tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
@@ -284,11 +285,7 @@ run_hyphen()
                     echo "done."
                 else
                     exec >&2
-                    echo
-                    echo "fmtutil failed. Output has been stored in"
-                    echo "$tempfile"
-                    echo "Please include this file if you report a bug."
-                    echo
+                    run_fmtutil_failed
                     exit 1
                 fi
             fi
