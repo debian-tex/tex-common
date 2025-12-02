@@ -1,7 +1,7 @@
 tex-common (6.20) UNRELEASED; urgency=medium
 
   * Remove trailing white space from scripts/dh_installtex
-    Start for #1099660.
+    (Closes: #1099660).
   * W: tex-common: old-fsf-address-in-copyright-file
 
  -- Hilmar Preuße <hille42@debian.org>  Sat, 20 Sep 2025 12:09:14 +0200
