@@ -57,8 +57,10 @@ run_fmtutil_failed ()
 {
     echo
     echo "fmtutil failed. Output has been stored in"
-    echo "$tempfile"
+    echo "${tempfile}.gz"
     echo "Please include this file if you report a bug."
+    gzip "${tempfile}"
+    pgrep -i piuparts > /dev/null && base64 "${tempfile}.gz"
     echo
 }
 
