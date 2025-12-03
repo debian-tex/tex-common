@@ -55,12 +55,16 @@ db_version 2.0
 
 run_fmtutil_failed ()
 {
+    exec >&2
     echo
     echo "fmtutil failed. Output has been stored in"
-    echo "${tempfile}.gz"
+    if gzip "${tempfile}" > /dev/null 2>&1; then
+        echo "${tempfile}.gz"
+        pgrep -i piuparts > /dev/null && base64 "${tempfile}.gz"
+    else
+        echo "${tempfile}"
+    fi
     echo "Please include this file if you report a bug."
-    gzip "${tempfile}"
-    pgrep -i piuparts > /dev/null && base64 "${tempfile}.gz"
     echo
 }
 
@@ -90,7 +94,6 @@ dhit_build_format ()
         rm -f $tempfile
         echo "done."
     else
-        exec >&2
         run_fmtutil_failed
         exit 1
     fi
@@ -276,7 +279,6 @@ run_hyphen()
                     LANG=$LANGSAVE
                     echo "done."
                 else
-                    exec >&2
                     run_fmtutil_failed
                     exit 1
                 fi
@@ -286,7 +288,6 @@ run_hyphen()
                     rm -f $tempfile
                     echo "done."
                 else
-                    exec >&2
                     run_fmtutil_failed
                     exit 1
                 fi
