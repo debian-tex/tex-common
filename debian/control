@@ -16,7 +16,7 @@ Vcs-Browser: https://github.com/debian-tex/tex-common
 Package: tex-common
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends}, ucf
+Depends: ${misc:Depends}, ucf, bzip2
 Suggests: debhelper
 Replaces: tetex-base (<= 3.0-10), dvipdfmx
 Breaks: tetex-base (<< 2007), texlive-common (<< 2010), itrans (<= 5.3-10),

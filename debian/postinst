@@ -58,9 +58,9 @@ run_fmtutil_failed ()
     exec >&2
     echo
     echo "fmtutil failed. Output has been stored in"
-    if gzip "${tempfile}" > /dev/null 2>&1; then
-        echo "${tempfile}.gz"
-        pgrep -i piuparts > /dev/null && base64 "${tempfile}.gz"
+    if bzip2 "${tempfile}" > /dev/null 2>&1; then
+        echo "${tempfile}.bz2"
+        pgrep -i piuparts > /dev/null && base64 "${tempfile}.bz2"
     else
         echo "${tempfile}"
     fi
