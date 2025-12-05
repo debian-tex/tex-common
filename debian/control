@@ -8,7 +8,7 @@ Uploaders: Julian Gilbey <jdg@debian.org>,
 Build-Depends: debhelper-compat (= 13)
 Build-Depends-Indep: help2man
 Rules-Requires-Root: no
-Standards-Version: 4.6.1
+Standards-Version: 4.7.2
 Vcs-Git: https://github.com/debian-tex/tex-common.git
 Vcs-Browser: https://github.com/debian-tex/tex-common
 

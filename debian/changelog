@@ -1,12 +1,13 @@
-tex-common (6.20) UNRELEASED; urgency=medium
+tex-common (6.20) unstable; urgency=medium
 
   * Remove trailing white space from scripts/dh_installtex
     (Closes: #1099660).
   * W: tex-common: old-fsf-address-in-copyright-file
   * In case of a failed fmtutil-sys run, compress the log file and in
     case of piuparts test, display it as base64 encoded to stdout.
+  * Bump Standards version, no changes needed.
 
- -- Hilmar Preuße <hille42@debian.org>  Sat, 20 Sep 2025 12:09:14 +0200
+ -- Hilmar Preuße <hille42@debian.org>  Sat, 06 Dec 2025 00:37:27 +0100
 
 tex-common (6.19) unstable; urgency=medium
 
