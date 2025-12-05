@@ -18,37 +18,18 @@ bin_manpages=$(foreach script,$(bin_scripts), scripts/$(script).1)
 nonbin_installfiles=$(foreach script,$(nonbin_scripts), scripts/$(script)) \
 	texmf/web2c/mktex.cnf
 
-#build: build-arch build-indep
-#build-arch: build-stamp
-#build-indep: build-stamp
-
 %:
 	dh $@ --without autoreconf
-
-#build-stamp:
-#	dh_testdir
 
 override_dh_auto_build:
         # Add here commands to compile the package.
 	cd scripts; pod2man dh_installtex > dh_installtex.1
 	cd scripts; help2man -n "generate hyphenation configuration for TeX engines" -s 8 -S Debian  -N ./update-language > update-language.8
 
-#	touch build-stamp
-
-#clean:
-#	dh_testdir
-#	dh_testroot
-
         # Add here commands to clean up after the build process.
 #	dh_clean
 
 override_dh_auto_install:
-#install: build
-#	dh_testdir
-#	dh_testroot
-#	dh_prep
-#	dh_installdirs
-
         # Add here commands to install the package into debian/tex-common.
 	#cp conf/texmf.d/00debian.cnf $(INSTDIR)/etc/texmf/texmf.d/
 	cp $(sbin_installfiles) $(INSTDIR)/usr/sbin/
@@ -73,35 +54,11 @@ override_dh_auto_install:
         # Debian-specific stuff
 	#install -m 644 debian/reportbug-control $(INSTDIR)/usr/share/bug/tex-common/control
 
-
-# Build architecture-dependent files here.
-#binary-arch: build install
-# We have nothing to do by default.
-
-# Build architecture-independent files here.
-#binary-indep: build install
-#	dh_testdir
-#	$(check-svn)
-#	dh_testroot
-#	dh_installchangelogs
-#	dh_installdocs
-#	dh_installexamples
-
 override_dh_installman:
 	dh_installman $(sbin_manpages) $(bin_manpages)
 
-#	dh_link
-#	dh_compress
-
 override_dh_fixperms:
 	dh_fixperms --exclude=var/cache/fonts
-
-#	dh_installdeb
-#	dh_shlibdeps
-#	dh_gencontrol
-#	dh_lintian
-#	dh_md5sums
-#	dh_builddeb
 
 #binary: binary-indep binary-arch
 #.PHONY: build clean binary-indep binary-arch binary install configure
