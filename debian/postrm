@@ -57,14 +57,6 @@ case $action in
       rm -rf /etc/texmf/web2c/texmf.cnf
       rmdir --ignore-fail-on-non-empty /etc/texmf/web2c
     fi
-
-    # try to remove /usr/local/share/texmf if it is empty
-    # people should normally not have TEXMFLOCAL ls-R files
-    # unless they called mktexlsr manually, in which case this is fine
-    # maintainer scripts should call mktexlsr with a list of trees so
-    # no /u/l/s/texmf/ls-R is created
-    #rm -f /usr/local/share/texmf/ls-R 2>/dev/null || true
-    rmdir --ignore-fail-on-non-empty /usr/local/share/texmf/ 2>/dev/null || true
     ;;
   *)
     ;;
