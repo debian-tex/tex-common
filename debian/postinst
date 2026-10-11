@@ -89,7 +89,10 @@ dhit_build_format()
 {
 
     tempfile=$(mktemp -p /tmp fmtutil.XXXXXXXX)
-    printf "Building format(s) (by calling \"fmtutil-sys $*\").\n\tThis may take some time... "
+    printf "Building format(s) (by calling \"fmtutil-sys "
+    echo -n $*
+    printf "\").\nThis script calls iniTeX for all or added format files. "
+    printf "This may take some time... "
     if LANG=C LC_ALL=C $FMTUTIL "$@" > $tempfile 2>&1 ; then
         rm -f $tempfile
         echo "done."
