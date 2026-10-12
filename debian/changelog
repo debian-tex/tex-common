@@ -2,6 +2,7 @@ tex-common (6.21) UNRELEASED; urgency=medium
 
   * Hand over creating and deletion of /usr/local/share/texmf to dh_usrlocal
     (Closes: #1127099).
+  * Inform better, what is done during postinst call (Closes: #1142467).
 
  -- Hilmar Preuße <hille42@debian.org>  Sun, 08 Feb 2026 23:00:46 +0100
 
